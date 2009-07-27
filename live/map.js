@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-07-03 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-07-?? */
 
 var gMap;
 var gMapConfig;
@@ -684,6 +684,7 @@ function getActionsHtml(mapConfig, point, zl) {
       "Change opacity of visited areas</a></li>" +
     "<li><a href='javascript:toggleShowExtensions()'>" + 
       showExtensionsTexts[gMapConfig.showExtensions] + " extensions</a></li>" +
+    "<li><a href='javascript:showTrips()'>Show trips</a></li>" + 
     "</ul>" +
     "Current visited data is " + gMapConfig.visitedDataDescription + 
     ". Change visited data to: <ul>" + visitedDataList + "</ul>";
@@ -733,4 +734,33 @@ function changeVisitedData(newTarget) {
   }
 
   setKm2sToMapConfig(gMapConfig, gMap);
+}
+
+function showTrips() {
+  var tripsFilename = "testi.gpx";
+  var polylineEncoder = new PolylineEncoder();
+
+  GDownloadUrl(tripsFilename, function(data, responseCode) {
+    var xml = GXml.parse(data);
+    var trks = xml.documentElement.getElementsByTagName("trk");
+
+    for (var i = 0; i < trks.length; i++) {
+      var trkpts = trks[i].getElementsByTagName("trkpt");
+      var points = new Array(0);
+
+      for (var j = 0; j < trkpts.length; j++) {
+        points[j] = new GLatLng(parseFloat(trkpts[j].getAttribute("lat")),
+                                parseFloat(trkpts[j].getAttribute("lon")));
+      }
+
+      var polyline = polylineEncoder.dpEncodeToGPolyline(points, "#FF0080");
+      GEvent.addListener(polyline, "mouseover", function() {
+        polyline.setStrokeStyle({'color':'#FFFFFF'});
+      });
+      GEvent.addListener(polyline, "mouseout", function() {
+        polyline.setStrokeStyle({'color':'#FF0080'});
+      });
+      gMap.addOverlay(polyline);
+    }
+  });
 }
