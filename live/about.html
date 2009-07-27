@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<title>Helsinki Area By Bike - About</title>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#666666">
+
+<h1>Helsinki Area By Bike - About</h1>
+
+<p>Last updated 2009-06-28.</p>
+
+<h2>Map</h2>
+
+<p>
+The map is based on map called "Kartat ja Kadunnimet Pääkaupunkiseutu" 
+(ISBN: 951-98617-1-8, printed in 2001):
+</p>
+
+<ul>
+  <li>Scale 1:20 000</li>
+  <li><a href="http://fi.wikipedia.org/wiki/Kartastokoordinaattij%C3%A4rjestelm%C3%A4">KKJ</a> coordinate system</li>
+  <li>48 A4 pages (210 &times; 297 mm)</li>
+  <li>Each page covers 4 &times; 5 = 20 square kilometers (200 &times; 250 mm)</li>
+  <li>In total the map covers 48 &times; 20 = 960 square kilometers</li>
+  <li>The map covers:
+  <ul>
+    <li>Helsinki (exluding some islands and the expansion to Sipoo in 2009)</li>
+    <li>Most parts of Espoo</li>
+    <li>Vantaa</li>
+    <li>Kauniainen</li>
+    <li>Small parts of Kirkkonummi, Vihti, Nurmijärvi, Tuusula, Kerava and Sipoo</li>
+  </ul>
+</ul>
+
+<h3>Extensions</h3>
+
+<p>
+The map is extended by 20 pages (A-T) to cover also all of Helsinki and Espoo.
+The extensions can be shown/hidden using the right-click <a href="context_menu.png">context menu</a>.
+</p>
+
+<h2>Other Maps</h2>
+
+<ul>
+  <li><a href="http://kansalaisen.karttapaikka.fi/">Kansalaisen Karttapaikka - Maanmittauslaitos</a>
+  <ul>
+    <li>This is used as normative reference, all the other maps are just approximations</li>
+    <li>Covers Finland</li>
+    <li>No street names</li>
+  </ul>
+  <li><a href="http://kartta.hel.fi/">kartta.hel.fi</a>
+  <ul>
+    <li>Covers Helsinki, Espoo, Vantaa and Kauniainen</li>
+    <li>Street names</li>
+  </ul>
+  <li><a href="http://www.retkikartta.fi/">Retkikartta.fi - Metsähallitus</a></li>
+  <li><a href="http://maps.google.com/">Google Maps</a></li>
+  <li><a href="http://www.bing.com/maps/">Bing Maps</a> (Microsoft)
+  <ul>
+    <li>In many areas more accurate and recent aerial images than in Google Maps</li>
+  </ul>
+  <li><a href="http://www.openstreetmap.org/">OpenStreetMap</a></li>
+</ul>
+
+<h2>Implementation Details</h2>
+
+<ul>
+  <li>Uses JavaScript version of <a href="http://code.google.com/apis/maps/">Google Maps API</a></li>
+  <li>Uses Mark McClure's <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/">PolylineEncoder class</a></li>
+  <li>KKJ coordinates were converted to EUREF89 (WGS84) using <a href="http://www.maanmittauslaitos.fi/inc/LoadDocument.asp?id=931&amp;docid=415&amp;type=doc">EurefMuunnos</a></li>
+</ul>
+
+<h2>Browser Compatibility</h2>
+
+<ul>
+  <li>Mozilla Firefox version 3.0.11: <a href="firefox.png">OK</a></li>
+  <li>Opera version 9.64: Not OK</li>
+  <li>Microsoft Internet Explorer version 8.0.6001.18783: OK</li>
+  <li>Google Chrome version 2.0.172.33: <a href="googlechrome.png">Not OK</a> (operation is OK)</li>
+</ul>
+
+<p>back to the <a href="map.html">map</a></p>
+</body></html>
