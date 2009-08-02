@@ -182,7 +182,7 @@ function setVisitedDataToKm2s(mapConfig, map) {
 
     for (var i = 0; i < pages.length; i++) {
       if (pages[i].getAttribute("visited_all") == "true") {
-        if ((mapConfig.showExtensions) || 
+        if ((mapConfig.showExtensions) ||
             (pages[i].getAttribute("number") < "A")) {
           allInPage.push(pages[i].getAttribute("number"));
         }
@@ -667,14 +667,14 @@ function getActionsHtml(mapConfig, point, zl) {
   var visitedDataList = "";
   var showExtensionsTexts = {"true":"Hide", "false":"Show"};
 
-  if (gMapConfig.filenames.visitedData != 
+  if (gMapConfig.filenames.visitedData !=
       gMapConfig.filenames.visitedData2008) {
-    visitedDataList += 
+    visitedDataList +=
         "<li><a href='javascript:changeVisitedData(2008)'>end of 2008</a></li>";
   }
-  if (gMapConfig.filenames.visitedData != 
+  if (gMapConfig.filenames.visitedData !=
       gMapConfig.filenames.visitedDataLatest) {
-    visitedDataList += 
+    visitedDataList +=
       "<li><a href='javascript:changeVisitedData(\"latest\")'>latest</a></li>";
   }
 
@@ -683,10 +683,10 @@ function getActionsHtml(mapConfig, point, zl) {
       ")'>Zoom to selected location</a></li>" +
     "<li><a href='javascript:toggleOpacity()'>" +
       "Change opacity of visited areas</a></li>" +
-    "<li><a href='javascript:toggleShowExtensions()'>" + 
+    "<li><a href='javascript:toggleShowExtensions()'>" +
       showExtensionsTexts[gMapConfig.showExtensions] + " extensions</a></li>" +
     "</ul>" +
-    "Current visited data is " + gMapConfig.visitedDataDescription + 
+    "Current visited data is " + gMapConfig.visitedDataDescription +
     ". Change visited data to: <ul>" + visitedDataList + "</ul>";
 
   return html;
@@ -714,7 +714,7 @@ function toggleShowExtensions() {
   gMap.clearOverlays();
   GEvent.clearInstanceListeners(gMap);
 
-  document.getElementById("statistics").innerHTML = 
+  document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;
 
   gMapConfig = createMapConfig(!gMapConfig.showExtensions);
@@ -742,7 +742,7 @@ function addTripsControl() {
   tripsControl.className = "trips";
   document.getElementById("map_canvas").appendChild(tripsControl);
 
-  var position = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(210, 7)); 
+  var position = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(210, 7));
   position.apply(tripsControl);
 
   showTrips(0);

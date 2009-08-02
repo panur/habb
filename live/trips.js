@@ -44,9 +44,9 @@ function setTripsInfo(mapConfig, map, isTableShown) {
 
 function getTripsTableHtml(tripsInfo) {
   var closeImgUrl = "http://maps.gstatic.com/intl/en_ALL/mapfiles/iw_close.gif";
-  var closeHtml = "<a href='javascript:showTrips(0)'>" + 
+  var closeHtml = "<a href='javascript:showTrips(0)'>" +
     '<img class="close" src="' + closeImgUrl + '"></a>';
-  var tableHtml = closeHtml+'<table class="trips">\n' + 
+  var tableHtml = closeHtml+'<table class="trips">\n' +
     '<tr><th>Name</th><th>Date</th></tr>\n';
 
   for (var i = 0; i < tripsInfo.length; i++) {
