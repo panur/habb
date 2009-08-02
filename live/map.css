@@ -2,3 +2,28 @@ html, body {
   height: 100%;
   margin: 0;
 }
+
+.trips {
+  color:#000000;
+  background-color:#ffffff;
+  border:1px solid #000000;
+}
+
+img.close {
+  border: 0px; 
+  position: absolute; 
+  right:0;
+}
+
+table.trips {
+  border-collapse: collapse;
+}
+
+td, th {
+  border:1px solid;
+}
+
+th {
+  color:#000000;
+  background-color:#ffffff;
+}

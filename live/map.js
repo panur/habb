@@ -37,6 +37,7 @@ function initMap(map, mapConfig) {
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
+    addTripsControl();
   });
 
   setPointsToMapConfig(mapConfig, map);
@@ -684,7 +685,6 @@ function getActionsHtml(mapConfig, point, zl) {
       "Change opacity of visited areas</a></li>" +
     "<li><a href='javascript:toggleShowExtensions()'>" + 
       showExtensionsTexts[gMapConfig.showExtensions] + " extensions</a></li>" +
-    "<li><a href='javascript:showTrips()'>Show trips</a></li>" + 
     "</ul>" +
     "Current visited data is " + gMapConfig.visitedDataDescription + 
     ". Change visited data to: <ul>" + visitedDataList + "</ul>";
@@ -736,6 +736,14 @@ function changeVisitedData(newTarget) {
   setKm2sToMapConfig(gMapConfig, gMap);
 }
 
-function showTrips() {
-  addTrips(gMapConfig, gMap);
+function addTripsControl() {
+  var tripsControl = document.createElement("div");
+  tripsControl.id = "tripsControl";
+  tripsControl.className = "trips";
+  document.getElementById("map_canvas").appendChild(tripsControl);
+
+  var position = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(210, 7)); 
+  position.apply(tripsControl);
+
+  showTrips(0);
 }
