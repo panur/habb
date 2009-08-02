@@ -8,10 +8,10 @@ function showTripsTable(mapConfig, map, isTableShown) {
   var html;
 
   if (isTableShown) {
-    if (mapConfig.tripsInfo) {
-      html = getTripsTableHtml(mapConfig.tripsInfo);
+    if (mapConfig.trips.info) {
+      html = getTripsTableHtml(mapConfig.trips.info);
     } else {
-      setTripsInfo(mapConfig, map, isTableShown);
+      setTripsInfo(mapConfig, map);
       html = "Loading...";
     }
   } else {
@@ -21,11 +21,10 @@ function showTripsTable(mapConfig, map, isTableShown) {
   tripsControl.innerHTML = html;
 }
 
-function setTripsInfo(mapConfig, map, isTableShown) {
-  var tripsFilename = "trips/index.xml";
+function setTripsInfo(mapConfig, map) {
   var tripsInfo = [];
 
-  GDownloadUrl(tripsFilename, function(data, responseCode) {
+  GDownloadUrl(mapConfig.filenames.tripsIndex, function(data, responseCode) {
     var xml = GXml.parse(data);
     var trips = xml.documentElement.getElementsByTagName("trip");
 
@@ -34,11 +33,10 @@ function setTripsInfo(mapConfig, map, isTableShown) {
       info.visibility = "hidden";
       info.filename = trips[i].getAttribute("filename");
       tripsInfo.push(info);
-      setTripPolyline(mapConfig, info.filename);
+      setTripPolyline(mapConfig, map, info.filename);
     }
 
-    mapConfig.tripsInfo = tripsInfo;
-    showTripsTable(mapConfig, map, isTableShown);
+    mapConfig.trips.info = tripsInfo;
   });
 }
 
@@ -68,21 +66,21 @@ function showTrip(filename) {
 }
 
 function toggleTripVisibility(mapConfig, map, tripFilename) {
-  for (var i = 0; i < mapConfig.tripsInfo.length; i++) {
-    if (mapConfig.tripsInfo[i].filename == tripFilename) {
-      if (mapConfig.tripsInfo[i].visibility == "hidden") {
-        mapConfig.tripsInfo[i].visibility = "visible";
-        map.addOverlay(mapConfig.tripsInfo[i].polyline);
+  for (var i = 0; i < mapConfig.trips.info.length; i++) {
+    if (mapConfig.trips.info[i].filename == tripFilename) {
+      if (mapConfig.trips.info[i].visibility == "hidden") {
+        mapConfig.trips.info[i].visibility = "visible";
+        map.addOverlay(mapConfig.trips.info[i].polyline);
       } else {
-        mapConfig.tripsInfo[i].visibility = "hidden";
-        map.removeOverlay(mapConfig.tripsInfo[i].polyline);
+        mapConfig.trips.info[i].visibility = "hidden";
+        map.removeOverlay(mapConfig.trips.info[i].polyline);
       }
       break;
     }
   }
 }
 
-function setTripPolyline(mapConfig, tripFilename) {
+function setTripPolyline(mapConfig, map, tripFilename) {
   var polylineEncoder = new PolylineEncoder();
 
   GDownloadUrl(tripFilename, function(data, responseCode) {
@@ -98,7 +96,8 @@ function setTripPolyline(mapConfig, tripFilename) {
                                 parseFloat(trkpts[j].getAttribute("lon")));
       }
 
-      var polyline = polylineEncoder.dpEncodeToGPolyline(points, "#FF0080");
+      var polyline =
+        polylineEncoder.dpEncodeToGPolyline(points, mapConfig.trips.color);
 /*
       GEvent.addListener(polyline, "mouseover", function() {
         polyline.setStrokeStyle({'color':'#FFFFFF'});
@@ -109,12 +108,21 @@ function setTripPolyline(mapConfig, tripFilename) {
       });
 */
 
-      for (var i = 0; i < mapConfig.tripsInfo.length; i++) {
-        if (mapConfig.tripsInfo[i].filename == tripFilename) {
-          mapConfig.tripsInfo[i].polyline = polyline;
+      for (var i = 0; i < mapConfig.trips.info.length; i++) {
+        if (mapConfig.trips.info[i].filename == tripFilename) {
+          mapConfig.trips.info[i].polyline = polyline;
           break;
         }
       }
+    }
+
+    mapConfig.trips.readyInfos += 1;
+
+    if (mapConfig.trips.readyInfos == mapConfig.trips.info.length) {
+      showTripsTable(mapConfig, map, 1);
+    } else {
+      var tripsControl = document.getElementById("tripsControl");
+      tripsControl.innerHTML += ".";
     }
   });
 }

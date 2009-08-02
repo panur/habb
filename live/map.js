@@ -51,7 +51,7 @@ function createMapConfig(showExtensions) {
 
   mapConfig.filenames =
     {points:"generated_points.xml", visitedDataLatest:"visited_data.xml",
-     visitedData2008:"visited_data_2008.xml"};
+     visitedData2008:"visited_data_2008.xml", tripsIndex:"trips/index.xml"};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
@@ -121,6 +121,8 @@ function createMapConfig(showExtensions) {
                        'K', 'L',  37,  38, 39, 40,  41, 42, 43,  44, 'M',
                        'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
   }
+
+  mapConfig.trips = {readyInfos:0, color:"#FF0080"};
 
   return mapConfig;
 }
