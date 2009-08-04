@@ -32,6 +32,7 @@ function setTripsInfo(mapConfig, map) {
       var info = {};
       info.visibility = "hidden";
       info.filename = trips[i].getAttribute("filename");
+      info.name = trips[i].getAttribute("name");
       tripsInfo.push(info);
       setTripPolyline(mapConfig, map, info.filename);
     }
@@ -44,15 +45,18 @@ function getTripsTableHtml(tripsInfo) {
   var closeImgUrl = "http://maps.gstatic.com/intl/en_ALL/mapfiles/iw_close.gif";
   var closeHtml = "<a href='javascript:showTrips(0)'>" +
     '<img class="close" src="' + closeImgUrl + '"></a>';
-  var tableHtml = closeHtml+'<table class="trips">\n' +
-    '<tr><th>Name</th><th>Date</th></tr>\n';
+  var tableHtml = closeHtml+'<table id="tripsTable" class="trips">\n' +
+    '<tr><th>Vis.</th><th>Name</th><th>Date</th><th>Duration</th></tr>\n';
 
   for (var i = 0; i < tripsInfo.length; i++) {
     var tripFilename = tripsInfo[i].filename;
+    var visibility = (tripsInfo[i].visibility == "hidden") ? "Show": "Hide";
     tableHtml += '<tr>';
-    tableHtml += '<td>' + tripFilename + '</td>';
     tableHtml += '<td>' +
-      "<a href='javascript:showTrip(\"" + tripFilename + "\")'>Show</a></td>";
+      "<a href='javascript:showTrip(" + i + ")'>" + visibility + "</a></td>";
+    tableHtml += '<td>' + tripsInfo[i].name + '</td>';
+    tableHtml += '<td>' + tripsInfo[i].date + '</td>';
+    tableHtml += '<td>' + tripsInfo[i].duration + '</td>';
     tableHtml += '</tr>\n';
   }
 
@@ -61,22 +65,18 @@ function getTripsTableHtml(tripsInfo) {
   return tableHtml;
 }
 
-function showTrip(filename) {
-  toggleTripVisibility(gMapConfig, gMap, filename)
+function showTrip(tripIndex) {
+  toggleTripVisibility(gMapConfig, gMap, tripIndex);
+  showTrips(1);
 }
 
-function toggleTripVisibility(mapConfig, map, tripFilename) {
-  for (var i = 0; i < mapConfig.trips.info.length; i++) {
-    if (mapConfig.trips.info[i].filename == tripFilename) {
-      if (mapConfig.trips.info[i].visibility == "hidden") {
-        mapConfig.trips.info[i].visibility = "visible";
-        map.addOverlay(mapConfig.trips.info[i].polyline);
-      } else {
-        mapConfig.trips.info[i].visibility = "hidden";
-        map.removeOverlay(mapConfig.trips.info[i].polyline);
-      }
-      break;
-    }
+function toggleTripVisibility(mapConfig, map, tripIndex) {
+  if (mapConfig.trips.info[tripIndex].visibility == "hidden") {
+    mapConfig.trips.info[tripIndex].visibility = "visible";
+    map.addOverlay(mapConfig.trips.info[tripIndex].polyline);
+  } else {
+    mapConfig.trips.info[tripIndex].visibility = "hidden";
+    map.removeOverlay(mapConfig.trips.info[tripIndex].polyline);
   }
 }
 
@@ -98,6 +98,11 @@ function setTripPolyline(mapConfig, map, tripFilename) {
 
       var polyline =
         polylineEncoder.dpEncodeToGPolyline(points, mapConfig.trips.color);
+      var times = trks[i].getElementsByTagName("time");
+      var date = times[0].firstChild.nodeValue;
+      date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */
+      var duration = getDuration(times[0].firstChild.nodeValue,
+                                 times[times.length - 1].firstChild.nodeValue);
 /*
       GEvent.addListener(polyline, "mouseover", function() {
         polyline.setStrokeStyle({'color':'#FFFFFF'});
@@ -111,6 +116,8 @@ function setTripPolyline(mapConfig, map, tripFilename) {
       for (var i = 0; i < mapConfig.trips.info.length; i++) {
         if (mapConfig.trips.info[i].filename == tripFilename) {
           mapConfig.trips.info[i].polyline = polyline;
+          mapConfig.trips.info[i].date = date;
+          mapConfig.trips.info[i].duration = duration;
           break;
         }
       }
@@ -125,4 +132,24 @@ function setTripPolyline(mapConfig, map, tripFilename) {
       tripsControl.innerHTML += ".";
     }
   });
+}
+
+function getDuration(start, end) {
+  var durationInSeconds =
+    secondsSinceMidnight(end) - secondsSinceMidnight(start);
+  var date = new Date(durationInSeconds * 1000)
+  var duration = date.toUTCString();
+  duration = duration.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
+
+  return duration;
+}
+
+function secondsSinceMidnight(date) {
+  /* 2009-07-19T10:23:21Z */
+  var hours = date.substr(11, 2);
+  var minutes = date.substr(14, 2);
+  var seconds = date.substr(17, 2);
+  var secondsSinceMidnight = (hours * 3600) + (minutes * 60) + (seconds * 1);
+
+  return secondsSinceMidnight;
 }

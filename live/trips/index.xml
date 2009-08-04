@@ -1,7 +1,7 @@
 <trips>
-  <trip filename="trips/20090803.gpx"/>
-  <trip filename="trips/20090801.gpx"/>
-  <trip filename="trips/20090730.gpx"/>
-  <trip filename="trips/20090728.gpx"/>
-  <trip filename="trips/20090719.gpx"/>
+  <trip filename="trips/20090803.gpx" name="Vihti-Nurmijärvi"/>
+  <trip filename="trips/20090801.gpx" name="Kerava-Sipoo"/>
+  <trip filename="trips/20090730.gpx" name="Nuuksio"/>
+  <trip filename="trips/20090728.gpx" name="Helsinki-Sipoo"/>
+  <trip filename="trips/20090719.gpx" name="Klaukkala"/>
 </trips>
