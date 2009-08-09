@@ -1,4 +1,6 @@
 <trips>
+  <trip filename="trips/20090808.gpx" name="Hämeenlinna-Kilo"/>
+  <trip filename="trips/20090807.gpx" name="Kilo-Hämeenlinna"/>
   <trip filename="trips/20090805.gpx" name="Sipoo-Vantaa"/>
   <trip filename="trips/20090803.gpx" name="Vihti-Nurmijärvi"/>
   <trip filename="trips/20090801.gpx" name="Kerava-Sipoo"/>
