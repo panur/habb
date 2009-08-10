@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-07-?? */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-10 */
 
 var gMap;
 var gMapConfig;
@@ -51,7 +51,7 @@ function createMapConfig(showExtensions) {
 
   mapConfig.filenames =
     {points:"generated_points.xml", visitedDataLatest:"visited_data.xml",
-     visitedData2008:"visited_data_2008.xml", tripsIndex:"trips/index.xml"};
+     visitedData2008:"visited_data_2008.xml", tripsData:"tripsData.xml"};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
@@ -122,7 +122,7 @@ function createMapConfig(showExtensions) {
                        'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
   }
 
-  mapConfig.trips = {readyInfos:0, color:"#FF0080"};
+  mapConfig.trips = {};
 
   return mapConfig;
 }

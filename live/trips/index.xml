@@ -1,10 +1,10 @@
 <trips>
-  <trip filename="trips/20090808.gpx" name="Hämeenlinna-Kilo"/>
-  <trip filename="trips/20090807.gpx" name="Kilo-Hämeenlinna"/>
-  <trip filename="trips/20090805.gpx" name="Sipoo-Vantaa"/>
-  <trip filename="trips/20090803.gpx" name="Vihti-Nurmijärvi"/>
-  <trip filename="trips/20090801.gpx" name="Kerava-Sipoo"/>
-  <trip filename="trips/20090730.gpx" name="Nuuksio"/>
-  <trip filename="trips/20090728.gpx" name="Helsinki-Sipoo"/>
-  <trip filename="trips/20090719.gpx" name="Klaukkala"/>
+  <trip filename="20090808.gpx" name="Hämeenlinna-Kilo"/>
+  <trip filename="20090807.gpx" name="Kilo-Hämeenlinna"/>
+  <trip filename="20090805.gpx" name="Sipoo-Vantaa"/>
+  <trip filename="20090803.gpx" name="Vihti-Nurmijärvi"/>
+  <trip filename="20090801.gpx" name="Kerava-Sipoo"/>
+  <trip filename="20090730.gpx" name="Nuuksio"/>
+  <trip filename="20090728.gpx" name="Helsinki-Sipoo"/>
+  <trip filename="20090719.gpx" name="Klaukkala"/>
 </trips>
