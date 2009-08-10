@@ -1,24 +1,24 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-10 */
 
 function showTrips(isTableShown) {
-  showTripsTable(gMapConfig, gMap, isTableShown);
+  showTripsControl(gMapConfig, gMap, isTableShown);
 }
 
-function showTripsTable(mapConfig, map, isTableShown) {
-  var tripsControl = document.getElementById("tripsControl");
-  var html;
-
+function showTripsControl(mapConfig, map, isTableShown) {
   if (isTableShown) {
     if (mapConfig.trips.data) {
-      html = getTripsTableHtml(mapConfig.trips.data);
+      setTripsControlHtml(getTripsTableHtml(mapConfig.trips.data));
     } else {
+      setTripsControlHtml("Loading...");
       setTripsData(mapConfig, map);
-      html = "Loading...";
     }
   } else {
-    html = '<a href="javascript:showTrips(1)">Show trips</a>';
+    setTripsControlHtml('<a href="javascript:showTrips(1)">Show trips</a>');
   }
+}
 
+function setTripsControlHtml(html) {
+  var tripsControl = document.getElementById("tripsControl");
   tripsControl.innerHTML = html;
 }
 
@@ -33,7 +33,7 @@ function setTripsData(mapConfig, map) {
     }
 
     mapConfig.trips.data = JSON.parse(tripsDataString);
-    showTripsTable(mapConfig, map, 1);
+    showTripsControl(mapConfig, map, 1);
   });
 }
 
