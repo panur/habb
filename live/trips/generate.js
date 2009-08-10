@@ -121,7 +121,7 @@ function writeToFile(tripsConfig) {
     var myJSONText = JSON.stringify(tripsConfig.data);
     var outputText =
       "<trips>\n<data>\n" + myJSONText + "\n</data>\n</trips>\n";
-    var rv = FileIO.write(fileOut, outputText);
+    var rv = FileIO.write(fileOut, outputText, '', 'UTF-8');
 
     if (rv == false) {
       statusText = "Failed to write file: " + filename;
