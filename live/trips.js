@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-12 */
 
 function showTrips(isTableShown) {
   showTripsControl(gMapConfig, gMap, isTableShown);
@@ -40,9 +40,25 @@ function setTripsData(mapConfig, map) {
 function getTripsTableHtml(tripsData) {
   var closeImgUrl = "http://maps.gstatic.com/intl/en_ALL/mapfiles/iw_close.gif";
   var closeHtml = "<a href='javascript:showTrips(0)'>" +
-    '<img class="close" src="' + closeImgUrl + '"></a>';
-  var tableHtml = closeHtml+'<table id="tripsTable" class="trips">\n' +
-    '<tr><th>Vis.</th><th>Name</th><th>Date</th><th>Duration</th></tr>\n';
+    '<img class="close" src="' + closeImgUrl + '"></a>\n';
+  var tableHtml = closeHtml + '<table id="tripsTable" class="trips">\n';
+
+  tableHtml += '<tr>' +
+    '<th rowspan="3">Vis.</th>' +
+    '<th rowspan="3">Name</th>' +
+    '<th rowspan="2">Date</th>' +
+    '<th colspan="4">GPS data</th>' +
+    '<th colspan="4">Cycle Computer data</th></tr>\n';
+
+  tableHtml += '<tr>' +
+    '<th>Duration</th><th>Distance</th><th>Max speed</th>' +
+    '<th>Max altitude</th>' +
+    '<th>Duration</th><th>Distance</th><th>Max speed</th>' +
+    '<th>Avg speed</th></tr>\n';
+
+  tableHtml += '<tr><th>yyyy-mm-dd</th>' +
+    '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>m</th>' +
+    '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>km/h</th></tr>\n';
 
   for (var i = 0; i < tripsData.length; i++) {
     var tripFilename = tripsData[i].filename;
@@ -52,7 +68,14 @@ function getTripsTableHtml(tripsData) {
       "<a href='javascript:showTrip(" + i + ")'>" + visibility + "</a></td>";
     tableHtml += '<td>' + tripsData[i].name + '</td>';
     tableHtml += '<td>' + tripsData[i].date + '</td>';
-    tableHtml += '<td>' + tripsData[i].duration + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsDuration + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsDistance + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsMaxSpeed + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsMaxAltitude + '</td>';
+    tableHtml += '<td>' + tripsData[i].ccDuration + '</td>';
+    tableHtml += '<td>' + tripsData[i].ccDistance + '</td>';
+    tableHtml += '<td>' + tripsData[i].ccMaxSpeed + '</td>';
+    tableHtml += '<td>' + tripsData[i].ccAvgSpeed + '</td>';
     tableHtml += '</tr>\n';
   }
 

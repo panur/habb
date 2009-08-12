@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-12 */
 
 function generate() {
   var tripsConfig = {
@@ -27,6 +27,10 @@ function setTripsData(tripsConfig) {
       tripData.visibility = "hidden";
       tripData.filename = trips[i].getAttribute("filename");
       tripData.name = trips[i].getAttribute("name");
+      tripData.ccDistance = trips[i].getAttribute("distance");
+      tripData.ccDuration = trips[i].getAttribute("duration");
+      tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
+      tripData.ccAvgSpeed = trips[i].getAttribute("avg_speed");
       tripsData.push(tripData);
       setTripGpsData(tripsConfig, tripData.filename);
     }
@@ -58,21 +62,18 @@ function setTripGpsData(tripsConfig, tripFilename) {
       date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */
       var duration = getDuration(times[0].firstChild.nodeValue,
                                  times[times.length - 1].firstChild.nodeValue);
-/*
-      GEvent.addListener(polyline, "mouseover", function() {
-        polyline.setStrokeStyle({'color':'#FFFFFF'});
-      });
-
-      GEvent.addListener(polyline, "mouseout", function() {
-        polyline.setStrokeStyle({'color':'#FF0080'});
-      });
-*/
+      var distance = Math.round((new GPolyline(points)).getLength() / 1000);
+      var maxSpeed = getMaxSpeed(trks[i].getElementsByTagName("speed"));
+      var maxAltitude = getMaxAltitude(trks[i].getElementsByTagName("ele"));
 
       for (var i = 0; i < tripsConfig.data.length; i++) {
         if (tripsConfig.data[i].filename == tripFilename) {
           tripsConfig.data[i].encodedPolyline = encodedPolyline;
           tripsConfig.data[i].date = date;
-          tripsConfig.data[i].duration = duration;
+          tripsConfig.data[i].gpsDuration = duration;
+          tripsConfig.data[i].gpsDistance = distance;
+          tripsConfig.data[i].gpsMaxSpeed = maxSpeed;
+          tripsConfig.data[i].gpsMaxAltitude = maxAltitude;
           break;
         }
       }
@@ -107,6 +108,33 @@ function secondsSinceMidnight(date) {
   var secondsSinceMidnight = (hours * 3600) + (minutes * 60) + (seconds * 1);
 
   return secondsSinceMidnight;
+}
+
+function getMaxMeasurement(measurements) {
+  var maxMeasurement = 0;
+
+  for (var i = 0; i < measurements.length; i++) {
+    maxMeasurement =
+      Math.max(maxMeasurement, measurements[i].firstChild.nodeValue);
+  }
+
+  return maxMeasurement;
+}
+
+function getMaxSpeed(speedMeasurements) {
+  var maxSpeed = getMaxMeasurement(speedMeasurements);
+
+  maxSpeed = Math.round(maxSpeed * 10) / 10;
+
+  return maxSpeed;
+}
+
+function getMaxAltitude(altitudeMeasurements) {
+  var maxAltitude = getMaxMeasurement(altitudeMeasurements);
+
+  maxAltitude = Math.round(maxAltitude);
+
+  return maxAltitude;
 }
 
 function writeToFile(tripsConfig) {

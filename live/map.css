@@ -7,11 +7,12 @@ html, body {
   color:#000000;
   background-color:#ffffff;
   border:1px solid #000000;
+  /*max-width: 54%;*/
 }
 
 img.close {
-  border: 0px; 
-  position: absolute; 
+  border: 0px;
+  position: absolute;
   right:0;
 }
 
