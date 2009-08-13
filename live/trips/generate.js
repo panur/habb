@@ -3,7 +3,8 @@
 function generate() {
   var tripsConfig = {
     readyTrips:0, color:"#FF0080", indexFilename:"index.xml",
-    dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml"
+    dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
+    visitedDataDirectory:"visited_datas"
   };
 
   setStatus("Please wait...");
@@ -26,6 +27,8 @@ function setTripsData(tripsConfig) {
       var tripData = {};
       tripData.visibility = "hidden";
       tripData.filename = trips[i].getAttribute("filename");
+      tripData.visitedDataFilename = tripsConfig.visitedDataDirectory + "/" +
+                                     trips[i].getAttribute("visited_data");
       tripData.name = trips[i].getAttribute("name");
       tripData.ccDistance = trips[i].getAttribute("distance");
       tripData.ccDuration = trips[i].getAttribute("duration");

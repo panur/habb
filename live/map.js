@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-13 */
 
 var gMap;
 var gMapConfig;
@@ -37,7 +37,7 @@ function initMap(map, mapConfig) {
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
-    addTripsControl();
+    addTripsControl(mapConfig, map);
   });
 
   setPointsToMapConfig(mapConfig, map);
@@ -122,7 +122,7 @@ function createMapConfig(showExtensions) {
                        'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
   }
 
-  mapConfig.trips = {};
+  mapConfig.trips = {isTableShown:false};
 
   return mapConfig;
 }
@@ -502,6 +502,8 @@ function addOverlaysToMap(mc, map) {
   for (var i = 0; i < mc.grid.lngPolylines.length; i++) {
     map.addOverlay(mc.grid.lngPolylines[i]);
   }
+
+  addTripsOverlaysToMap(mc, map);
 }
 
 function addMouseListeners(mapConfig, map) {
@@ -725,27 +727,18 @@ function toggleShowExtensions() {
 }
 
 function changeVisitedData(newTarget) {
-  gMap.clearOverlays();
-
   if (newTarget == 2008) {
-    gMapConfig.filenames.visitedData = gMapConfig.filenames.visitedData2008;
-    gMapConfig.visitedDataDescription = "from end of 2008";
+    setVisitedData(gMapConfig.filenames.visitedData2008, "from end of 2008");
   } else {
-    gMapConfig.filenames.visitedData = gMapConfig.filenames.visitedDataLatest;
-    gMapConfig.visitedDataDescription = "latest";
+    setVisitedData(gMapConfig.filenames.visitedDataLatest, "latest");
   }
-
-  setKm2sToMapConfig(gMapConfig, gMap);
 }
 
-function addTripsControl() {
-  var tripsControl = document.createElement("div");
-  tripsControl.id = "tripsControl";
-  tripsControl.className = "trips";
-  document.getElementById("map_canvas").appendChild(tripsControl);
+function setVisitedData(filename, visitedDataDescription) {
+  gMap.clearOverlays();
 
-  var position = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(210, 7));
-  position.apply(tripsControl);
+  gMapConfig.filenames.visitedData = filename;
+  gMapConfig.visitedDataDescription = visitedDataDescription;
 
-  showTrips(0);
+  setKm2sToMapConfig(gMapConfig, gMap);
 }
