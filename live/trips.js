@@ -105,7 +105,6 @@ function getTripsTableHtml(tripsData) {
     '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>km/h</th></tr>\n';
 
   for (var i = 0; i < tripsData.length; i++) {
-    var tripFilename = tripsData[i].filename;
     var visibility = (tripsData[i].visibility == "hidden") ? "Show": "Hide";
     tableHtml += '<tr>';
     tableHtml += '<td>' + "<a title='Toggle trip visibility' " +

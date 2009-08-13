@@ -26,7 +26,6 @@ function setTripsData(tripsConfig) {
     for (var i = 0; i < trips.length; i++) {
       var tripData = {};
       tripData.visibility = "hidden";
-      tripData.filename = trips[i].getAttribute("filename");
       tripData.visitedDataFilename = tripsConfig.visitedDataDirectory + "/" +
                                      trips[i].getAttribute("visited_data");
       tripData.name = trips[i].getAttribute("name");
@@ -35,52 +34,38 @@ function setTripsData(tripsConfig) {
       tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
       tripData.ccAvgSpeed = trips[i].getAttribute("avg_speed");
       tripsData.push(tripData);
-      setTripGpsData(tripsConfig, tripData.filename);
+      setTripGpsData(tripsConfig, trips[i].getAttribute("gps_data"), i);
     }
 
     tripsConfig.data = tripsData;
   });
 }
 
-function setTripGpsData(tripsConfig, tripFilename) {
+function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
   var polylineEncoder = new PolylineEncoder();
 
-  GDownloadUrl(tripFilename, function(data, responseCode) {
+  GDownloadUrl(gpsDataFilename, function(data, responseCode) {
     var xml = GXml.parse(data);
     var trks = xml.documentElement.getElementsByTagName("trk");
+    var points = getPoints(trks[0].getElementsByTagName("trkpt"));
 
-    for (var i = 0; i < trks.length; i++) {
-      var trkpts = trks[i].getElementsByTagName("trkpt");
-      var points = new Array(0);
+    var encodedPolyline =
+      polylineEncoder.dpEncodeToJSON(points, tripsConfig.color);
+    var times = trks[0].getElementsByTagName("time");
+    var date = times[0].firstChild.nodeValue;
+    date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */
+    var duration = getDuration(times[0].firstChild.nodeValue,
+                               times[times.length - 1].firstChild.nodeValue);
+    var distance = Math.round((new GPolyline(points)).getLength() / 1000);
+    var maxSpeed = getMaxSpeed(trks[0].getElementsByTagName("speed"));
+    var maxAltitude = getMaxAltitude(trks[0].getElementsByTagName("ele"));
 
-      for (var j = 0; j < trkpts.length; j++) {
-        points[j] = new GLatLng(parseFloat(trkpts[j].getAttribute("lat")),
-                                parseFloat(trkpts[j].getAttribute("lon")));
-      }
-
-      var encodedPolyline =
-        polylineEncoder.dpEncodeToJSON(points, tripsConfig.color);
-      var times = trks[i].getElementsByTagName("time");
-      var date = times[0].firstChild.nodeValue;
-      date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */
-      var duration = getDuration(times[0].firstChild.nodeValue,
-                                 times[times.length - 1].firstChild.nodeValue);
-      var distance = Math.round((new GPolyline(points)).getLength() / 1000);
-      var maxSpeed = getMaxSpeed(trks[i].getElementsByTagName("speed"));
-      var maxAltitude = getMaxAltitude(trks[i].getElementsByTagName("ele"));
-
-      for (var i = 0; i < tripsConfig.data.length; i++) {
-        if (tripsConfig.data[i].filename == tripFilename) {
-          tripsConfig.data[i].encodedPolyline = encodedPolyline;
-          tripsConfig.data[i].date = date;
-          tripsConfig.data[i].gpsDuration = duration;
-          tripsConfig.data[i].gpsDistance = distance;
-          tripsConfig.data[i].gpsMaxSpeed = maxSpeed;
-          tripsConfig.data[i].gpsMaxAltitude = maxAltitude;
-          break;
-        }
-      }
-    }
+    tripsConfig.data[tripIndex].encodedPolyline = encodedPolyline;
+    tripsConfig.data[tripIndex].date = date;
+    tripsConfig.data[tripIndex].gpsDuration = duration;
+    tripsConfig.data[tripIndex].gpsDistance = distance;
+    tripsConfig.data[tripIndex].gpsMaxSpeed = maxSpeed;
+    tripsConfig.data[tripIndex].gpsMaxAltitude = maxAltitude;
 
     tripsConfig.readyTrips += 1;
 
@@ -91,6 +76,17 @@ function setTripGpsData(tripsConfig, tripFilename) {
       writeToFile(tripsConfig);
     }
   });
+}
+
+function getPoints(trkpts) {
+  var points = new Array(0);
+
+  for (var i = 0; i < trkpts.length; i++) {
+    points[i] = new GLatLng(parseFloat(trkpts[i].getAttribute("lat")),
+                            parseFloat(trkpts[i].getAttribute("lon")));
+  }
+
+  return points;
 }
 
 function getDuration(start, end) {
