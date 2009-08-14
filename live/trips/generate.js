@@ -3,7 +3,7 @@
 function generate() {
   var tripsConfig = {
     colors:["#FF0080", "#408080", "#004000", "#804000", "#80FFFF", "#8080FF",
-            "#004040", "#0080FF", "#008040"],
+            "#004040", "#0080FF", "#008040", "#808000"],
     indexFilename:"index.xml",
     dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
     visitedDataDirectory:"visited_datas", readyTrips:0
