@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-14 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -44,20 +44,27 @@ function _setVisitedData(tripIndex) {
   var visitedDataDescription =
     "from " + filename.split("/").pop().split(".")[0];
 
+  gMapConfig.trips.visitedDataIndex = tripIndex;
+
   setVisitedData(filename, visitedDataDescription);
+}
+
+function _setVisitedDataToLatest() {
+  gMapConfig.trips.visitedDataIndex = -1;
+  changeVisitedData("latest");
 }
 
 function showTripsControl(mapConfig, map) {
   if (mapConfig.isTableShown) {
     if (mapConfig.trips.data) {
-      setTripsControlHtml(getTripsTableHtml(mapConfig.trips.data));
+      setTripsControlHtml(getTripsTableHtml(mapConfig, mapConfig.trips.data));
     } else {
       setTripsControlHtml("Loading...");
       setTripsData(mapConfig, map);
     }
   } else {
-    setTripsControlHtml('<a title="Show trips" ' +
-                        ' href="javascript:_showTripsTable()">Trips</a>');
+    setTripsControlHtml('<div class="tripsButton" title="Show trips" ' +
+                        'onclick="javascript:_showTripsTable()">Trips</div>');
   }
 }
 
@@ -81,7 +88,7 @@ function setTripsData(mapConfig, map) {
   });
 }
 
-function getTripsTableHtml(tripsData) {
+function getTripsTableHtml(mapConfig, tripsData) {
   var closeImgUrl = "http://maps.gstatic.com/intl/en_ALL/mapfiles/iw_close.gif";
   var closeHtml = "<a href='javascript:_hideTripsTable()'>" +
     '<img class="close" src="' + closeImgUrl + '"></a>\n';
@@ -105,14 +112,9 @@ function getTripsTableHtml(tripsData) {
     '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>km/h</th></tr>\n';
 
   for (var i = 0; i < tripsData.length; i++) {
-    var visibility = (tripsData[i].visibility == "hidden") ? "Show": "Hide";
     tableHtml += '<tr>';
-    tableHtml += '<td>' + "<a title='Toggle trip visibility' " +
-                          "href='javascript:_toggleTripVisibility(" + i +
-                          ")'>" + visibility + "</a></td>";
-    tableHtml += '<td>' + "<a title='Set visited data as before this trip' " +
-                          "href='javascript:_setVisitedData(" + i +
-                          ")'>Set</a></td>";
+    tableHtml += '<td>' + getVisibilityCommandHtml(tripsData[i], i) + '</td>';
+    tableHtml += '<td>' + getVisitedDataCommandHtml(mapConfig, i) + '</td>';
     tableHtml += '<td>' + tripsData[i].name + '</td>';
     tableHtml += '<td>' + tripsData[i].date + '</td>';
     tableHtml += '<td>' + tripsData[i].gpsDuration + '</td>';
@@ -129,6 +131,35 @@ function getTripsTableHtml(tripsData) {
   tableHtml += '</table>'
 
   return tableHtml;
+}
+
+function getVisibilityCommandHtml(tripsData, tripIndex) {
+  var linkText = (tripsData.visibility == 'hidden') ? 'Show' : 'Hide';
+  var linkTitle = 'Toggle trip visibility';
+  var style =
+    (linkText == 'Hide') ? 'color:' + tripsData.encodedPolyline.color : '';
+  var js = 'javascript:_toggleTripVisibility(' + tripIndex + ')';
+  var html = "<a title='" + linkTitle + "' style='" + style + "' href='" + js +
+    "'>" + linkText + "</a>";
+
+  return html;
+}
+
+function getVisitedDataCommandHtml(mapConfig, tripIndex) {
+  if (mapConfig.trips.visitedDataIndex == tripIndex) {
+    var linkText = 'Unset';
+    var linkTitle = 'Set visited data to latest';
+    var js = 'javascript:_setVisitedDataToLatest()';
+  } else {
+    var linkText = 'Set';
+    var linkTitle = 'Set visited data as before this trip';
+    var js = 'javascript:_setVisitedData(' + tripIndex + ')';
+  }
+
+  var html =
+    "<a title='" + linkTitle + "' href='" + js + "'>" + linkText + "</a>";
+
+  return html;
 }
 
 function toggleTripVisibility(mapConfig, map, tripIndex) {

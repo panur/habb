@@ -1,10 +1,12 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-12 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-14 */
 
 function generate() {
   var tripsConfig = {
-    readyTrips:0, color:"#FF0080", indexFilename:"index.xml",
+    colors:["#FF0080", "#408080", "#004000", "#804000", "#80FFFF", "#8080FF",
+            "#004040", "#0080FF", "#008040"],
+    indexFilename:"index.xml",
     dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
-    visitedDataDirectory:"visited_datas"
+    visitedDataDirectory:"visited_datas", readyTrips:0
   };
 
   setStatus("Please wait...");
@@ -49,8 +51,8 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     var trks = xml.documentElement.getElementsByTagName("trk");
     var points = getPoints(trks[0].getElementsByTagName("trkpt"));
 
-    var encodedPolyline =
-      polylineEncoder.dpEncodeToJSON(points, tripsConfig.color);
+    var color = tripsConfig.colors[tripIndex % tripsConfig.colors.length];
+    var encodedPolyline = polylineEncoder.dpEncodeToJSON(points, color);
     var times = trks[0].getElementsByTagName("time");
     var date = times[0].firstChild.nodeValue;
     date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */

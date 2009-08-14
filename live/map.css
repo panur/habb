@@ -3,10 +3,25 @@ html, body {
   margin: 0;
 }
 
+.tripsButton {
+  border-bottom-color: #B0B0B0;
+  border-left-color: #FFFFFF;
+  border-right-color: #B0B0B0;
+  border-top-color: #FFFFFF;
+  border-style: solid;
+  border-width: 1px;
+  display: block;
+  font-size: 12px;
+  height: 15px;
+  width: 63px;
+  font-family: Arial,sans-serif;
+  text-align: center;
+}
+
 .trips {
-  color:#000000;
-  background-color:#ffffff;
-  border:1px solid #000000;
+  color: #000000;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
   /*max-width: 54%;*/
 }
 
@@ -21,10 +36,10 @@ table.trips {
 }
 
 td, th {
-  border:1px solid;
+  border: 1px solid;
 }
 
 th {
-  color:#000000;
-  background-color:#ffffff;
+  color: #000000;
+  background-color: #FFFFFF;
 }

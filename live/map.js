@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-14 */
 
 var gMap;
 var gMapConfig;
@@ -122,7 +122,7 @@ function createMapConfig(showExtensions) {
                        'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
   }
 
-  mapConfig.trips = {isTableShown:false};
+  mapConfig.trips = {isTableShown:false, visitedDataIndex:-1};
 
   return mapConfig;
 }
