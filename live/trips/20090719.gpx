@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <gpx creator="Mobile Action http://www.mobileaction.com/" version="1.0" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 <trk>
-<name>20090719191449_1</name>
+<name>20090719</name>
 <desc>Color:004000ff</desc>
 <trkseg>
 <trkpt lat="60.223694" lon="24.775513">
@@ -20368,26 +20368,6 @@
 <ele>20.170000</ele>
 <time>2009-07-19T14:55:59Z</time>
 <speed>14.83</speed>
-</trkpt>
-<trkpt lat="60.217777" lon="24.786039">
-<ele>21.969999</ele>
-<time>2009-07-19T14:56:03Z</time>
-<speed>10.33</speed>
-</trkpt>
-<trkpt lat="60.217861" lon="24.786259">
-<ele>28.779999</ele>
-<time>2009-07-19T14:56:07Z</time>
-<speed>11.52</speed>
-</trkpt>
-<trkpt lat="60.217896" lon="24.786324">
-<ele>25.279999</ele>
-<time>2009-07-19T14:56:11Z</time>
-<speed>0.22</speed>
-</trkpt>
-<trkpt lat="60.217896" lon="24.786331">
-<ele>25.410000</ele>
-<time>2009-07-19T14:56:15Z</time>
-<speed>0.00</speed>
 </trkpt>
 </trkseg>
 </trk>

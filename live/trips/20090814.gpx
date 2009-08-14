@@ -1,69 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <gpx creator="Mobile Action http://www.mobileaction.com/" version="1.0" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 <trk>
-<name>20090814190851_1</name>
+<name>20090814</name>
 <desc>Color:004000ff</desc>
 <trkseg>
-<trkpt lat="60.217873" lon="24.786219">
-<ele>29.150000</ele>
-<time>2009-08-14T09:41:53Z</time>
-<speed>0.22</speed>
-</trkpt>
-<trkpt lat="60.217873" lon="24.786219">
-<ele>29.150000</ele>
-<time>2009-08-14T09:43:00Z</time>
-<speed>1.22</speed>
-</trkpt>
-<trkpt lat="60.218002" lon="24.786118">
-<ele>41.559998</ele>
-<time>2009-08-14T09:43:52Z</time>
-<speed>0.50</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:08Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:12Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:16Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:20Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:24Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:28Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217918" lon="24.786186">
-<ele>38.860001</ele>
-<time>2009-08-14T09:44:32Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217934" lon="24.785986">
-<ele>41.309998</ele>
-<time>2009-08-14T09:44:36Z</time>
-<speed>8.53</speed>
-</trkpt>
-<trkpt lat="60.217884" lon="24.785810">
-<ele>43.610001</ele>
-<time>2009-08-14T09:44:40Z</time>
-<speed>11.81</speed>
-</trkpt>
 <trkpt lat="60.217686" lon="24.785826">
 <ele>33.700001</ele>
 <time>2009-08-14T09:44:44Z</time>
@@ -20998,26 +20938,6 @@
 <ele>26.799999</ele>
 <time>2009-08-14T14:23:49Z</time>
 <speed>13.43</speed>
-</trkpt>
-<trkpt lat="60.217793" lon="24.786114">
-<ele>27.000000</ele>
-<time>2009-08-14T14:23:53Z</time>
-<speed>8.71</speed>
-</trkpt>
-<trkpt lat="60.217865" lon="24.786274">
-<ele>28.650000</ele>
-<time>2009-08-14T14:23:57Z</time>
-<speed>8.82</speed>
-</trkpt>
-<trkpt lat="60.217899" lon="24.786289">
-<ele>29.779999</ele>
-<time>2009-08-14T14:24:01Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217899" lon="24.786289">
-<ele>29.779999</ele>
-<time>2009-08-14T14:24:05Z</time>
-<speed>0.00</speed>
 </trkpt>
 </trkseg>
 </trk>

@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <gpx creator="Mobile Action http://www.mobileaction.com/" version="1.0" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
 <trk>
-<name>20090803211908_1</name>
+<name>20090803</name>
 <desc>Color:004000ff</desc>
 <trkseg>
-<trkpt lat="60.217583" lon="24.784256">
-<ele>33.799999</ele>
-<time>2009-08-03T09:47:46Z</time>
-<speed>1.84</speed>
-</trkpt>
 <trkpt lat="60.217583" lon="24.784256">
 <ele>33.799999</ele>
 <time>2009-08-03T09:48:50Z</time>
@@ -29728,51 +29723,6 @@
 <ele>44.290001</ele>
 <time>2009-08-03T16:25:58Z</time>
 <speed>11.56</speed>
-</trkpt>
-<trkpt lat="60.217819" lon="24.785931">
-<ele>37.610001</ele>
-<time>2009-08-03T16:26:02Z</time>
-<speed>11.34</speed>
-</trkpt>
-<trkpt lat="60.217831" lon="24.786114">
-<ele>33.419998</ele>
-<time>2009-08-03T16:26:06Z</time>
-<speed>8.82</speed>
-</trkpt>
-<trkpt lat="60.217884" lon="24.786259">
-<ele>32.480000</ele>
-<time>2009-08-03T16:26:10Z</time>
-<speed>8.60</speed>
-</trkpt>
-<trkpt lat="60.217915" lon="24.786327">
-<ele>31.689999</ele>
-<time>2009-08-03T16:26:14Z</time>
-<speed>0.79</speed>
-</trkpt>
-<trkpt lat="60.217907" lon="24.786346">
-<ele>32.579998</ele>
-<time>2009-08-03T16:26:18Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217907" lon="24.786346">
-<ele>32.579998</ele>
-<time>2009-08-03T16:26:22Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217907" lon="24.786346">
-<ele>32.579998</ele>
-<time>2009-08-03T16:26:26Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217907" lon="24.786346">
-<ele>32.579998</ele>
-<time>2009-08-03T16:26:30Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217907" lon="24.786346">
-<ele>32.579998</ele>
-<time>2009-08-03T16:26:34Z</time>
-<speed>0.00</speed>
 </trkpt>
 </trkseg>
 </trk>
