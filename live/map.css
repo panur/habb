@@ -22,7 +22,8 @@ html, body {
   color: #000000;
   background-color: #FFFFFF;
   border: 1px solid #000000;
-  /*max-width: 54%;*/
+  max-width: 54%;
+  /*overflow: auto;*/
 }
 
 img.close {
