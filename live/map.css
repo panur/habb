@@ -23,7 +23,7 @@ html, body {
   background-color: #FFFFFF;
   border: 1px solid #000000;
   max-width: 54%;
-  /*overflow: auto;*/
+  overflow: auto;
 }
 
 img.close {
