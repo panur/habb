@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-15 */
 
 function generate() {
   var tripsConfig = {
@@ -50,24 +50,25 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     var xml = GXml.parse(data);
     var trks = xml.documentElement.getElementsByTagName("trk");
     var points = getPoints(trks[0].getElementsByTagName("trkpt"));
-
-    var color = tripsConfig.colors[tripIndex % tripsConfig.colors.length];
-    var encodedPolyline = polylineEncoder.dpEncodeToJSON(points, color);
     var times = trks[0].getElementsByTagName("time");
-    var date = times[0].firstChild.nodeValue;
-    date = date.substr(0, 10); /* 2009-07-19T10:23:21Z */
-    var duration = getDuration(times[0].firstChild.nodeValue,
-                               times[times.length - 1].firstChild.nodeValue);
-    var distance = Math.round((new GPolyline(points)).getLength() / 1000);
-    var maxSpeed = getMaxSpeed(trks[0].getElementsByTagName("speed"));
-    var maxAltitude = getMaxAltitude(trks[0].getElementsByTagName("ele"));
+    var color = tripsConfig.colors[tripIndex % tripsConfig.colors.length];
 
-    tripsConfig.data[tripIndex].encodedPolyline = encodedPolyline;
-    tripsConfig.data[tripIndex].date = date;
-    tripsConfig.data[tripIndex].gpsDuration = duration;
-    tripsConfig.data[tripIndex].gpsDistance = distance;
-    tripsConfig.data[tripIndex].gpsMaxSpeed = maxSpeed;
-    tripsConfig.data[tripIndex].gpsMaxAltitude = maxAltitude;
+    tripsConfig.data[tripIndex].encodedPolyline =
+      polylineEncoder.dpEncodeToJSON(points, color);
+
+    tripsConfig.data[tripIndex].date =
+      times[0].firstChild.nodeValue.substr(0, 10); /* 2009-07-19T10:23:21Z */
+
+    tripsConfig.data[tripIndex].gpsDuration = getDuration(times);
+
+    tripsConfig.data[tripIndex].gpsDistance =
+      Math.round((new GPolyline(points)).getLength() / 1000);
+
+    tripsConfig.data[tripIndex].gpsMaxSpeed =
+      getMaxSpeed(trks[0].getElementsByTagName("speed"), points);
+
+    tripsConfig.data[tripIndex].gpsMaxAltitude =
+      getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
 
     tripsConfig.readyTrips += 1;
 
@@ -91,7 +92,9 @@ function getPoints(trkpts) {
   return points;
 }
 
-function getDuration(start, end) {
+function getDuration(times) {
+  var start = times[0].firstChild.nodeValue;
+  var end = times[times.length - 1].firstChild.nodeValue;
   var durationInSeconds =
     secondsSinceMidnight(end) - secondsSinceMidnight(start);
   var date = new Date(durationInSeconds * 1000)
@@ -112,28 +115,35 @@ function secondsSinceMidnight(date) {
 }
 
 function getMaxMeasurement(measurements) {
-  var maxMeasurement = 0;
+  var maxMeasurement = {value:0, index:0};
 
   for (var i = 0; i < measurements.length; i++) {
-    maxMeasurement =
-      Math.max(maxMeasurement, measurements[i].firstChild.nodeValue);
+    var value = new Number(measurements[i].firstChild.nodeValue);
+    if (value > maxMeasurement.value) {
+      maxMeasurement.value = value;
+      maxMeasurement.index = i;
+    }
   }
 
   return maxMeasurement;
 }
 
-function getMaxSpeed(speedMeasurements) {
-  var maxSpeed = getMaxMeasurement(speedMeasurements);
+function getMaxSpeed(speedMeasurements, points) {
+  var maxMeasurement = getMaxMeasurement(speedMeasurements);
+  var maxSpeed = {};
 
-  maxSpeed = Math.round(maxSpeed * 10) / 10;
+  maxSpeed.value = Math.round(maxMeasurement.value * 10) / 10;
+  maxSpeed.location = points[maxMeasurement.index];
 
   return maxSpeed;
 }
 
-function getMaxAltitude(altitudeMeasurements) {
-  var maxAltitude = getMaxMeasurement(altitudeMeasurements);
+function getMaxAltitude(altitudeMeasurements, points) {
+  var maxMeasurement = getMaxMeasurement(altitudeMeasurements);
+  var maxAltitude = {};
 
-  maxAltitude = Math.round(maxAltitude);
+  maxAltitude.value = Math.round(maxMeasurement.value);
+  maxAltitude.location = points[maxMeasurement.index];
 
   return maxAltitude;
 }

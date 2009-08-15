@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-15 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -20,6 +20,8 @@ function addTripsOverlaysToMap(mapConfig, map) {
   for (var i = 0; i < mapConfig.trips.data.length; i++) {
     if (mapConfig.trips.data[i].visibility == "visible") {
       map.addOverlay(mapConfig.trips.data[i].polyline);
+      map.addOverlay(mapConfig.trips.data[i].gpsMaxSpeed.marker);
+      map.addOverlay(mapConfig.trips.data[i].gpsMaxAltitude.marker);
     }
   }
 }
@@ -89,7 +91,7 @@ function setTripsData(mapConfig, map) {
 }
 
 function getTripsTableHtml(mapConfig, tripsData) {
-  var closeImgUrl = "http://maps.gstatic.com/intl/en_ALL/mapfiles/iw_close.gif";
+  var closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   var closeHtml = "<a href='javascript:_hideTripsTable()'>" +
     '<img class="close" src="' + closeImgUrl + '"></a>\n';
   var tableHtml = closeHtml + '<table id="tripsTable" class="trips">\n';
@@ -119,8 +121,8 @@ function getTripsTableHtml(mapConfig, tripsData) {
     tableHtml += '<td>' + tripsData[i].date + '</td>';
     tableHtml += '<td>' + tripsData[i].gpsDuration + '</td>';
     tableHtml += '<td>' + tripsData[i].gpsDistance + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsMaxSpeed + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsMaxAltitude + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsMaxSpeed.value + '</td>';
+    tableHtml += '<td>' + tripsData[i].gpsMaxAltitude.value + '</td>';
     tableHtml += '<td>' + tripsData[i].ccDuration + '</td>';
     tableHtml += '<td>' + tripsData[i].ccDistance + '</td>';
     tableHtml += '<td>' + tripsData[i].ccMaxSpeed + '</td>';
@@ -163,16 +165,40 @@ function getVisitedDataCommandHtml(mapConfig, tripIndex) {
 }
 
 function toggleTripVisibility(mapConfig, map, tripIndex) {
-  if (typeof(mapConfig.trips.data[tripIndex].polyline) == "undefined") {
-    mapConfig.trips.data[tripIndex].polyline =
-      GPolyline.fromEncoded(mapConfig.trips.data[tripIndex].encodedPolyline);
+  var tripData = mapConfig.trips.data[tripIndex];
+
+  if (typeof(tripData.polyline) == "undefined") {
+    tripData.polyline = GPolyline.fromEncoded(tripData.encodedPolyline);
+    tripData.gpsMaxSpeed.marker = getMarker(mapConfig, map,
+      tripData.gpsMaxSpeed.location,
+      "S", "Max speed: " + tripData.gpsMaxSpeed.value + " km/h");
+    tripData.gpsMaxAltitude.marker = getMarker(mapConfig, map,
+      tripData.gpsMaxAltitude.location,
+      "A", "Max altitude: " + tripData.gpsMaxAltitude.value + " m");
   }
 
-  if (mapConfig.trips.data[tripIndex].visibility == "hidden") {
-    mapConfig.trips.data[tripIndex].visibility = "visible";
-    map.addOverlay(mapConfig.trips.data[tripIndex].polyline);
+  if (tripData.visibility == "hidden") {
+    tripData.visibility = "visible";
+    map.addOverlay(tripData.polyline);
+    map.addOverlay(tripData.gpsMaxSpeed.marker);
+    map.addOverlay(tripData.gpsMaxAltitude.marker);
   } else {
-    mapConfig.trips.data[tripIndex].visibility = "hidden";
-    map.removeOverlay(mapConfig.trips.data[tripIndex].polyline);
+    tripData.visibility = "hidden";
+    map.removeOverlay(tripData.polyline);
+    map.removeOverlay(tripData.gpsMaxSpeed.marker);
+    map.removeOverlay(tripData.gpsMaxAltitude.marker);
   }
+}
+
+function getMarker(mapConfig, map, point, letter, title) {
+  var icon = new GIcon(G_DEFAULT_ICON);
+  icon.image = "http://www.google.com/mapfiles/marker" + letter + ".png";
+  var markerOptions = {icon:icon, title:title};
+  var marker = new GMarker(point, markerOptions);
+
+  GEvent.addListener(marker, "click", function(latlng) {
+    map.setCenter(latlng, mapConfig.zoomToPointZoomLevel);
+  });
+
+  return marker;
 }
