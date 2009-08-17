@@ -1,13 +1,19 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-16 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-17 */
 
 function addTripsControl(mapConfig, map) {
+  var position =
+    new GControlPosition(G_ANCHOR_TOP_RIGHT, mapConfig.trips.controlPosition);
+
   var tripsControl = document.createElement("div");
   tripsControl.id = "tripsControl";
   tripsControl.className = "trips";
   document.getElementById("map_canvas").appendChild(tripsControl);
-
-  var position = new GControlPosition(G_ANCHOR_TOP_RIGHT, new GSize(210, 7));
   position.apply(tripsControl);
+
+  var tripsTableHide = document.createElement("div");
+  tripsTableHide.id = "tripsTableHide";
+  document.getElementById("map_canvas").appendChild(tripsTableHide);
+  position.apply(tripsTableHide);
 
   showTripsControl(mapConfig, map);
 }
@@ -29,11 +35,13 @@ function addTripsOverlaysToMap(mapConfig, map) {
 function _showTripsTable() {
   gMapConfig.isTableShown = true;
   showTripsControl(gMapConfig, gMap);
+  setTripsTableHideVisibility("visible");
 }
 
 function _hideTripsTable() {
   gMapConfig.isTableShown = false;
   showTripsControl(gMapConfig, gMap);
+  setTripsTableHideVisibility("hidden");
 }
 
 function _toggleTripVisibility(tripIndex) {
@@ -65,7 +73,7 @@ function showTripsControl(mapConfig, map) {
       setTripsData(mapConfig, map);
     }
   } else {
-    setTripsControlHtml('<div class="tripsButton" title="Show trips" ' +
+    setTripsControlHtml('<div class="showTripsTable" title="Show trips" ' +
                         'onclick="javascript:_showTripsTable()">Trips</div>');
   }
 }
@@ -73,6 +81,19 @@ function showTripsControl(mapConfig, map) {
 function setTripsControlHtml(html) {
   var tripsControl = document.getElementById("tripsControl");
   tripsControl.innerHTML = html;
+}
+
+function setTripsTableHideVisibility(visibility) {
+  var tripsTableHide = document.getElementById("tripsTableHide");
+  var hideHtml = "";
+
+  if (visibility == "visible") {
+    var hideImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
+    var hideHtml = "<a href='javascript:_hideTripsTable()'>" +
+      '<img class="hideTripsTable" src="' + hideImgUrl + '"></a>\n';
+  }
+
+  tripsTableHide.innerHTML = hideHtml;
 }
 
 function setTripsData(mapConfig, map) {
@@ -91,10 +112,7 @@ function setTripsData(mapConfig, map) {
 }
 
 function getTripsTableHtml(mapConfig, tripsData) {
-  var closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
-  var closeHtml = "<a href='javascript:_hideTripsTable()'>" +
-    '<img class="close" src="' + closeImgUrl + '"></a>\n';
-  var tableHtml = closeHtml + '<table id="tripsTable" class="trips">\n';
+  var tableHtml = '<table id="tripsTable" class="trips">\n';
 
   tableHtml += '<tr>' +
     '<th colspan="2" rowspan="3">Commands</th>' +
@@ -130,7 +148,7 @@ function getTripsTableHtml(mapConfig, tripsData) {
     tableHtml += '</tr>\n';
   }
 
-  tableHtml += '</table>'
+  tableHtml += '</table>';
 
   return tableHtml;
 }

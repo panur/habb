@@ -3,7 +3,7 @@ html, body {
   margin: 0;
 }
 
-.tripsButton {
+div.showTripsTable {
   border-bottom-color: #B0B0B0;
   border-left-color: #FFFFFF;
   border-right-color: #B0B0B0;
@@ -18,28 +18,30 @@ html, body {
   text-align: center;
 }
 
-.trips {
+div.trips {
   color: #000000;
   background-color: #FFFFFF;
   border: 1px solid #000000;
-  /*max-width: 54%;*/
+  max-width: 57%;
+  max-height: 60%;
+  overflow: auto;
 }
 
-img.close {
+img.hideTripsTable {
   border: 0px;
   position: absolute;
-  right:0;
+  right: 0;
 }
 
 table.trips {
   border-collapse: collapse;
 }
 
-td, th {
+th {
   border: 1px solid;
 }
 
-th {
-  color: #000000;
-  background-color: #FFFFFF;
+td {
+  border: 1px solid;
+  white-space: nowrap;
 }
