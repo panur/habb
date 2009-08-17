@@ -187,6 +187,11 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
 
   if (typeof(tripData.polyline) == "undefined") {
     tripData.polyline = GPolyline.fromEncoded(tripData.encodedPolyline);
+
+    GEvent.addListener(tripData.polyline, "click", function(latlng) {
+      addDirectionMarker(map, latlng, tripData.polyline);
+    });
+
     tripData.gpsMaxSpeed.marker = getMarker(mapConfig, map,
       tripData.gpsMaxSpeed.location,
       "S", "Max speed: " + tripData.gpsMaxSpeed.value + " km/h");
@@ -206,6 +211,74 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     map.removeOverlay(tripData.gpsMaxSpeed.marker);
     map.removeOverlay(tripData.gpsMaxAltitude.marker);
   }
+}
+
+function addDirectionMarker(map, point, polyline) {
+  /* modified from: http://econym.org.uk/gmap/arrows.htm */
+  var p1;
+  var p2;
+
+  for (var i = 0; i < polyline.getVertexCount() - 1; i++) {
+    p1 = polyline.getVertex(i);
+    p2 = polyline.getVertex(i + 1);
+
+    if (isPointInLineSegment(map, point, p1, p2) == true) {
+      var direction = getLineDirection(p1, p2);
+      map.addOverlay(new GMarker(point, getDirectionIcon(direction)));
+      break;
+    }
+  }
+}
+
+function isPointInLineSegment(map, point, p1, p2) {
+  var distance = Math.abs(point.distanceFrom(p1) + point.distanceFrom(p2) -
+                          p1.distanceFrom(p2));
+  var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
+
+  return (distance < tolerance);
+}
+
+function getLineDirection(from, to) {
+  var direction = getBearing(from, to);
+
+  direction = Math.round(direction / 3) * 3;
+
+  while (direction >= 120) {
+    direction -= 120;
+  }
+
+  return direction;
+}
+
+function getBearing(from, to) {
+  var lat1 = from.latRadians();
+  var lng1 = from.lngRadians();
+  var lat2 = to.latRadians();
+  var lng2 = to.lngRadians();
+  var y = Math.sin(lng1 - lng2) * Math.cos(lat2);
+  var x = (Math.cos(lat1) * Math.sin(lat2)) -
+    (Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng1 - lng2));
+  var angle = - Math.atan2(y ,x);
+
+  if (angle < 0.0) {
+    angle += Math.PI * 2.0;
+  }
+
+  angle = angle * (180.0 / Math.PI);
+  angle = angle.toFixed(1);
+
+  return angle;
+}
+
+function getDirectionIcon(direction) {
+  var arrowIcon = new GIcon();
+  arrowIcon.iconSize = new GSize(24, 24);
+  arrowIcon.shadowSize = new GSize(1, 1);
+  arrowIcon.iconAnchor = new GPoint(12, 12);
+  arrowIcon.infoWindowAnchor = new GPoint(0, 0);
+  arrowIcon.image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
+
+  return arrowIcon;
 }
 
 function getMarker(mapConfig, map, point, letter, title) {

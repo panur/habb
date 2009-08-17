@@ -2009,21 +2009,6 @@
 <time>2009-07-28T09:40:06Z</time>
 <speed>0.00</speed>
 </trkpt>
-<trkpt lat="60.221081" lon="24.940519">
-<ele>63.879997</ele>
-<time>2009-07-28T09:40:10Z</time>
-<speed>9.58</speed>
-</trkpt>
-<trkpt lat="60.220951" lon="24.940355">
-<ele>54.509998</ele>
-<time>2009-07-28T09:40:14Z</time>
-<speed>10.94</speed>
-</trkpt>
-<trkpt lat="60.220757" lon="24.940424">
-<ele>46.129997</ele>
-<time>2009-07-28T09:40:18Z</time>
-<speed>17.86</speed>
-</trkpt>
 <trkpt lat="60.220543" lon="24.940685">
 <ele>34.880001</ele>
 <time>2009-07-28T09:40:22Z</time>
@@ -21223,31 +21208,6 @@
 <ele>29.070000</ele>
 <time>2009-07-28T13:56:25Z</time>
 <speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.220959" lon="24.940422">
-<ele>70.689995</ele>
-<time>2009-07-28T13:56:29Z</time>
-<speed>10.04</speed>
-</trkpt>
-<trkpt lat="60.221004" lon="24.940203">
-<ele>63.449997</ele>
-<time>2009-07-28T13:56:33Z</time>
-<speed>13.72</speed>
-</trkpt>
-<trkpt lat="60.220970" lon="24.939911">
-<ele>56.619999</ele>
-<time>2009-07-28T13:56:37Z</time>
-<speed>13.32</speed>
-</trkpt>
-<trkpt lat="60.221062" lon="24.939760">
-<ele>49.369999</ele>
-<time>2009-07-28T13:56:41Z</time>
-<speed>13.10</speed>
-</trkpt>
-<trkpt lat="60.221153" lon="24.939701">
-<ele>44.349998</ele>
-<time>2009-07-28T13:56:45Z</time>
-<speed>10.55</speed>
 </trkpt>
 <trkpt lat="60.221115" lon="24.939388">
 <ele>40.219997</ele>

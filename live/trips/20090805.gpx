@@ -4,46 +4,6 @@
 <name>20090805</name>
 <desc>Color:004000ff</desc>
 <trkseg>
-<trkpt lat="60.217728" lon="24.785988">
-<ele>67.290001</ele>
-<time>2009-08-05T09:38:12Z</time>
-<speed>11.81</speed>
-</trkpt>
-<trkpt lat="60.217655" lon="24.786112">
-<ele>88.189995</ele>
-<time>2009-08-05T09:38:16Z</time>
-<speed>12.89</speed>
-</trkpt>
-<trkpt lat="60.217491" lon="24.786192">
-<ele>90.939995</ele>
-<time>2009-08-05T09:38:20Z</time>
-<speed>12.42</speed>
-</trkpt>
-<trkpt lat="60.217358" lon="24.786274">
-<ele>97.269997</ele>
-<time>2009-08-05T09:38:24Z</time>
-<speed>12.38</speed>
-</trkpt>
-<trkpt lat="60.217236" lon="24.786364">
-<ele>102.979996</ele>
-<time>2009-08-05T09:38:28Z</time>
-<speed>12.64</speed>
-</trkpt>
-<trkpt lat="60.217201" lon="24.786665">
-<ele>105.189995</ele>
-<time>2009-08-05T09:38:32Z</time>
-<speed>17.82</speed>
-</trkpt>
-<trkpt lat="60.217037" lon="24.786938">
-<ele>67.540001</ele>
-<time>2009-08-05T09:38:36Z</time>
-<speed>16.81</speed>
-</trkpt>
-<trkpt lat="60.217075" lon="24.787189">
-<ele>54.129997</ele>
-<time>2009-08-05T09:38:40Z</time>
-<speed>15.95</speed>
-</trkpt>
 <trkpt lat="60.217083" lon="24.787464">
 <ele>45.969997</ele>
 <time>2009-08-05T09:38:44Z</time>
@@ -283,91 +243,6 @@
 <ele>53.719997</ele>
 <time>2009-08-05T09:41:52Z</time>
 <speed>26.75</speed>
-</trkpt>
-<trkpt lat="60.217144" lon="24.808788">
-<ele>74.439995</ele>
-<time>2009-08-05T09:41:56Z</time>
-<speed>15.77</speed>
-</trkpt>
-<trkpt lat="60.217194" lon="24.808985">
-<ele>86.540001</ele>
-<time>2009-08-05T09:42:00Z</time>
-<speed>7.60</speed>
-</trkpt>
-<trkpt lat="60.217186" lon="24.809099">
-<ele>84.889999</ele>
-<time>2009-08-05T09:42:04Z</time>
-<speed>5.08</speed>
-</trkpt>
-<trkpt lat="60.217129" lon="24.809155">
-<ele>73.619995</ele>
-<time>2009-08-05T09:42:08Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217129" lon="24.809155">
-<ele>73.619995</ele>
-<time>2009-08-05T09:42:12Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217129" lon="24.809155">
-<ele>73.619995</ele>
-<time>2009-08-05T09:42:16Z</time>
-<speed>0.00</speed>
-</trkpt>
-<trkpt lat="60.217003" lon="24.809479">
-<ele>73.900002</ele>
-<time>2009-08-05T09:42:20Z</time>
-<speed>8.35</speed>
-</trkpt>
-<trkpt lat="60.216984" lon="24.809689">
-<ele>77.729996</ele>
-<time>2009-08-05T09:42:24Z</time>
-<speed>17.06</speed>
-</trkpt>
-<trkpt lat="60.216949" lon="24.810038">
-<ele>85.169998</ele>
-<time>2009-08-05T09:42:28Z</time>
-<speed>16.70</speed>
-</trkpt>
-<trkpt lat="60.216984" lon="24.810436">
-<ele>90.529999</ele>
-<time>2009-08-05T09:42:32Z</time>
-<speed>21.20</speed>
-</trkpt>
-<trkpt lat="60.217033" lon="24.810822">
-<ele>93.430000</ele>
-<time>2009-08-05T09:42:36Z</time>
-<speed>18.25</speed>
-</trkpt>
-<trkpt lat="60.217083" lon="24.811140">
-<ele>92.709999</ele>
-<time>2009-08-05T09:42:40Z</time>
-<speed>14.15</speed>
-</trkpt>
-<trkpt lat="60.217155" lon="24.811626">
-<ele>86.400002</ele>
-<time>2009-08-05T09:42:44Z</time>
-<speed>18.58</speed>
-</trkpt>
-<trkpt lat="60.217110" lon="24.811998">
-<ele>73.290001</ele>
-<time>2009-08-05T09:42:48Z</time>
-<speed>16.81</speed>
-</trkpt>
-<trkpt lat="60.217068" lon="24.812382">
-<ele>67.519997</ele>
-<time>2009-08-05T09:42:52Z</time>
-<speed>19.84</speed>
-</trkpt>
-<trkpt lat="60.217045" lon="24.812733">
-<ele>63.599998</ele>
-<time>2009-08-05T09:42:56Z</time>
-<speed>15.08</speed>
-</trkpt>
-<trkpt lat="60.217003" lon="24.813107">
-<ele>60.680000</ele>
-<time>2009-08-05T09:43:00Z</time>
-<speed>16.81</speed>
 </trkpt>
 <trkpt lat="60.217136" lon="24.813629">
 <ele>49.660000</ele>
