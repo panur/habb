@@ -204,7 +204,7 @@ function addDirectionMarker(map, point, polyline) {
     p1 = polyline.getVertex(i);
     p2 = polyline.getVertex(i + 1);
 
-    if (isPointInLineSegment(point, p1, p2) == true) {
+    if (isPointInLineSegment(map, point, p1, p2) == true) {
       var direction = getLineDirection(p1, p2);
       map.addOverlay(new GMarker(point, getDirectionIcon(direction)));
       break;
@@ -212,35 +212,12 @@ function addDirectionMarker(map, point, polyline) {
   }
 }
 
-function isPointInLineSegment(point, p1, p2) {
-  var isLatOk = false;
-  var isLngOk = false;
+function isPointInLineSegment(map, point, p1, p2) {
+  var distance = Math.abs(point.distanceFrom(p1) + point.distanceFrom(p2) -
+                          p1.distanceFrom(p2));
+  var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
 
-  if (p2.lat() > p1.lat()) {
-    if ((p1.lat() < point.lat()) && (point.lat() < p2.lat())) {
-      isLatOk = true;
-    }
-  } else {
-    if ((p2.lat() < point.lat()) && (point.lat() < p1.lat())) {
-      isLatOk = true;
-    }
-  }
-
-  if (isLatOk == false) {
-    return false;
-  }
-
-  if (p2.lng() > p1.lng()) {
-    if ((p1.lng() < point.lng()) && (point.lng() < p2.lng())) {
-      isLngOk = true;
-    }
-  } else {
-    if ((p2.lng() < point.lng()) && (point.lng() < p1.lng())) {
-      isLngOk = true;
-    }
-  }
-
-  return isLngOk;
+  return (distance < tolerance);
 }
 
 function getLineDirection(from, to) {
