@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-18 */
 
 function addTripsControl(mapConfig, map) {
   var position =
@@ -224,7 +224,11 @@ function addDirectionMarker(map, point, polyline) {
 
     if (isPointInLineSegment(map, point, p1, p2) == true) {
       var direction = getLineDirection(p1, p2);
-      map.addOverlay(new GMarker(point, getDirectionIcon(direction)));
+      var marker = new GMarker(point, getDirectionIcon(direction));
+      GEvent.addListener(marker, "click", function(latlng) {
+        map.removeOverlay(marker);
+      });
+      map.addOverlay(marker);
       break;
     }
   }
