@@ -192,6 +192,15 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
       addDirectionMarker(map, latlng, tripData.polyline);
     });
 
+    GEvent.addListener(tripData.polyline, "mouseover", function() {
+      mapConfig.trips.directionMarker.polyline = tripData.polyline;
+      showDirectionMarker(mapConfig, map);
+    });
+
+    GEvent.addListener(tripData.polyline, "mouseout", function(latlng) {
+      hideDirectionMarker(mapConfig, map);
+    });
+
     tripData.gpsMaxSpeed.marker = getMarker(mapConfig, map,
       tripData.gpsMaxSpeed.location,
       "S", "Max speed: " + tripData.gpsMaxSpeed.value + " km/h");
@@ -210,6 +219,38 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     map.removeOverlay(tripData.polyline);
     map.removeOverlay(tripData.gpsMaxSpeed.marker);
     map.removeOverlay(tripData.gpsMaxAltitude.marker);
+  }
+}
+
+function showDirectionMarker(mapConfig, map) {
+  var p1;
+  var p2;
+  var point = mapConfig.trips.directionMarker.point;
+  var polyline = mapConfig.trips.directionMarker.polyline;
+  var bounds = map.getBounds();
+
+  hideDirectionMarker(mapConfig, map);
+
+  for (var i = 0; i < polyline.getVertexCount() - 1; i++) {
+    p1 = polyline.getVertex(i);
+    if (bounds.containsLatLng(p1)) {
+      p2 = polyline.getVertex(i + 1);
+
+      if (isPointInLineSegment(map, point, p1, p2) == true) {
+        var direction = getLineDirection(p1, p2);
+        mapConfig.trips.directionMarker.marker =
+          new GMarker(point, getDirectionIcon(direction));
+        map.addOverlay(mapConfig.trips.directionMarker.marker);
+        break;
+      }
+    }
+  }
+}
+
+function hideDirectionMarker(mapConfig, map) {
+  if (typeof(mapConfig.trips.directionMarker.marker) != "undefined") {
+    map.removeOverlay(mapConfig.trips.directionMarker.marker);
+    mapConfig.trips.directionMarker.marker = undefined;
   }
 }
 
@@ -233,7 +274,7 @@ function addDirectionMarker(map, point, polyline) {
 function isPointInLineSegment(map, point, p1, p2) {
   var distance = Math.abs(point.distanceFrom(p1) + point.distanceFrom(p2) -
                           p1.distanceFrom(p2));
-  var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
+  var tolerance = 10 * 391817 * Math.pow(0.445208, map.getZoom());
 
   return (distance < tolerance);
 }

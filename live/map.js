@@ -123,7 +123,7 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new GSize(214, 7)};
+                     controlPosition:new GSize(214, 7), directionMarker:{}};
 
   return mapConfig;
 }
@@ -510,6 +510,12 @@ function addOverlaysToMap(mc, map) {
 function addMouseListeners(mapConfig, map) {
   GEvent.addListener(map, "mousemove", function(point) {
     var info = getInfo(mapConfig, map, point);
+
+    mapConfig.trips.directionMarker.point = point;
+    if (typeof(mapConfig.trips.directionMarker.marker) != "undefined") {
+      showDirectionMarker(mapConfig, map);
+    }
+
     updateStatusBar(info);
     updateCursor(mapConfig, map, info);
   });
