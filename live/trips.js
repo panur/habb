@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-21 */
 
 function addTripsControl(mapConfig, map) {
   var position =
@@ -201,6 +201,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
   }
 
   if (tripData.visibility == "hidden") {
+    setVisitedAreaOpacityToLow(mapConfig);
     tripData.visibility = "visible";
     map.addOverlay(tripData.polyline);
     map.addOverlay(tripData.gpsMaxSpeed.marker);
@@ -296,4 +297,10 @@ function getMarker(mapConfig, map, point, letter, title) {
   });
 
   return marker;
+}
+
+function setVisitedAreaOpacityToLow(mapConfig) {
+  if (mapConfig.area.opacity == mapConfig.area.opacityHigh) {
+    toggleOpacity();
+  }
 }
