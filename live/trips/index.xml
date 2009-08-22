@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="20090822.gpx" visited_data="20090814.xml" distance="112" max_speed="48.7" avg_speed="24.0" duration="4:39:38" name="Kehä III"/>
   <trip gps_data="20090814.gpx" visited_data="20090811.xml" distance="101" max_speed="51.3" avg_speed="22.5" duration="4:29:38" name="Nurmijärvi-Vihti"/>
   <trip gps_data="20090811.gpx" visited_data="20090805.xml" distance="100" max_speed="58.0" avg_speed="19.3" duration="5:10:20" name="Kirkkonummi-Vihti"/>
   <trip gps_data="20090808.gpx" visited_data="20090805.xml" distance="106" max_speed="39.7" avg_speed="26.5" duration="3:59:41" name="Hämeenlinna-Espoo"/>

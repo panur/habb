@@ -1,9 +1,9 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-15 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-22 */
 
 function generate() {
   var tripsConfig = {
-    colors:["#FF0080", "#408080", "#004000", "#804000", "#80FFFF", "#8080FF",
-            "#004040", "#0080FF", "#008040", "#808000"],
+    colors:["#FF0080", "#408080", "#804000", "#004000", "#80FFFF", "#8080FF",
+            "#0080FF", "#004040", "#008040", "#808000", "#400040"],
     indexFilename:"index.xml",
     dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
     visitedDataDirectory:"visited_datas", readyTrips:0
