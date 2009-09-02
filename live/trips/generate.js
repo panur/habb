@@ -1,9 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-02 */
 
 function generate() {
   var tripsConfig = {
-    colors:["#FF0080", "#408080", "#804000", "#004000", "#80FFFF", "#8080FF",
-            "#0080FF", "#004040", "#008040", "#808000", "#400040"],
     indexFilename:"index.xml",
     dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
     visitedDataDirectory:"visited_datas", readyTrips:0
@@ -31,6 +29,7 @@ function setTripsData(tripsConfig) {
       tripData.visitedDataFilename = tripsConfig.visitedDataDirectory + "/" +
                                      trips[i].getAttribute("visited_data");
       tripData.name = trips[i].getAttribute("name");
+      tripData.color = trips[i].getAttribute("color");
       tripData.ccDistance = trips[i].getAttribute("distance");
       tripData.ccDuration = trips[i].getAttribute("duration");
       tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
@@ -51,7 +50,7 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     var trks = xml.documentElement.getElementsByTagName("trk");
     var points = getPoints(trks[0].getElementsByTagName("trkpt"));
     var times = trks[0].getElementsByTagName("time");
-    var color = tripsConfig.colors[tripIndex % tripsConfig.colors.length];
+    var color = tripsConfig.data[tripIndex].color;
 
     tripsConfig.data[tripIndex].encodedPolyline =
       polylineEncoder.dpEncodeToJSON(points, color);
