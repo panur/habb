@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="20090905.gpx" visited_data="20090902.xml" distance="59"  max_speed="58.5" avg_speed="17.0" duration="3:27:27" color="#8000FF" name="Velskola-Solvalla"/>
   <trip gps_data="20090902.gpx" visited_data="20090814.xml" distance="81"  max_speed="48.4" avg_speed="20.9" duration="3:54:12" color="#00FF80" name="Sarfvik-Ämmässuo"/>
   <trip gps_data="20090822.gpx" visited_data="20090814.xml" distance="112" max_speed="48.7" avg_speed="24.0" duration="4:39:38" color="#FF0080" name="Kehä III"/>
   <trip gps_data="20090814.gpx" visited_data="20090811.xml" distance="101" max_speed="51.3" avg_speed="22.5" duration="4:29:38" color="#408080" name="Nurmijärvi-Vihti"/>
