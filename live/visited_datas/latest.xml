@@ -321,29 +321,7 @@
       <km2 page="G" kkj_lat="84" kkj_lng="69" visited="yes"/>
     </km2s>
   <page number="H" visited_all="true"/>
-  <page number="I" visited_all="false"/>
-    <km2s>
-      <km2 page="I" kkj_lat="85" kkj_lng="30" visited="yes"/>
-      <km2 page="I" kkj_lat="85" kkj_lng="31" visited="yes"/>
-      <km2 page="I" kkj_lat="85" kkj_lng="32" visited="yes"/>
-      <km2 page="I" kkj_lat="85" kkj_lng="33" visited="yes"/>
-      <km2 page="I" kkj_lat="86" kkj_lng="30" visited="yes"/>
-      <km2 page="I" kkj_lat="86" kkj_lng="31" visited="yes"/>
-      <km2 page="I" kkj_lat="86" kkj_lng="32" visited="yes"/>
-      <km2 page="I" kkj_lat="86" kkj_lng="33" visited="yes"/>
-      <km2 page="I" kkj_lat="87" kkj_lng="30" visited="yes"/>
-      <km2 page="I" kkj_lat="87" kkj_lng="31" visited="yes"/>
-      <km2 page="I" kkj_lat="87" kkj_lng="32" visited="yes"/>
-      <km2 page="I" kkj_lat="87" kkj_lng="33" visited="yes"/>
-      <km2 page="I" kkj_lat="88" kkj_lng="30" visited="yes"/>
-      <km2 page="I" kkj_lat="88" kkj_lng="31" visited="yes"/>
-      <km2 page="I" kkj_lat="88" kkj_lng="32" visited="yes"/>
-      <km2 page="I" kkj_lat="88" kkj_lng="33" visited="yes"/>
-      <km2 page="I" kkj_lat="89" kkj_lng="30" visited="yes"/>
-      <km2 page="I" kkj_lat="89" kkj_lng="31" visited="yes"/>
-      <km2 page="I" kkj_lat="89" kkj_lng="32" visited="yes"/>
-      <km2 page="I" kkj_lat="89" kkj_lng="33" visited="yes"/>
-    </km2s>
+  <page number="I" visited_all="true"/>
   <page number="29" visited_all="true"/>
   <page number="30" visited_all="true"/>
   <page number="31" visited_all="true"/>
