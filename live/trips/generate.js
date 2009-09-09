@@ -1,10 +1,11 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-02 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-09 */
 
 function generate() {
   var tripsConfig = {
     indexFilename:"index.xml",
     dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
-    visitedDataDirectory:"visited_datas", readyTrips:0
+    visitedDataDirectory:"visited_datas", readyTrips:0, polylineWeight:3,
+    polylineOpacity:0.9
   };
 
   setStatus("Please wait...");
@@ -43,7 +44,7 @@ function setTripsData(tripsConfig) {
 }
 
 function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
-  var polylineEncoder = new PolylineEncoder();
+  var polylineEncoder = new PolylineEncoder(18, 2, 0.000005);
 
   GDownloadUrl(gpsDataFilename, function(data, responseCode) {
     var xml = GXml.parse(data);
@@ -53,7 +54,8 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     var color = tripsConfig.data[tripIndex].color;
 
     tripsConfig.data[tripIndex].encodedPolyline =
-      polylineEncoder.dpEncodeToJSON(points, color);
+      polylineEncoder.dpEncodeToJSON(points, color, tripsConfig.polylineWeight,
+                                     tripsConfig.polylineOpacity);
 
     tripsConfig.data[tripIndex].date =
       times[0].firstChild.nodeValue.substr(0, 10); /* 2009-07-19T10:23:21Z */
