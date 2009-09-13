@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-13 */
 
 var gMap;
 var gMapConfig;
@@ -283,11 +283,7 @@ function getVisitedStatusAreas(mc) {
 
   for (var i = 0; i < polygons.length; i++) {
     if (isPolygonInPolygons(polygons[i], polygonGroups.yes)) {
-      if (i < polygonGroups.no.length) {
-        polygonGroups.yes.push(polygonGroups.no[i]);
-      } else {
-        polygonGroups.yes.push(polygonGroups.np[i - polygonGroups.no.length]);
-      }
+      polygonGroups.yes.push(polygons[i]);
     }
   }
 
@@ -328,8 +324,10 @@ function getPolygonGroup(mc, visitedStatus) {
 
         getPolylinePoints(y, x, "right", mc, points, params);
 
-        points.push(points[0]);
-        polygons.push(points);
+        var splittedLoops = splitLoops(points);
+        for (var i = 0; i < splittedLoops.length; i++) {
+          polygons.push(splittedLoops[i]);
+        }
 
         if (visitedStatus == "yes") {
           return polygons;
@@ -339,6 +337,29 @@ function getPolygonGroup(mc, visitedStatus) {
   }
 
   return polygons;
+}
+
+function splitLoops(points) {
+  var splittedLoops = [];
+
+  points.push(points[0]);
+
+  for (var loopEnd = 1; loopEnd < points.length; loopEnd++) {
+    var loopStart = getIndexOf(points, points[loopEnd]);
+    if ((loopStart > 0) && (loopStart != loopEnd)) {
+      splittedLoops[0] = points.slice(0);
+      splittedLoops[1] =
+        splittedLoops[0].splice(loopStart, (loopEnd - loopStart));
+      splittedLoops[1].push(points[loopStart]);
+      break;
+    }
+  }
+
+  if (splittedLoops.length == 0) {
+    splittedLoops[0] = points;
+  }
+
+  return splittedLoops;
 }
 
 function getKm2sInMap(mc) {
