@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-14 */
 
 var gMap;
 var gMapConfig;
@@ -330,6 +330,7 @@ function getPolygonGroup(mc, visitedStatus) {
         }
 
         if (visitedStatus == "yes") {
+          polygons[0].reverse(); // http://econym.org.uk/gmap/chrome.htm#winding
           return polygons;
         }
       }
