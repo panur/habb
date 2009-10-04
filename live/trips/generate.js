@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
 
 function generate() {
   var tripsConfig = {
@@ -70,6 +70,9 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
 
     tripsConfig.data[tripIndex].gpsMaxAltitude =
       getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
+
+    tripsConfig.data[tripIndex].gpsSpeedData =
+      getSpeedData(trks[0].getElementsByTagName("speed"), points);
 
     tripsConfig.readyTrips += 1;
 
@@ -147,6 +150,17 @@ function getMaxAltitude(altitudeMeasurements, points) {
   maxAltitude.location = points[maxMeasurement.index];
 
   return maxAltitude;
+}
+
+function getSpeedData(measurements) {
+  var speedData = [];
+
+  for (var i = 0; i < measurements.length; i++) {
+    var value = Math.round(new Number(measurements[i].firstChild.nodeValue));
+    speedData.push(value);
+  }
+
+  return speedData;
 }
 
 function writeToFile(tripsConfig) {

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
 
 var gMap;
 var gMapConfig;
@@ -34,10 +34,12 @@ function initMap(map, mapConfig) {
   GEvent.addListener(map, "km2sAreInMapConfig", function() {
     updateMapGrid(mapConfig);
     mapConfig.visitedStatusAreas = getVisitedStatusAreas(mapConfig, map);
+    updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
     addTripsControl(mapConfig, map);
+    _resizeMap();
   });
 
   setPointsToMapConfig(mapConfig, map);
@@ -124,6 +126,8 @@ function createMapConfig(showExtensions) {
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      controlPosition:new GSize(214, 7)};
+  mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
+  mapConfig.tripGrap = {visibility:"hidden", height:100};
 
   return mapConfig;
 }
@@ -764,4 +768,24 @@ function setVisitedData(filename, visitedDataDescription) {
   gMapConfig.visitedDataDescription = visitedDataDescription;
 
   setKm2sToMapConfig(gMapConfig, gMap);
+}
+
+function _resizeMap() {
+  if (window.onresize != _resizeMap) {
+    window.onresize = _resizeMap;
+  }
+
+  if (gMapConfig.tripGrap.visibility == "visible") {
+    addTripGraph(gMapConfig, gMap, gMapConfig.tripGrap.tripData);
+  } else {
+    resizeMapCanvas();
+  }
+}
+
+function resizeMapCanvas() {
+  document.getElementById("map_canvas").style.height =
+    document.documentElement.clientHeight -
+    document.getElementById("trip_graph").clientHeight -
+    document.getElementById("status_bar").clientHeight -
+    document.getElementById("statistics").clientHeight + "px";
 }

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-08-21 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
 
 function addTripsControl(mapConfig, map) {
   var position =
@@ -35,13 +35,13 @@ function addTripsOverlaysToMap(mapConfig, map) {
 function _showTripsTable() {
   gMapConfig.isTableShown = true;
   showTripsControl(gMapConfig, gMap);
-  setTripsTableHideVisibility("visible");
+  setTripsTableHideVisibility(gMapConfig, "visible");
 }
 
 function _hideTripsTable() {
   gMapConfig.isTableShown = false;
   showTripsControl(gMapConfig, gMap);
-  setTripsTableHideVisibility("hidden");
+  setTripsTableHideVisibility(gMapConfig, "hidden");
 }
 
 function _toggleTripVisibility(tripIndex) {
@@ -83,14 +83,13 @@ function setTripsControlHtml(html) {
   tripsControl.innerHTML = html;
 }
 
-function setTripsTableHideVisibility(visibility) {
+function setTripsTableHideVisibility(mapConfig, visibility) {
   var tripsTableHide = document.getElementById("tripsTableHide");
   var hideHtml = "";
 
   if (visibility == "visible") {
-    var hideImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
     var hideHtml = "<a href='javascript:_hideTripsTable()'>" +
-      '<img class="hideTripsTable" src="' + hideImgUrl + '"></a>\n';
+      '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '"></a>\n';
   }
 
   tripsTableHide.innerHTML = hideHtml;
@@ -206,6 +205,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     map.addOverlay(tripData.polyline);
     map.addOverlay(tripData.gpsMaxSpeed.marker);
     map.addOverlay(tripData.gpsMaxAltitude.marker);
+    addTripGraph(mapConfig, map, tripData);
   } else {
     tripData.visibility = "hidden";
     map.removeOverlay(tripData.polyline);

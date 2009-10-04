@@ -3,6 +3,10 @@ html, body {
   margin: 0;
 }
 
+div.map_canvas {
+  height: 90%;
+}
+
 div.showTripsTable {
   border-bottom-color: #B0B0B0;
   border-left-color: #FFFFFF;
@@ -44,4 +48,22 @@ th {
 td {
   border: 1px solid;
   white-space: nowrap;
+}
+
+div.tripGraphHide {
+  border: 0px;
+  position: absolute;
+  right: 0;
+}
+
+img.hideTripGraph {
+  border: 0px;
+  position: absolute;
+  right: 0;
+}
+
+div.trip_graph {
+  color: #000000;
+  background-color: #FFFFFF;
+  overflow: hidden;
 }
