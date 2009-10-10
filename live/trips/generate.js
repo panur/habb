@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-10 */
 
 function generate() {
   var tripsConfig = {
@@ -154,10 +154,19 @@ function getMaxAltitude(altitudeMeasurements, points) {
 
 function getSpeedData(measurements) {
   var speedData = [];
+  var maxLength = 2000;
 
-  for (var i = 0; i < measurements.length; i++) {
-    var value = Math.round(new Number(measurements[i].firstChild.nodeValue));
-    speedData.push(value);
+  if (measurements.length < maxLength) {
+    for (var i = 0; i < measurements.length; i++) {
+      var value = Math.round(new Number(measurements[i].firstChild.nodeValue));
+      speedData.push(value);
+    }
+  } else {
+    var tmpArray = [];
+    for (var i = 0; i < measurements.length; i++) {
+      tmpArray.push(new Number(measurements[i].firstChild.nodeValue));
+    }
+    resizeArray(tmpArray, speedData, maxLength);
   }
 
   return speedData;

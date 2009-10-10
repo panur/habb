@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-10 */
 
 function addTripGraph(mapConfig, map, tripData) {
   mapConfig.tripGrap.tripData = tripData;
@@ -20,27 +20,44 @@ function addTripGraph(mapConfig, map, tripData) {
 
 function drawTripGraph(mapConfig, map, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
+  var speedData = [];
+  resizeArray(tripData.gpsSpeedData, speedData, canvas.width);
+
   var ctx = canvas.getContext('2d');
   ctx.beginPath();
-  var width = canvas.width;
-  var xRatio = Math.round(tripData.gpsSpeedData.length / width);
 
-  for (var x = 0; x < width; x++) {
-    var dX = Math.round((x / width) * tripData.gpsSpeedData.length);
-    var y = 0;
-    if (((dX - xRatio / 2) > 0) && ((dX + xRatio / 2) < tripData.gpsSpeedData.length)) {
-    //if (0) {
-      for (var i = Math.round(0 - xRatio / 2); i < xRatio / 2; i++) {
-        y += tripData.gpsSpeedData[dX + i];
-      }
-      y = Math.round(y / xRatio);
-    } else {
-      y = tripData.gpsSpeedData[dX];
-    }
-    ctx.lineTo(x, 100 - (2 * y));
-    //ctx.lineTo(x, 100 - (2 * tripData.gpsSpeedData[dX]));
+  for (var x = 0; x < speedData.length; x++) {
+    ctx.lineTo(x, 100 - (2 * speedData[x]));
   }
+
   ctx.stroke();
+}
+
+function resizeArray(originalArray, newArray, newSize) {
+  var xRatio = Math.round(originalArray.length / newSize);
+  var middleX = 0;
+  var lowX = 0;
+  var highX = 0;
+  var newY = 0;
+
+  for (var x = 0; x < newSize; x++) {
+    middleX = Math.round((x / newSize) * originalArray.length);
+    lowX = Math.round(middleX - (xRatio / 2));
+    highX = Math.round(middleX + (xRatio / 2));
+    newY = 0;
+
+    if ((lowX > 0) && (highX < originalArray.length)) {
+      for (var i = 0; i < xRatio; i++) {
+        newY += originalArray[lowX + i];
+      }
+      newY = newY / xRatio;
+    } else {
+      newY = originalArray[middleX];
+    }
+
+    newY = Math.round(newY);
+    newArray.push(newY);
+  }
 }
 
 function addHideTripGraph(mapConfig) {
