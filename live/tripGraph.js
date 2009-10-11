@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-11 */
 
 function addTripGraph(mapConfig, map, tripData) {
   mapConfig.tripGrap.tripData = tripData;
@@ -12,25 +12,89 @@ function addTripGraph(mapConfig, map, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
 
   if (canvas && canvas.getContext) {
-    drawTripGraph(mapConfig, map, tripData);
+    drawTripGraph(mapConfig, tripData);
     resizeMapCanvas();
     addHideTripGraph(mapConfig);
   }
 }
 
-function drawTripGraph(mapConfig, map, tripData) {
+function drawTripGraph(mapConfig, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
-  var speedData = [];
-  resizeArray(tripData.gpsSpeedData, speedData, canvas.width);
 
+  drawSpeedGraph(mapConfig, tripData, canvas);
+  drawXAxis(mapConfig, tripData, canvas);
+  drawYAxis(mapConfig, tripData, canvas);
+}
+
+function drawSpeedGraph(mapConfig, tripData, canvas) {
+  var origo = mapConfig.tripGrap.origo;
   var ctx = canvas.getContext('2d');
+
+  var speedData = [];
+  resizeArray(tripData.gpsSpeedData, speedData, canvas.width - origo.x);
+
+  var gradient = ctx.createLinearGradient(origo.x, 0, origo.x, origo.y);
+  gradient.addColorStop(0, "#000000");
+  gradient.addColorStop(1, tripData.color);
+
   ctx.beginPath();
+  ctx.fillStyle = gradient;
+  ctx.moveTo(origo.x, origo.y);
 
   for (var x = 0; x < speedData.length; x++) {
-    ctx.lineTo(x, 100 - (2 * speedData[x]));
+    ctx.lineTo(origo.x + x,
+               origo.y - (mapConfig.tripGrap.speedToPixelRadio * speedData[x]));
   }
 
+  ctx.lineTo(canvas.width, origo.y);
+  ctx.fill();
+}
+
+function drawXAxis(mapConfig, tripData, canvas) {
+  var origo = mapConfig.tripGrap.origo;
+  var ctx = canvas.getContext('2d');
+
+  /* line */
+  ctx.beginPath();
+  ctx.strokeStyle = "#000000";
+  ctx.moveTo(origo.x, origo.y);
+  ctx.lineTo(canvas.width, origo.y);
   ctx.stroke();
+
+  /* scale */
+  var steps = new Number(tripData.gpsDuration.substr(0, 2)) +
+              (new Number(tripData.gpsDuration.substr(3, 2)) / 60);
+  for (var i = 1; i <= Math.floor(steps); i++) {
+    var x = ((canvas.width - origo.x) / steps) * i;
+    ctx.beginPath();
+    ctx.strokeStyle = "#000000";
+    ctx.moveTo(x, origo.y - 3);
+    ctx.lineTo(x, origo.y + 3);
+    ctx.stroke();
+  }
+}
+
+function drawYAxis(mapConfig, tripData, canvas) {
+  var origo = mapConfig.tripGrap.origo;
+  var ctx = canvas.getContext('2d');
+
+  /* line */
+  ctx.beginPath();
+  ctx.strokeStyle = "#000000";
+  ctx.moveTo(origo.x, origo.y);
+  ctx.lineTo(origo.x, origo.y - canvas.height);
+  ctx.stroke();
+
+  /* scale */
+  var steps = origo.y / (mapConfig.tripGrap.speedToPixelRadio * 10);
+  for (var i = 1; i <= Math.floor(steps); i++) {
+    var y = (origo.y / steps) * i;
+    ctx.beginPath();
+    ctx.strokeStyle = "#000000";
+    ctx.moveTo(origo.x - 3, y);
+    ctx.lineTo(origo.x + 3, y);
+    ctx.stroke();
+  }
 }
 
 function resizeArray(originalArray, newArray, newSize) {

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-11 */
 
 var gMap;
 var gMapConfig;
@@ -127,7 +127,8 @@ function createMapConfig(showExtensions) {
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      controlPosition:new GSize(214, 7)};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
-  mapConfig.tripGrap = {visibility:"hidden", height:100};
+  mapConfig.tripGrap = {visibility:"hidden", height:100, origo:{x:5, y:95},
+                        speedToPixelRadio:2};
 
   return mapConfig;
 }
