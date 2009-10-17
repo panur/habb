@@ -125,7 +125,8 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new GSize(214, 7)};
+                     controlPosition:new GSize(214, 7), numberOfVisibleTrips:0,
+                     directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          speedToPixelRadio:2};
@@ -789,14 +790,16 @@ function _resizeMap() {
   if (gMapConfig.tripGraph.visibility == "visible") {
     addTripGraph(gMapConfig, gMap, gMapConfig.tripGraph.tripData);
   } else {
-    resizeMapCanvas();
+    resizeMapCanvas(gMap);
   }
 }
 
-function resizeMapCanvas() {
+function resizeMapCanvas(map) {
   document.getElementById("map_canvas").style.height =
     document.documentElement.clientHeight -
     document.getElementById("trip_graph").clientHeight -
     document.getElementById("status_bar").clientHeight -
     document.getElementById("statistics").clientHeight + "px";
+
+  map.checkResize();
 }

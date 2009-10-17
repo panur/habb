@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
 
 function addTripsControl(mapConfig, map) {
   var position =
@@ -188,7 +188,10 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.polyline = GPolyline.fromEncoded(tripData.encodedPolyline);
 
     GEvent.addListener(tripData.polyline, "click", function(latlng) {
-      addDirectionMarker(map, latlng, tripData.polyline);
+      if (mapConfig.tripGraph.tripData == tripData) {
+        addDirectionMarker(mapConfig, map, latlng, tripData.polyline);
+      }
+      addTripGraph(mapConfig, map, tripData);
     });
 
     tripData.gpsMaxSpeed.marker = getMarker(mapConfig, map,
@@ -200,21 +203,28 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
   }
 
   if (tripData.visibility == "hidden") {
-    setVisitedAreaOpacityToLow(mapConfig);
     tripData.visibility = "visible";
+    mapConfig.trips.numberOfVisibleTrips += 1;
+    setVisitedAreaOpacityToLow(mapConfig);
     map.addOverlay(tripData.polyline);
     map.addOverlay(tripData.gpsMaxSpeed.marker);
     map.addOverlay(tripData.gpsMaxAltitude.marker);
     addTripGraph(mapConfig, map, tripData);
   } else {
     tripData.visibility = "hidden";
+    mapConfig.trips.numberOfVisibleTrips -= 1;
+    if (mapConfig.trips.numberOfVisibleTrips == 0) {
+      setVisitedAreaOpacityToHigh(mapConfig);
+    }
     map.removeOverlay(tripData.polyline);
     map.removeOverlay(tripData.gpsMaxSpeed.marker);
     map.removeOverlay(tripData.gpsMaxAltitude.marker);
+    removeDirectionMarkers(mapConfig, map);
+    _hideTripGraph();
   }
 }
 
-function addDirectionMarker(map, point, polyline) {
+function addDirectionMarker(mapConfig, map, point, polyline) {
   /* modified from: http://econym.org.uk/gmap/arrows.htm */
   var p1;
   var p2;
@@ -230,8 +240,15 @@ function addDirectionMarker(map, point, polyline) {
         map.removeOverlay(marker);
       });
       map.addOverlay(marker);
+      mapConfig.trips.directionMarkers.push(marker);
       break;
     }
+  }
+}
+
+function removeDirectionMarkers(mapConfig, map) {
+  for (var i = 0; i < mapConfig.trips.directionMarkers.length; i++) {
+    map.removeOverlay(mapConfig.trips.directionMarkers[i]);
   }
 }
 
@@ -301,6 +318,12 @@ function getMarker(mapConfig, map, point, letter, title) {
 
 function setVisitedAreaOpacityToLow(mapConfig) {
   if (mapConfig.area.opacity == mapConfig.area.opacityHigh) {
+    toggleOpacity();
+  }
+}
+
+function setVisitedAreaOpacityToHigh(mapConfig) {
+  if (mapConfig.area.opacity == mapConfig.area.opacityLow) {
     toggleOpacity();
   }
 }

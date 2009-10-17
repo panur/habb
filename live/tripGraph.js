@@ -14,7 +14,7 @@ function addTripGraph(mapConfig, map, tripData) {
   if (canvas && canvas.getContext) {
     addTripGraphMouseListeners(mapConfig, map, tripGraph);
     drawTripGraph(mapConfig, tripData);
-    resizeMapCanvas();
+    resizeMapCanvas(map);
     addHideTripGraph(mapConfig);
   }
 }
@@ -40,6 +40,11 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
     if (mapConfig.tripGraph.marker) {
       map.removeOverlay(mapConfig.tripGraph.marker);
     }
+  };
+
+  tripGraph.onclick = function(event) {
+    map.setCenter(mapConfig.tripGraph.marker.getLatLng(),
+                  mapConfig.zoomToPointZoomLevel);
   };
 }
 
@@ -109,9 +114,9 @@ function getTimeString(seconds) {
 function drawTripGraph(mapConfig, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
 
-  drawSpeedGraph(mapConfig, tripData, canvas);
   drawXAxis(mapConfig, tripData, canvas);
   drawYAxis(mapConfig, tripData, canvas);
+  drawSpeedGraph(mapConfig, tripData, canvas);
 }
 
 function drawSpeedGraph(mapConfig, tripData, canvas) {
@@ -181,9 +186,9 @@ function drawYAxis(mapConfig, tripData, canvas) {
   for (var i = 1; i <= Math.floor(steps); i++) {
     var y = origo.y - (yStep * i);
     ctx.beginPath();
-    ctx.strokeStyle = "#000000";
-    ctx.moveTo(origo.x - 3, y);
-    ctx.lineTo(origo.x + 3, y);
+    ctx.strokeStyle = "#C0C0C0";
+    ctx.moveTo(origo.x, y);
+    ctx.lineTo(canvas.width, y);
     ctx.stroke();
   }
 }
