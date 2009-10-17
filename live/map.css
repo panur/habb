@@ -1,6 +1,11 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
+}
+
+div.map_canvas {
+  height: 90%;
 }
 
 div.showTripsTable {
@@ -44,4 +49,21 @@ th {
 td {
   border: 1px solid;
   white-space: nowrap;
+}
+
+div.tripGraphHide {
+  border: 0px;
+  position: absolute;
+  right: 0;
+}
+
+img.hideTripGraph {
+  border: 0px;
+  position: absolute;
+  right: 0;
+}
+
+div.trip_graph {
+  color: #000000;
+  background-color: #FFFFFF;
 }

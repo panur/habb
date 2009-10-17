@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-09-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
 
 var gMap;
 var gMapConfig;
@@ -34,10 +34,12 @@ function initMap(map, mapConfig) {
   GEvent.addListener(map, "km2sAreInMapConfig", function() {
     updateMapGrid(mapConfig);
     mapConfig.visitedStatusAreas = getVisitedStatusAreas(mapConfig, map);
+    updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
     addTripsControl(mapConfig, map);
+    _resizeMap();
   });
 
   setPointsToMapConfig(mapConfig, map);
@@ -123,7 +125,11 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new GSize(214, 7)};
+                     controlPosition:new GSize(214, 7), numberOfVisibleTrips:0,
+                     directionMarkers:[]};
+  mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
+  mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
+                         speedToPixelRadio:2};
 
   return mapConfig;
 }
@@ -536,6 +542,12 @@ function addMouseListeners(mapConfig, map) {
     updateCursor(mapConfig, map, info);
   });
 
+  GEvent.addListener(map, "mouseout", function(point) {
+    if (mapConfig.cursor)  {
+      map.removeOverlay(mapConfig.cursor);
+    }
+  });
+
   GEvent.addListener(map, "singlerightclick", function(point, src, overlay) {
     if ((overlay) && (overlay.color)) {
       var latLng = map.fromContainerPixelToLatLng(point);
@@ -639,7 +651,11 @@ function updateStatusBar(info) {
                    ", visited=" + info.visited + ", ZL=" + info.zl +
                    ", Lat/Lng=" + info.latLng;
 
-  document.getElementById("status_bar").innerHTML = statusText;
+  setStatusBarText(statusText);
+}
+
+function setStatusBarText(statusBarText) {
+  document.getElementById("status_bar").innerHTML = statusBarText;
 }
 
 function updateCursor(mc, map, info) {
@@ -764,4 +780,26 @@ function setVisitedData(filename, visitedDataDescription) {
   gMapConfig.visitedDataDescription = visitedDataDescription;
 
   setKm2sToMapConfig(gMapConfig, gMap);
+}
+
+function _resizeMap() {
+  if (window.onresize != _resizeMap) {
+    window.onresize = _resizeMap;
+  }
+
+  if (gMapConfig.tripGraph.visibility == "visible") {
+    addTripGraph(gMapConfig, gMap, gMapConfig.tripGraph.tripData);
+  } else {
+    resizeMapCanvas(gMap);
+  }
+}
+
+function resizeMapCanvas(map) {
+  document.getElementById("map_canvas").style.height =
+    document.documentElement.clientHeight -
+    document.getElementById("trip_graph").clientHeight -
+    document.getElementById("status_bar").clientHeight -
+    document.getElementById("statistics").clientHeight + "px";
+
+  map.checkResize();
 }
