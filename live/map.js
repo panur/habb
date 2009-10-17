@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
 
 var gMap;
 var gMapConfig;
@@ -127,8 +127,8 @@ function createMapConfig(showExtensions) {
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      controlPosition:new GSize(214, 7)};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
-  mapConfig.tripGrap = {visibility:"hidden", height:100, origo:{x:5, y:95},
-                        speedToPixelRadio:2};
+  mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
+                         speedToPixelRadio:2};
 
   return mapConfig;
 }
@@ -541,6 +541,12 @@ function addMouseListeners(mapConfig, map) {
     updateCursor(mapConfig, map, info);
   });
 
+  GEvent.addListener(map, "mouseout", function(point) {
+    if (mapConfig.cursor)  {
+      map.removeOverlay(mapConfig.cursor);
+    }
+  });
+
   GEvent.addListener(map, "singlerightclick", function(point, src, overlay) {
     if ((overlay) && (overlay.color)) {
       var latLng = map.fromContainerPixelToLatLng(point);
@@ -644,7 +650,11 @@ function updateStatusBar(info) {
                    ", visited=" + info.visited + ", ZL=" + info.zl +
                    ", Lat/Lng=" + info.latLng;
 
-  document.getElementById("status_bar").innerHTML = statusText;
+  setStatusBarText(statusText);
+}
+
+function setStatusBarText(statusBarText) {
+  document.getElementById("status_bar").innerHTML = statusBarText;
 }
 
 function updateCursor(mc, map, info) {
@@ -776,8 +786,8 @@ function _resizeMap() {
     window.onresize = _resizeMap;
   }
 
-  if (gMapConfig.tripGrap.visibility == "visible") {
-    addTripGraph(gMapConfig, gMap, gMapConfig.tripGrap.tripData);
+  if (gMapConfig.tripGraph.visibility == "visible") {
+    addTripGraph(gMapConfig, gMap, gMapConfig.tripGraph.tripData);
   } else {
     resizeMapCanvas();
   }

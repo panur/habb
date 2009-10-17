@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
 div.map_canvas {
@@ -65,5 +66,4 @@ img.hideTripGraph {
 div.trip_graph {
   color: #000000;
   background-color: #FFFFFF;
-  overflow: hidden;
 }

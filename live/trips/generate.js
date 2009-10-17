@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
 
 function generate() {
   var tripsConfig = {
@@ -57,10 +57,16 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
       polylineEncoder.dpEncodeToJSON(points, color, tripsConfig.polylineWeight,
                                      tripsConfig.polylineOpacity);
 
+    tripsConfig.data[tripIndex].vertexTimes =
+      getVertexTimes(tripsConfig.data[tripIndex].encodedPolyline, points,
+                     times);
+
     tripsConfig.data[tripIndex].date =
       times[0].firstChild.nodeValue.substr(0, 10); /* 2009-07-19T10:23:21Z */
 
     tripsConfig.data[tripIndex].gpsDuration = getDuration(times);
+
+    tripsConfig.data[tripIndex].gpsDurationSeconds = getDurationSeconds(times);
 
     tripsConfig.data[tripIndex].gpsDistance =
       Math.round((new GPolyline(points)).getLength() / 1000);
@@ -96,16 +102,70 @@ function getPoints(trkpts) {
   return points;
 }
 
+function getVertexTimes(encodedPolyline, points, times) {
+  var vertexTimes = new Array(0);
+  var polyline = GPolyline.fromEncoded(encodedPolyline);
+  var pointIndex = 0;
+  var previousPointIndex = 0;
+
+  for (var i = 0; i < polyline.getVertexCount(); i++) {
+    pointIndex =
+      getPointIndex(points, polyline.getVertex(i), previousPointIndex);
+
+    if (pointIndex != -1) {
+      vertexTimes[i] = getPointTime(times, pointIndex);
+      previousPointIndex = pointIndex + 1;
+    } else {
+      vertexTimes[i] = 0;
+      GLog.write("Failed to find point index for vertex index: " + i);
+    }
+  }
+
+  for (var i = vertexTimes.length - 1; i > 0; i--) {
+    vertexTimes[i] = vertexTimes[i] - vertexTimes[i - 1];
+    if (vertexTimes[i] < 0) {
+      GLog.write("Negative time at index: " + i);
+    }
+  }
+
+  vertexTimes[0] = 0;
+
+  return vertexTimes;
+}
+
+function getPointIndex(points, point, previousIndex) {
+  for (var i = previousIndex ; i < points.length; i++) {
+    if ((Math.abs(point.lat() -  points[i].lat()) < 0.0001) &&
+        (Math.abs(point.lng() -  points[i].lng()) < 0.0001)) {
+      return i;
+    }
+  }
+
+  return -1;
+}
+
+function getPointTime(times, index) {
+  var start = times[0].firstChild.nodeValue;
+  var end = times[index].firstChild.nodeValue;
+  var pointTime = secondsSinceMidnight(end) - secondsSinceMidnight(start);
+
+  return pointTime;
+}
+
 function getDuration(times) {
+  var durationInSeconds = getDurationSeconds(times);
+  var duration = getTimeString(durationInSeconds);
+
+  return duration;
+}
+
+function getDurationSeconds(times) {
   var start = times[0].firstChild.nodeValue;
   var end = times[times.length - 1].firstChild.nodeValue;
   var durationInSeconds =
     secondsSinceMidnight(end) - secondsSinceMidnight(start);
-  var date = new Date(durationInSeconds * 1000)
-  var duration = date.toUTCString();
-  duration = duration.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
 
-  return duration;
+  return durationInSeconds;
 }
 
 function secondsSinceMidnight(date) {
