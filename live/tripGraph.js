@@ -1,9 +1,6 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
 
 function addTripGraph(mapConfig, map, tripData) {
-  mapConfig.tripGraph.tripData = tripData;
-  mapConfig.tripGraph.visibility = "visible";
-
   var tripGraph = document.getElementById("trip_graph");
   tripGraph.innerHTML = '<canvas id="tripGraphCanvas" width="' +
     tripGraph.clientWidth + '" height="' + mapConfig.tripGraph.height +
@@ -12,6 +9,9 @@ function addTripGraph(mapConfig, map, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
 
   if (canvas && canvas.getContext) {
+    mapConfig.tripGraph.tripData = tripData;
+    mapConfig.tripGraph.visibility = "visible";
+
     addTripGraphMouseListeners(mapConfig, map, tripGraph);
     drawTripGraph(mapConfig, tripData);
     resizeMapCanvas(map);
@@ -253,10 +253,12 @@ function _hideTripGraph() {
 }
 
 function hideTripGraph(mapConfig) {
-  mapConfig.tripGraph.visibility = "hidden";
+  if (mapConfig.tripGraph.visibility == "visible") {
+    mapConfig.tripGraph.visibility = "hidden";
 
-  document.getElementById("trip_graph").innerHTML = "";
-  document.getElementById("tripGraphHide").innerHTML = "";
+    document.getElementById("trip_graph").innerHTML = "";
+    document.getElementById("tripGraphHide").innerHTML = "";
 
-  _resizeMap();
+    _resizeMap();
+  }
 }
