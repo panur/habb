@@ -36,12 +36,14 @@ function _showTripsTable() {
   gMapConfig.isTableShown = true;
   showTripsControl(gMapConfig, gMap);
   setTripsTableHideVisibility(gMapConfig, "visible");
+  document.getElementById("tripsControl").style.overflow = "auto"; /* for GC */
 }
 
 function _hideTripsTable() {
   gMapConfig.isTableShown = false;
   showTripsControl(gMapConfig, gMap);
   setTripsTableHideVisibility(gMapConfig, "hidden");
+  document.getElementById("tripsControl").style.overflow = "hidden"; /*for GC */
 }
 
 function _toggleTripVisibility(tripIndex) {
