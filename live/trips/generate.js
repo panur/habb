@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-22 */
 
 function generate() {
   var tripsConfig = {
@@ -57,9 +57,9 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
       polylineEncoder.dpEncodeToJSON(points, color, tripsConfig.polylineWeight,
                                      tripsConfig.polylineOpacity);
 
-    tripsConfig.data[tripIndex].vertexTimes =
-      getVertexTimes(tripsConfig.data[tripIndex].encodedPolyline, points,
-                     times);
+    tripsConfig.data[tripIndex].encodedVertexTimes =
+      getEncodedVertexTimes(tripsConfig.data[tripIndex].encodedPolyline, points,
+                            times);
 
     tripsConfig.data[tripIndex].date =
       times[0].firstChild.nodeValue.substr(0, 10); /* 2009-07-19T10:23:21Z */
@@ -102,7 +102,7 @@ function getPoints(trkpts) {
   return points;
 }
 
-function getVertexTimes(encodedPolyline, points, times) {
+function getEncodedVertexTimes(encodedPolyline, points, times) {
   var vertexTimes = new Array(0);
   var polyline = GPolyline.fromEncoded(encodedPolyline);
   var pointIndex = 0;
@@ -130,7 +130,31 @@ function getVertexTimes(encodedPolyline, points, times) {
 
   vertexTimes[0] = 0;
 
-  return vertexTimes;
+  var encodedVertexTimes = runLengthEncode(vertexTimes);
+
+  return encodedVertexTimes;
+}
+
+function runLengthEncode(sourceArray) {
+  var encodedArray = [];
+  var runLength = 0;
+  var elementValue = sourceArray[0];
+
+  for (var i = 0; i < sourceArray.length; i++) {
+    if (sourceArray[i] == elementValue) {
+      runLength += 1;
+    } else {
+      encodedArray.push(runLength);
+      encodedArray.push(elementValue);
+      runLength = 1;
+      elementValue = sourceArray[i];
+    }
+  }
+
+  encodedArray.push(runLength);
+  encodedArray.push(elementValue);
+
+  return encodedArray;
 }
 
 function getPointIndex(points, point, previousIndex) {
