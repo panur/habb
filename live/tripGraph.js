@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-22 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -45,6 +45,10 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   tripGraph.onclick = function(event) {
     map.setCenter(mapConfig.tripGraph.marker.getLatLng(),
                   mapConfig.zoomToPointZoomLevel);
+  };
+
+  tripGraph.ondblclick = function(event) {
+    map.returnToSavedPosition();
   };
 }
 
