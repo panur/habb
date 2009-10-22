@@ -111,6 +111,8 @@ function setTripsData(mapConfig, map) {
     for (var i = 0; i < mapConfig.trips.data.length; i++) {
       mapConfig.trips.data[i].vertexTimes =
         runLengthDecode(mapConfig.trips.data[i].encodedVertexTimes);
+      mapConfig.trips.data[i].gpsSpeedData =
+        arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
     }
     showTripsControl(mapConfig, map);
   });
@@ -123,6 +125,18 @@ function runLengthDecode(encodedArray) {
     for (var j = 0; j < encodedArray[i]; j++) {
       decodedArray.push(encodedArray[i + 1]);
     }
+  }
+
+  return decodedArray;
+}
+
+function arrayToStringDecode(encodedString) {
+  var string = decodeURI(encodedString);
+  var decodedArray = [];
+  var offsetValue = string.charCodeAt(0);
+
+  for (var i = 1; i < string.length; i++) {
+    decodedArray.push(string.charCodeAt(i) - offsetValue);
   }
 
   return decodedArray;

@@ -77,8 +77,8 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     tripsConfig.data[tripIndex].gpsMaxAltitude =
       getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
 
-    tripsConfig.data[tripIndex].gpsSpeedData =
-      getSpeedData(trks[0].getElementsByTagName("speed"), points);
+    tripsConfig.data[tripIndex].encodedGpsSpeedData =
+      getEncodedSpeedData(trks[0].getElementsByTagName("speed"), points);
 
     tripsConfig.readyTrips += 1;
 
@@ -236,7 +236,7 @@ function getMaxAltitude(altitudeMeasurements, points) {
   return maxAltitude;
 }
 
-function getSpeedData(measurements) {
+function getEncodedSpeedData(measurements) {
   var speedData = [];
   var maxLength = 2000;
 
@@ -253,7 +253,27 @@ function getSpeedData(measurements) {
     resizeArray(tmpArray, speedData, maxLength);
   }
 
-  return speedData;
+  var encodedSpeedData = arrayToStringEncode(speedData);
+
+  return encodedSpeedData;
+}
+
+function arrayToStringEncode(sourceArray) {
+  var string = "0";
+  var offsetValue = string.charCodeAt(0);
+  var maxValue = "~".charCodeAt(0);
+  var charCode;
+
+  for (var i = 0; i < sourceArray.length; i++) {
+    charCode = offsetValue + sourceArray[i];
+    string += String.fromCharCode(charCode);
+    if (charCode > maxValue) {
+      GLog.write("Too high value (" + charCode +
+                 ") in arrayToStringEncode at index: " + i);
+    }
+  }
+
+  return encodeURI(string);
 }
 
 function writeToFile(tripsConfig) {
