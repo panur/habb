@@ -132,6 +132,8 @@ function getEncodedVertexTimes(encodedPolyline, points, times) {
 
   var encodedVertexTimes = runLengthEncode(vertexTimes);
 
+  encodedVertexTimes = arrayToStringEncode(encodedVertexTimes);
+
   return encodedVertexTimes;
 }
 
@@ -261,16 +263,9 @@ function getEncodedSpeedData(measurements) {
 function arrayToStringEncode(sourceArray) {
   var string = "0";
   var offsetValue = string.charCodeAt(0);
-  var maxValue = "~".charCodeAt(0);
-  var charCode;
 
   for (var i = 0; i < sourceArray.length; i++) {
-    charCode = offsetValue + sourceArray[i];
-    string += String.fromCharCode(charCode);
-    if (charCode > maxValue) {
-      GLog.write("Too high value (" + charCode +
-                 ") in arrayToStringEncode at index: " + i);
-    }
+    string += String.fromCharCode(offsetValue + sourceArray[i]);
   }
 
   return encodeURI(string);

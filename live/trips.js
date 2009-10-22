@@ -109,8 +109,8 @@ function setTripsData(mapConfig, map) {
 
     mapConfig.trips.data = JSON.parse(tripsDataString);
     for (var i = 0; i < mapConfig.trips.data.length; i++) {
-      mapConfig.trips.data[i].vertexTimes =
-        runLengthDecode(mapConfig.trips.data[i].encodedVertexTimes);
+      mapConfig.trips.data[i].vertexTimes = runLengthDecode(
+        arrayToStringDecode(mapConfig.trips.data[i].encodedVertexTimes));
       mapConfig.trips.data[i].gpsSpeedData =
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
     }
