@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
 
 function generate() {
   var tripsConfig = {
@@ -78,7 +78,10 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
       getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
 
     tripsConfig.data[tripIndex].encodedGpsSpeedData =
-      getEncodedSpeedData(trks[0].getElementsByTagName("speed"), points);
+      getEncodedGpsData(trks[0].getElementsByTagName("speed"), points);
+
+    tripsConfig.data[tripIndex].encodedGpsAltitudeData =
+      getEncodedGpsData(trks[0].getElementsByTagName("ele"), points);
 
     tripsConfig.readyTrips += 1;
 
@@ -238,26 +241,28 @@ function getMaxAltitude(altitudeMeasurements, points) {
   return maxAltitude;
 }
 
-function getEncodedSpeedData(measurements) {
-  var speedData = [];
+function getEncodedGpsData(measurements) {
+  var gpsData = [];
   var maxLength = 2000;
+  var tmpArray = [];
+
+  for (var i = 0; i < measurements.length; i++) {
+    var value = new Number(measurements[i].firstChild.nodeValue);
+    value = Math.max(value, 0);
+    tmpArray.push(value);
+  }
 
   if (measurements.length < maxLength) {
     for (var i = 0; i < measurements.length; i++) {
-      var value = Math.round(new Number(measurements[i].firstChild.nodeValue));
-      speedData.push(value);
+      gpsData[i] = Math.round(tmpArray[i]);
     }
   } else {
-    var tmpArray = [];
-    for (var i = 0; i < measurements.length; i++) {
-      tmpArray.push(new Number(measurements[i].firstChild.nodeValue));
-    }
-    resizeArray(tmpArray, speedData, maxLength);
+    resizeArray(tmpArray, gpsData, maxLength);
   }
 
-  var encodedSpeedData = arrayToStringEncode(speedData);
+  var encodedGpsData = arrayToStringEncode(gpsData);
 
-  return encodedSpeedData;
+  return encodedGpsData;
 }
 
 function arrayToStringEncode(sourceArray) {

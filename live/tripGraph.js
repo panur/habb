@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -9,14 +9,38 @@ function addTripGraph(mapConfig, map, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
 
   if (canvas && canvas.getContext) {
-    mapConfig.tripGraph.tripData = tripData;
-    mapConfig.tripGraph.visibility = "visible";
-
+    setTripGraphConfig(mapConfig, tripData, canvas);
     addTripGraphMouseListeners(mapConfig, map, tripGraph);
-    drawTripGraph(mapConfig, tripData);
+    drawTripGraph(mapConfig);
     resizeMapCanvas(map);
     addHideTripGraph(mapConfig);
   }
+}
+
+function setTripGraphConfig(mapConfig, tripData, canvas) {
+  var originalGpsData;
+
+  mapConfig.tripGraph.tripData = tripData;
+  mapConfig.tripGraph.visibility = "visible";
+
+  if (mapConfig.tripGraph.types[0] == "Speed") {
+    mapConfig.tripGraph.unit = "km/h";
+    originalGpsData = tripData.gpsSpeedData;
+    mapConfig.tripGraph.yUnitsPerScaleLine = 10;
+    mapConfig.tripGraph.yUnitToPixelRatio = 2;
+  } else {
+    mapConfig.tripGraph.unit = "m";
+    originalGpsData = tripData.gpsAltitudeData;
+    mapConfig.tripGraph.yUnitsPerScaleLine = 20;
+    var maxAltitude = mapConfig.tripGraph.tripData.gpsMaxAltitude.value;
+    var height = mapConfig.tripGraph.origo.y;
+    mapConfig.tripGraph.yUnitToPixelRatio =
+      1 / (1 + Math.floor(maxAltitude / height));
+  }
+
+  tripData.graphData = [];
+  resizeArray(originalGpsData, mapConfig.tripGraph.tripData.graphData,
+              canvas.width - mapConfig.tripGraph.origo.x);
 }
 
 function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
@@ -24,9 +48,10 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
     var origo = mapConfig.tripGraph.origo;
     var canvas = document.getElementById('tripGraphCanvas');
     if ((event.clientX > origo.x) && (event.clientX < canvas.width)) {
-      var ratio = (event.clientX - origo.x) / (canvas.width - origo.x);
-      addTripGraphMarker(mapConfig, map, ratio);
-      updateTripCraphStatusBar(mapConfig, ratio);
+      mapConfig.tripGraph.lastRatio =
+        (event.clientX - origo.x) / (canvas.width - origo.x);
+      addTripGraphMarker(mapConfig, map);
+      updateTripCraphStatusBar(mapConfig);
     }
   };
 
@@ -52,9 +77,9 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 }
 
-function addTripGraphMarker(mapConfig, map, ratio) {
+function addTripGraphMarker(mapConfig, map) {
   var tripData = mapConfig.tripGraph.tripData;
-  var markerTime = ratio * tripData.gpsDurationSeconds;
+  var markerTime = mapConfig.tripGraph.lastRatio * tripData.gpsDurationSeconds;
   var vertexIndex = getTripGraphMarkerVertexIndex(markerTime, tripData);
   var marker = getTripGraphMarker(tripData.polyline, vertexIndex);
 
@@ -89,22 +114,27 @@ function getTripGraphMarker(polyline, vertexIndex) {
   return marker;
 }
 
-function updateTripCraphStatusBar(mapConfig, ratio) {
+function updateTripCraphStatusBar(mapConfig) {
+  var type = mapConfig.tripGraph.types[0];
   var tripData = mapConfig.tripGraph.tripData;
-  var speed = tripData.speedData[Math.round(ratio * tripData.speedData.length)];
+  var ratio = mapConfig.tripGraph.lastRatio;
+  var value = tripData.graphData[Math.round(ratio * tripData.graphData.length)];
+  var unit = mapConfig.tripGraph.unit;
   var time = getTimeString(ratio * tripData.gpsDurationSeconds);
-  var yScale = 1 / mapConfig.tripGraph.speedToPixelRadio;
+  var yScale = 1 / mapConfig.tripGraph.yUnitToPixelRatio;
   var xScale =
-    Math.round(tripData.gpsDurationSeconds / tripData.speedData.length);
+    Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
   var latLng = mapConfig.tripGraph.marker.getLatLng();
   latLng = Math.round(latLng.lat() * 10000)/10000 + " / " +
            Math.round(latLng.lng() * 10000)/10000;
 
-  var statusText = "Speed=" + speed + " km/h, time=" + time +
-    " (1 y pixel = " + yScale + " km/h, 1 x pixel = " + xScale +
+  var statusHtml = "<a title='Toggle type of trip graph' " +
+    "href='javascript:_toggleTripGraphType()'>" + type + "</a>=" +
+    value + " " + unit + ", time=" + time +
+    " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
     " s), Lat/Lng=" + latLng;
 
-  setStatusBarText(statusText);
+  setStatusBarHtml(statusHtml);
 }
 
 function getTimeString(seconds) {
@@ -115,22 +145,28 @@ function getTimeString(seconds) {
   return timeString; /* 04:32:54 */
 }
 
-function drawTripGraph(mapConfig, tripData) {
-  var canvas = document.getElementById('tripGraphCanvas');
-
-  drawXAxis(mapConfig, tripData, canvas);
-  drawYAxis(mapConfig, tripData, canvas);
-  drawSpeedGraph(mapConfig, tripData, canvas);
+function _toggleTripGraphType() {
+  toggleTripGraphType(gMapConfig, gMap);
 }
 
-function drawSpeedGraph(mapConfig, tripData, canvas) {
+function toggleTripGraphType(mapConfig, map) {
+  mapConfig.tripGraph.types.reverse();
+  addTripGraph(mapConfig, map, mapConfig.tripGraph.tripData);
+  updateTripCraphStatusBar(mapConfig);
+}
+
+function drawTripGraph(mapConfig) {
+  var canvas = document.getElementById('tripGraphCanvas');
+
+  drawXAxis(mapConfig, canvas);
+  drawYAxis(mapConfig, canvas);
+  drawGraph(mapConfig, canvas);
+}
+
+function drawGraph(mapConfig, canvas) {
+  var tripData = mapConfig.tripGraph.tripData;
   var origo = mapConfig.tripGraph.origo;
   var ctx = canvas.getContext('2d');
-
-  tripData.speedData = [];
-  resizeArray(tripData.gpsSpeedData, tripData.speedData,
-              canvas.width - origo.x);
-
   var gradient = ctx.createLinearGradient(origo.x, 0, origo.x, origo.y);
   gradient.addColorStop(0, "#000000");
   gradient.addColorStop(1, tripData.color);
@@ -139,8 +175,8 @@ function drawSpeedGraph(mapConfig, tripData, canvas) {
   ctx.fillStyle = gradient;
   ctx.moveTo(origo.x, origo.y);
 
-  for (var x = 0; x < tripData.speedData.length; x++) {
-    var y = mapConfig.tripGraph.speedToPixelRadio * tripData.speedData[x];
+  for (var x = 0; x < tripData.graphData.length; x++) {
+    var y = mapConfig.tripGraph.yUnitToPixelRatio * tripData.graphData[x];
     ctx.lineTo(origo.x + x, origo.y - y);
   }
 
@@ -148,7 +184,8 @@ function drawSpeedGraph(mapConfig, tripData, canvas) {
   ctx.fill();
 }
 
-function drawXAxis(mapConfig, tripData, canvas) {
+function drawXAxis(mapConfig, canvas) {
+  var tripData = mapConfig.tripGraph.tripData;
   var origo = mapConfig.tripGraph.origo;
   var ctx = canvas.getContext('2d');
 
@@ -173,7 +210,8 @@ function drawXAxis(mapConfig, tripData, canvas) {
   }
 }
 
-function drawYAxis(mapConfig, tripData, canvas) {
+function drawYAxis(mapConfig, canvas) {
+  var tripData = mapConfig.tripGraph.tripData;
   var origo = mapConfig.tripGraph.origo;
   var ctx = canvas.getContext('2d');
 
@@ -185,7 +223,8 @@ function drawYAxis(mapConfig, tripData, canvas) {
   ctx.stroke();
 
   /* scale */
-  var steps = origo.y / (mapConfig.tripGraph.speedToPixelRadio * 10);
+  var steps = origo.y / (mapConfig.tripGraph.yUnitToPixelRatio *
+                         mapConfig.tripGraph.yUnitsPerScaleLine);
   var yStep = origo.y / steps
   for (var i = 1; i <= Math.floor(steps); i++) {
     var y = origo.y - (yStep * i);
@@ -248,7 +287,8 @@ function addHideTripGraph(mapConfig) {
   tripGraphHide.style.top =
     document.getElementById("map_canvas").clientHeight + "px";
 
-  tripGraphHide.innerHTML = "<a href='javascript:_hideTripGraph()'>" +
+  tripGraphHide.innerHTML =
+    "<a title='Hide trip graph' href='javascript:_hideTripGraph()'>" +
     '<img class="hideTripGraph" src="' + mapConfig.closeImgUrl + '"></a>';
 }
 

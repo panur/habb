@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
 
 var gMap;
 var gMapConfig;
@@ -129,7 +129,7 @@ function createMapConfig(showExtensions) {
                      directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
-                         speedToPixelRadio:2};
+                         types:["Speed", "Altitude"]};
 
   return mapConfig;
 }
@@ -647,15 +647,15 @@ function getKm2XYFromGuess(mc, point, guessXY) {
 }
 
 function updateStatusBar(info) {
-  var statusText = "Page=" + info.page + ", KKJ=" + info.kkjText +
+  var statusHtml = "Page=" + info.page + ", KKJ=" + info.kkjText +
                    ", visited=" + info.visited + ", ZL=" + info.zl +
                    ", Lat/Lng=" + info.latLng;
 
-  setStatusBarText(statusText);
+  setStatusBarHtml(statusHtml);
 }
 
-function setStatusBarText(statusBarText) {
-  document.getElementById("status_bar").innerHTML = statusBarText;
+function setStatusBarHtml(statusBarHtml) {
+  document.getElementById("status_bar").innerHTML = statusBarHtml;
 }
 
 function updateCursor(mc, map, info) {

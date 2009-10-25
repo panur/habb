@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
 
 function addTripsControl(mapConfig, map) {
   var position =
@@ -90,7 +90,8 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
   var hideHtml = "";
 
   if (visibility == "visible") {
-    var hideHtml = "<a href='javascript:_hideTripsTable()'>" +
+    var hideHtml =
+      "<a title='Hide trips table' href='javascript:_hideTripsTable()'>" +
       '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '"></a>\n';
   }
 
@@ -113,6 +114,8 @@ function setTripsData(mapConfig, map) {
         arrayToStringDecode(mapConfig.trips.data[i].encodedVertexTimes));
       mapConfig.trips.data[i].gpsSpeedData =
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
+      mapConfig.trips.data[i].gpsAltitudeData =
+        arrayToStringDecode(mapConfig.trips.data[i].encodedGpsAltitudeData);
     }
     showTripsControl(mapConfig, map);
   });
