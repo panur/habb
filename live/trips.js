@@ -137,9 +137,10 @@ function arrayToStringDecode(encodedString) {
   var string = decodeURI(encodedString);
   var decodedArray = [];
   var offsetValue = string.charCodeAt(0);
+  var scale = string.charCodeAt(1) - offsetValue;
 
-  for (var i = 1; i < string.length; i++) {
-    decodedArray.push(string.charCodeAt(i) - offsetValue);
+  for (var i = 2; i < string.length; i++) {
+    decodedArray.push((string.charCodeAt(i) - offsetValue) * scale);
   }
 
   return decodedArray;

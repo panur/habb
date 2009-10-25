@@ -78,10 +78,10 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
       getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
 
     tripsConfig.data[tripIndex].encodedGpsSpeedData =
-      getEncodedGpsData(trks[0].getElementsByTagName("speed"), points);
+      getEncodedGpsData(trks[0].getElementsByTagName("speed"), 1);
 
     tripsConfig.data[tripIndex].encodedGpsAltitudeData =
-      getEncodedGpsData(trks[0].getElementsByTagName("ele"), points);
+      getEncodedGpsData(trks[0].getElementsByTagName("ele"), 2);
 
     tripsConfig.readyTrips += 1;
 
@@ -135,7 +135,7 @@ function getEncodedVertexTimes(encodedPolyline, points, times) {
 
   var encodedVertexTimes = runLengthEncode(vertexTimes);
 
-  encodedVertexTimes = arrayToStringEncode(encodedVertexTimes);
+  encodedVertexTimes = arrayToStringEncode(encodedVertexTimes, 1);
 
   return encodedVertexTimes;
 }
@@ -241,13 +241,13 @@ function getMaxAltitude(altitudeMeasurements, points) {
   return maxAltitude;
 }
 
-function getEncodedGpsData(measurements) {
+function getEncodedGpsData(measurements, scale) {
   var gpsData = [];
   var maxLength = 2000;
   var tmpArray = [];
 
   for (var i = 0; i < measurements.length; i++) {
-    var value = new Number(measurements[i].firstChild.nodeValue);
+    var value = (new Number(measurements[i].firstChild.nodeValue)) / scale;
     value = Math.max(value, 0);
     tmpArray.push(value);
   }
@@ -260,13 +260,13 @@ function getEncodedGpsData(measurements) {
     resizeArray(tmpArray, gpsData, maxLength);
   }
 
-  var encodedGpsData = arrayToStringEncode(gpsData);
+  var encodedGpsData = arrayToStringEncode(gpsData, scale);
 
   return encodedGpsData;
 }
 
-function arrayToStringEncode(sourceArray) {
-  var string = "0";
+function arrayToStringEncode(sourceArray, scale) {
+  var string = "0" + scale;
   var offsetValue = string.charCodeAt(0);
 
   for (var i = 0; i < sourceArray.length; i++) {
