@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-12-02 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -9,19 +9,26 @@ function addTripGraph(mapConfig, map, tripData) {
   var canvas = document.getElementById('tripGraphCanvas');
 
   if (canvas && canvas.getContext) {
-    setTripGraphConfig(mapConfig, tripData, canvas);
+    setTripGraphConfig(mapConfig, map, tripData, canvas);
     addTripGraphMouseListeners(mapConfig, map, tripGraph);
+    setTripGraphControl(mapConfig, tripData);
     drawTripGraph(mapConfig);
     resizeMapCanvas(map);
     addHideTripGraph(mapConfig);
   }
 }
 
-function setTripGraphConfig(mapConfig, tripData, canvas) {
+function setTripGraphConfig(mapConfig, map, tripData, canvas) {
   var originalGpsData;
 
   mapConfig.tripGraph.tripData = tripData;
   mapConfig.tripGraph.visibility = "visible";
+
+  if (typeof(mapConfig.tripGraph.tickInterval) == "undefined") {
+    var intervalMs = mapConfig.tripGraph.tickIntervalMs;
+    mapConfig.tripGraph.tickInterval =
+      window.setInterval(processTripGraphTick, intervalMs, mapConfig, map);
+  }
 
   if (mapConfig.tripGraph.types[0] == "Speed") {
     mapConfig.tripGraph.unit = "km/h";
@@ -43,15 +50,22 @@ function setTripGraphConfig(mapConfig, tripData, canvas) {
               canvas.width - mapConfig.tripGraph.origo.x);
 }
 
+function processTripGraphEvent(mapConfig, map, event) {
+  var origo = mapConfig.tripGraph.origo;
+  var canvas = document.getElementById('tripGraphCanvas');
+  if ((event.clientX > origo.x) && (event.clientX < canvas.width)) {
+    mapConfig.tripGraph.lastRatio =
+      (event.clientX - origo.x) / (canvas.width - origo.x);
+    updateTripCursor(mapConfig, map);
+    updateTripCraphStatusBar(mapConfig);
+    drawTripGraph(mapConfig);
+  }
+}
+
 function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   tripGraph.onmousemove = function(event) {
-    var origo = mapConfig.tripGraph.origo;
-    var canvas = document.getElementById('tripGraphCanvas');
-    if ((event.clientX > origo.x) && (event.clientX < canvas.width)) {
-      mapConfig.tripGraph.lastRatio =
-        (event.clientX - origo.x) / (canvas.width - origo.x);
-      addTripGraphMarker(mapConfig, map);
-      updateTripCraphStatusBar(mapConfig);
+    if (mapConfig.tripGraph.player.state == "stop") {
+      processTripGraphEvent(mapConfig, map, event);
     }
   };
 
@@ -62,13 +76,16 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 
   tripGraph.onmouseout = function() {
-    if (mapConfig.tripGraph.marker) {
-      map.removeOverlay(mapConfig.tripGraph.marker);
+    if (mapConfig.tripGraph.player.state == "stop") {
+      stopTrip(mapConfig, map);
     }
   };
 
   tripGraph.onclick = function(event) {
-    map.setCenter(mapConfig.tripGraph.marker.getLatLng(),
+    if (mapConfig.tripGraph.player.state != "stop") {
+      processTripGraphEvent(mapConfig, map, event);
+    }
+    map.setCenter(mapConfig.tripGraph.tripCursor[0].getLatLng(),
                   mapConfig.zoomToPointZoomLevel);
   };
 
@@ -77,27 +94,40 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 }
 
-function addTripGraphMarker(mapConfig, map) {
+function updateTripCursor(mapConfig, map) {
   var tripData = mapConfig.tripGraph.tripData;
-  var markerTime = mapConfig.tripGraph.lastRatio * tripData.gpsDurationSeconds;
-  var vertexIndex = getTripGraphMarkerVertexIndex(markerTime, tripData);
+  var vertexTime = mapConfig.tripGraph.lastRatio * tripData.gpsDurationSeconds;
+  var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
   var marker = getTripGraphMarker(tripData.polyline, vertexIndex);
 
-  if (mapConfig.tripGraph.marker) {
-    map.removeOverlay(mapConfig.tripGraph.marker);
+  if (mapConfig.tripGraph.tripCursor.length >
+      mapConfig.tripGraph.maxTripCursorLength) {
+    map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
   }
 
-  mapConfig.tripGraph.marker = marker;
+  mapConfig.tripGraph.tripCursor.unshift(marker);
 
   map.addOverlay(marker);
+
+  if (mapConfig.tripGraph.player.state == "play") {
+    if (map.getBounds().containsLatLng(marker.getLatLng()) == false) {
+      map.panTo(marker.getLatLng());
+    }
+  }
 }
 
-function getTripGraphMarkerVertexIndex(markerTime, tripData) {
+function removeTripCursor(mapConfig, map) {
+  while (mapConfig.tripGraph.tripCursor.length > 0) {
+    map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
+  }
+}
+
+function getTripGraphVertexIndex(vertexTime, tripData) {
   var timeFromStart = 0;
 
-  for (var i = 0; i < tripData.vertexTimes.length - 1; i++) {
+  for (var i = 0; i < tripData.vertexTimes.length; i++) {
     timeFromStart += new Number(tripData.vertexTimes[i]);
-    if (timeFromStart > markerTime) {
+    if (timeFromStart > vertexTime) {
       return i;
     }
   }
@@ -118,19 +148,17 @@ function updateTripCraphStatusBar(mapConfig) {
   var type = mapConfig.tripGraph.types[0];
   var tripData = mapConfig.tripGraph.tripData;
   var ratio = mapConfig.tripGraph.lastRatio;
-  var value = tripData.graphData[Math.round(ratio * tripData.graphData.length)];
+  var value = tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
   var unit = mapConfig.tripGraph.unit;
   var time = getTimeString(ratio * tripData.gpsDurationSeconds);
   var yScale = 1 / mapConfig.tripGraph.yUnitToPixelRatio;
   var xScale =
     Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
-  var latLng = mapConfig.tripGraph.marker.getLatLng();
+  var latLng = mapConfig.tripGraph.tripCursor[0].getLatLng();
   latLng = Math.round(latLng.lat() * 10000)/10000 + " / " +
            Math.round(latLng.lng() * 10000)/10000;
 
-  var statusHtml = "<a title='Toggle type of trip graph' " +
-    "href='javascript:_toggleTripGraphType()'>" + type + "</a>=" +
-    value + " " + unit + ", time=" + time +
+  var statusHtml = type + "=" + value + " " + unit + ", time=" + time +
     " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
     " s), Lat/Lng=" + latLng;
 
@@ -152,15 +180,114 @@ function _toggleTripGraphType() {
 function toggleTripGraphType(mapConfig, map) {
   mapConfig.tripGraph.types.reverse();
   addTripGraph(mapConfig, map, mapConfig.tripGraph.tripData);
-  updateTripCraphStatusBar(mapConfig);
+}
+
+function setTripGraphControl(mapConfig) {
+  var play = "<a title='Start trip playing' " +
+             "href='javascript:_controlTripPlayer(\"play\")'>Play</a>";
+  var pause = "<a title='Pause trip playing' " +
+              "href='javascript:_controlTripPlayer(\"pause\")'>Pause</a>";
+  var stop = "<a title='Stop trip playing' " +
+             "href='javascript:_controlTripPlayer(\"stop\")'>Stop</a>";
+  var slower1x = "<a title='Slower (-1x)' " +
+                 "href='javascript:_controlTripPlayer(\"slower1x\")'><</a>";
+  var faster1x = "<a title='Faster (+1x)' " +
+                 "href='javascript:_controlTripPlayer(\"faster1x\")'>></a>";
+  var slower10x = "<a title='Slower (-10x)' " +
+                  "href='javascript:_controlTripPlayer(\"slower10x\")'><</a>";
+  var faster10x = "<a title='Faster (+10x)' " +
+                  "href='javascript:_controlTripPlayer(\"faster10x\")'>></a>";
+
+  var speed = " " + mapConfig.tripGraph.player.speed + "x ";
+  var speedControl = slower10x + slower1x + speed + faster1x + faster10x;
+  var html = "";
+
+  if (mapConfig.tripGraph.player.state == "stop") {
+    html = play + " | Stop  | <<" + speed + ">>";
+  } else if (mapConfig.tripGraph.player.state == "play") {
+    html = pause + " | " + stop + " | " + speedControl;
+  } else if (mapConfig.tripGraph.player.state == "pause") {
+    html = play + " | " + stop + " | " + speedControl;
+  }
+
+  html += " / <a title='Toggle type of trip graph' " +
+    "href='javascript:_toggleTripGraphType()'>Show " + mapConfig.tripGraph.types[1] + "</a>";
+
+  document.getElementById("trip_graph_control").innerHTML = html;
+}
+
+function _controlTripPlayer(controlType) {
+  controlTripPlayer(gMapConfig, gMap, controlType);
+}
+
+function controlTripPlayer(mapConfig, map, controlType) {
+  if (controlType == "play") {
+    if (mapConfig.tripGraph.player.state == "stop") {
+      mapConfig.tripGraph.lastRatio = 0;
+    }
+    mapConfig.tripGraph.player.state = "play";
+    setTripGraphControl(mapConfig);
+  } else if (controlType == "pause") {
+    mapConfig.tripGraph.player.state = "pause";
+    setTripGraphControl(mapConfig);
+  } else if (controlType == "stop") {
+    stopTrip(mapConfig, map);
+  } else if (controlType == "slower10x") {
+    mapConfig.tripGraph.player.speed -= 10;
+    setTripGraphControl(mapConfig);
+  } else if (controlType == "slower1x") {
+    mapConfig.tripGraph.player.speed -= 1;
+    setTripGraphControl(mapConfig);
+  } else if (controlType == "faster1x") {
+    mapConfig.tripGraph.player.speed += 1;
+    setTripGraphControl(mapConfig);
+  } else if (controlType == "faster10x") {
+    mapConfig.tripGraph.player.speed += 10;
+    setTripGraphControl(mapConfig);
+  }
+}
+
+function processTripGraphTick(mapConfig, map) {
+  if (mapConfig.tripGraph.player.state == "play") {
+    var player = mapConfig.tripGraph.player;
+    var tripData = mapConfig.tripGraph.tripData;
+    var intervalMs = mapConfig.tripGraph.tickIntervalMs;
+    var ratioIncrement =
+      ((intervalMs / 1000) * player.speed) / tripData.gpsDurationSeconds;
+
+    mapConfig.tripGraph.lastRatio += ratioIncrement;
+
+    if (mapConfig.tripGraph.lastRatio < 1) {
+      updateTripCursor(mapConfig, map);
+      updateTripCraphStatusBar(mapConfig);
+      drawTripGraph(mapConfig);
+    } else {
+      stopTrip(mapConfig, map);
+    }
+  } else {
+    if (mapConfig.tripGraph.tripCursor.length > 1) {
+      map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
+    }
+  }
+}
+
+function stopTrip(mapConfig, map) {
+  mapConfig.tripGraph.player.state = "stop";
+  mapConfig.tripGraph.lastRatio = 0;
+  removeTripCursor(mapConfig, map);
+  drawTripGraph(mapConfig);
+  setTripGraphControl(mapConfig);
 }
 
 function drawTripGraph(mapConfig) {
   var canvas = document.getElementById('tripGraphCanvas');
 
+  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+
   drawXAxis(mapConfig, canvas);
   drawYAxis(mapConfig, canvas);
   drawGraph(mapConfig, canvas);
+  drawGraphCursor(mapConfig, canvas);
 }
 
 function drawGraph(mapConfig, canvas) {
@@ -184,6 +311,20 @@ function drawGraph(mapConfig, canvas) {
   ctx.fill();
 }
 
+function drawGraphCursor(mapConfig, canvas) {
+  var origo = mapConfig.tripGraph.origo;
+  var x = origo.x + mapConfig.tripGraph.lastRatio * (canvas.width - origo.x);
+  var ctx = canvas.getContext('2d');
+
+  if (mapConfig.tripGraph.lastRatio > 0) {
+    ctx.beginPath();
+    ctx.strokeStyle = "#000000";
+    ctx.moveTo(x, origo.y);
+    ctx.lineTo(x, origo.y - canvas.height);
+    ctx.stroke();
+  }
+}
+
 function drawXAxis(mapConfig, canvas) {
   var tripData = mapConfig.tripGraph.tripData;
   var origo = mapConfig.tripGraph.origo;
@@ -197,8 +338,7 @@ function drawXAxis(mapConfig, canvas) {
   ctx.stroke();
 
   /* scale */
-  var steps = new Number(tripData.gpsDuration.substr(0, 2)) +
-              (new Number(tripData.gpsDuration.substr(3, 2)) / 60);
+  var steps = tripData.gpsDurationSeconds / 3600;
   var xStep = (canvas.width - origo.x) / steps;
   for (var i = 1; i <= Math.floor(steps); i++) {
     var x = origo.x + (xStep * i);
@@ -293,14 +433,16 @@ function addHideTripGraph(mapConfig) {
 }
 
 function _hideTripGraph() {
-  hideTripGraph(gMapConfig);
+  hideTripGraph(gMapConfig, gMap);
 }
 
-function hideTripGraph(mapConfig) {
+function hideTripGraph(mapConfig, map) {
   if (mapConfig.tripGraph.visibility == "visible") {
     mapConfig.tripGraph.visibility = "hidden";
+    stopTrip(mapConfig, map);
 
     document.getElementById("trip_graph").innerHTML = "";
+    document.getElementById("trip_graph_control").innerHTML = "";
     document.getElementById("tripGraphHide").innerHTML = "";
 
     _resizeMap();

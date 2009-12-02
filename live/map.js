@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-12-02 */
 
 var gMap;
 var gMapConfig;
@@ -129,7 +129,9 @@ function createMapConfig(showExtensions) {
                      directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
-                         types:["Speed", "Altitude"]};
+                         types:["Speed", "Altitude"], lastRatio:0,
+                         tripCursor:[], maxTripCursorLength:10,
+                         tickIntervalMs:200, player:{state:"stop", speed:50}};
 
   return mapConfig;
 }
@@ -537,9 +539,11 @@ function addOverlaysToMap(mc, map) {
 
 function addMouseListeners(mapConfig, map) {
   GEvent.addListener(map, "mousemove", function(point) {
-    var info = getInfo(mapConfig, map, point);
-    updateStatusBar(info);
-    updateCursor(mapConfig, map, info);
+    if (mapConfig.tripGraph.player.state == "stop") {
+      var info = getInfo(mapConfig, map, point);
+      updateStatusBar(info);
+      updateCursor(mapConfig, map, info);
+    }
   });
 
   GEvent.addListener(map, "mouseout", function(point) {
@@ -798,6 +802,7 @@ function resizeMapCanvas(map) {
   document.getElementById("map_canvas").style.height =
     document.documentElement.clientHeight -
     document.getElementById("trip_graph").clientHeight -
+    document.getElementById("trip_graph_control").clientHeight -
     document.getElementById("status_bar").clientHeight -
     document.getElementById("statistics").clientHeight + "px";
 
