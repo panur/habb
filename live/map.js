@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-12-02 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-05-13 */
 
 var gMap;
 var gMapConfig;
@@ -53,13 +53,14 @@ function createMapConfig(showExtensions) {
 
   mapConfig.filenames = {points:"generated_points.xml",
     visitedDataLatest:"visited_datas/latest.xml",
-    visitedData2008:"visited_datas/2008.xml", tripsData:"tripsData.xml"};
+    visitedData2008:"visited_datas/2008.xml",
+    visitedData2009:"visited_datas/2009.xml", tripsData:"tripsData.xml"};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
 
   mapConfig.initialZL = 10;
-  mapConfig.initialLatLng = new GLatLng(60.250460, 24.862446);
+  mapConfig.initialLatLng = new GLatLng(60.2558, 24.8275);
   mapConfig.zoomToPointZoomLevel = 14;
 
   mapConfig.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
@@ -102,26 +103,26 @@ function createMapConfig(showExtensions) {
 
   if (mapConfig.showExtensions) {
     mapConfig.filenames.points = "generated_points_ext.xml";
-    mapConfig.lngPages = 11;
-    mapConfig.kkjStart = {lat:65, lng:26};
+    mapConfig.lngPages = 12;
+    mapConfig.kkjStart = {lat:65, lng:22};
 
-    mapConfig.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:4},
-                      {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:9},
-                      {n:26, lngOffsetKm:0,  latOffsetKm:10, lengthP:11}];
-
-
-    mapConfig.lngs = [{n:17, lngOffsetKm:0,  latOffsetKm:0,  lengthP:7},
-                      {n:20, lngOffsetKm:17, latOffsetKm:5,  lengthP:6},
-                      {n:8,  lngOffsetKm:37, latOffsetKm:10, lengthP:5}];
+    mapConfig.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:5},
+                      {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:10},
+                      {n:26, lngOffsetKm:0,  latOffsetKm:10, lengthP:12}];
 
 
-    mapConfig.pages = ['A', 'B',   1,   2,  0,  0,   0,  0,  0,   0,   0,
-                       'C',   3,   4,   5,  6,  7,   8,  9, 10,   0,   0,
-                       'D',  11,  12,  13, 14, 15,  16, 17, 18,  19, 'E',
-                       'F',  20,  21,  22, 23, 24,  25, 26, 27,  28, 'G',
-                       'H', 'I',  29,  30, 31, 32,  33, 34, 35,  36, 'J',
-                       'K', 'L',  37,  38, 39, 40,  41, 42, 43,  44, 'M',
-                       'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
+    mapConfig.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:7},
+                      {n:20, lngOffsetKm:21, latOffsetKm:5,  lengthP:6},
+                      {n:8,  lngOffsetKm:41, latOffsetKm:10, lengthP:5}];
+
+
+    mapConfig.pages = ['a', 'A', 'B',   1,   2,  0,  0,   0,  0,  0,   0,   0,
+                       'b', 'C',   3,   4,   5,  6,  7,   8,  9, 10,   0,   0,
+                       'c', 'D',  11,  12,  13, 14, 15,  16, 17, 18,  19, 'E',
+                       'd', 'F',  20,  21,  22, 23, 24,  25, 26, 27,  28, 'G',
+                       'e', 'H', 'I',  29,  30, 31, 32,  33, 34, 35,  36, 'J',
+                       'f', 'K', 'L',  37,  38, 39, 40,  41, 42, 43,  44, 'M',
+                       'g', 'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
@@ -720,6 +721,11 @@ function getActionsHtml(mapConfig, point, zl) {
         "<li><a href='javascript:changeVisitedData(2008)'>end of 2008</a></li>";
   }
   if (gMapConfig.filenames.visitedData !=
+      gMapConfig.filenames.visitedData2009) {
+    visitedDataList +=
+        "<li><a href='javascript:changeVisitedData(2009)'>end of 2009</a></li>";
+  }
+  if (gMapConfig.filenames.visitedData !=
       gMapConfig.filenames.visitedDataLatest) {
     visitedDataList +=
       "<li><a href='javascript:changeVisitedData(\"latest\")'>latest</a></li>";
@@ -772,6 +778,8 @@ function toggleShowExtensions() {
 function changeVisitedData(newTarget) {
   if (newTarget == 2008) {
     setVisitedData(gMapConfig.filenames.visitedData2008, "from end of 2008");
+  } else if (newTarget == 2009) {
+    setVisitedData(gMapConfig.filenames.visitedData2009, "from end of 2009");
   } else {
     setVisitedData(gMapConfig.filenames.visitedDataLatest, "latest");
   }
