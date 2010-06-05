@@ -67,3 +67,23 @@ div.trip_graph {
   color: #000000;
   background-color: #FFFFFF;
 }
+
+a.real_link:link {
+  color: #0000ff;
+  background-color: #ffffff;
+}
+
+a.real_link:link:hover {
+  color: #ffffff;
+  background-color: #0000ff;
+}
+
+a.real_link:visited {
+  color: #606060;
+  background-color: #ffffff;
+}
+
+a.real_link:visited:hover {
+  color: #ffffff;
+  background-color: #606060;
+}
