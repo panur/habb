@@ -1,37 +1,29 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-05-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-06 */
 
 var gMap;
 var gMapConfig;
 
 function load() {
-  if (GBrowserIsCompatible()) {
-    if (document.implementation.hasFeature(
-        "http://www.w3.org/TR/SVG11/feature#SVG","1.1")) {
-      /* needed for Opera */
-      _mSvgEnabled = true;
-      _mSvgForced  = true;
-    }
+  var mOptions = {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    streetViewControl: true
+  };
 
-    gMap = new GMap2(document.getElementById("map_canvas"));
-    gMap.enableScrollWheelZoom();
-    gMap.addControl(new GLargeMapControl());
-    gMap.addControl(new GMapTypeControl());
-    gMap.addControl(new GScaleControl());
+  gMap = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
 
-    gMapConfig = createMapConfig(true);
+  gMapConfig = createMapConfig(true);
 
-    initMap(gMap, gMapConfig);
-  }
+  initMap(gMap, gMapConfig);
 }
 
 function initMap(map, mapConfig) {
-  map.setCenter(mapConfig.initialLatLng, mapConfig.initialZL);
+  map.setOptions({center: mapConfig.initialLatLng, zoom: mapConfig.initialZL});
 
-  GEvent.addListener(map, "pointsAreInMapConfig", function() {
+  google.maps.event.addListener(map, "pointsAreInMapConfig", function() {
     setKm2sToMapConfig(mapConfig, map);
   });
 
-  GEvent.addListener(map, "km2sAreInMapConfig", function() {
+  google.maps.event.addListener(map, "km2sAreInMapConfig", function() {
     updateMapGrid(mapConfig);
     mapConfig.visitedStatusAreas = getVisitedStatusAreas(mapConfig, map);
     updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
@@ -60,7 +52,7 @@ function createMapConfig(showExtensions) {
   mapConfig.visitedDataDescription = "latest";
 
   mapConfig.initialZL = 10;
-  mapConfig.initialLatLng = new GLatLng(60.2558, 24.8275);
+  mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
   mapConfig.zoomToPointZoomLevel = 14;
 
   mapConfig.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
@@ -126,8 +118,8 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new GSize(214, 7), numberOfVisibleTrips:0,
-                     directionMarkers:[]};
+                     controlPosition:new google.maps.Size(214, 27),
+                     numberOfVisibleTrips:0, directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,
@@ -147,8 +139,7 @@ function setPointsToMapConfig(mapConfig, map) {
     }
   }
 
-  GDownloadUrl(mapConfig.filenames.points, function(data, responseCode) {
-    var xml = GXml.parse(data);
+  downloadUrl(mapConfig.filenames.points, function(xml, responseCode) {
     var p = xml.documentElement.getElementsByTagName("point");
     mapConfig.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
     mapConfig.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
@@ -158,11 +149,11 @@ function setPointsToMapConfig(mapConfig, map) {
       var x = parseInt(p[i].getAttribute("kkj_lng")) - mapConfig.kkjOffset.lng;
       var lat = parseFloat(p[i].getAttribute("lat"));
       var lng = parseFloat(p[i].getAttribute("lng"));
-      points[y][x] = new GLatLng(lat, lng);
+      points[y][x] = new google.maps.LatLng(lat, lng);
     }
 
     mapConfig.points = points;
-    GEvent.trigger(map, "pointsAreInMapConfig");
+    google.maps.event.trigger(map, "pointsAreInMapConfig");
   });
 }
 
@@ -187,9 +178,8 @@ function setKm2sToMapConfig(mc, map) {
 }
 
 function setVisitedDataToKm2s(mapConfig, map) {
-  GDownloadUrl(mapConfig.filenames.visitedData, function(data, responseCode) {
+  downloadUrl(mapConfig.filenames.visitedData, function(xml, responseCode) {
     var allInPage = [];
-    var xml = GXml.parse(data);
     var pages = xml.documentElement.getElementsByTagName("page");
 
     for (var i = 0; i < pages.length; i++) {
@@ -226,7 +216,7 @@ function setVisitedDataToKm2s(mapConfig, map) {
       }
     }
 
-    GEvent.trigger(map, "km2sAreInMapConfig");
+    google.maps.event.trigger(map, "km2sAreInMapConfig");
   });
 }
 
@@ -241,7 +231,6 @@ function getIndexOf(array, value) {
 }
 
 function updateMapGrid(mc) {
-  var polylineEncoder = new PolylineEncoder();
   var color;
 
   mc.grid.latPolylines = [];
@@ -256,8 +245,10 @@ function updateMapGrid(mc) {
       }
       color = ((lines++ % mc.latKmPerP) == 0) ?
               mc.grid.colors.page : mc.grid.colors.km2;
-      var lat = polylineEncoder.dpEncodeToGPolyline(
-        points, color, mc.grid.weight, mc.grid.opacity);
+      var lat = new google.maps.Polyline({
+        path: points, strokeColor: color, strokeWeight: mc.grid.weight,
+        strokeOpacity: mc.grid.opacity
+      });
       mc.grid.latPolylines.push(lat);
     }
   }
@@ -272,15 +263,16 @@ function updateMapGrid(mc) {
 
       color = ((lines++ % mc.lngKmPerP) == 0) ?
               mc.grid.colors.page : mc.grid.colors.km2;
-      var lng = polylineEncoder.dpEncodeToGPolyline(
-        points, color, mc.grid.weight, mc.grid.opacity);
+      var lng = new google.maps.Polyline({
+        path: points, strokeColor: color, strokeWeight: mc.grid.weight,
+        strokeOpacity: mc.grid.opacity
+      });
       mc.grid.lngPolylines.push(lng);
     }
   }
 }
 
 function getVisitedStatusAreas(mc) {
-  var polylineEncoder = new PolylineEncoder();
   var polygonGroups = {};
   polygonGroups.np = getPolygonGroup(mc, "np");
   polygonGroups.no = getPolygonGroup(mc, "no");
@@ -297,19 +289,19 @@ function getVisitedStatusAreas(mc) {
   }
 
   for (var i in polygonGroups) {
-    var jsons = [];
+    var paths = [];
     for (var j = 0; j < polygonGroups[i].length; j++) {
-      var json = polylineEncoder.dpEncodeToJSON(polygonGroups[i][j]);
-      jsons.push(json);
+      paths.push(polygonGroups[i][j]);
     }
 
-    var polygon = new GPolygon.fromEncoded({
-      polylines: jsons,
-      fill: true,
-      color: mc.area.colors[i],
-      opacity: mc.area.opacity,
-      outline: false
-    });;
+    var polygon = new google.maps.Polygon({
+      paths: paths,
+      strokeColor: mc.area.colors[i],
+      strokeWeight: 1,
+      strokeOpacity: 0.5,
+      fillColor: mc.area.colors[i],
+      fillOpacity: mc.area.opacity
+    });
 
     visitedStatusAreas.push(polygon);
   }
@@ -522,40 +514,48 @@ function setStatistics(mapConfig) {
 }
 
 function addOverlaysToMap(mc, map) {
+  addOrRemoveOverlays(mc, map, map);
+}
+
+function removeOverlaysFromMap(mc, map) {
+  addOrRemoveOverlays(mc, map, null);
+}
+
+function addOrRemoveOverlays(mc, map, mapOrNull) {
   for (var i = 0; i < mc.visitedStatusAreas.length; i++) {
     mc.visitedStatusAreas[i].opacity = mc.area.opacity;
-    map.addOverlay(mc.visitedStatusAreas[i]);
+    mc.visitedStatusAreas[i].setMap(mapOrNull);
   }
 
   for (var i = 0; i < mc.grid.latPolylines.length; i++) {
-    map.addOverlay(mc.grid.latPolylines[i]);
+    mc.grid.latPolylines[i].setMap(mapOrNull);
   }
 
   for (var i = 0; i < mc.grid.lngPolylines.length; i++) {
-    map.addOverlay(mc.grid.lngPolylines[i]);
+    mc.grid.lngPolylines[i].setMap(mapOrNull);
   }
 
   addTripsOverlaysToMap(mc, map);
 }
 
 function addMouseListeners(mapConfig, map) {
-  GEvent.addListener(map, "mousemove", function(point) {
+  google.maps.event.addListener(map, "mousemove", function(event) {
     if (mapConfig.tripGraph.player.state == "stop") {
-      var info = getInfo(mapConfig, map, point);
+      var info = getInfo(mapConfig, map, event.latLng);
       updateStatusBar(info);
       updateCursor(mapConfig, map, info);
     }
   });
 
-  GEvent.addListener(map, "mouseout", function(point) {
+  google.maps.event.addListener(map, "mouseout", function(event) {
     if (mapConfig.cursor)  {
-      map.removeOverlay(mapConfig.cursor);
+      mapConfig.cursor.setMap(null);
     }
   });
 
-  GEvent.addListener(map, "singlerightclick", function(point, src, overlay) {
-    if ((overlay) && (overlay.color)) {
-      var latLng = map.fromContainerPixelToLatLng(point);
+  google.maps.event.addListener(map, "singlerightclick", function(event, src, overlay) {
+    if ((overlay) && (overlay.color)) { // tbd
+      var latLng = map.fromContainerPixelToLatLng(event.latLng);
       var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
       var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
       var tabs = [new GInfoWindowTab("Links", linksHtml),
@@ -604,8 +604,8 @@ function getKm2XYFromPoint(mc, point) {
 
   for (var i = 0, lines = 0; i < mc.grid.latPolylines.length; i++) {
     var line = mc.grid.latPolylines[i];
-    var p1 = line.getVertex(0);
-    var p2 = line.getVertex(line.getVertexCount() - 1);
+    var p1 = line.getPath().getAt(0);
+    var p2 = line.getPath().getAt(line.getPath().length - 1);
     var mp = 1 - (point.lng() - p1.lng()) / (p2.lng() - p1.lng());
     var lat = p2.lat() + (p1.lat() - p2.lat()) * mp;
 
@@ -617,8 +617,8 @@ function getKm2XYFromPoint(mc, point) {
 
   for (var i = 0, lines = 0; i < mc.grid.lngPolylines.length; i++) {
     var line = mc.grid.lngPolylines[i];
-    var p1 = line.getVertex(0);
-    var p2 = line.getVertex(line.getVertexCount() - 1);
+    var p1 = line.getPath().getAt(0);
+    var p2 = line.getPath().getAt(line.getPath().length - 1);
     var mp = 1 - (point.lat() - p2.lat()) / (p1.lat() - p2.lat());
     var lng = p1.lng() + (p2.lng() - p1.lng()) * mp;
 
@@ -668,17 +668,22 @@ function updateCursor(mc, map, info) {
     if (mc.cursorParams.kkj == info.kkjText) {
       return;
     } else {
-      map.removeOverlay(mc.cursor);
+      mc.cursor.setMap(null);
       mc.cursorParams.kkj = "-";
     }
   }
 
   if ((info.km2XY) && (map.getZoom() < mc.cursorParams.maxZoomLevel)) {
     var points = mc.km2s[info.km2XY.y][info.km2XY.x].points;
-    mc.cursor = new GPolygon(points, mc.cursorParams.strokeColor,
-      mc.cursorParams.strokeWeight, mc.cursorParams.strokeOpacity,
-      mc.cursorParams.fillColor, mc.cursorParams.fillOpacity);
-    map.addOverlay(mc.cursor);
+    mc.cursor = new google.maps.Polygon({
+      paths: points,
+      strokeColor: mc.cursorParams.strokeColor,
+      strokeWeight: mc.cursorParams.strokeWeight,
+      strokeOpacity: mc.cursorParams.strokeOpacity,
+      fillColor: mc.cursorParams.fillColor,
+      fillOpacity: mc.cursorParams.fillOpacity
+    });
+    mc.cursor.setMap(map);
     mc.cursorParams.kkj = info.kkjText;
   }
 }
@@ -746,13 +751,13 @@ function getActionsHtml(mapConfig, point, zl) {
 }
 
 function zoomToPoint(lat, lng) {
-  var latLng = new GLatLng(parseFloat(lat), parseFloat(lng));
+  var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
-  gMap.setCenter(latLng, gMapConfig.zoomToPointZoomLevel);
+  gMap.setOptions({center: latLng, zoom: gMapConfig.zoomToPointZoomLevel});
 }
 
 function toggleOpacity() {
-  gMap.clearOverlays();
+  removeOverlaysFromMap(gMapConfig, gMap);
 
   if (gMapConfig.area.opacity == gMapConfig.area.opacityHigh) {
     gMapConfig.area.opacity = gMapConfig.area.opacityLow;
@@ -760,12 +765,12 @@ function toggleOpacity() {
     gMapConfig.area.opacity = gMapConfig.area.opacityHigh;
   }
 
-  addOverlaysToMap(gMapConfig, gMap);
+  addOverlaysToMap(gMapConfig, gMap); // tbd see setVisitedData
 }
 
 function toggleShowExtensions() {
-  gMap.clearOverlays();
-  GEvent.clearInstanceListeners(gMap);
+  removeOverlaysFromMap(gMapConfig, gMap);
+  GEvent.clearInstanceListeners(gMap); // tbd
 
   document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;
@@ -786,7 +791,7 @@ function changeVisitedData(newTarget) {
 }
 
 function setVisitedData(filename, visitedDataDescription) {
-  gMap.clearOverlays();
+  removeOverlaysFromMap(gMapConfig, gMap);
 
   gMapConfig.filenames.visitedData = filename;
   gMapConfig.visitedDataDescription = visitedDataDescription;
@@ -814,5 +819,64 @@ function resizeMapCanvas(map) {
     document.getElementById("status_bar").clientHeight -
     document.getElementById("statistics").clientHeight + "px";
 
-  map.checkResize();
+  google.maps.event.trigger(map, "resize");
+}
+
+// tbd
+
+/**
+* Returns an XMLHttp instance to use for asynchronous
+* downloading. This method will never throw an exception, but will
+* return NULL if the browser does not support XmlHttp for any reason.
+* @return {XMLHttpRequest|Null}
+*/
+function createXmlHttpRequest() {
+ try {
+   if (typeof ActiveXObject != 'undefined') {
+     return new ActiveXObject('Microsoft.XMLHTTP');
+   } else if (window["XMLHttpRequest"]) {
+     return new XMLHttpRequest();
+   }
+ } catch (e) {
+    alert(e);
+   //changeStatus(e);
+ }
+ return null;
+}
+
+/**
+* This functions wraps XMLHttpRequest open/send function.
+* It lets you specify a URL and will call the callback if
+* it gets a status code of 200.
+* @param {String} url The URL to retrieve
+* @param {Function} callback The function to call once retrieved.
+*/
+function downloadUrl(url, callback) {
+ var status = -1;
+ var request = createXmlHttpRequest();
+ if (!request) {
+   return false;
+ }
+
+ request.onreadystatechange = function() {
+   if (request.readyState == 4) {
+     try {
+       status = request.status;
+     } catch (e) {
+       // Usually indicates request timed out in FF.
+     }
+     if ((status == 0) || (status == 200)) { // tbd
+       callback(request.responseXML, request.status);
+       request.onreadystatechange = function() {};
+     }
+   }
+ }
+ request.open('GET', url, true);
+ try {
+   request.send(null);
+ } catch (e) {
+    setStatusBarHtml(e);
+    alert(e);
+   //changeStatus(e);
+ }
 }

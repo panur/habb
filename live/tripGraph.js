@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-12-02 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-06 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -71,7 +71,7 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
 
   tripGraph.onmouseover = function() {
     if (mapConfig.cursor)  {
-      map.removeOverlay(mapConfig.cursor);
+      mapConfig.cursor.setMap(null);
     }
   };
 
@@ -85,12 +85,13 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
     if (mapConfig.tripGraph.player.state != "stop") {
       processTripGraphEvent(mapConfig, map, event);
     }
-    map.setCenter(mapConfig.tripGraph.tripCursor[0].getLatLng(),
-                  mapConfig.zoomToPointZoomLevel);
+    map.setOptions({center: mapConfig.tripGraph.tripCursor[0].getPosition(),
+                    zoom: mapConfig.zoomToPointZoomLevel});
   };
 
   tripGraph.ondblclick = function(event) {
-    map.returnToSavedPosition();
+    //map.returnToSavedPosition();
+    // tbd
   };
 }
 
@@ -102,23 +103,24 @@ function updateTripCursor(mapConfig, map) {
 
   if (mapConfig.tripGraph.tripCursor.length >
       mapConfig.tripGraph.maxTripCursorLength) {
-    map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
+    mapConfig.tripGraph.tripCursor.pop().setMap(null);
   }
 
   mapConfig.tripGraph.tripCursor.unshift(marker);
 
-  map.addOverlay(marker);
+  marker.setMap(map);
 
   if (mapConfig.tripGraph.player.state == "play") {
-    if (map.getBounds().containsLatLng(marker.getLatLng()) == false) {
-      map.panTo(marker.getLatLng());
-    }
+    //if (map.getBounds().containsLatLng(marker.getPosition()) == false) {
+    //  map.panTo(marker.getPosition());
+    //}
+    // tbd
   }
 }
 
 function removeTripCursor(mapConfig, map) {
   while (mapConfig.tripGraph.tripCursor.length > 0) {
-    map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
+    mapConfig.tripGraph.tripCursor.pop().setMap(null);
   }
 }
 
@@ -136,10 +138,10 @@ function getTripGraphVertexIndex(vertexTime, tripData) {
 }
 
 function getTripGraphMarker(polyline, vertexIndex) {
-  var p1 = polyline.getVertex(vertexIndex);
-  var p2 = polyline.getVertex(vertexIndex + 1);
+  var p1 = polyline.getPath().getAt(vertexIndex);
+  var p2 = polyline.getPath().getAt(vertexIndex + 1);
   var direction = getLineDirection(p1, p2);
-  var marker = new GMarker(p1, getDirectionIcon(direction));
+  var marker = getDirectionMarker(p1, direction);
 
   return marker;
 }
@@ -154,7 +156,7 @@ function updateTripCraphStatusBar(mapConfig) {
   var yScale = 1 / mapConfig.tripGraph.yUnitToPixelRatio;
   var xScale =
     Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
-  var latLng = mapConfig.tripGraph.tripCursor[0].getLatLng();
+  var latLng = mapConfig.tripGraph.tripCursor[0].getPosition();
   latLng = Math.round(latLng.lat() * 10000)/10000 + " / " +
            Math.round(latLng.lng() * 10000)/10000;
 
@@ -266,7 +268,7 @@ function processTripGraphTick(mapConfig, map) {
     }
   } else {
     if (mapConfig.tripGraph.tripCursor.length > 1) {
-      map.removeOverlay(mapConfig.tripGraph.tripCursor.pop());
+      mapConfig.tripGraph.tripCursor.pop().setMap(null);
     }
   }
 }

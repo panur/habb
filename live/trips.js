@@ -1,19 +1,18 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-06 */
 
 function addTripsControl(mapConfig, map) {
-  var position =
-    new GControlPosition(G_ANCHOR_TOP_RIGHT, mapConfig.trips.controlPosition);
+  // tbd mapConfig.trips.controlPosition
 
   var tripsControl = document.createElement("div");
   tripsControl.id = "tripsControl";
   tripsControl.className = "trips";
   document.getElementById("map_canvas").appendChild(tripsControl);
-  position.apply(tripsControl);
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(tripsControl); // tbd
 
   var tripsTableHide = document.createElement("div");
   tripsTableHide.id = "tripsTableHide";
   document.getElementById("map_canvas").appendChild(tripsTableHide);
-  position.apply(tripsTableHide);
+  map.controls[google.maps.ControlPosition.RIGHT].push(tripsTableHide); // tbd
 
   showTripsControl(mapConfig, map);
 }
@@ -25,9 +24,9 @@ function addTripsOverlaysToMap(mapConfig, map) {
 
   for (var i = 0; i < mapConfig.trips.data.length; i++) {
     if (mapConfig.trips.data[i].visibility == "visible") {
-      map.addOverlay(mapConfig.trips.data[i].polyline);
-      map.addOverlay(mapConfig.trips.data[i].gpsMaxSpeed.marker);
-      map.addOverlay(mapConfig.trips.data[i].gpsMaxAltitude.marker);
+      mapConfig.trips.data[i].polyline.setMap(map);
+      mapConfig.trips.data[i].gpsMaxSpeed.marker.setMap(map);
+      mapConfig.trips.data[i].gpsMaxAltitude.marker.setMap(map);
     }
   }
 }
@@ -99,8 +98,7 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 }
 
 function setTripsData(mapConfig, map) {
-  GDownloadUrl(mapConfig.filenames.tripsData, function(data, responseCode) {
-    var xml = GXml.parse(data);
+  downloadUrl(mapConfig.filenames.tripsData, function(xml, responseCode) {
     var tripsData = xml.documentElement.getElementsByTagName("data");
     var tripsDataString = "";
 
@@ -217,15 +215,31 @@ function getVisitedDataCommandHtml(mapConfig, tripIndex) {
   return html;
 }
 
+function getTripPolyline(encodedPolyline) {
+  var points = decodeLine(encodedPolyline.points);
+  var path = [];
+
+  for (var i = 0; i < points.length; i++) {
+    path.push(new google.maps.LatLng(points[i][0], points[i][1]));
+  }
+
+  return new google.maps.Polyline({
+    path: path,
+    strokeColor: encodedPolyline.color,
+    strokeWeight: encodedPolyline.weight,
+    strokeOpacity: encodedPolyline.opacity
+  });
+}
+
 function toggleTripVisibility(mapConfig, map, tripIndex) {
   var tripData = mapConfig.trips.data[tripIndex];
 
   if (typeof(tripData.polyline) == "undefined") {
-    tripData.polyline = GPolyline.fromEncoded(tripData.encodedPolyline);
+    tripData.polyline = getTripPolyline(tripData.encodedPolyline);
 
-    GEvent.addListener(tripData.polyline, "click", function(latlng) {
+    google.maps.event.addListener(tripData.polyline, "click", function(event) {
       if (mapConfig.tripGraph.tripData == tripData) {
-        addDirectionMarker(mapConfig, map, latlng, tripData.polyline);
+        addDirectionMarker(mapConfig, map, event.latLng, tripData.polyline);
       }
       addTripGraph(mapConfig, map, tripData);
     });
@@ -242,9 +256,9 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.visibility = "visible";
     mapConfig.trips.numberOfVisibleTrips += 1;
     setVisitedAreaOpacityToLow(mapConfig);
-    map.addOverlay(tripData.polyline);
-    map.addOverlay(tripData.gpsMaxSpeed.marker);
-    map.addOverlay(tripData.gpsMaxAltitude.marker);
+    tripData.polyline.setMap(map);
+    tripData.gpsMaxSpeed.marker.setMap(map);
+    tripData.gpsMaxAltitude.marker.setMap(map);
     addTripGraph(mapConfig, map, tripData);
   } else {
     tripData.visibility = "hidden";
@@ -252,9 +266,9 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     if (mapConfig.trips.numberOfVisibleTrips == 0) {
       setVisitedAreaOpacityToHigh(mapConfig);
     }
-    map.removeOverlay(tripData.polyline);
-    map.removeOverlay(tripData.gpsMaxSpeed.marker);
-    map.removeOverlay(tripData.gpsMaxAltitude.marker);
+    tripData.polyline.setMap(null);
+    tripData.gpsMaxSpeed.marker.setMap(null);
+    tripData.gpsMaxAltitude.marker.setMap(null);
     removeDirectionMarkers(mapConfig, map);
     _hideTripGraph();
   }
@@ -265,17 +279,17 @@ function addDirectionMarker(mapConfig, map, point, polyline) {
   var p1;
   var p2;
 
-  for (var i = 0; i < polyline.getVertexCount() - 1; i++) {
-    p1 = polyline.getVertex(i);
-    p2 = polyline.getVertex(i + 1);
+  for (var i = 0; i < polyline.getPath().length - 1; i++) {
+    p1 = polyline.getPath().getAt(i);
+    p2 = polyline.getPath().getAt(i + 1);
 
     if (isPointInLineSegment(map, point, p1, p2) == true) {
       var direction = getLineDirection(p1, p2);
-      var marker = new GMarker(point, getDirectionIcon(direction));
-      GEvent.addListener(marker, "click", function(latlng) {
-        map.removeOverlay(marker);
+      var marker = getDirectionMarker(point, direction);
+      google.maps.event.addListener(marker, "click", function(event) {
+        marker.setMap(null);
       });
-      map.addOverlay(marker);
+      marker.setMap(map);
       mapConfig.trips.directionMarkers.push(marker);
       break;
     }
@@ -284,7 +298,7 @@ function addDirectionMarker(mapConfig, map, point, polyline) {
 
 function removeDirectionMarkers(mapConfig, map) {
   for (var i = 0; i < mapConfig.trips.directionMarkers.length; i++) {
-    map.removeOverlay(mapConfig.trips.directionMarkers[i]);
+    mapConfig.trips.directionMarkers[i].setMap(null);
   }
 }
 
@@ -297,7 +311,9 @@ function isPointInLineSegment(map, point, p1, p2) {
 }
 
 function getLineDirection(from, to) {
-  var direction = getBearing(from, to);
+  //var direction = getBearing(from, to);
+  // tbd
+  var direction = 0;
 
   direction = Math.round(direction / 3) * 3;
 
@@ -328,25 +344,34 @@ function getBearing(from, to) {
   return angle;
 }
 
-function getDirectionIcon(direction) {
+function getDirectionMarker(point, direction) {
+/*
   var arrowIcon = new GIcon();
-  arrowIcon.iconSize = new GSize(24, 24);
-  arrowIcon.shadowSize = new GSize(1, 1);
-  arrowIcon.iconAnchor = new GPoint(12, 12);
-  arrowIcon.infoWindowAnchor = new GPoint(0, 0);
+  arrowIcon.iconSize = new google.maps.Size(24, 24);
+  arrowIcon.shadowSize = new google.maps.Size(1, 1);
+  arrowIcon.iconAnchor = new google.maps.Point(12, 12);
+  arrowIcon.infoWindowAnchor = new google.maps.Point(0, 0);
   arrowIcon.image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
+*/
+  // tbd
+  var image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
 
-  return arrowIcon;
+  return new google.maps.Marker({
+    position: point,
+    icon: image
+  });
 }
 
 function getMarker(mapConfig, map, point, letter, title) {
-  var icon = new GIcon(G_DEFAULT_ICON);
-  icon.image = "http://www.google.com/mapfiles/marker" + letter + ".png";
-  var markerOptions = {icon:icon, title:title};
-  var marker = new GMarker(point, markerOptions);
+  var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
+  var position = new google.maps.LatLng(point.y, point.x); // tbd
+  var marker = new google.maps.Marker({
+    position: position, icon: image, title: title
+  });
 
-  GEvent.addListener(marker, "click", function(latlng) {
-    map.setCenter(latlng, mapConfig.zoomToPointZoomLevel);
+  google.maps.event.addListener(marker, "click", function(event) {
+    map.setOptions({center: event.latLng,
+                    zoom: mapConfig.zoomToPointZoomLevel});
   });
 
   return marker;
@@ -362,4 +387,42 @@ function setVisitedAreaOpacityToHigh(mapConfig) {
   if (mapConfig.area.opacity == mapConfig.area.opacityLow) {
     toggleOpacity();
   }
+}
+
+// tbd
+
+// This function is from Google's polyline utility.
+function decodeLine (encoded) {
+  var len = encoded.length;
+  var index = 0;
+  var array = [];
+  var lat = 0;
+  var lng = 0;
+
+  while (index < len) {
+    var b;
+    var shift = 0;
+    var result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lat += dlat;
+
+    shift = 0;
+    result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lng += dlng;
+
+    array.push([lat * 1e-5, lng * 1e-5]);
+  }
+
+  return array;
 }
