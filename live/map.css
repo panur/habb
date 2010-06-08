@@ -9,25 +9,29 @@ div.map_canvas {
 }
 
 div.showTripsTable {
-  border-bottom-color: #B0B0B0;
-  border-left-color: #FFFFFF;
-  border-right-color: #B0B0B0;
-  border-top-color: #FFFFFF;
+  border-bottom-color: #707070;
+  border-left-color: #D0D0D0;
+  border-right-color: #707070;
+  border-top-color: #D0D0D0;
   border-style: solid;
   border-width: 1px;
   display: block;
   font-size: 12px;
   height: 15px;
-  width: 63px;
+  width: 64px;
   font-family: Arial,sans-serif;
   text-align: center;
+  color: #A52A2A;
 }
 
 div.trips {
+  position: absolute;
+  top: 5px;
+  right: 285px;
   color: #000000;
   background-color: #FFFFFF;
   border: 1px solid #000000;
-  max-width: 58%;
+  max-width: 49%;
   max-height: 64%;
   overflow: auto;
 }
@@ -35,7 +39,8 @@ div.trips {
 img.hideTripsTable {
   border: 0px;
   position: absolute;
-  right: 0;
+  top: 5px;
+  right: 285px;
 }
 
 table.trips {

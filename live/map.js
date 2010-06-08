@@ -6,6 +6,8 @@ var gMapConfig;
 function load() {
   var mOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControlOptions:
+      {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
     streetViewControl: true
   };
 
@@ -118,7 +120,6 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new google.maps.Size(214, 27),
                      numberOfVisibleTrips:0, directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},

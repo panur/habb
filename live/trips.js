@@ -1,18 +1,14 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-06 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-08 */
 
 function addTripsControl(mapConfig, map) {
-  // tbd mapConfig.trips.controlPosition
-
   var tripsControl = document.createElement("div");
   tripsControl.id = "tripsControl";
   tripsControl.className = "trips";
   document.getElementById("map_canvas").appendChild(tripsControl);
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(tripsControl); // tbd
 
   var tripsTableHide = document.createElement("div");
   tripsTableHide.id = "tripsTableHide";
   document.getElementById("map_canvas").appendChild(tripsTableHide);
-  map.controls[google.maps.ControlPosition.RIGHT].push(tripsTableHide); // tbd
 
   showTripsControl(mapConfig, map);
 }
