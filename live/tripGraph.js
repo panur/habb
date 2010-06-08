@@ -417,14 +417,7 @@ function downsampleArray(originalArray, newArray, newSize) {
 }
 
 function addHideTripGraph(mapConfig) {
-  var tripGraphHide = document.getElementById("tripGraphHide")
-
-  if (tripGraphHide == null) {
-    tripGraphHide = document.createElement("div");
-    tripGraphHide.id = "tripGraphHide";
-    tripGraphHide.className = "tripGraphHide";
-    document.getElementById("trip_graph").appendChild(tripGraphHide);
-  }
+  var tripGraphHide = document.getElementById("trip_graph_hide")
 
   tripGraphHide.style.top =
     document.getElementById("map_canvas").clientHeight + "px";
@@ -445,6 +438,7 @@ function hideTripGraph(mapConfig, map) {
 
     document.getElementById("trip_graph").innerHTML = "";
     document.getElementById("trip_graph_control").innerHTML = "";
+    document.getElementById("trip_graph_hide").innerHTML = "";
 
     _resizeMap();
   }

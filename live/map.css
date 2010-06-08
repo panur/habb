@@ -56,7 +56,7 @@ td {
   white-space: nowrap;
 }
 
-div.tripGraphHide {
+div.trip_graph_hide {
   border: 0px;
   position: absolute;
   right: 0;

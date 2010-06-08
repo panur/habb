@@ -110,6 +110,10 @@ function setTripsData(mapConfig, map) {
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
       mapConfig.trips.data[i].gpsAltitudeData =
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsAltitudeData);
+      mapConfig.trips.data[i].gpsMaxSpeed.location =
+        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxSpeed.location);
+      mapConfig.trips.data[i].gpsMaxAltitude.location =
+        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxAltitude.location);
     }
     showTripsControl(mapConfig, map);
   });
@@ -138,6 +142,10 @@ function arrayToStringDecode(encodedString) {
   }
 
   return decodedArray;
+}
+
+function mapLatLngFromV2ToV3(latLngV2) {
+  return new google.maps.LatLng(latLngV2.y, latLngV2.x);
 }
 
 function getTripsTableHtml(mapConfig, tripsData) {
@@ -360,9 +368,8 @@ function getDirectionMarker(point, direction) {
 
 function getMarker(mapConfig, map, point, letter, title) {
   var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
-  var position = new google.maps.LatLng(point.y, point.x); // tbd
   var marker = new google.maps.Marker({
-    position: position, icon: image, title: title
+    position: point, icon: image, title: title
   });
 
   google.maps.event.addListener(marker, "click", function(event) {

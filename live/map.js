@@ -524,7 +524,7 @@ function removeOverlaysFromMap(mc, map) {
 
 function addOrRemoveOverlays(mc, map, mapOrNull) {
   for (var i = 0; i < mc.visitedStatusAreas.length; i++) {
-    mc.visitedStatusAreas[i].opacity = mc.area.opacity;
+    mc.visitedStatusAreas[i].setOptions({fillOpacity: mc.area.opacity});
     mc.visitedStatusAreas[i].setMap(mapOrNull);
   }
 
@@ -766,7 +766,7 @@ function toggleOpacity() {
     gMapConfig.area.opacity = gMapConfig.area.opacityHigh;
   }
 
-  addOverlaysToMap(gMapConfig, gMap); // tbd see setVisitedData
+  addOverlaysToMap(gMapConfig, gMap);
 }
 
 function toggleShowExtensions() {
