@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-06 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
 
 var gMap;
 var gMapConfig;
@@ -52,6 +52,8 @@ function createMapConfig(showExtensions) {
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
+
+  mapConfig.infowindow = new google.maps.InfoWindow();
 
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
@@ -540,29 +542,29 @@ function addOrRemoveOverlays(mc, map, mapOrNull) {
 }
 
 function addMouseListeners(mapConfig, map) {
-  google.maps.event.addListener(map, "mousemove", function(event) {
+  google.maps.event.addListener(map, "mousemove", function(mouseEvent) {
     if (mapConfig.tripGraph.player.state == "stop") {
-      var info = getInfo(mapConfig, map, event.latLng);
+      var info = getInfo(mapConfig, map, mouseEvent.latLng);
       updateStatusBar(info);
       updateCursor(mapConfig, map, info);
     }
   });
 
-  google.maps.event.addListener(map, "mouseout", function(event) {
-    if (mapConfig.cursor)  {
+  google.maps.event.addListener(map, "mouseout", function(mouseEvent) {
+    if (mapConfig.cursor) {
       mapConfig.cursor.setMap(null);
     }
   });
 
-  google.maps.event.addListener(map, "singlerightclick", function(event, src, overlay) {
-    if ((overlay) && (overlay.color)) { // tbd
-      var latLng = map.fromContainerPixelToLatLng(event.latLng);
-      var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
-      var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
-      var tabs = [new GInfoWindowTab("Links", linksHtml),
-                  new GInfoWindowTab("Actions", actionsHtml)]
-      map.openInfoWindowTabsHtml(latLng, tabs);
-    }
+  google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
+    var latLng = mouseEvent.latLng;
+    var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
+    var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
+
+    mapConfig.infowindow.setPosition(latLng);
+    mapConfig.infowindow.setContent(linksHtml); // tbd actionsHtml
+
+    mapConfig.infowindow.open(map);
   });
 }
 
@@ -771,7 +773,7 @@ function toggleOpacity() {
 
 function toggleShowExtensions() {
   removeOverlaysFromMap(gMapConfig, gMap);
-  GEvent.clearInstanceListeners(gMap); // tbd
+  //GEvent.clearInstanceListeners(gMap); // tbd
 
   document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;

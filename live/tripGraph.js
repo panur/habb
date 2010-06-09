@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-08 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -111,10 +111,9 @@ function updateTripCursor(mapConfig, map) {
   marker.setMap(map);
 
   if (mapConfig.tripGraph.player.state == "play") {
-    //if (map.getBounds().containsLatLng(marker.getPosition()) == false) {
-    //  map.panTo(marker.getPosition());
-    //}
-    // tbd
+    if (map.getBounds().contains(marker.getPosition()) == false) {
+      map.panTo(marker.getPosition());
+    }
   }
 }
 

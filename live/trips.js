@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-08 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -235,15 +235,54 @@ function getTripPolyline(encodedPolyline) {
   });
 }
 
+// http://code.google.com/apis/maps/documentation/utilities/include/polyline.js
+// Decode an encoded polyline into a list of lat/lng tuples.
+function decodeLine(encoded) {
+  var len = encoded.length;
+  var index = 0;
+  var array = [];
+  var lat = 0;
+  var lng = 0;
+
+  while (index < len) {
+    var b;
+    var shift = 0;
+    var result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lat += dlat;
+
+    shift = 0;
+    result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lng += dlng;
+
+    array.push([lat * 1e-5, lng * 1e-5]);
+  }
+
+  return array;
+}
+
 function toggleTripVisibility(mapConfig, map, tripIndex) {
   var tripData = mapConfig.trips.data[tripIndex];
 
   if (typeof(tripData.polyline) == "undefined") {
     tripData.polyline = getTripPolyline(tripData.encodedPolyline);
 
-    google.maps.event.addListener(tripData.polyline, "click", function(event) {
+    google.maps.event.addListener(tripData.polyline, "click",
+                                  function(mouseEvent) {
       if (mapConfig.tripGraph.tripData == tripData) {
-        addDirectionMarker(mapConfig, map, event.latLng, tripData.polyline);
+        addDirectionMarker(mapConfig, map, mouseEvent.latLng,
+                           tripData.polyline);
       }
       addTripGraph(mapConfig, map, tripData);
     });
@@ -373,7 +412,7 @@ function getMarker(mapConfig, map, point, letter, title) {
   });
 
   google.maps.event.addListener(marker, "click", function(event) {
-    map.setOptions({center: event.latLng,
+    map.setOptions({center: marker.getPosition(),
                     zoom: mapConfig.zoomToPointZoomLevel});
   });
 
@@ -390,42 +429,4 @@ function setVisitedAreaOpacityToHigh(mapConfig) {
   if (mapConfig.area.opacity == mapConfig.area.opacityLow) {
     toggleOpacity();
   }
-}
-
-// tbd
-
-// This function is from Google's polyline utility.
-function decodeLine (encoded) {
-  var len = encoded.length;
-  var index = 0;
-  var array = [];
-  var lat = 0;
-  var lng = 0;
-
-  while (index < len) {
-    var b;
-    var shift = 0;
-    var result = 0;
-    do {
-      b = encoded.charCodeAt(index++) - 63;
-      result |= (b & 0x1f) << shift;
-      shift += 5;
-    } while (b >= 0x20);
-    var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-    lat += dlat;
-
-    shift = 0;
-    result = 0;
-    do {
-      b = encoded.charCodeAt(index++) - 63;
-      result |= (b & 0x1f) << shift;
-      shift += 5;
-    } while (b >= 0x20);
-    var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-    lng += dlng;
-
-    array.push([lat * 1e-5, lng * 1e-5]);
-  }
-
-  return array;
 }
