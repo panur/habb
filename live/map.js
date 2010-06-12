@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-12 */
 
 var gMap;
 var gMapConfig;
@@ -250,7 +250,7 @@ function updateMapGrid(mc) {
               mc.grid.colors.page : mc.grid.colors.km2;
       var lat = new google.maps.Polyline({
         path: points, strokeColor: color, strokeWeight: mc.grid.weight,
-        strokeOpacity: mc.grid.opacity
+        strokeOpacity: mc.grid.opacity, clickable: false, zIndex: 1
       });
       mc.grid.latPolylines.push(lat);
     }
@@ -268,7 +268,7 @@ function updateMapGrid(mc) {
               mc.grid.colors.page : mc.grid.colors.km2;
       var lng = new google.maps.Polyline({
         path: points, strokeColor: color, strokeWeight: mc.grid.weight,
-        strokeOpacity: mc.grid.opacity
+        strokeOpacity: mc.grid.opacity, clickable: false, zIndex: 1
       });
       mc.grid.lngPolylines.push(lng);
     }
@@ -303,7 +303,9 @@ function getVisitedStatusAreas(mc) {
       strokeWeight: 1,
       strokeOpacity: 0.5,
       fillColor: mc.area.colors[i],
-      fillOpacity: mc.area.opacity
+      fillOpacity: mc.area.opacity,
+      clickable: false,
+      zIndex: 1
     });
 
     visitedStatusAreas.push(polygon);
@@ -684,7 +686,9 @@ function updateCursor(mc, map, info) {
       strokeWeight: mc.cursorParams.strokeWeight,
       strokeOpacity: mc.cursorParams.strokeOpacity,
       fillColor: mc.cursorParams.fillColor,
-      fillOpacity: mc.cursorParams.fillOpacity
+      fillOpacity: mc.cursorParams.fillOpacity,
+      clickable: false,
+      zIndex: 1
     });
     mc.cursor.setMap(map);
     mc.cursorParams.kkj = info.kkjText;

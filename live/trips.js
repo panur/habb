@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-12 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -231,7 +231,9 @@ function getTripPolyline(encodedPolyline) {
     path: path,
     strokeColor: encodedPolyline.color,
     strokeWeight: encodedPolyline.weight,
-    strokeOpacity: encodedPolyline.opacity
+    strokeOpacity: encodedPolyline.opacity,
+    clickable: true,
+    zIndex: 10
   });
 }
 
@@ -346,17 +348,34 @@ function removeDirectionMarkers(mapConfig, map) {
 }
 
 function isPointInLineSegment(map, point, p1, p2) {
-  var distance = Math.abs(point.distanceFrom(p1) + point.distanceFrom(p2) -
-                          p1.distanceFrom(p2));
+  var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
+                          getDistance(p1, p2));
   var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
 
   return (distance < tolerance);
 }
 
+/* based on http://www.movable-type.co.uk/scripts/latlong.html */
+function getDistance(p1, p2) {
+  var R = 6378137; /* earth's radius in meters */
+  var lat1 = getRadians(p1.lat());
+  var lon1 = getRadians(p1.lng());
+  var lat2 = getRadians(p2.lat());
+  var lon2 = getRadians(p2.lng());
+  var dLat = lat2 - lat1;
+  var dLon = lon2 - lon1;
+
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1) * Math.cos(lat2) * 
+          Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+
+  return d; /* distance between p1 and p2 in meters */
+}
+
 function getLineDirection(from, to) {
-  //var direction = getBearing(from, to);
-  // tbd
-  var direction = 0;
+  var direction = getBearing(from, to);
 
   direction = Math.round(direction / 3) * 3;
 
@@ -368,10 +387,10 @@ function getLineDirection(from, to) {
 }
 
 function getBearing(from, to) {
-  var lat1 = from.latRadians();
-  var lng1 = from.lngRadians();
-  var lat2 = to.latRadians();
-  var lng2 = to.lngRadians();
+  var lat1 = getRadians(from.lat());
+  var lng1 = getRadians(from.lng());
+  var lat2 = getRadians(to.lat());
+  var lng2 = getRadians(to.lng());
   var y = Math.sin(lng1 - lng2) * Math.cos(lat2);
   var x = (Math.cos(lat1) * Math.sin(lat2)) -
     (Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng1 - lng2));
@@ -387,17 +406,17 @@ function getBearing(from, to) {
   return angle;
 }
 
+function getRadians(latOrLng) {
+  return latOrLng * Math.PI / 180;
+}
+
 function getDirectionMarker(point, direction) {
-/*
-  var arrowIcon = new GIcon();
-  arrowIcon.iconSize = new google.maps.Size(24, 24);
-  arrowIcon.shadowSize = new google.maps.Size(1, 1);
-  arrowIcon.iconAnchor = new google.maps.Point(12, 12);
-  arrowIcon.infoWindowAnchor = new google.maps.Point(0, 0);
-  arrowIcon.image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
-*/
-  // tbd
-  var image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
+  var image = new google.maps.MarkerImage(
+    "http://www.google.com/mapfiles/dir_" + direction + ".png",
+    new google.maps.Size(24, 24), /* size */
+    new google.maps.Point(0, 0), /* origin */
+    new google.maps.Point(12, 12) /* anchor */
+  );
 
   return new google.maps.Marker({
     position: point,
