@@ -160,6 +160,47 @@ function setPointsToMapConfig(mapConfig, map) {
   });
 }
 
+function downloadUrl(url, callback) {
+  var request = createXmlHttpRequest();
+
+  if (request == null) {
+    return false;
+  }
+
+  request.onreadystatechange = function() {
+    if (request.readyState == 4) {
+      try {
+        var status = request.status;
+        if ((status == 0) || (status == 200)) {
+          callback(request.responseXML, status);
+          request.onreadystatechange = function() {};
+        }
+      } catch (e) {
+        alert(e);
+      }
+    }
+  }
+
+  request.open("GET", url, true);
+  request.send(null);
+}
+
+function createXmlHttpRequest() {
+  try {
+    if (typeof ActiveXObject != "undefined") {
+      return new ActiveXObject("Microsoft.XMLHTTP");
+    } else if (window["XMLHttpRequest"]) {
+      return new XMLHttpRequest();
+    }
+  } catch (e) {
+    alert(e);
+  }
+
+  alert("Cannot create XmlHttpRequest");
+
+  return null;
+}
+
 function setKm2sToMapConfig(mc, map) {
   var km2s = [];
 
@@ -827,63 +868,4 @@ function resizeMapCanvas(map) {
     document.getElementById("statistics").clientHeight + "px";
 
   google.maps.event.trigger(map, "resize");
-}
-
-// tbd
-
-/**
-* Returns an XMLHttp instance to use for asynchronous
-* downloading. This method will never throw an exception, but will
-* return NULL if the browser does not support XmlHttp for any reason.
-* @return {XMLHttpRequest|Null}
-*/
-function createXmlHttpRequest() {
- try {
-   if (typeof ActiveXObject != 'undefined') {
-     return new ActiveXObject('Microsoft.XMLHTTP');
-   } else if (window["XMLHttpRequest"]) {
-     return new XMLHttpRequest();
-   }
- } catch (e) {
-    alert(e);
-   //changeStatus(e);
- }
- return null;
-}
-
-/**
-* This functions wraps XMLHttpRequest open/send function.
-* It lets you specify a URL and will call the callback if
-* it gets a status code of 200.
-* @param {String} url The URL to retrieve
-* @param {Function} callback The function to call once retrieved.
-*/
-function downloadUrl(url, callback) {
- var status = -1;
- var request = createXmlHttpRequest();
- if (!request) {
-   return false;
- }
-
- request.onreadystatechange = function() {
-   if (request.readyState == 4) {
-     try {
-       status = request.status;
-     } catch (e) {
-       // Usually indicates request timed out in FF.
-     }
-     if ((status == 0) || (status == 200)) { // tbd
-       callback(request.responseXML, request.status);
-       request.onreadystatechange = function() {};
-     }
-   }
- }
- request.open('GET', url, true);
- try {
-   request.send(null);
- } catch (e) {
-    setStatusBarHtml(e);
-    alert(e);
-   //changeStatus(e);
- }
 }
