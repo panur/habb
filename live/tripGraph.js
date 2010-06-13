@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-13 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -90,8 +90,8 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 
   tripGraph.ondblclick = function(event) {
-    //map.returnToSavedPosition();
-    // tbd
+    map.setOptions({center: mapConfig.initialLatLng,
+                    zoom: mapConfig.initialZL});
   };
 }
 
@@ -212,7 +212,8 @@ function setTripGraphControl(mapConfig) {
   }
 
   html += " / <a title='Toggle type of trip graph' " +
-    "href='javascript:_toggleTripGraphType()'>Show " + mapConfig.tripGraph.types[1] + "</a>";
+    "href='javascript:_toggleTripGraphType()'>Show " +
+    mapConfig.tripGraph.types[1] + "</a>";
 
   document.getElementById("trip_graph_control").innerHTML = html;
 }

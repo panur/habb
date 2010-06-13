@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-12 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-13 */
 
 var gMap;
 var gMapConfig;
@@ -8,6 +8,8 @@ function load() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControlOptions:
       {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+    navigationControlOptions:
+      {style: google.maps.NavigationControlStyle.ZOOM_PAN},
     streetViewControl: true
   };
 
@@ -32,6 +34,7 @@ function initMap(map, mapConfig) {
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
+    addHomeButton(mapConfig, map);
     addTripsControl(mapConfig, map);
     _resizeMap();
   });
@@ -845,6 +848,20 @@ function setVisitedData(filename, visitedDataDescription) {
   gMapConfig.visitedDataDescription = visitedDataDescription;
 
   setKm2sToMapConfig(gMapConfig, gMap);
+}
+
+function addHomeButton(mapConfig, map) {
+  var homeButton = document.createElement("div");
+  homeButton.id = "homeButton";
+  homeButton.className = "homeButton";
+  document.getElementById("map_canvas").appendChild(homeButton);
+
+  homeButton.title = "Return to initial location";
+
+  homeButton.onclick = function() {
+    map.setOptions({center: mapConfig.initialLatLng,
+                    zoom: mapConfig.initialZL});
+  };
 }
 
 function _resizeMap() {
