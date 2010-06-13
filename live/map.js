@@ -67,8 +67,7 @@ function createMapConfig(showExtensions) {
   mapConfig.grid = {weight:1, opacity:0.5,
                     colors:{page:"#000000", km2:"#FFFFFF"}};
   mapConfig.cursorParams = {strokeColor:"#000000", strokeWeight:2,
-                            strokeOpacity:1, fillColor:"#120000",
-                            fillOpacity:0, maxZoomLevel:15, kkj:"-"};
+                            strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
 
   mapConfig.latKmPerP = 5;
   mapConfig.latPages = 7;
@@ -724,13 +723,11 @@ function updateCursor(mc, map, info) {
 
   if ((info.km2XY) && (map.getZoom() < mc.cursorParams.maxZoomLevel)) {
     var points = mc.km2s[info.km2XY.y][info.km2XY.x].points;
-    mc.cursor = new google.maps.Polygon({
-      paths: points,
+    mc.cursor = new google.maps.Polyline({
+      path: points,
       strokeColor: mc.cursorParams.strokeColor,
       strokeWeight: mc.cursorParams.strokeWeight,
       strokeOpacity: mc.cursorParams.strokeOpacity,
-      fillColor: mc.cursorParams.fillColor,
-      fillOpacity: mc.cursorParams.fillOpacity,
       clickable: false,
       zIndex: 1
     });
