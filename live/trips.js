@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-12 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-18 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -94,7 +94,8 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 }
 
 function setTripsData(mapConfig, map) {
-  downloadUrl(mapConfig.filenames.tripsData, function(xml, responseCode) {
+  downloadUrl(mapConfig.filenames.tripsData, function(data, responseCode) {
+    var xml = parseXml(data);
     var tripsData = xml.documentElement.getElementsByTagName("data");
     var tripsDataString = "";
 
@@ -431,8 +432,7 @@ function getMarker(mapConfig, map, point, letter, title) {
   });
 
   google.maps.event.addListener(marker, "click", function(event) {
-    map.setOptions({center: marker.getPosition(),
-                    zoom: mapConfig.zoomToPointZoomLevel});
+    setCenter(map, marker.getPosition(), mapConfig.zoomToPointZoomLevel);
   });
 
   return marker;

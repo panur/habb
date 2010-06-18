@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-18 */
 
 var gMap;
 var gMapConfig;
@@ -40,6 +40,11 @@ function initMap(map, mapConfig) {
   });
 
   setPointsToMapConfig(mapConfig, map);
+}
+
+function setCenter(map, latLng, zoom) {
+  map.setZoom(zoom);
+  map.panTo(latLng);
 }
 
 function createMapConfig(showExtensions) {
@@ -144,7 +149,8 @@ function setPointsToMapConfig(mapConfig, map) {
     }
   }
 
-  downloadUrl(mapConfig.filenames.points, function(xml, responseCode) {
+  downloadUrl(mapConfig.filenames.points, function(data, responseCode) {
+    var xml = parseXml(data);
     var p = xml.documentElement.getElementsByTagName("point");
     mapConfig.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
     mapConfig.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
@@ -174,7 +180,7 @@ function downloadUrl(url, callback) {
       try {
         var status = request.status;
         if ((status == 0) || (status == 200)) {
-          callback(request.responseXML, status);
+          callback(request.responseText, status);
           request.onreadystatechange = function() {};
         }
       } catch (e) {
@@ -203,6 +209,16 @@ function createXmlHttpRequest() {
   return null;
 }
 
+function parseXml(string) {
+  if (window.ActiveXObject) {
+    var doc = new ActiveXObject('Microsoft.XMLDOM');
+    doc.loadXML(string);
+    return doc;
+  } else if (window.DOMParser) {
+    return (new DOMParser).parseFromString(string, 'text/xml');
+  }
+}
+
 function setKm2sToMapConfig(mc, map) {
   var km2s = [];
 
@@ -224,7 +240,8 @@ function setKm2sToMapConfig(mc, map) {
 }
 
 function setVisitedDataToKm2s(mapConfig, map) {
-  downloadUrl(mapConfig.filenames.visitedData, function(xml, responseCode) {
+  downloadUrl(mapConfig.filenames.visitedData, function(data, responseCode) {
+    var xml = parseXml(data);
     var allInPage = [];
     var pages = xml.documentElement.getElementsByTagName("page");
 
@@ -602,12 +619,13 @@ function addMouseListeners(mapConfig, map) {
   });
 
   google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
-    var latLng = mouseEvent.latLng;
+    var latLng = mouseEvent.latLng; // tbd: out of visited areas
     var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
     var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
 
     mapConfig.infowindow.setPosition(latLng);
-    mapConfig.infowindow.setContent(linksHtml); // tbd actionsHtml
+    //mapConfig.infowindow.setContent(linksHtml); // tbd
+    mapConfig.infowindow.setContent(actionsHtml);// tbd
 
     mapConfig.infowindow.open(map);
   });
@@ -801,7 +819,7 @@ function getActionsHtml(mapConfig, point, zl) {
 function zoomToPoint(lat, lng) {
   var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
-  gMap.setOptions({center: latLng, zoom: gMapConfig.zoomToPointZoomLevel});
+  setCenter(gMap, latLng, gMapConfig.zoomToPointZoomLevel);
 }
 
 function toggleOpacity() {
@@ -818,7 +836,7 @@ function toggleOpacity() {
 
 function toggleShowExtensions() {
   removeOverlaysFromMap(gMapConfig, gMap);
-  //GEvent.clearInstanceListeners(gMap); // tbd
+  google.maps.event.clearInstanceListeners(gMap);
 
   document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;
@@ -856,8 +874,7 @@ function addHomeButton(mapConfig, map) {
   homeButton.title = "Return to initial location";
 
   homeButton.onclick = function() {
-    map.setOptions({center: mapConfig.initialLatLng,
-                    zoom: mapConfig.initialZL});
+    setCenter(map, mapConfig.initialLatLng, mapConfig.initialZL);
   };
 }
 
