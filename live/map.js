@@ -619,14 +619,17 @@ function addMouseListeners(mapConfig, map) {
   });
 
   google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
-    var latLng = mouseEvent.latLng; // tbd: out of visited areas
-    var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
-    var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
+    var latLng = mouseEvent.latLng;
 
-    mapConfig.infoWindow.setPosition(latLng);
-    mapConfig.infoWindow.setContent(linksHtml);
+    if (getKm2XYFromPoint(mapConfig, latLng) != null) {
+      var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
+      var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
 
-    mapConfig.infoWindow.open(map);
+      mapConfig.infoWindow.setPosition(latLng);
+      mapConfig.infoWindow.setContent(linksHtml);
+
+      mapConfig.infoWindow.open(map);
+    }
   });
 }
 
@@ -664,15 +667,16 @@ function getInfo(mc, map, point) {
   return info;
 }
 
+// tbd: this is not accurate
 function getKm2XYFromPoint(mc, point) {
   var guessXY = {y : -1, x : -1};
 
-  for (var i = 0, lines = 0; i < mc.grid.latPolylines.length; i++) {
+  for (var i = 0; i < mc.grid.latPolylines.length; i++) {
     var line = mc.grid.latPolylines[i];
     var p1 = line.getPath().getAt(0);
     var p2 = line.getPath().getAt(line.getPath().length - 1);
-    var mp = 1 - (point.lng() - p1.lng()) / (p2.lng() - p1.lng());
-    var lat = p2.lat() + (p1.lat() - p2.lat()) * mp;
+    var mp = 1 - ((point.lng() - p1.lng()) / (p2.lng() - p1.lng()));
+    var lat = p2.lat() + ((p1.lat() - p2.lat()) * mp);
 
     if (point.lat() < lat) {
       guessXY.y = i - 1;
@@ -680,12 +684,12 @@ function getKm2XYFromPoint(mc, point) {
     }
   }
 
-  for (var i = 0, lines = 0; i < mc.grid.lngPolylines.length; i++) {
+  for (var i = 0; i < mc.grid.lngPolylines.length; i++) {
     var line = mc.grid.lngPolylines[i];
     var p1 = line.getPath().getAt(0);
     var p2 = line.getPath().getAt(line.getPath().length - 1);
-    var mp = 1 - (point.lat() - p2.lat()) / (p1.lat() - p2.lat());
-    var lng = p1.lng() + (p2.lng() - p1.lng()) * mp;
+    var mp = 1 - ((point.lat() - p2.lat()) / (p1.lat() - p2.lat()));
+    var lng = p1.lng() + ((p2.lng() - p1.lng()) * mp);
 
     if (point.lng() < lng) {
       guessXY.x = i - 1;
@@ -754,7 +758,7 @@ function updateCursor(mc, map, info) {
 }
 
 function getLinksHtml(mapConfig, point, zl) {
-  var km2XY = getKm2XYFromPoint(mapConfig, point)
+  var km2XY = getKm2XYFromPoint(mapConfig, point);
   var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
   var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
   var kkpUrl = "http://kansalaisen.karttapaikka.fi/kartanhaku/osoitehaku.html" +
