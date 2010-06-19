@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-19 */
 
 var gMap;
 var gMapConfig;
@@ -61,7 +61,7 @@ function createMapConfig(showExtensions) {
 
   mapConfig.visitedDataDescription = "latest";
 
-  mapConfig.infowindow = new google.maps.InfoWindow();
+  mapConfig.infoWindow = new google.maps.InfoWindow();
 
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
@@ -623,11 +623,10 @@ function addMouseListeners(mapConfig, map) {
     var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
     var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
 
-    mapConfig.infowindow.setPosition(latLng);
-    //mapConfig.infowindow.setContent(linksHtml); // tbd
-    mapConfig.infowindow.setContent(actionsHtml);// tbd
+    mapConfig.infoWindow.setPosition(latLng);
+    mapConfig.infoWindow.setContent(linksHtml);
 
-    mapConfig.infowindow.open(map);
+    mapConfig.infoWindow.open(map);
   });
 }
 
@@ -779,7 +778,23 @@ function getLinksHtml(mapConfig, point, zl) {
     "<li><a href='" + osmUrl + "'>OpenStreetMap</a></li>" +
     "</ul>";
 
+  html += "See other <a href='javascript:_setActionsHtml()'>Actions</a>";
+
   return html;
+}
+
+function _setActionsHtml() {
+  var actionsHtml =
+    getActionsHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
+                   gMap.getZoom());
+  gMapConfig.infoWindow.setContent(actionsHtml);
+}
+
+function _setLinksHtml() {
+  var linksHtml =
+    getLinksHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
+                   gMap.getZoom());
+  gMapConfig.infoWindow.setContent(linksHtml);
 }
 
 function getActionsHtml(mapConfig, point, zl) {
@@ -813,6 +828,8 @@ function getActionsHtml(mapConfig, point, zl) {
     "Current visited data is " + gMapConfig.visitedDataDescription +
     ". Change visited data to: <ul>" + visitedDataList + "</ul>";
 
+  html += "Back to <a href='javascript:_setLinksHtml()'>Links</a>";
+
   return html;
 }
 
@@ -834,6 +851,7 @@ function toggleOpacity() {
   addOverlaysToMap(gMapConfig, gMap);
 }
 
+// tbd: doesn't work
 function toggleShowExtensions() {
   removeOverlaysFromMap(gMapConfig, gMap);
   google.maps.event.clearInstanceListeners(gMap);
@@ -869,7 +887,7 @@ function addHomeButton(mapConfig, map) {
   var homeButton = document.createElement("div");
   homeButton.id = "homeButton";
   homeButton.className = "homeButton";
-  document.getElementById("map_canvas").appendChild(homeButton);
+  document.getElementById("dynamic_divs").appendChild(homeButton);
 
   homeButton.title = "Return to initial location";
 
