@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="20100626.gpx" visited_data="20100620.xml" distance="98"  max_speed="57.1" avg_speed="23.5" duration="4:09:29" color="#800080" name="Otalampi-Ojakkala"/>
   <trip gps_data="20100620.gpx" visited_data="20100602.xml" distance="95"  max_speed="57.6" avg_speed="21.6" duration="4:23:03" color="#404000" name="Ojakkala-Kattila"/>
   <trip gps_data="20100605.gpx" visited_data="20100602.xml" distance="57"  max_speed="42.6" avg_speed="23.2" duration="2:27:06" color="#00FF40" name="Kehä I"/>
   <trip gps_data="20100602.gpx" visited_data="20100516.xml" distance="81"  max_speed="52.5" avg_speed="21.1" duration="3:50:18" color="#0040FF" name="Österby"/>
