@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="20100801.gpx" visited_data="20100626.xml" distance="105" max_speed="41.6" avg_speed="25.5" duration="4:07:30" color="#008000" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="20100731.gpx" visited_data="20100626.xml" distance="105" max_speed="46.4" avg_speed="29.1" duration="3:37:11" color="#80FF80" name="Espoo-Hämeenlinna"/>
   <trip gps_data="20100730.gpx" visited_data="20100626.xml" distance="103" max_speed="45.0" avg_speed="24.9" duration="4:07:31" color="#FF80FF" name="Järvenpää"/>
   <trip gps_data="20100626.gpx" visited_data="20100620.xml" distance="98"  max_speed="57.1" avg_speed="23.5" duration="4:09:29" color="#800080" name="Otalampi-Ojakkala"/>
   <trip gps_data="20100620.gpx" visited_data="20100602.xml" distance="95"  max_speed="57.6" avg_speed="21.6" duration="4:23:03" color="#404000" name="Ojakkala-Kattila"/>
