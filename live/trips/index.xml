@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
-  <trip gps_data="20100801.gpx" visited_data="20100626.xml" distance="105" max_speed="41.6" avg_speed="25.5" duration="4:07:30" color="#008000" name="Hämeenlinna-Espoo"/>
-  <trip gps_data="20100731.gpx" visited_data="20100626.xml" distance="105" max_speed="46.4" avg_speed="29.1" duration="3:37:11" color="#80FF80" name="Espoo-Hämeenlinna"/>
-  <trip gps_data="20100730.gpx" visited_data="20100626.xml" distance="103" max_speed="45.0" avg_speed="24.9" duration="4:07:31" color="#FF80FF" name="Järvenpää"/>
-  <trip gps_data="20100626.gpx" visited_data="20100620.xml" distance="98"  max_speed="57.1" avg_speed="23.5" duration="4:09:29" color="#800080" name="Otalampi-Ojakkala"/>
-  <trip gps_data="20100620.gpx" visited_data="20100602.xml" distance="95"  max_speed="57.6" avg_speed="21.6" duration="4:23:03" color="#404000" name="Ojakkala-Kattila"/>
-  <trip gps_data="20100605.gpx" visited_data="20100602.xml" distance="57"  max_speed="42.6" avg_speed="23.2" duration="2:27:06" color="#00FF40" name="Kehä I"/>
-  <trip gps_data="20100602.gpx" visited_data="20100516.xml" distance="81"  max_speed="52.5" avg_speed="21.1" duration="3:50:18" color="#0040FF" name="Österby"/>
-  <trip gps_data="20100516.gpx" visited_data="20100513.xml" distance="89"  max_speed="47.2" avg_speed="21.8" duration="4:05:27" color="#FF4000" name="Veikkola"/>
-  <trip gps_data="20100513.gpx" visited_data="20100509.xml" distance="79"  max_speed="53.3" avg_speed="22.1" duration="3:33:23" color="#000040" name="Kirkkonummi"/>
-  <trip gps_data="20100509.gpx" visited_data="20090909.xml" distance="54"  max_speed="52.5" avg_speed="18.8" duration="2:52:20" color="#400000" name="Saarijärvi"/>
-  <trip gps_data="20090909.gpx" visited_data="20090905.xml" distance="122" max_speed="47.3" avg_speed="19.0" duration="6:23:56" color="#80FF00" name="Port-Airport"/>
-  <trip gps_data="20090905.gpx" visited_data="20090902.xml" distance="59"  max_speed="58.5" avg_speed="17.0" duration="3:27:27" color="#8000FF" name="Velskola-Solvalla"/>
-  <trip gps_data="20090902.gpx" visited_data="20090814.xml" distance="81"  max_speed="48.4" avg_speed="20.9" duration="3:54:12" color="#00FF80" name="Sarfvik-Ämmässuo"/>
-  <trip gps_data="20090822.gpx" visited_data="20090814.xml" distance="112" max_speed="48.7" avg_speed="24.0" duration="4:39:38" color="#FF0080" name="Kehä III"/>
-  <trip gps_data="20090814.gpx" visited_data="20090811.xml" distance="101" max_speed="51.3" avg_speed="22.5" duration="4:29:38" color="#408080" name="Nurmijärvi-Vihti"/>
-  <trip gps_data="20090811.gpx" visited_data="20090805.xml" distance="100" max_speed="58.0" avg_speed="19.3" duration="5:10:20" color="#804000" name="Kirkkonummi-Vihti"/>
-  <trip gps_data="20090808.gpx" visited_data="20090805.xml" distance="106" max_speed="39.7" avg_speed="26.5" duration="3:59:41" color="#004000" name="Hämeenlinna-Espoo"/>
-  <trip gps_data="20090807.gpx" visited_data="20090805.xml" distance="105" max_speed="41.2" avg_speed="25.0" duration="4:12:24" color="#80FFFF" name="Espoo-Hämeenlinna"/>
-  <trip gps_data="20090805.gpx" visited_data="20090803.xml" distance="117" max_speed="50.9" avg_speed="22.0" duration="5:18:47" color="#8080FF" name="Sipoo-Vantaa"/>
-  <trip gps_data="20090803.gpx" visited_data="20090801.xml" distance="126" max_speed="49.1" avg_speed="20.2" duration="6:13:09" color="#0080FF" name="Vihti-Nurmijärvi"/>
-  <trip gps_data="20090801.gpx" visited_data="20090730.xml" distance="105" max_speed="43.3" avg_speed="24.4" duration="4:18:58" color="#004040" name="Kerava-Sipoo"/>
-  <trip gps_data="20090730.gpx" visited_data="20090728.xml" distance="98"  max_speed="54.2" avg_speed="19.1" duration="5:08:09" color="#008040" name="Nuuksio"/>
-  <trip gps_data="20090728.gpx" visited_data="20090719.xml" distance="105" max_speed="45.1" avg_speed="21.7" duration="4:49:34" color="#808000" name="Helsinki-Sipoo"/>
-  <trip gps_data="20090719.gpx" visited_data="20090711.xml" distance="104" max_speed="47.6" avg_speed="23.0" duration="4:31:10" color="#400040" name="Klaukkala"/>
+  <trip gps_data="2010/20100801.gpx" visited_data="20100626.xml" distance="105" max_speed="41.6" avg_speed="25.5" duration="4:07:30" color="#008000" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="2010/20100731.gpx" visited_data="20100626.xml" distance="105" max_speed="46.4" avg_speed="29.1" duration="3:37:11" color="#80FF80" name="Espoo-Hämeenlinna"/>
+  <trip gps_data="2010/20100730.gpx" visited_data="20100626.xml" distance="103" max_speed="45.0" avg_speed="24.9" duration="4:07:31" color="#FF80FF" name="Järvenpää"/>
+  <trip gps_data="2010/20100626.gpx" visited_data="20100620.xml" distance="98"  max_speed="57.1" avg_speed="23.5" duration="4:09:29" color="#800080" name="Otalampi-Ojakkala"/>
+  <trip gps_data="2010/20100620.gpx" visited_data="20100602.xml" distance="95"  max_speed="57.6" avg_speed="21.6" duration="4:23:03" color="#404000" name="Ojakkala-Kattila"/>
+  <trip gps_data="2010/20100605.gpx" visited_data="20100602.xml" distance="57"  max_speed="42.6" avg_speed="23.2" duration="2:27:06" color="#00FF40" name="Kehä I"/>
+  <trip gps_data="2010/20100602.gpx" visited_data="20100516.xml" distance="81"  max_speed="52.5" avg_speed="21.1" duration="3:50:18" color="#0040FF" name="Österby"/>
+  <trip gps_data="2010/20100516.gpx" visited_data="20100513.xml" distance="89"  max_speed="47.2" avg_speed="21.8" duration="4:05:27" color="#FF4000" name="Veikkola"/>
+  <trip gps_data="2010/20100513.gpx" visited_data="20100509.xml" distance="79"  max_speed="53.3" avg_speed="22.1" duration="3:33:23" color="#000040" name="Kirkkonummi"/>
+  <trip gps_data="2010/20100509.gpx" visited_data="20090909.xml" distance="54"  max_speed="52.5" avg_speed="18.8" duration="2:52:20" color="#400000" name="Saarijärvi"/>
+  <trip gps_data="2009/20090909.gpx" visited_data="20090905.xml" distance="122" max_speed="47.3" avg_speed="19.0" duration="6:23:56" color="#80FF00" name="Port-Airport"/>
+  <trip gps_data="2009/20090905.gpx" visited_data="20090902.xml" distance="59"  max_speed="58.5" avg_speed="17.0" duration="3:27:27" color="#8000FF" name="Velskola-Solvalla"/>
+  <trip gps_data="2009/20090902.gpx" visited_data="20090814.xml" distance="81"  max_speed="48.4" avg_speed="20.9" duration="3:54:12" color="#00FF80" name="Sarfvik-Ämmässuo"/>
+  <trip gps_data="2009/20090822.gpx" visited_data="20090814.xml" distance="112" max_speed="48.7" avg_speed="24.0" duration="4:39:38" color="#FF0080" name="Kehä III"/>
+  <trip gps_data="2009/20090814.gpx" visited_data="20090811.xml" distance="101" max_speed="51.3" avg_speed="22.5" duration="4:29:38" color="#408080" name="Nurmijärvi-Vihti"/>
+  <trip gps_data="2009/20090811.gpx" visited_data="20090805.xml" distance="100" max_speed="58.0" avg_speed="19.3" duration="5:10:20" color="#804000" name="Kirkkonummi-Vihti"/>
+  <trip gps_data="2009/20090808.gpx" visited_data="20090805.xml" distance="106" max_speed="39.7" avg_speed="26.5" duration="3:59:41" color="#004000" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="2009/20090807.gpx" visited_data="20090805.xml" distance="105" max_speed="41.2" avg_speed="25.0" duration="4:12:24" color="#80FFFF" name="Espoo-Hämeenlinna"/>
+  <trip gps_data="2009/20090805.gpx" visited_data="20090803.xml" distance="117" max_speed="50.9" avg_speed="22.0" duration="5:18:47" color="#8080FF" name="Sipoo-Vantaa"/>
+  <trip gps_data="2009/20090803.gpx" visited_data="20090801.xml" distance="126" max_speed="49.1" avg_speed="20.2" duration="6:13:09" color="#0080FF" name="Vihti-Nurmijärvi"/>
+  <trip gps_data="2009/20090801.gpx" visited_data="20090730.xml" distance="105" max_speed="43.3" avg_speed="24.4" duration="4:18:58" color="#004040" name="Kerava-Sipoo"/>
+  <trip gps_data="2009/20090730.gpx" visited_data="20090728.xml" distance="98"  max_speed="54.2" avg_speed="19.1" duration="5:08:09" color="#008040" name="Nuuksio"/>
+  <trip gps_data="2009/20090728.gpx" visited_data="20090719.xml" distance="105" max_speed="45.1" avg_speed="21.7" duration="4:49:34" color="#808000" name="Helsinki-Sipoo"/>
+  <trip gps_data="2009/20090719.gpx" visited_data="20090711.xml" distance="104" max_speed="47.6" avg_speed="23.0" duration="4:31:10" color="#400040" name="Klaukkala"/>
 </trips>
