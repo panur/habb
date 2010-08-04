@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-19 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
 
 var gMap;
-var gMapConfig;
+var gMapConfig = {};
 
 function load() {
   var mOptions = {
@@ -15,7 +15,7 @@ function load() {
 
   gMap = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
 
-  gMapConfig = createMapConfig(true);
+  initMapConfig(gMapConfig, true);
 
   initMap(gMap, gMapConfig);
 }
@@ -47,9 +47,7 @@ function setCenter(map, latLng, zoom) {
   map.panTo(latLng);
 }
 
-function createMapConfig(showExtensions) {
-  var mapConfig = {};
-
+function initMapConfig(mapConfig, showExtensions) {
   mapConfig.showExtensions = showExtensions;
   mapConfig.initialStatistics = document.getElementById("statistics").innerHTML;
 
@@ -61,7 +59,11 @@ function createMapConfig(showExtensions) {
 
   mapConfig.visitedDataDescription = "latest";
 
-  mapConfig.infoWindow = new google.maps.InfoWindow();
+  if (mapConfig.infoWindow) {
+    mapConfig.infoWindow.close();
+  } else {
+    mapConfig.infoWindow = new google.maps.InfoWindow();
+  }
 
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
@@ -135,8 +137,6 @@ function createMapConfig(showExtensions) {
                          types:["Speed", "Altitude"], lastRatio:0,
                          tripCursor:[], maxTripCursorLength:10,
                          tickIntervalMs:200, player:{state:"stop", speed:50}};
-
-  return mapConfig;
 }
 
 function setPointsToMapConfig(mapConfig, map) {
@@ -622,15 +622,24 @@ function addMouseListeners(mapConfig, map) {
     var latLng = mouseEvent.latLng;
 
     if (getKm2XYFromPoint(mapConfig, latLng) != null) {
-      var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
-      var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
-
-      mapConfig.infoWindow.setPosition(latLng);
-      mapConfig.infoWindow.setContent(linksHtml);
-
-      mapConfig.infoWindow.open(map);
+      showInfoWindow(mapConfig, map, latLng, "links");
     }
   });
+}
+
+function showInfoWindow(mapConfig, map, latLng, contentType) {
+  var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
+  var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
+
+  mapConfig.infoWindow.setPosition(latLng);
+
+  if (contentType == "links") {
+    mapConfig.infoWindow.setContent(linksHtml);
+  } else {
+    mapConfig.infoWindow.setContent(actionsHtml);
+  }
+
+  mapConfig.infoWindow.open(map);
 }
 
 function getInfo(mc, map, point) {
@@ -855,15 +864,20 @@ function toggleOpacity() {
   addOverlaysToMap(gMapConfig, gMap);
 }
 
-// tbd: doesn't work
 function toggleShowExtensions() {
+  _hideAllTrips();
+
   removeOverlaysFromMap(gMapConfig, gMap);
-  google.maps.event.clearInstanceListeners(gMap);
+
+  // http://code.google.com/p/gmaps-api-issues/issues/detail?id=2517
+  //google.maps.event.clearInstanceListeners(gMap);
+  google.maps.event.clearListeners(gMap, "pointsAreInMapConfig");
+  google.maps.event.clearListeners(gMap, "km2sAreInMapConfig");
 
   document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;
 
-  gMapConfig = createMapConfig(!gMapConfig.showExtensions);
+  initMapConfig(gMapConfig, !gMapConfig.showExtensions);
 
   initMap(gMap, gMapConfig);
 }
@@ -876,6 +890,9 @@ function changeVisitedData(newTarget) {
   } else {
     setVisitedData(gMapConfig.filenames.visitedDataLatest, "latest");
   }
+
+  showInfoWindow(gMapConfig, gMap, gMapConfig.infoWindow.getPosition(),
+                 "actions");
 }
 
 function setVisitedData(filename, visitedDataDescription) {

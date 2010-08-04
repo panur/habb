@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-06-19 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -44,6 +44,18 @@ function _hideTripsTable() {
 function _toggleTripVisibility(tripIndex) {
   toggleTripVisibility(gMapConfig, gMap, tripIndex);
   showTripsControl(gMapConfig, gMap);
+}
+
+function _hideAllTrips() {
+  if (typeof(gMapConfig.trips.data) == "undefined") {
+    return;
+  }
+
+  for (var i = 0; i < gMapConfig.trips.data.length; i++) {
+    if (gMapConfig.trips.data[i].visibility == "visible") {
+      toggleTripVisibility(gMapConfig, gMap, i);
+    }
+  }
 }
 
 function _setVisitedData(tripIndex) {
