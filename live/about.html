@@ -12,7 +12,7 @@
 
 <h1>Helsinki Area By Bike - About</h1>
 
-<p>Last updated 2010-05-13.</p>
+<p>Last updated 2010-08-04.</p>
 
 <h2>Map</h2>
 
@@ -69,7 +69,11 @@ be shown/hidden using the right-click
   <li><a href="http://maps.google.com/">Google Maps</a></li>
   <li><a href="http://www.bing.com/maps/">Bing Maps</a> (Microsoft)
     <ul>
-    <li>In many areas more accurate and recent aerial images than in Google Maps</li>
+    <li>In many areas more accurate and newer satellite images than in Google Maps</li>
+    </ul></li>
+  <li><a href="http://maps.ovi.com/">Ovi Maps</a> (Nokia)
+    <ul>
+    <li>In some areas newer satellite images than in Bing Maps</li>
     </ul></li>
   <li><a href="http://www.openstreetmap.org/">OpenStreetMap</a></li>
 </ul>
@@ -86,23 +90,25 @@ cycle computer Atech K29. No map is used during the trips.
 <h2>Implementation Details</h2>
 
 <ul>
-  <li>Uses JavaScript version of <a href="http://code.google.com/apis/maps/">Google Maps API</a></li>
-  <li>Uses Mark McClure's <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/">PolylineEncoder class</a></li>
+  <li>Uses JavaScript version of <a href="http://code.google.com/apis/maps/">Google Maps API</a> (version 3)</li>
   <li>Uses <a href="http://www.json.org/js.html">JSON in JavaScript</a> to store trips data</li>
-  <li>Uses <a href="http://kb.mozillazine.org/Io.js">Io.js</a> in trips data generator</li>
+  <li>Uses Mark McClure's <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/">PolylineEncoder class</a> and <a href="http://kb.mozillazine.org/Io.js">Io.js</a> in trips data generator</li>
   <li>KKJ coordinates were converted to EUREF89 (WGS84) using <a href="http://www.maanmittauslaitos.fi/inc/LoadDocument.asp?id=931&amp;docid=415&amp;type=doc">EurefMuunnos</a></li>
 </ul>
 
 <h2>Browser Compatibility</h2>
 
 <ul>
-  <li>Mozilla Firefox version 3.6.3: <a href="firefox.png">OK</a></li>
-  <li>Opera version 10.53: Not OK</li>
-  <li>Microsoft Internet Explorer version 8.0.6001.18904: OK
+  <li>Mozilla Firefox version 3.6.8: <a href="firefox.png">OK</a></li>
+  <li>Opera version 10.60: Not OK
+    <ul>
+    <li>Otherwise OK but closing of trips table doesn't work</li>
+    </ul></li>
+  <li>Microsoft Internet Explorer version 8.0.6001.18928: OK
     <ul>
     <li>Doesn't support trip graph (<a href="https://developer.mozilla.org/en/HTML/Canvas">canvas</a>)</li>
     </ul></li>
-  <li>Google Chrome version 4.1.249.1064: OK</li>
+  <li>Google Chrome version 5.0.375.125: OK</li>
 </ul>
 
 <p>back to the <a href="map.html">map</a></p>
