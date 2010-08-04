@@ -38,12 +38,12 @@ div.showTripsTable {
 
 div.trips {
   position: absolute;
-  top: 5px;
-  right: 285px;
+  top: 30px;
+  right: 206px;
   color: #000000;
   background-color: #FFFFFF;
   border: 1px solid #000000;
-  max-width: 49%;
+  max-width: 58%;
   max-height: 64%;
   overflow: auto;
 }
@@ -51,8 +51,8 @@ div.trips {
 img.hideTripsTable {
   border: 0px;
   position: absolute;
-  top: 5px;
-  right: 285px;
+  top: 30px;
+  right: 206px;
 }
 
 table.trips {
