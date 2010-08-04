@@ -1,43 +1,40 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-05-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
 
 var gMap;
-var gMapConfig;
+var gMapConfig = {};
 
 function load() {
-  if (GBrowserIsCompatible()) {
-    if (document.implementation.hasFeature(
-        "http://www.w3.org/TR/SVG11/feature#SVG","1.1")) {
-      /* needed for Opera */
-      _mSvgEnabled = true;
-      _mSvgForced  = true;
-    }
+  var mOptions = {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControlOptions:
+      {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+    navigationControlOptions:
+      {style: google.maps.NavigationControlStyle.ZOOM_PAN},
+    streetViewControl: true
+  };
 
-    gMap = new GMap2(document.getElementById("map_canvas"));
-    gMap.enableScrollWheelZoom();
-    gMap.addControl(new GLargeMapControl());
-    gMap.addControl(new GMapTypeControl());
-    gMap.addControl(new GScaleControl());
+  gMap = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
 
-    gMapConfig = createMapConfig(true);
+  initMapConfig(gMapConfig, true);
 
-    initMap(gMap, gMapConfig);
-  }
+  initMap(gMap, gMapConfig);
 }
 
 function initMap(map, mapConfig) {
-  map.setCenter(mapConfig.initialLatLng, mapConfig.initialZL);
+  map.setOptions({center: mapConfig.initialLatLng, zoom: mapConfig.initialZL});
 
-  GEvent.addListener(map, "pointsAreInMapConfig", function() {
+  google.maps.event.addListener(map, "pointsAreInMapConfig", function() {
     setKm2sToMapConfig(mapConfig, map);
   });
 
-  GEvent.addListener(map, "km2sAreInMapConfig", function() {
+  google.maps.event.addListener(map, "km2sAreInMapConfig", function() {
     updateMapGrid(mapConfig);
     mapConfig.visitedStatusAreas = getVisitedStatusAreas(mapConfig, map);
     updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
     setStatistics(mapConfig);
     addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
+    addHomeButton(mapConfig, map);
     addTripsControl(mapConfig, map);
     _resizeMap();
   });
@@ -45,9 +42,12 @@ function initMap(map, mapConfig) {
   setPointsToMapConfig(mapConfig, map);
 }
 
-function createMapConfig(showExtensions) {
-  var mapConfig = {};
+function setCenter(map, latLng, zoom) {
+  map.setZoom(zoom);
+  map.panTo(latLng);
+}
 
+function initMapConfig(mapConfig, showExtensions) {
   mapConfig.showExtensions = showExtensions;
   mapConfig.initialStatistics = document.getElementById("statistics").innerHTML;
 
@@ -59,8 +59,14 @@ function createMapConfig(showExtensions) {
 
   mapConfig.visitedDataDescription = "latest";
 
+  if (mapConfig.infoWindow) {
+    mapConfig.infoWindow.close();
+  } else {
+    mapConfig.infoWindow = new google.maps.InfoWindow();
+  }
+
   mapConfig.initialZL = 10;
-  mapConfig.initialLatLng = new GLatLng(60.2558, 24.8275);
+  mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
   mapConfig.zoomToPointZoomLevel = 14;
 
   mapConfig.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
@@ -68,8 +74,7 @@ function createMapConfig(showExtensions) {
   mapConfig.grid = {weight:1, opacity:0.5,
                     colors:{page:"#000000", km2:"#FFFFFF"}};
   mapConfig.cursorParams = {strokeColor:"#000000", strokeWeight:2,
-                            strokeOpacity:1, fillColor:"#120000",
-                            fillOpacity:0, maxZoomLevel:15, kkj:"-"};
+                            strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
 
   mapConfig.latKmPerP = 5;
   mapConfig.latPages = 7;
@@ -126,15 +131,12 @@ function createMapConfig(showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     controlPosition:new GSize(214, 7), numberOfVisibleTrips:0,
-                     directionMarkers:[]};
+                     numberOfVisibleTrips:0, directionMarkers:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,
                          tripCursor:[], maxTripCursorLength:10,
                          tickIntervalMs:200, player:{state:"stop", speed:50}};
-
-  return mapConfig;
 }
 
 function setPointsToMapConfig(mapConfig, map) {
@@ -147,8 +149,8 @@ function setPointsToMapConfig(mapConfig, map) {
     }
   }
 
-  GDownloadUrl(mapConfig.filenames.points, function(data, responseCode) {
-    var xml = GXml.parse(data);
+  downloadUrl(mapConfig.filenames.points, function(data, responseCode) {
+    var xml = parseXml(data);
     var p = xml.documentElement.getElementsByTagName("point");
     mapConfig.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
     mapConfig.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
@@ -158,12 +160,63 @@ function setPointsToMapConfig(mapConfig, map) {
       var x = parseInt(p[i].getAttribute("kkj_lng")) - mapConfig.kkjOffset.lng;
       var lat = parseFloat(p[i].getAttribute("lat"));
       var lng = parseFloat(p[i].getAttribute("lng"));
-      points[y][x] = new GLatLng(lat, lng);
+      points[y][x] = new google.maps.LatLng(lat, lng);
     }
 
     mapConfig.points = points;
-    GEvent.trigger(map, "pointsAreInMapConfig");
+    google.maps.event.trigger(map, "pointsAreInMapConfig");
   });
+}
+
+function downloadUrl(url, callback) {
+  var request = createXmlHttpRequest();
+
+  if (request == null) {
+    return false;
+  }
+
+  request.onreadystatechange = function() {
+    if (request.readyState == 4) {
+      try {
+        var status = request.status;
+        if ((status == 0) || (status == 200)) {
+          callback(request.responseText, status);
+          request.onreadystatechange = function() {};
+        }
+      } catch (e) {
+        alert(e);
+      }
+    }
+  }
+
+  request.open("GET", url, true);
+  request.send(null);
+}
+
+function createXmlHttpRequest() {
+  try {
+    if (typeof ActiveXObject != "undefined") {
+      return new ActiveXObject("Microsoft.XMLHTTP");
+    } else if (window["XMLHttpRequest"]) {
+      return new XMLHttpRequest();
+    }
+  } catch (e) {
+    alert(e);
+  }
+
+  alert("Cannot create XmlHttpRequest");
+
+  return null;
+}
+
+function parseXml(string) {
+  if (window.ActiveXObject) {
+    var doc = new ActiveXObject('Microsoft.XMLDOM');
+    doc.loadXML(string);
+    return doc;
+  } else if (window.DOMParser) {
+    return (new DOMParser).parseFromString(string, 'text/xml');
+  }
 }
 
 function setKm2sToMapConfig(mc, map) {
@@ -187,9 +240,9 @@ function setKm2sToMapConfig(mc, map) {
 }
 
 function setVisitedDataToKm2s(mapConfig, map) {
-  GDownloadUrl(mapConfig.filenames.visitedData, function(data, responseCode) {
+  downloadUrl(mapConfig.filenames.visitedData, function(data, responseCode) {
+    var xml = parseXml(data);
     var allInPage = [];
-    var xml = GXml.parse(data);
     var pages = xml.documentElement.getElementsByTagName("page");
 
     for (var i = 0; i < pages.length; i++) {
@@ -226,7 +279,7 @@ function setVisitedDataToKm2s(mapConfig, map) {
       }
     }
 
-    GEvent.trigger(map, "km2sAreInMapConfig");
+    google.maps.event.trigger(map, "km2sAreInMapConfig");
   });
 }
 
@@ -241,7 +294,6 @@ function getIndexOf(array, value) {
 }
 
 function updateMapGrid(mc) {
-  var polylineEncoder = new PolylineEncoder();
   var color;
 
   mc.grid.latPolylines = [];
@@ -256,8 +308,10 @@ function updateMapGrid(mc) {
       }
       color = ((lines++ % mc.latKmPerP) == 0) ?
               mc.grid.colors.page : mc.grid.colors.km2;
-      var lat = polylineEncoder.dpEncodeToGPolyline(
-        points, color, mc.grid.weight, mc.grid.opacity);
+      var lat = new google.maps.Polyline({
+        path: points, strokeColor: color, strokeWeight: mc.grid.weight,
+        strokeOpacity: mc.grid.opacity, clickable: false, zIndex: 1
+      });
       mc.grid.latPolylines.push(lat);
     }
   }
@@ -272,15 +326,16 @@ function updateMapGrid(mc) {
 
       color = ((lines++ % mc.lngKmPerP) == 0) ?
               mc.grid.colors.page : mc.grid.colors.km2;
-      var lng = polylineEncoder.dpEncodeToGPolyline(
-        points, color, mc.grid.weight, mc.grid.opacity);
+      var lng = new google.maps.Polyline({
+        path: points, strokeColor: color, strokeWeight: mc.grid.weight,
+        strokeOpacity: mc.grid.opacity, clickable: false, zIndex: 1
+      });
       mc.grid.lngPolylines.push(lng);
     }
   }
 }
 
 function getVisitedStatusAreas(mc) {
-  var polylineEncoder = new PolylineEncoder();
   var polygonGroups = {};
   polygonGroups.np = getPolygonGroup(mc, "np");
   polygonGroups.no = getPolygonGroup(mc, "no");
@@ -297,19 +352,21 @@ function getVisitedStatusAreas(mc) {
   }
 
   for (var i in polygonGroups) {
-    var jsons = [];
+    var paths = [];
     for (var j = 0; j < polygonGroups[i].length; j++) {
-      var json = polylineEncoder.dpEncodeToJSON(polygonGroups[i][j]);
-      jsons.push(json);
+      paths.push(polygonGroups[i][j]);
     }
 
-    var polygon = new GPolygon.fromEncoded({
-      polylines: jsons,
-      fill: true,
-      color: mc.area.colors[i],
-      opacity: mc.area.opacity,
-      outline: false
-    });;
+    var polygon = new google.maps.Polygon({
+      paths: paths,
+      strokeColor: mc.area.colors[i],
+      strokeWeight: 1,
+      strokeOpacity: 0.5,
+      fillColor: mc.area.colors[i],
+      fillOpacity: mc.area.opacity,
+      clickable: false,
+      zIndex: 1
+    });
 
     visitedStatusAreas.push(polygon);
   }
@@ -522,47 +579,67 @@ function setStatistics(mapConfig) {
 }
 
 function addOverlaysToMap(mc, map) {
+  addOrRemoveOverlays(mc, map, map);
+}
+
+function removeOverlaysFromMap(mc, map) {
+  addOrRemoveOverlays(mc, map, null);
+}
+
+function addOrRemoveOverlays(mc, map, mapOrNull) {
   for (var i = 0; i < mc.visitedStatusAreas.length; i++) {
-    mc.visitedStatusAreas[i].opacity = mc.area.opacity;
-    map.addOverlay(mc.visitedStatusAreas[i]);
+    mc.visitedStatusAreas[i].setOptions({fillOpacity: mc.area.opacity});
+    mc.visitedStatusAreas[i].setMap(mapOrNull);
   }
 
   for (var i = 0; i < mc.grid.latPolylines.length; i++) {
-    map.addOverlay(mc.grid.latPolylines[i]);
+    mc.grid.latPolylines[i].setMap(mapOrNull);
   }
 
   for (var i = 0; i < mc.grid.lngPolylines.length; i++) {
-    map.addOverlay(mc.grid.lngPolylines[i]);
+    mc.grid.lngPolylines[i].setMap(mapOrNull);
   }
 
   addTripsOverlaysToMap(mc, map);
 }
 
 function addMouseListeners(mapConfig, map) {
-  GEvent.addListener(map, "mousemove", function(point) {
+  google.maps.event.addListener(map, "mousemove", function(mouseEvent) {
     if (mapConfig.tripGraph.player.state == "stop") {
-      var info = getInfo(mapConfig, map, point);
+      var info = getInfo(mapConfig, map, mouseEvent.latLng);
       updateStatusBar(info);
       updateCursor(mapConfig, map, info);
     }
   });
 
-  GEvent.addListener(map, "mouseout", function(point) {
-    if (mapConfig.cursor)  {
-      map.removeOverlay(mapConfig.cursor);
+  google.maps.event.addListener(map, "mouseout", function(mouseEvent) {
+    if (mapConfig.cursor) {
+      mapConfig.cursor.setMap(null);
     }
   });
 
-  GEvent.addListener(map, "singlerightclick", function(point, src, overlay) {
-    if ((overlay) && (overlay.color)) {
-      var latLng = map.fromContainerPixelToLatLng(point);
-      var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
-      var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
-      var tabs = [new GInfoWindowTab("Links", linksHtml),
-                  new GInfoWindowTab("Actions", actionsHtml)]
-      map.openInfoWindowTabsHtml(latLng, tabs);
+  google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
+    var latLng = mouseEvent.latLng;
+
+    if (getKm2XYFromPoint(mapConfig, latLng) != null) {
+      showInfoWindow(mapConfig, map, latLng, "links");
     }
   });
+}
+
+function showInfoWindow(mapConfig, map, latLng, contentType) {
+  var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
+  var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
+
+  mapConfig.infoWindow.setPosition(latLng);
+
+  if (contentType == "links") {
+    mapConfig.infoWindow.setContent(linksHtml);
+  } else {
+    mapConfig.infoWindow.setContent(actionsHtml);
+  }
+
+  mapConfig.infoWindow.open(map);
 }
 
 function getInfo(mc, map, point) {
@@ -599,15 +676,16 @@ function getInfo(mc, map, point) {
   return info;
 }
 
+// tbd: this is not accurate
 function getKm2XYFromPoint(mc, point) {
   var guessXY = {y : -1, x : -1};
 
-  for (var i = 0, lines = 0; i < mc.grid.latPolylines.length; i++) {
+  for (var i = 0; i < mc.grid.latPolylines.length; i++) {
     var line = mc.grid.latPolylines[i];
-    var p1 = line.getVertex(0);
-    var p2 = line.getVertex(line.getVertexCount() - 1);
-    var mp = 1 - (point.lng() - p1.lng()) / (p2.lng() - p1.lng());
-    var lat = p2.lat() + (p1.lat() - p2.lat()) * mp;
+    var p1 = line.getPath().getAt(0);
+    var p2 = line.getPath().getAt(line.getPath().length - 1);
+    var mp = 1 - ((point.lng() - p1.lng()) / (p2.lng() - p1.lng()));
+    var lat = p2.lat() + ((p1.lat() - p2.lat()) * mp);
 
     if (point.lat() < lat) {
       guessXY.y = i - 1;
@@ -615,12 +693,12 @@ function getKm2XYFromPoint(mc, point) {
     }
   }
 
-  for (var i = 0, lines = 0; i < mc.grid.lngPolylines.length; i++) {
+  for (var i = 0; i < mc.grid.lngPolylines.length; i++) {
     var line = mc.grid.lngPolylines[i];
-    var p1 = line.getVertex(0);
-    var p2 = line.getVertex(line.getVertexCount() - 1);
-    var mp = 1 - (point.lat() - p2.lat()) / (p1.lat() - p2.lat());
-    var lng = p1.lng() + (p2.lng() - p1.lng()) * mp;
+    var p1 = line.getPath().getAt(0);
+    var p2 = line.getPath().getAt(line.getPath().length - 1);
+    var mp = 1 - ((point.lat() - p2.lat()) / (p1.lat() - p2.lat()));
+    var lng = p1.lng() + ((p2.lng() - p1.lng()) * mp);
 
     if (point.lng() < lng) {
       guessXY.x = i - 1;
@@ -668,23 +746,28 @@ function updateCursor(mc, map, info) {
     if (mc.cursorParams.kkj == info.kkjText) {
       return;
     } else {
-      map.removeOverlay(mc.cursor);
+      mc.cursor.setMap(null);
       mc.cursorParams.kkj = "-";
     }
   }
 
   if ((info.km2XY) && (map.getZoom() < mc.cursorParams.maxZoomLevel)) {
     var points = mc.km2s[info.km2XY.y][info.km2XY.x].points;
-    mc.cursor = new GPolygon(points, mc.cursorParams.strokeColor,
-      mc.cursorParams.strokeWeight, mc.cursorParams.strokeOpacity,
-      mc.cursorParams.fillColor, mc.cursorParams.fillOpacity);
-    map.addOverlay(mc.cursor);
+    mc.cursor = new google.maps.Polyline({
+      path: points,
+      strokeColor: mc.cursorParams.strokeColor,
+      strokeWeight: mc.cursorParams.strokeWeight,
+      strokeOpacity: mc.cursorParams.strokeOpacity,
+      clickable: false,
+      zIndex: 1
+    });
+    mc.cursor.setMap(map);
     mc.cursorParams.kkj = info.kkjText;
   }
 }
 
 function getLinksHtml(mapConfig, point, zl) {
-  var km2XY = getKm2XYFromPoint(mapConfig, point)
+  var km2XY = getKm2XYFromPoint(mapConfig, point);
   var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
   var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
   var kkpUrl = "http://kansalaisen.karttapaikka.fi/kartanhaku/osoitehaku.html" +
@@ -708,7 +791,23 @@ function getLinksHtml(mapConfig, point, zl) {
     "<li><a href='" + osmUrl + "'>OpenStreetMap</a></li>" +
     "</ul>";
 
+  html += "See other <a href='javascript:_setActionsHtml()'>Actions</a>";
+
   return html;
+}
+
+function _setActionsHtml() {
+  var actionsHtml =
+    getActionsHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
+                   gMap.getZoom());
+  gMapConfig.infoWindow.setContent(actionsHtml);
+}
+
+function _setLinksHtml() {
+  var linksHtml =
+    getLinksHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
+                   gMap.getZoom());
+  gMapConfig.infoWindow.setContent(linksHtml);
 }
 
 function getActionsHtml(mapConfig, point, zl) {
@@ -742,17 +841,19 @@ function getActionsHtml(mapConfig, point, zl) {
     "Current visited data is " + gMapConfig.visitedDataDescription +
     ". Change visited data to: <ul>" + visitedDataList + "</ul>";
 
+  html += "Back to <a href='javascript:_setLinksHtml()'>Links</a>";
+
   return html;
 }
 
 function zoomToPoint(lat, lng) {
-  var latLng = new GLatLng(parseFloat(lat), parseFloat(lng));
+  var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
-  gMap.setCenter(latLng, gMapConfig.zoomToPointZoomLevel);
+  setCenter(gMap, latLng, gMapConfig.zoomToPointZoomLevel);
 }
 
 function toggleOpacity() {
-  gMap.clearOverlays();
+  removeOverlaysFromMap(gMapConfig, gMap);
 
   if (gMapConfig.area.opacity == gMapConfig.area.opacityHigh) {
     gMapConfig.area.opacity = gMapConfig.area.opacityLow;
@@ -764,13 +865,19 @@ function toggleOpacity() {
 }
 
 function toggleShowExtensions() {
-  gMap.clearOverlays();
-  GEvent.clearInstanceListeners(gMap);
+  _hideAllTrips();
+
+  removeOverlaysFromMap(gMapConfig, gMap);
+
+  // http://code.google.com/p/gmaps-api-issues/issues/detail?id=2517
+  //google.maps.event.clearInstanceListeners(gMap);
+  google.maps.event.clearListeners(gMap, "pointsAreInMapConfig");
+  google.maps.event.clearListeners(gMap, "km2sAreInMapConfig");
 
   document.getElementById("statistics").innerHTML =
     gMapConfig.initialStatistics;
 
-  gMapConfig = createMapConfig(!gMapConfig.showExtensions);
+  initMapConfig(gMapConfig, !gMapConfig.showExtensions);
 
   initMap(gMap, gMapConfig);
 }
@@ -783,15 +890,31 @@ function changeVisitedData(newTarget) {
   } else {
     setVisitedData(gMapConfig.filenames.visitedDataLatest, "latest");
   }
+
+  showInfoWindow(gMapConfig, gMap, gMapConfig.infoWindow.getPosition(),
+                 "actions");
 }
 
 function setVisitedData(filename, visitedDataDescription) {
-  gMap.clearOverlays();
+  removeOverlaysFromMap(gMapConfig, gMap);
 
   gMapConfig.filenames.visitedData = filename;
   gMapConfig.visitedDataDescription = visitedDataDescription;
 
   setKm2sToMapConfig(gMapConfig, gMap);
+}
+
+function addHomeButton(mapConfig, map) {
+  var homeButton = document.createElement("div");
+  homeButton.id = "homeButton";
+  homeButton.className = "homeButton";
+  document.getElementById("dynamic_divs").appendChild(homeButton);
+
+  homeButton.title = "Return to initial location";
+
+  homeButton.onclick = function() {
+    setCenter(map, mapConfig.initialLatLng, mapConfig.initialZL);
+  };
 }
 
 function _resizeMap() {
@@ -814,5 +937,5 @@ function resizeMapCanvas(map) {
     document.getElementById("status_bar").clientHeight -
     document.getElementById("statistics").clientHeight + "px";
 
-  map.checkResize();
+  google.maps.event.trigger(map, "resize");
 }

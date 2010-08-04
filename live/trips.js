@@ -1,19 +1,14 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
 
 function addTripsControl(mapConfig, map) {
-  var position =
-    new GControlPosition(G_ANCHOR_TOP_RIGHT, mapConfig.trips.controlPosition);
-
   var tripsControl = document.createElement("div");
   tripsControl.id = "tripsControl";
   tripsControl.className = "trips";
-  document.getElementById("map_canvas").appendChild(tripsControl);
-  position.apply(tripsControl);
+  document.getElementById("dynamic_divs").appendChild(tripsControl);
 
   var tripsTableHide = document.createElement("div");
   tripsTableHide.id = "tripsTableHide";
-  document.getElementById("map_canvas").appendChild(tripsTableHide);
-  position.apply(tripsTableHide);
+  document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
   showTripsControl(mapConfig, map);
 }
@@ -25,9 +20,9 @@ function addTripsOverlaysToMap(mapConfig, map) {
 
   for (var i = 0; i < mapConfig.trips.data.length; i++) {
     if (mapConfig.trips.data[i].visibility == "visible") {
-      map.addOverlay(mapConfig.trips.data[i].polyline);
-      map.addOverlay(mapConfig.trips.data[i].gpsMaxSpeed.marker);
-      map.addOverlay(mapConfig.trips.data[i].gpsMaxAltitude.marker);
+      mapConfig.trips.data[i].polyline.setMap(map);
+      mapConfig.trips.data[i].gpsMaxSpeed.marker.setMap(map);
+      mapConfig.trips.data[i].gpsMaxAltitude.marker.setMap(map);
     }
   }
 }
@@ -49,6 +44,18 @@ function _hideTripsTable() {
 function _toggleTripVisibility(tripIndex) {
   toggleTripVisibility(gMapConfig, gMap, tripIndex);
   showTripsControl(gMapConfig, gMap);
+}
+
+function _hideAllTrips() {
+  if (typeof(gMapConfig.trips.data) == "undefined") {
+    return;
+  }
+
+  for (var i = 0; i < gMapConfig.trips.data.length; i++) {
+    if (gMapConfig.trips.data[i].visibility == "visible") {
+      toggleTripVisibility(gMapConfig, gMap, i);
+    }
+  }
 }
 
 function _setVisitedData(tripIndex) {
@@ -99,8 +106,8 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 }
 
 function setTripsData(mapConfig, map) {
-  GDownloadUrl(mapConfig.filenames.tripsData, function(data, responseCode) {
-    var xml = GXml.parse(data);
+  downloadUrl(mapConfig.filenames.tripsData, function(data, responseCode) {
+    var xml = parseXml(data);
     var tripsData = xml.documentElement.getElementsByTagName("data");
     var tripsDataString = "";
 
@@ -116,6 +123,10 @@ function setTripsData(mapConfig, map) {
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
       mapConfig.trips.data[i].gpsAltitudeData =
         arrayToStringDecode(mapConfig.trips.data[i].encodedGpsAltitudeData);
+      mapConfig.trips.data[i].gpsMaxSpeed.location =
+        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxSpeed.location);
+      mapConfig.trips.data[i].gpsMaxAltitude.location =
+        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxAltitude.location);
     }
     showTripsControl(mapConfig, map);
   });
@@ -144,6 +155,10 @@ function arrayToStringDecode(encodedString) {
   }
 
   return decodedArray;
+}
+
+function mapLatLngFromV2ToV3(latLngV2) {
+  return new google.maps.LatLng(latLngV2.y, latLngV2.x);
 }
 
 function getTripsTableHtml(mapConfig, tripsData) {
@@ -217,15 +232,72 @@ function getVisitedDataCommandHtml(mapConfig, tripIndex) {
   return html;
 }
 
+function getTripPolyline(encodedPolyline) {
+  var points = decodeLine(encodedPolyline.points);
+  var path = [];
+
+  for (var i = 0; i < points.length; i++) {
+    path.push(new google.maps.LatLng(points[i][0], points[i][1]));
+  }
+
+  return new google.maps.Polyline({
+    path: path,
+    strokeColor: encodedPolyline.color,
+    strokeWeight: encodedPolyline.weight,
+    strokeOpacity: encodedPolyline.opacity,
+    clickable: true,
+    zIndex: 10
+  });
+}
+
+// http://code.google.com/apis/maps/documentation/utilities/include/polyline.js
+// Decode an encoded polyline into a list of lat/lng tuples.
+function decodeLine(encoded) {
+  var len = encoded.length;
+  var index = 0;
+  var array = [];
+  var lat = 0;
+  var lng = 0;
+
+  while (index < len) {
+    var b;
+    var shift = 0;
+    var result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lat += dlat;
+
+    shift = 0;
+    result = 0;
+    do {
+      b = encoded.charCodeAt(index++) - 63;
+      result |= (b & 0x1f) << shift;
+      shift += 5;
+    } while (b >= 0x20);
+    var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+    lng += dlng;
+
+    array.push([lat * 1e-5, lng * 1e-5]);
+  }
+
+  return array;
+}
+
 function toggleTripVisibility(mapConfig, map, tripIndex) {
   var tripData = mapConfig.trips.data[tripIndex];
 
   if (typeof(tripData.polyline) == "undefined") {
-    tripData.polyline = GPolyline.fromEncoded(tripData.encodedPolyline);
+    tripData.polyline = getTripPolyline(tripData.encodedPolyline);
 
-    GEvent.addListener(tripData.polyline, "click", function(latlng) {
+    google.maps.event.addListener(tripData.polyline, "click",
+                                  function(mouseEvent) {
       if (mapConfig.tripGraph.tripData == tripData) {
-        addDirectionMarker(mapConfig, map, latlng, tripData.polyline);
+        addDirectionMarker(mapConfig, map, mouseEvent.latLng,
+                           tripData.polyline);
       }
       addTripGraph(mapConfig, map, tripData);
     });
@@ -242,9 +314,9 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.visibility = "visible";
     mapConfig.trips.numberOfVisibleTrips += 1;
     setVisitedAreaOpacityToLow(mapConfig);
-    map.addOverlay(tripData.polyline);
-    map.addOverlay(tripData.gpsMaxSpeed.marker);
-    map.addOverlay(tripData.gpsMaxAltitude.marker);
+    tripData.polyline.setMap(map);
+    tripData.gpsMaxSpeed.marker.setMap(map);
+    tripData.gpsMaxAltitude.marker.setMap(map);
     addTripGraph(mapConfig, map, tripData);
   } else {
     tripData.visibility = "hidden";
@@ -252,9 +324,9 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     if (mapConfig.trips.numberOfVisibleTrips == 0) {
       setVisitedAreaOpacityToHigh(mapConfig);
     }
-    map.removeOverlay(tripData.polyline);
-    map.removeOverlay(tripData.gpsMaxSpeed.marker);
-    map.removeOverlay(tripData.gpsMaxAltitude.marker);
+    tripData.polyline.setMap(null);
+    tripData.gpsMaxSpeed.marker.setMap(null);
+    tripData.gpsMaxAltitude.marker.setMap(null);
     removeDirectionMarkers(mapConfig, map);
     _hideTripGraph();
   }
@@ -265,17 +337,17 @@ function addDirectionMarker(mapConfig, map, point, polyline) {
   var p1;
   var p2;
 
-  for (var i = 0; i < polyline.getVertexCount() - 1; i++) {
-    p1 = polyline.getVertex(i);
-    p2 = polyline.getVertex(i + 1);
+  for (var i = 0; i < polyline.getPath().length - 1; i++) {
+    p1 = polyline.getPath().getAt(i);
+    p2 = polyline.getPath().getAt(i + 1);
 
     if (isPointInLineSegment(map, point, p1, p2) == true) {
       var direction = getLineDirection(p1, p2);
-      var marker = new GMarker(point, getDirectionIcon(direction));
-      GEvent.addListener(marker, "click", function(latlng) {
-        map.removeOverlay(marker);
+      var marker = getDirectionMarker(point, direction);
+      google.maps.event.addListener(marker, "click", function(event) {
+        marker.setMap(null);
       });
-      map.addOverlay(marker);
+      marker.setMap(map);
       mapConfig.trips.directionMarkers.push(marker);
       break;
     }
@@ -284,16 +356,35 @@ function addDirectionMarker(mapConfig, map, point, polyline) {
 
 function removeDirectionMarkers(mapConfig, map) {
   for (var i = 0; i < mapConfig.trips.directionMarkers.length; i++) {
-    map.removeOverlay(mapConfig.trips.directionMarkers[i]);
+    mapConfig.trips.directionMarkers[i].setMap(null);
   }
 }
 
 function isPointInLineSegment(map, point, p1, p2) {
-  var distance = Math.abs(point.distanceFrom(p1) + point.distanceFrom(p2) -
-                          p1.distanceFrom(p2));
+  var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
+                          getDistance(p1, p2));
   var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
 
   return (distance < tolerance);
+}
+
+/* based on http://www.movable-type.co.uk/scripts/latlong.html */
+function getDistance(p1, p2) {
+  var R = 6378137; /* earth's radius in meters */
+  var lat1 = getRadians(p1.lat());
+  var lon1 = getRadians(p1.lng());
+  var lat2 = getRadians(p2.lat());
+  var lon2 = getRadians(p2.lng());
+  var dLat = lat2 - lat1;
+  var dLon = lon2 - lon1;
+
+  var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1) * Math.cos(lat2) *
+          Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+
+  return d; /* distance between p1 and p2 in meters */
 }
 
 function getLineDirection(from, to) {
@@ -309,10 +400,10 @@ function getLineDirection(from, to) {
 }
 
 function getBearing(from, to) {
-  var lat1 = from.latRadians();
-  var lng1 = from.lngRadians();
-  var lat2 = to.latRadians();
-  var lng2 = to.lngRadians();
+  var lat1 = getRadians(from.lat());
+  var lng1 = getRadians(from.lng());
+  var lat2 = getRadians(to.lat());
+  var lng2 = getRadians(to.lng());
   var y = Math.sin(lng1 - lng2) * Math.cos(lat2);
   var x = (Math.cos(lat1) * Math.sin(lat2)) -
     (Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng1 - lng2));
@@ -328,25 +419,32 @@ function getBearing(from, to) {
   return angle;
 }
 
-function getDirectionIcon(direction) {
-  var arrowIcon = new GIcon();
-  arrowIcon.iconSize = new GSize(24, 24);
-  arrowIcon.shadowSize = new GSize(1, 1);
-  arrowIcon.iconAnchor = new GPoint(12, 12);
-  arrowIcon.infoWindowAnchor = new GPoint(0, 0);
-  arrowIcon.image = "http://www.google.com/mapfiles/dir_" + direction + ".png";
+function getRadians(latOrLng) {
+  return latOrLng * Math.PI / 180;
+}
 
-  return arrowIcon;
+function getDirectionMarker(point, direction) {
+  var image = new google.maps.MarkerImage(
+    "http://www.google.com/mapfiles/dir_" + direction + ".png",
+    new google.maps.Size(24, 24), /* size */
+    new google.maps.Point(0, 0), /* origin */
+    new google.maps.Point(12, 12) /* anchor */
+  );
+
+  return new google.maps.Marker({
+    position: point,
+    icon: image
+  });
 }
 
 function getMarker(mapConfig, map, point, letter, title) {
-  var icon = new GIcon(G_DEFAULT_ICON);
-  icon.image = "http://www.google.com/mapfiles/marker" + letter + ".png";
-  var markerOptions = {icon:icon, title:title};
-  var marker = new GMarker(point, markerOptions);
+  var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
+  var marker = new google.maps.Marker({
+    position: point, icon: image, title: title
+  });
 
-  GEvent.addListener(marker, "click", function(latlng) {
-    map.setCenter(latlng, mapConfig.zoomToPointZoomLevel);
+  google.maps.event.addListener(marker, "click", function(event) {
+    setCenter(map, marker.getPosition(), mapConfig.zoomToPointZoomLevel);
   });
 
   return marker;
