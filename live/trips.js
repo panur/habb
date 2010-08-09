@@ -1,9 +1,9 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-09 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
   tripsControl.id = "tripsControl";
-  tripsControl.className = "trips";
+  tripsControl.className = "tripsControl";
   document.getElementById("dynamic_divs").appendChild(tripsControl);
 
   var tripsTableHide = document.createElement("div");
@@ -31,14 +31,12 @@ function _showTripsTable() {
   gMapConfig.isTableShown = true;
   showTripsControl(gMapConfig, gMap);
   setTripsTableHideVisibility(gMapConfig, "visible");
-  document.getElementById("tripsControl").style.overflow = "auto"; /* for GC */
 }
 
 function _hideTripsTable() {
   gMapConfig.isTableShown = false;
   showTripsControl(gMapConfig, gMap);
   setTripsTableHideVisibility(gMapConfig, "hidden");
-  document.getElementById("tripsControl").style.overflow = "hidden"; /*for GC */
 }
 
 function _toggleTripVisibility(tripIndex) {
@@ -46,16 +44,18 @@ function _toggleTripVisibility(tripIndex) {
   showTripsControl(gMapConfig, gMap);
 }
 
-function _hideAllTrips() {
+function _setVisibilityOfAllTrips(visibility) {
   if (typeof(gMapConfig.trips.data) == "undefined") {
     return;
   }
 
   for (var i = 0; i < gMapConfig.trips.data.length; i++) {
-    if (gMapConfig.trips.data[i].visibility == "visible") {
+    if (gMapConfig.trips.data[i].visibility != visibility) {
       toggleTripVisibility(gMapConfig, gMap, i);
     }
   }
+
+  showTripsControl(gMapConfig, gMap);
 }
 
 function _setVisitedData(tripIndex) {
@@ -76,7 +76,8 @@ function _setVisitedDataToLatest() {
 function showTripsControl(mapConfig, map) {
   if (mapConfig.isTableShown) {
     if (mapConfig.trips.data) {
-      setTripsControlHtml(getTripsTableHtml(mapConfig, mapConfig.trips.data));
+      setTripsControlHtml(getTripsSummaryHtml(mapConfig, mapConfig.trips.data) +
+                          getTripsTableHtml(mapConfig, mapConfig.trips.data));
     } else {
       setTripsControlHtml("Loading...");
       setTripsData(mapConfig, map);
@@ -90,6 +91,13 @@ function showTripsControl(mapConfig, map) {
 function setTripsControlHtml(html) {
   var tripsControl = document.getElementById("tripsControl");
   tripsControl.innerHTML = html;
+
+  var tripsTable = document.getElementById("tripsTable");
+  if (tripsTable) {
+    var mapCanvas = document.getElementById("map_canvas");
+    tripsTable.style.height = Math.round(mapCanvas.clientHeight * 0.64) + "px";
+    tripsTable.style.width = Math.round(mapCanvas.clientWidth * 0.58) + "px";
+  }
 }
 
 function setTripsTableHideVisibility(mapConfig, visibility) {
@@ -161,8 +169,35 @@ function mapLatLngFromV2ToV3(latLngV2) {
   return new google.maps.LatLng(latLngV2.y, latLngV2.x);
 }
 
+function getTripsSummaryHtml(mapConfig, tripsData) {
+  var summaryHtml = '<div class="tripsSummary">';
+
+  summaryHtml += 'Loaded ' + tripsData.length + ' trips. ';
+
+  if (mapConfig.trips.numberOfVisibleTrips == tripsData.length) {
+    summaryHtml += 'Show All';
+  } else {
+    summaryHtml +=
+      '<a href="javascript:_setVisibilityOfAllTrips(\'visible\')">Show All</a>';
+  }
+
+  summaryHtml += ' | ';
+
+  if (mapConfig.trips.numberOfVisibleTrips == 0) {
+    summaryHtml += 'Hide All';
+  } else {
+    summaryHtml +=
+      '<a href="javascript:_setVisibilityOfAllTrips(\'hidden\')">Hide All</a>';
+  }
+
+  summaryHtml += '</div>\n';
+
+  return summaryHtml;
+}
+
 function getTripsTableHtml(mapConfig, tripsData) {
-  var tableHtml = '<table id="tripsTable" class="trips">\n';
+  var tableHtml = '<div id="tripsTable" class="tripsTable">' +
+                  '<table id="tripsTable" class="trips">\n';
 
   tableHtml += '<tr>' +
     '<th colspan="2" rowspan="3">Commands</th>' +
@@ -198,7 +233,7 @@ function getTripsTableHtml(mapConfig, tripsData) {
     tableHtml += '</tr>\n';
   }
 
-  tableHtml += '</table>';
+  tableHtml += '</table></div>';
 
   return tableHtml;
 }

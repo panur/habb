@@ -19,6 +19,16 @@ div.homeButton {
   cursor: pointer;
 }
 
+div.tripsControl {
+  position: absolute;
+  top: 30px;
+  right: 206px;
+  overflow: hidden;
+  color: #000000;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+}
+
 div.showTripsTable {
   border-bottom-color: #707070;
   border-left-color: #D0D0D0;
@@ -33,18 +43,16 @@ div.showTripsTable {
   font-family: Arial,sans-serif;
   text-align: center;
   color: #A52A2A;
+  background-color: #FFFFFF;
   cursor: pointer;
 }
 
-div.trips {
-  position: absolute;
-  top: 30px;
-  right: 206px;
+div.tripsSummary {
   color: #000000;
-  background-color: #FFFFFF;
-  border: 1px solid #000000;
-  max-width: 58%;
-  max-height: 64%;
+  background-color: #E0E0FF;
+}
+
+div.tripsTable {
   overflow: auto;
 }
 

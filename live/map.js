@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-09 */
 
 var gMap;
 var gMapConfig = {};
@@ -865,7 +865,7 @@ function toggleOpacity() {
 }
 
 function toggleShowExtensions() {
-  _hideAllTrips();
+  _setVisibilityOfAllTrips("hidden");
 
   removeOverlaysFromMap(gMapConfig, gMap);
 
@@ -927,6 +927,8 @@ function _resizeMap() {
   } else {
     resizeMapCanvas(gMap);
   }
+
+  showTripsControl(gMapConfig, gMap);
 }
 
 function resizeMapCanvas(map) {
