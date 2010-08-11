@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2010/20100811.gpx"   visited_data="20100626.xml" distance="114" max_speed="53.8" avg_speed="25.5" duration="4:28:53" color="#4000FF" name="Tammisaari-Espoo"/>
+  <trip gps_data="2010/20100810.gpx"   visited_data="20100626.xml" distance="108" max_speed="50.9" avg_speed="23.1" duration="4:39:01" color="#FF0040" name="Espoo-Tammisaari"/>
   <trip gps_data="2010/20100806.gpx"   visited_data="20100626.xml" distance="113" max_speed="47.7" avg_speed="24.8" duration="4:32:25" color="#800000" name="Porvoo-Espoo"/>
   <trip gps_data="2010/20100805_2.gpx" visited_data="20100626.xml" distance="69"  max_speed="48.7" avg_speed="25.7" duration="2:40:59" color="#000080" name="Pellinki"/>
   <trip gps_data="2010/20100805_1.gpx" visited_data="20100626.xml" distance="72"  max_speed="39.7" avg_speed="25.4" duration="2:49:27" color="#000080" name="Espoo-Porvoo"/>
