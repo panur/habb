@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-14 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -251,6 +251,12 @@ function getVisibilityCommandHtml(tripsData, tripIndex) {
 }
 
 function getVisitedDataCommandHtml(mapConfig, tripIndex) {
+  var filename = mapConfig.trips.data[tripIndex].visitedDataFilename;
+
+  if (filename.charAt(filename.length - 1) == "-") {
+    return "";
+  }
+
   if (mapConfig.trips.visitedDataIndex == tripIndex) {
     var linkText = 'Unset';
     var linkTitle = 'Set visited data to latest';
