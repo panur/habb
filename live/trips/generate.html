@@ -12,7 +12,15 @@
     <script src="../tripGraph.js" type="text/javascript"></script>
     <script src="generate.js" type="text/javascript"></script>
   </head>
-  <body onload="generate()">
+  <body>
+    <div>
+    Generate:
+    <ul>
+      <li><a href='javascript:generate("")'>all</a></li>
+      <li><a href='javascript:generate("2010")'>2010</a></li>
+      <li><a href='javascript:generate("2009")'>2009</a></li>
+    </ul>
+    </div>
     <div id="status_bar"></div>
   </body>
 </html>

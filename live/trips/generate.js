@@ -1,15 +1,21 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2009-10-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-14 */
 
-function generate() {
+function generate(year) {
   var tripsConfig = {
     indexFilename:"index.xml",
-    dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData.xml",
+    dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData",
     visitedDataDirectory:"visited_datas", readyTrips:0, polylineWeight:3,
     polylineOpacity:0.9
   };
 
+  if (year == "") {
+    tripsConfig.dataFilename += ".xml";
+  } else {
+    tripsConfig.dataFilename += "_" + year + ".xml";
+  }
+
   setStatus("Please wait...");
-  setTripsData(tripsConfig);
+  setTripsData(tripsConfig, year);
 }
 
 function setStatus(statusText) {
@@ -17,7 +23,7 @@ function setStatus(statusText) {
   statusBar.innerHTML = statusText;
 }
 
-function setTripsData(tripsConfig) {
+function setTripsData(tripsConfig, filenameFilter) {
   var tripsData = [];
 
   GDownloadUrl(tripsConfig.indexFilename, function(data, responseCode) {
@@ -25,18 +31,22 @@ function setTripsData(tripsConfig) {
     var trips = xml.documentElement.getElementsByTagName("trip");
 
     for (var i = 0; i < trips.length; i++) {
-      var tripData = {};
-      tripData.visibility = "hidden";
-      tripData.visitedDataFilename = tripsConfig.visitedDataDirectory + "/" +
-                                     trips[i].getAttribute("visited_data");
-      tripData.name = trips[i].getAttribute("name");
-      tripData.color = trips[i].getAttribute("color");
-      tripData.ccDistance = trips[i].getAttribute("distance");
-      tripData.ccDuration = trips[i].getAttribute("duration");
-      tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
-      tripData.ccAvgSpeed = trips[i].getAttribute("avg_speed");
-      tripsData.push(tripData);
-      setTripGpsData(tripsConfig, trips[i].getAttribute("gps_data"), i);
+      if ((filenameFilter == "") ||
+          (trips[i].getAttribute("gps_data").indexOf(filenameFilter) == 0)) {
+        var tripData = {};
+        tripData.visibility = "hidden";
+        tripData.visitedDataFilename = tripsConfig.visitedDataDirectory + "/" +
+                                       trips[i].getAttribute("visited_data");
+        tripData.name = trips[i].getAttribute("name");
+        tripData.color = trips[i].getAttribute("color");
+        tripData.ccDistance = trips[i].getAttribute("distance");
+        tripData.ccDuration = trips[i].getAttribute("duration");
+        tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
+        tripData.ccAvgSpeed = trips[i].getAttribute("avg_speed");
+        tripsData.push(tripData);
+        setTripGpsData(tripsConfig, trips[i].getAttribute("gps_data"),
+                       tripsData.length - 1);
+      }
     }
 
     tripsConfig.data = tripsData;
