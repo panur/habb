@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-18 */
 
 var gMap;
 var gMapConfig = {};
@@ -619,11 +619,7 @@ function addMouseListeners(mapConfig, map) {
   });
 
   google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
-    var latLng = mouseEvent.latLng;
-
-    if (getKm2XYFromPoint(mapConfig, latLng) != null) {
-      showInfoWindow(mapConfig, map, latLng, "links");
-    }
+    showInfoWindow(mapConfig, map, mouseEvent.latLng, "links");
   });
 }
 
@@ -768,28 +764,40 @@ function updateCursor(mc, map, info) {
 
 function getLinksHtml(mapConfig, point, zl) {
   var km2XY = getKm2XYFromPoint(mapConfig, point);
-  var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
-  var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
-  var kkpUrl = "http://kansalaisen.karttapaikka.fi/kartanhaku/osoitehaku.html" +
-    "?cy=" + kkpUrlY + "500&amp;cx=" + kkpUrlX + "500&scale=8000";
-  var khfN = mapConfig.kkjStart.lat + km2XY.y;
-  var khfE = mapConfig.kkjStart.lng + km2XY.x;
-  var khfUrl = "http://kartta.hel.fi/opas/main/?n=" +
-    khfN + "500&amp;e=" + khfE + "500";
+  if (km2XY != null) {
+    var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
+    var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
+    var kkpUrl =
+      "http://kansalaisen.karttapaikka.fi/kartanhaku/osoitehaku.html" +
+      "?cy=" + kkpUrlY + "500&amp;cx=" + kkpUrlX + "500&amp;scale=8000";
+  } else {
+    var kkpUrl =
+      "http://kansalaisen.karttapaikka.fi/kartanhaku/koordinaattihaku.html" +
+      "?y=" + point.lat() + "&amp;x=" + point.lng() +
+      "&amp;srsName=EPSG%3A4258&amp;scale=8000";
+  }
+  if (km2XY != null) {
+    var khfN = mapConfig.kkjStart.lat + km2XY.y;
+    var khfE = mapConfig.kkjStart.lng + km2XY.x;
+    var khfUrl =
+      "http://kartta.hel.fi/opas/main/?n=" + khfN + "500&amp;e=" + khfE + "500";
+  }
   var googleUrl = "http://maps.google.com/?ll=" +
     point.lat() +"," + point.lng() + "&amp;z=" + zl;
   var msUrl = "http://www.bing.com/maps/default.aspx?cp=" +
     point.lat() + "~" + point.lng() + "&amp;lvl=" + zl;
   var osmUrl = "http://www.openstreetmap.org/?lat=" +
-    point.lat() + "&lon=" + point.lng() + "&zoom=" + zl;
+    point.lat() + "&amp;lon=" + point.lng() + "&amp;zoom=" + zl;
 
-  var html = "Open location " + point + " to:<ul>"+
-    "<li><a href='" + kkpUrl + "'>Kansalaisen karttapaikka</a></li>" +
-    "<li><a href='" + khfUrl + "'>kartta.hel.fi</a></li>" +
-    "<li><a href='" + googleUrl + "'>Google Maps</a></li>" +
-    "<li><a href='" + msUrl + "'>Bing Maps</a></li>" +
-    "<li><a href='" + osmUrl + "'>OpenStreetMap</a></li>" +
-    "</ul>";
+  var html = "Open location " + point + " to:<ul>";
+  html += "<li><a href='" + kkpUrl + "'>Kansalaisen karttapaikka</a></li>";
+  if (km2XY != null) {
+    html += "<li><a href='" + khfUrl + "'>kartta.hel.fi</a></li>";
+  }
+  html += "<li><a href='" + googleUrl + "'>Google Maps</a></li>";
+  html += "<li><a href='" + msUrl + "'>Bing Maps</a></li>";
+  html += "<li><a href='" + osmUrl + "'>OpenStreetMap</a></li>";
+  html += "</ul>";
 
   html += "See other <a href='javascript:_setActionsHtml()'>Actions</a>";
 
