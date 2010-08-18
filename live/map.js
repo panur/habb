@@ -131,7 +131,8 @@ function initMapConfig(mapConfig, showExtensions) {
   }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     numberOfVisibleTrips:0, directionMarkers:[]};
+                     numberOfVisibleTrips:0, directionMarkers:[],
+                     areMarkersVisible:true};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,

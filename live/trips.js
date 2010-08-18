@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-18 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -52,6 +52,20 @@ function _setVisibilityOfAllTrips(visibility) {
   for (var i = 0; i < gMapConfig.trips.data.length; i++) {
     if (gMapConfig.trips.data[i].visibility != visibility) {
       toggleTripVisibility(gMapConfig, gMap, i);
+    }
+  }
+
+  showTripsControl(gMapConfig, gMap);
+}
+
+function _toggleTripMarkersVisibility() {
+  gMapConfig.trips.areMarkersVisible = !(gMapConfig.trips.areMarkersVisible);
+  var isVisible = gMapConfig.trips.areMarkersVisible;
+
+  for (var i = 0; i < gMapConfig.trips.data.length; i++) {
+    if (gMapConfig.trips.data[i].gpsMaxSpeed.marker) {
+      gMapConfig.trips.data[i].gpsMaxSpeed.marker.setVisible(isVisible);
+      gMapConfig.trips.data[i].gpsMaxAltitude.marker.setVisible(isVisible);
     }
   }
 
@@ -178,7 +192,8 @@ function getTripsSummaryHtml(mapConfig, tripsData) {
     summaryHtml += 'Show All';
   } else {
     summaryHtml +=
-      '<a href="javascript:_setVisibilityOfAllTrips(\'visible\')">Show All</a>';
+      '<a title="Show all trips" ' +
+      'href="javascript:_setVisibilityOfAllTrips(\'visible\')">Show All</a>';
   }
 
   summaryHtml += ' | ';
@@ -187,7 +202,22 @@ function getTripsSummaryHtml(mapConfig, tripsData) {
     summaryHtml += 'Hide All';
   } else {
     summaryHtml +=
-      '<a href="javascript:_setVisibilityOfAllTrips(\'hidden\')">Hide All</a>';
+      '<a title="Hide all trips" ' +
+      'href="javascript:_setVisibilityOfAllTrips(\'hidden\')">Hide All</a>';
+  }
+
+  if (mapConfig.trips.numberOfVisibleTrips > 0) {
+    summaryHtml += ' | ';
+
+    if (mapConfig.trips.areMarkersVisible) {
+      summaryHtml +=
+        '<a title="Hide all trips markers" ' +
+        'href="javascript:_toggleTripMarkersVisibility()">Hide Markers</a>';
+    } else {
+      summaryHtml +=
+        '<a title="Show all trips markers" ' +
+        'href="javascript:_toggleTripMarkersVisibility()">Show Markers</a>';
+    }
   }
 
   summaryHtml += '</div>\n';
