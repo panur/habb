@@ -49,7 +49,7 @@ function _setVisibilityOfAllTrips(visibility) {
     return;
   }
 
-  for (var i = 0; i < gMapConfig.trips.data.length; i++) {
+  for (var i = gMapConfig.trips.data.length - 1; i >= 0; i--) {
     if (gMapConfig.trips.data[i].visibility != visibility) {
       toggleTripVisibility(gMapConfig, gMap, i);
     }
