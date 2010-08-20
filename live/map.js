@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
 
 var gMap;
 var gMapConfig = {};
@@ -54,7 +54,8 @@ function initMapConfig(mapConfig, showExtensions) {
   mapConfig.filenames = {points:"generated_points.xml",
     visitedDataLatest:"visited_datas/latest.xml",
     visitedData2008:"visited_datas/2008.xml",
-    visitedData2009:"visited_datas/2009.xml", tripsData:"tripsData.xml"};
+    visitedData2009:"visited_datas/2009.xml",
+    tripsDatas:["tripsData2010.xml", "tripsData2009.xml"]};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
@@ -132,7 +133,7 @@ function initMapConfig(mapConfig, showExtensions) {
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      numberOfVisibleTrips:0, directionMarkers:[],
-                     areMarkersVisible:true};
+                     areMarkersVisible:true, fileIndex:0, data:[]};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -89,11 +89,12 @@ function _setVisitedDataToLatest() {
 
 function showTripsControl(mapConfig, map) {
   if (mapConfig.isTableShown) {
-    if (mapConfig.trips.data) {
+    if (mapConfig.filenames.tripsDatas.length == mapConfig.trips.fileIndex) {
       setTripsControlHtml(getTripsSummaryHtml(mapConfig, mapConfig.trips.data) +
                           getTripsTableHtml(mapConfig, mapConfig.trips.data));
     } else {
-      setTripsControlHtml("Loading...");
+      setTripsControlHtml("Loading " + (1 + mapConfig.trips.fileIndex) + "/" +
+                          mapConfig.filenames.tripsDatas.length);
       setTripsData(mapConfig, map);
     }
   } else {
@@ -128,28 +129,34 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 }
 
 function setTripsData(mapConfig, map) {
-  downloadUrl(mapConfig.filenames.tripsData, function(data, responseCode) {
+  var file = mapConfig.filenames.tripsDatas[mapConfig.trips.fileIndex++];
+
+  downloadUrl(file, function(data, responseCode) {
     var xml = parseXml(data);
-    var tripsData = xml.documentElement.getElementsByTagName("data");
+    var rawTripsData = xml.documentElement.getElementsByTagName("data");
     var tripsDataString = "";
 
-    for (var i = 0; i < tripsData[0].childNodes.length; i++) {
-      tripsDataString += tripsData[0].childNodes[i].nodeValue;
+    for (var i = 0; i < rawTripsData[0].childNodes.length; i++) {
+      tripsDataString += rawTripsData[0].childNodes[i].nodeValue;
     }
 
-    mapConfig.trips.data = JSON.parse(tripsDataString);
-    for (var i = 0; i < mapConfig.trips.data.length; i++) {
-      mapConfig.trips.data[i].vertexTimes = runLengthDecode(
-        arrayToStringDecode(mapConfig.trips.data[i].encodedVertexTimes));
-      mapConfig.trips.data[i].gpsSpeedData =
-        arrayToStringDecode(mapConfig.trips.data[i].encodedGpsSpeedData);
-      mapConfig.trips.data[i].gpsAltitudeData =
-        arrayToStringDecode(mapConfig.trips.data[i].encodedGpsAltitudeData);
-      mapConfig.trips.data[i].gpsMaxSpeed.location =
-        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxSpeed.location);
-      mapConfig.trips.data[i].gpsMaxAltitude.location =
-        mapLatLngFromV2ToV3(mapConfig.trips.data[i].gpsMaxAltitude.location);
+    var tripsData = JSON.parse(tripsDataString);
+
+    for (var i = 0; i < tripsData.length; i++) {
+      tripsData[i].vertexTimes = runLengthDecode(
+        arrayToStringDecode(tripsData[i].encodedVertexTimes));
+      tripsData[i].gpsSpeedData =
+        arrayToStringDecode(tripsData[i].encodedGpsSpeedData);
+      tripsData[i].gpsAltitudeData =
+        arrayToStringDecode(tripsData[i].encodedGpsAltitudeData);
+      tripsData[i].gpsMaxSpeed.location =
+        mapLatLngFromV2ToV3(tripsData[i].gpsMaxSpeed.location);
+      tripsData[i].gpsMaxAltitude.location =
+        mapLatLngFromV2ToV3(tripsData[i].gpsMaxAltitude.location);
     }
+
+    mapConfig.trips.data = mapConfig.trips.data.concat(tripsData);
+
     showTripsControl(mapConfig, map);
   });
 }
