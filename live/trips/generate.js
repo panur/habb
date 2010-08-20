@@ -1,18 +1,18 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
+
+function generateAll() {
+  generate(2009);
+  generate(2010);
+}
 
 function generate(year) {
   var tripsConfig = {
     indexFilename:"index.xml",
-    dataFilename:"D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData",
+    dataFilename:
+      "D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData" + year + ".xml",
     visitedDataDirectory:"visited_datas", readyTrips:0, polylineWeight:3,
     polylineOpacity:0.9
   };
-
-  if (year == "") {
-    tripsConfig.dataFilename += ".xml";
-  } else {
-    tripsConfig.dataFilename += "_" + year + ".xml";
-  }
 
   setStatus("Please wait...");
   setTripsData(tripsConfig, year);
