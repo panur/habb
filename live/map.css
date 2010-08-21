@@ -67,6 +67,11 @@ table.trips {
   border-collapse: collapse;
 }
 
+tr.selectedTrip {
+  color: #000000;
+  background-color: #C0FFC0;
+}
+
 th {
   border: 1px solid;
 }

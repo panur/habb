@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-21 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -254,7 +254,11 @@ function getTripsTableHtml(mapConfig, tripsData) {
     '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>km/h</th></tr>\n';
 
   for (var i = 0; i < tripsData.length; i++) {
-    tableHtml += '<tr>';
+    if (i == mapConfig.trips.selectedTripIndex) {
+      tableHtml += '<tr class="selectedTrip">';
+    } else {
+      tableHtml += '<tr>';
+    }
     tableHtml += '<td>' + getVisibilityCommandHtml(tripsData[i], i) + '</td>';
     tableHtml += '<td>' + getVisitedDataCommandHtml(mapConfig, i) + '</td>';
     tableHtml += '<td>' + tripsData[i].name + '</td>';
@@ -378,6 +382,8 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
                            tripData.polyline);
       }
       addTripGraph(mapConfig, map, tripData);
+      mapConfig.trips.selectedTripIndex = tripIndex;
+      showTripsControl(mapConfig, map);
     });
 
     tripData.gpsMaxSpeed.marker = getMarker(mapConfig, map,
@@ -396,6 +402,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.gpsMaxSpeed.marker.setMap(map);
     tripData.gpsMaxAltitude.marker.setMap(map);
     addTripGraph(mapConfig, map, tripData);
+    mapConfig.trips.selectedTripIndex = tripIndex;
   } else {
     tripData.visibility = "hidden";
     mapConfig.trips.numberOfVisibleTrips -= 1;
@@ -407,6 +414,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.gpsMaxAltitude.marker.setMap(null);
     removeDirectionMarkers(mapConfig, map);
     _hideTripGraph();
+    mapConfig.trips.selectedTripIndex = -1;
   }
 }
 

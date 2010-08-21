@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-21 */
 
 var gMap;
 var gMapConfig = {};
@@ -133,7 +133,8 @@ function initMapConfig(mapConfig, showExtensions) {
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      numberOfVisibleTrips:0, directionMarkers:[],
-                     areMarkersVisible:true, fileIndex:0, data:[]};
+                     areMarkersVisible:true, fileIndex:0, data:[],
+                     selectedTripIndex:-1};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,
