@@ -36,6 +36,7 @@ function initMap(map, mapConfig) {
     addMouseListeners(mapConfig, map);
     addHomeButton(mapConfig, map);
     addTripsControl(mapConfig, map);
+    initStreetView(mapConfig, map);
     _resizeMap();
   });
 
@@ -928,6 +929,37 @@ function addHomeButton(mapConfig, map) {
   };
 }
 
+function initStreetView(mapConfig, map) {
+  var div = document.getElementById("street_view")
+  var panoramaOptions = {
+    visible: false,
+    enableCloseButton: true,
+  };
+  var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
+
+  google.maps.event.addListener(panorama, "visible_changed", function() {
+    if ((panorama.getVisible()) && (div.clientHeight == 0)) {
+      resizeMapStreetView(map);
+      resizeMapCanvas(map);
+      setCenter(map, panorama.getPosition(), map.getZoom());
+    }
+  });
+
+  google.maps.event.addListener(panorama, "closeclick", function() {
+    div.style.height = "0px";
+    google.maps.event.trigger(panorama, "resize");
+    resizeMapCanvas(map);
+  });
+
+  map.setStreetView(panorama);
+}
+
+function resizeMapStreetView(map) {
+  document.getElementById("street_view").style.height =
+    (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
+  google.maps.event.trigger(map.getStreetView(), "resize");
+}
+
 function _resizeMap() {
   if (window.onresize != _resizeMap) {
     window.onresize = _resizeMap;
@@ -936,15 +968,29 @@ function _resizeMap() {
   if (gMapConfig.tripGraph.visibility == "visible") {
     addTripGraph(gMapConfig, gMap, gMapConfig.tripGraph.tripData);
   } else {
-    resizeMapCanvas(gMap);
+    resizeDivs(gMap);
   }
 
   showTripsControl(gMapConfig, gMap);
 }
 
+function resizeDivs(map) {
+  var oldStreetViewHeight = document.getElementById("street_view").clientHeight;
+
+  document.getElementById("street_view").style.height = "0px";
+
+  resizeMapCanvas(map);
+
+  if (oldStreetViewHeight != 0) {
+    resizeMapStreetView(map);
+    resizeMapCanvas(map);
+  }
+}
+
 function resizeMapCanvas(map) {
   document.getElementById("map_canvas").style.height =
     document.documentElement.clientHeight -
+    document.getElementById("street_view").clientHeight -
     document.getElementById("trip_graph").clientHeight -
     document.getElementById("trip_graph_control").clientHeight -
     document.getElementById("status_bar").clientHeight -

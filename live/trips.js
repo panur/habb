@@ -109,9 +109,11 @@ function setTripsControlHtml(html) {
 
   var tripsTable = document.getElementById("tripsTable");
   if (tripsTable) {
-    var mapCanvas = document.getElementById("map_canvas");
-    tripsTable.style.height = Math.round(mapCanvas.clientHeight * 0.64) + "px";
-    tripsTable.style.width = Math.round(mapCanvas.clientWidth * 0.58) + "px";
+    var mapDiv = document.getElementById("map_canvas");
+    var streetViewDiv = document.getElementById("street_view");
+    var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
+    tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
+    tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.58) + "px";
   }
 }
 
