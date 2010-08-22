@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-21 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
 
 var gMap;
 var gMapConfig = {};
@@ -140,7 +140,8 @@ function initMapConfig(mapConfig, showExtensions) {
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,
                          tripCursor:[], maxTripCursorLength:10,
-                         tickIntervalMs:200, player:{state:"stop", speed:50}};
+                         tickIntervalMs:200, player:{state:"stop", speed:50},
+                         lastDirection:0};
 }
 
 function setPointsToMapConfig(mapConfig, map) {
@@ -930,34 +931,43 @@ function addHomeButton(mapConfig, map) {
 }
 
 function initStreetView(mapConfig, map) {
-  var div = document.getElementById("street_view")
+  var div = document.getElementById("street_view");
   var panoramaOptions = {
     visible: false,
     enableCloseButton: true,
+    addressControl: false,
   };
   var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
 
   google.maps.event.addListener(panorama, "visible_changed", function() {
-    if ((panorama.getVisible()) && (div.clientHeight == 0)) {
-      resizeMapStreetView(map);
-      resizeMapCanvas(map);
-      setCenter(map, panorama.getPosition(), map.getZoom());
+    if (panorama.getVisible()) {
+      if (div.clientHeight == 0) {
+        showStreetView(map);
+      }
+    } else {
+      hideStreetView(map);
     }
   });
 
   google.maps.event.addListener(panorama, "closeclick", function() {
-    div.style.height = "0px";
-    google.maps.event.trigger(panorama, "resize");
-    resizeMapCanvas(map);
+    hideStreetView(map);
   });
 
   map.setStreetView(panorama);
 }
 
-function resizeMapStreetView(map) {
+function showStreetView(map) {
   document.getElementById("street_view").style.height =
     (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
   google.maps.event.trigger(map.getStreetView(), "resize");
+  resizeMapCanvas(map);
+  setCenter(map, map.getStreetView().getPosition(), map.getZoom());
+}
+
+function hideStreetView(map) {
+  document.getElementById("street_view").style.height = "0px";
+  google.maps.event.trigger(map.getStreetView(), "resize");
+  resizeMapCanvas(map);
 }
 
 function _resizeMap() {
@@ -982,8 +992,7 @@ function resizeDivs(map) {
   resizeMapCanvas(map);
 
   if (oldStreetViewHeight != 0) {
-    resizeMapStreetView(map);
-    resizeMapCanvas(map);
+    showStreetView(map);
   }
 }
 

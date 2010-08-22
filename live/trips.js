@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-21 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -430,7 +430,7 @@ function addDirectionMarker(mapConfig, map, point, polyline) {
     p2 = polyline.getPath().getAt(i + 1);
 
     if (isPointInLineSegment(map, point, p1, p2) == true) {
-      var direction = getLineDirection(p1, p2);
+      var direction = getLineDirection120(getLineDirection360(p1, p2));
       var marker = getDirectionMarker(point, direction);
       google.maps.event.addListener(marker, "click", function(event) {
         marker.setMap(null);
@@ -475,14 +475,20 @@ function getDistance(p1, p2) {
   return d; /* distance between p1 and p2 in meters */
 }
 
-function getLineDirection(from, to) {
-  var direction = getBearing(from, to);
-
-  direction = Math.round(direction / 3) * 3;
+function getLineDirection120(direction360) {
+  var direction = direction360;
 
   while (direction >= 120) {
     direction -= 120;
   }
+
+  return direction;
+}
+
+function getLineDirection360(from, to) {
+  var direction = getBearing(from, to);
+
+  direction = Math.round(direction / 3) * 3;
 
   return direction;
 }

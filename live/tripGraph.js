@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-21 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -82,11 +82,12 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 
   tripGraph.onclick = function(event) {
+    var position = mapConfig.tripGraph.tripCursor[0].getPosition();
     if (mapConfig.tripGraph.player.state != "stop") {
       processTripGraphEvent(mapConfig, map, event);
     }
-    setCenter(map, mapConfig.tripGraph.tripCursor[0].getPosition(),
-              mapConfig.zoomToPointZoomLevel);
+    setCenter(map, position, mapConfig.zoomToPointZoomLevel);
+    updateStreetView(mapConfig, map, position);
   };
 
   tripGraph.ondblclick = function(event) {
@@ -94,11 +95,24 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   };
 }
 
+function updateStreetView(mapConfig, map, position) {
+  if (document.getElementById("street_view").clientHeight != 0) {
+    var svs = new google.maps.StreetViewService();
+    svs.getPanoramaByLocation(position, 50, function(data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        var heading = mapConfig.tripGraph.lastDirection;
+        map.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
+        map.getStreetView().setPosition(position)
+      }
+    });
+  }
+}
+
 function updateTripCursor(mapConfig, map) {
   var tripData = mapConfig.tripGraph.tripData;
   var vertexTime = mapConfig.tripGraph.lastRatio * tripData.gpsDurationSeconds;
   var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
-  var marker = getTripGraphMarker(tripData.polyline, vertexIndex);
+  var marker = getTripGraphMarker(mapConfig, tripData.polyline, vertexIndex);
 
   if (mapConfig.tripGraph.tripCursor.length >
       mapConfig.tripGraph.maxTripCursorLength) {
@@ -112,6 +126,7 @@ function updateTripCursor(mapConfig, map) {
   if (mapConfig.tripGraph.player.state == "play") {
     if (map.getBounds().contains(marker.getPosition()) == false) {
       map.panTo(marker.getPosition());
+      updateStreetView(mapConfig, map, marker.getPosition())
     }
   }
 }
@@ -135,10 +150,13 @@ function getTripGraphVertexIndex(vertexTime, tripData) {
   return -1;
 }
 
-function getTripGraphMarker(polyline, vertexIndex) {
+function getTripGraphMarker(mapConfig, polyline, vertexIndex) {
   var p1 = polyline.getPath().getAt(vertexIndex);
   var p2 = polyline.getPath().getAt(vertexIndex + 1);
-  var direction = getLineDirection(p1, p2);
+
+  mapConfig.tripGraph.lastDirection = getLineDirection360(p1, p2);
+
+  var direction = getLineDirection120(mapConfig.tripGraph.lastDirection);
   var marker = getDirectionMarker(p1, direction);
 
   return marker;
