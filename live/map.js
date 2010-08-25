@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-25 */
 
 var gMap;
 var gMapConfig = {};
@@ -10,6 +10,7 @@ function load() {
       {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
     navigationControlOptions:
       {style: google.maps.NavigationControlStyle.ZOOM_PAN},
+    scaleControl: true,
     streetViewControl: true
   };
 
@@ -961,6 +962,8 @@ function showStreetView(map) {
     (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
   google.maps.event.trigger(map.getStreetView(), "resize");
   resizeMapCanvas(map);
+  map.setOptions({navigationControlOptions:
+                  {style: google.maps.NavigationControlStyle.SMALL}});
   setCenter(map, map.getStreetView().getPosition(), map.getZoom());
 }
 
@@ -968,6 +971,8 @@ function hideStreetView(map) {
   document.getElementById("street_view").style.height = "0px";
   google.maps.event.trigger(map.getStreetView(), "resize");
   resizeMapCanvas(map);
+  map.setOptions({navigationControlOptions:
+                  {style: google.maps.NavigationControlStyle.ZOOM_PAN}});
 }
 
 function _resizeMap() {
