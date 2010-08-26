@@ -124,9 +124,10 @@ function updateTripCursor(mapConfig, map) {
   marker.setMap(map);
 
   if (mapConfig.tripGraph.player.state == "play") {
+    updateStreetView(mapConfig, map, marker.getPosition());
+
     if (map.getBounds().contains(marker.getPosition()) == false) {
       map.panTo(marker.getPosition());
-      updateStreetView(mapConfig, map, marker.getPosition());
     }
   }
 }
