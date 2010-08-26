@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-26 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -102,7 +102,7 @@ function updateStreetView(mapConfig, map, position) {
       if (status == google.maps.StreetViewStatus.OK) {
         var heading = mapConfig.tripGraph.lastDirection;
         map.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
-        map.getStreetView().setPosition(position)
+        map.getStreetView().setPosition(position);
       }
     });
   }
@@ -126,7 +126,7 @@ function updateTripCursor(mapConfig, map) {
   if (mapConfig.tripGraph.player.state == "play") {
     if (map.getBounds().contains(marker.getPosition()) == false) {
       map.panTo(marker.getPosition());
-      updateStreetView(mapConfig, map, marker.getPosition())
+      updateStreetView(mapConfig, map, marker.getPosition());
     }
   }
 }

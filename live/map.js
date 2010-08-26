@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-25 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-26 */
 
 var gMap;
 var gMapConfig = {};
@@ -45,7 +45,10 @@ function initMap(map, mapConfig) {
 }
 
 function setCenter(map, latLng, zoom) {
-  map.setZoom(zoom);
+  /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
+  if (zoom != map.getZoom()) {
+    map.setZoom(zoom);
+  }
   map.panTo(latLng);
 }
 
