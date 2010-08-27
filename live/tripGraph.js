@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-26 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-27 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -93,19 +93,6 @@ function addTripGraphMouseListeners(mapConfig, map, tripGraph) {
   tripGraph.ondblclick = function(event) {
     setCenter(map, mapConfig.initialLatLng, mapConfig.initialZL);
   };
-}
-
-function updateStreetView(mapConfig, map, position) {
-  if (document.getElementById("street_view").clientHeight != 0) {
-    var svs = new google.maps.StreetViewService();
-    svs.getPanoramaByLocation(position, 50, function(data, status) {
-      if (status == google.maps.StreetViewStatus.OK) {
-        var heading = mapConfig.tripGraph.lastDirection;
-        map.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
-        map.getStreetView().setPosition(position);
-      }
-    });
-  }
 }
 
 function updateTripCursor(mapConfig, map) {

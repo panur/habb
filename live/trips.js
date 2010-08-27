@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-22 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-27 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -539,6 +539,7 @@ function getMarker(mapConfig, map, point, letter, title) {
 
   google.maps.event.addListener(marker, "click", function(event) {
     setCenter(map, marker.getPosition(), mapConfig.zoomToPointZoomLevel);
+    updateStreetView(mapConfig, map, marker.getPosition());
   });
 
   return marker;
