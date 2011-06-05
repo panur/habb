@@ -1,8 +1,9 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-06-05 */
 
 function generateAll() {
   generate(2009);
   generate(2010);
+  generate(2011);
 }
 
 function generate(year) {

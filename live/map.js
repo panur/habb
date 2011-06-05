@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-27 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-06-05 */
 
 var gMap;
 var gMapConfig = {};
@@ -60,7 +60,7 @@ function initMapConfig(mapConfig, showExtensions) {
     visitedDataLatest:"visited_datas/latest.xml",
     visitedData2008:"visited_datas/2008.xml",
     visitedData2009:"visited_datas/2009.xml",
-    tripsDatas:["tripsData2010.xml", "tripsData2009.xml"]};
+    tripsDatas:["tripsData2011.xml", "tripsData2010.xml", "tripsData2009.xml"]};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.visitedDataDescription = "latest";
