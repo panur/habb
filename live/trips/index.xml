@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110718.gpx"   visited_data="-"            distance="114" max_speed="51.1" avg_speed="23.2" duration="4:54:25" color="#8040FF" name="Riihimäki-Espoo"/>
+  <trip gps_data="2011/20110717.gpx"   visited_data="-"            distance="112" max_speed="45.7" avg_speed="25.4" duration="4:24:46" color="#FF8080" name="Espoo-Riihimäki"/>
   <trip gps_data="2011/20110714.gpx"   visited_data="-"            distance="129" max_speed="46.1" avg_speed="26.1" duration="4:56:08" color="#40FF80" name="Forssa-Espoo"/>
   <trip gps_data="2011/20110713.gpx"   visited_data="-"            distance="104" max_speed="42.6" avg_speed="22.4" duration="4:38:50" color="#80FF40" name="Espoo-Forssa"/>
   <trip gps_data="2011/20110706.gpx"   visited_data="-"            distance="122" max_speed="46.2" avg_speed="23.9" duration="5:05:48" color="#FF40FF" name="Salo-Espoo"/>
