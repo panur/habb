@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-27 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-20 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -27,7 +27,8 @@ function setTripGraphConfig(mapConfig, map, tripData, canvas) {
   if (typeof(mapConfig.tripGraph.tickInterval) == "undefined") {
     var intervalMs = mapConfig.tripGraph.tickIntervalMs;
     mapConfig.tripGraph.tickInterval =
-      window.setInterval(processTripGraphTick, intervalMs, mapConfig, map);
+      window.setInterval(function() {processTripGraphTick(mapConfig, map);},
+                         intervalMs);
   }
 
   if (mapConfig.tripGraph.types[0] == "Speed") {

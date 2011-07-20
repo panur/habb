@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-06-05 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-20 */
 
 var gMap;
 var gMapConfig = {};
@@ -8,8 +8,10 @@ function load() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControlOptions:
       {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
-    navigationControlOptions:
-      {style: google.maps.NavigationControlStyle.ZOOM_PAN},
+    zoomControlOptions:
+      {style: google.maps.ZoomControlStyle.DEFAULT},
+    panControl: true,
+    zoomControl: true,
     scaleControl: true,
     streetViewControl: true
   };
@@ -597,8 +599,10 @@ function removeOverlaysFromMap(mc, map) {
 
 function addOrRemoveOverlays(mc, map, mapOrNull) {
   for (var i = 0; i < mc.visitedStatusAreas.length; i++) {
-    mc.visitedStatusAreas[i].setOptions({fillOpacity: mc.area.opacity});
-    mc.visitedStatusAreas[i].setMap(mapOrNull);
+    if (mc.visitedStatusAreas[i].getPath()) {
+      mc.visitedStatusAreas[i].setOptions({fillOpacity: mc.area.opacity});
+      mc.visitedStatusAreas[i].setMap(mapOrNull);
+    }
   }
 
   for (var i = 0; i < mc.grid.latPolylines.length; i++) {
@@ -948,8 +952,6 @@ function initStreetView(mapConfig, map) {
       if (div.clientHeight == 0) {
         showStreetView(map);
       }
-    } else {
-      hideStreetView(map);
     }
   });
 
@@ -965,8 +967,8 @@ function showStreetView(map) {
     (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
   google.maps.event.trigger(map.getStreetView(), "resize");
   resizeMapCanvas(map);
-  map.setOptions({navigationControlOptions:
-                  {style: google.maps.NavigationControlStyle.SMALL}});
+  map.setOptions({panControl: false, zoomControlOptions:
+                  {style: google.maps.ZoomControlStyle.SMALL}});
   setCenter(map, map.getStreetView().getPosition(), map.getZoom());
 }
 
@@ -974,8 +976,8 @@ function hideStreetView(map) {
   document.getElementById("street_view").style.height = "0px";
   google.maps.event.trigger(map.getStreetView(), "resize");
   resizeMapCanvas(map);
-  map.setOptions({navigationControlOptions:
-                  {style: google.maps.NavigationControlStyle.ZOOM_PAN}});
+  map.setOptions({panControl: true, zoomControlOptions:
+                  {style: google.maps.ZoomControlStyle.DEFAULT}});
 }
 
 function updateStreetView(mapConfig, map, position) {
