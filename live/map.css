@@ -19,6 +19,35 @@ div.homeButton {
   cursor: pointer;
 }
 
+div.menu {
+  position: absolute;
+  color: #000000;
+  background-color: #FFFFFF;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.347656);
+}
+
+table.menu {
+  border-collapse: collapse;
+  font-family: Arial,sans-serif;
+  font-size: 12px;
+}
+
+tr.selectedMenuItem {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #A9BBDF;
+  color: #FFFFFF;
+  background-color: #678AC7;
+}
+
+tr.menuItem {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #A9BBDF;
+  color: #000000;
+  background-color: #FFFFFF;
+}
+
 div.tripsControl {
   position: absolute;
   top: 5px;
@@ -77,11 +106,11 @@ tr.selectedTrip {
   background-color: #C0FFC0;
 }
 
-th {
+#tripsTable th {
   border: 1px solid;
 }
 
-td {
+#tripsTable td {
   border: 1px solid;
   white-space: nowrap;
 }

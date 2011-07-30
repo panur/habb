@@ -1,0 +1,184 @@
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-30 */
+
+function initMenu(map) {
+  var selectedMenuItem = "";
+
+  google.maps.event.clearListeners(map, "click");
+
+  google.maps.event.addListener(map, "click", function(mouseEvent) {
+    if (document.getElementById("menu")) {
+      hideMenu();
+    } else {
+      var menuItems = ["Open...", "Areas...", "Zoom"];
+      showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel), menuItems,
+               "menu");
+    }
+
+    function getMenuLocation(pixel) {
+      var menuLocation = {};
+
+      if (pixel.y > (window.innerHeight / 2)) {
+        menuLocation.bottom = (window.innerHeight - pixel.y) + "px";
+      } else {
+        menuLocation.top = pixel.y + "px";
+      }
+      if (pixel.x > (window.innerWidth / 2)) {
+        menuLocation.right = (window.innerWidth - pixel.x) + "px";
+      } else {
+        menuLocation.left = pixel.x + "px";
+      }
+
+      return menuLocation;
+    }
+  });
+
+  function hideMenu() {
+    var parent = document.getElementById("dynamic_divs");
+    parent.removeChild(document.getElementById("menu"));
+    hideSubMenu();
+  }
+
+  function hideSubMenu() {
+    var parent = document.getElementById("dynamic_divs");
+    if (parent) {
+      if (document.getElementById("subMenu")) {
+        parent.removeChild(document.getElementById("subMenu"));
+      }
+    }
+  }
+
+  function showMenu(latLng, menuLocation, menuItems, divId) {
+    var menu = document.createElement("div");
+    menu.id = divId;
+    menu.className = "menu";
+    menu.appendChild(createMenuTable(latLng, menuItems));
+
+    if (menuLocation.bottom) {
+      menu.style.bottom = menuLocation.bottom;
+    }
+    if (menuLocation.top) {
+      menu.style.top = menuLocation.top;
+    }
+    if (menuLocation.right) {
+      menu.style.right = menuLocation.right;
+    }
+    if (menuLocation.left) {
+      menu.style.left = menuLocation.left;
+    }
+
+    document.getElementById("dynamic_divs").appendChild(menu);
+  }
+
+  function createMenuTable(latLng, menuItems) {
+    var table = document.createElement("table");
+    table.className = "menu";
+
+    for (var i = 0; i < menuItems.length; i++) {
+      createRow(menuItems[i]);
+    }
+
+    function createRow(menuItem) {
+      var row = table.insertRow(-1);
+      var cell = row.insertCell(-1);
+      cell.appendChild(document.createTextNode(menuItem));
+      row.className = "menuItem";
+      row.onmouseover = function() {processMouseOver(row);};
+      row.onclick = function () {processMenuClick(row);};
+
+      function processMouseOver(rowElement) {
+        selectMenuItem(rowElement);
+
+        if (isMenuItem(rowElement)) {
+          selectedMenuItem = rowElement.textContent;
+
+          if (rowElement.textContent == "Open...") {
+            var subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
+                                "Google Maps", "Bing Maps", "OpenStreetMap"];
+            hideSubMenu();
+            showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
+                     "subMenu");
+          } else if (rowElement.textContent == "Areas...") {
+            var subMenuItems = ["Toggle opacity", "Toggle extensions",
+                                "Set end of 2008", "Set end of 2009",
+                                "Set latest"];
+            hideSubMenu();
+            showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
+                     "subMenu");
+          } else {
+            hideSubMenu();
+          }
+        }
+
+        function getSubMenuLocation(rowElement) {
+          var rect = rowElement.getBoundingClientRect();
+          var subMenuLocation = {};
+
+          if (rect.top > (window.innerHeight / 2)) {
+            subMenuLocation.bottom = (window.innerHeight - rect.bottom) + "px";
+          } else {
+            subMenuLocation.top = rect.top + "px";
+          }
+          if (rect.right > (window.innerWidth / 2)) {
+            subMenuLocation.right = (window.innerWidth - rect.left) + "px";
+          } else {
+            subMenuLocation.left = rect.right + "px";
+          }
+
+          return subMenuLocation;
+        }
+
+        function selectMenuItem(rowElement) {
+          var rows = rowElement.parentNode.parentNode.rows;
+          for (var i = 0; i < rows.length; i++) {
+            rows[i].className = "menuItem";
+          }
+          rowElement.className = "selectedMenuItem";
+        }
+
+      }
+
+      function isMenuItem(rowElement) {
+        var node = rowElement;
+        while (node = node.parentNode) {
+          if (node.nodeName == "DIV") {
+            return node.id == "menu";
+          }
+        }
+      }
+
+      function processMenuClick(rowElement) {
+        if (isMenuItem(rowElement)) {
+          if (rowElement.textContent == "Zoom") {
+            hideMenu();
+            zoomToPoint(latLng.lat(), latLng.lng());
+          }
+        } else {
+          hideMenu();
+
+          if (selectedMenuItem == "Open...") {
+            openOtherMap(gMapConfig, rowElement.textContent, latLng,
+                         gMap.getZoom());
+          } else if (selectedMenuItem == "Areas...") {
+            if (rowElement.textContent == "Toggle opacity") {
+              toggleOpacity();
+            } else if (rowElement.textContent == "Toggle extensions") {
+              toggleShowExtensions();
+            } else if (rowElement.textContent == "Set end of 2008") {
+              changeVisitedData(2008);
+            } else if (rowElement.textContent == "Set end of 2009") {
+              changeVisitedData(2009);
+            } else if (rowElement.textContent == "Set latest") {
+              changeVisitedData("latest");
+            } else {
+              alert("Error: unknown area command: " + rowElement.textContent);
+            }
+          } else {
+            alert("Error: unknown selected menu item: " + selectedMenuItem);
+          }
+        }
+      }
+    }
+
+    return table;
+  }
+}

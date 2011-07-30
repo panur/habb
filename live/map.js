@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-30 */
 
 var gMap;
 var gMapConfig = {};
@@ -41,6 +41,7 @@ function initMap(map, mapConfig) {
     addTripsControl(mapConfig, map);
     initStreetView(mapConfig, map);
     _resizeMap();
+    initMenu(map);
   });
 
   setPointsToMapConfig(mapConfig, map);
@@ -64,14 +65,6 @@ function initMapConfig(mapConfig, showExtensions) {
     visitedData2009:"visited_datas/2009.xml",
     tripsDatas:["tripsData2011.xml", "tripsData2010.xml", "tripsData2009.xml"]};
   mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
-
-  mapConfig.visitedDataDescription = "latest";
-
-  if (mapConfig.infoWindow) {
-    mapConfig.infoWindow.close();
-  } else {
-    mapConfig.infoWindow = new google.maps.InfoWindow();
-  }
 
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
@@ -630,25 +623,6 @@ function addMouseListeners(mapConfig, map) {
       mapConfig.cursor.setMap(null);
     }
   });
-
-  google.maps.event.addListener(map, "rightclick", function(mouseEvent) {
-    showInfoWindow(mapConfig, map, mouseEvent.latLng, "links");
-  });
-}
-
-function showInfoWindow(mapConfig, map, latLng, contentType) {
-  var linksHtml = getLinksHtml(mapConfig, latLng, map.getZoom());
-  var actionsHtml = getActionsHtml(mapConfig, latLng, map.getZoom());
-
-  mapConfig.infoWindow.setPosition(latLng);
-
-  if (contentType == "links") {
-    mapConfig.infoWindow.setContent(linksHtml);
-  } else {
-    mapConfig.infoWindow.setContent(actionsHtml);
-  }
-
-  mapConfig.infoWindow.open(map);
 }
 
 function getInfo(mc, map, point) {
@@ -775,96 +749,43 @@ function updateCursor(mc, map, info) {
   }
 }
 
-function getLinksHtml(mapConfig, point, zl) {
+function openOtherMap(mapConfig, otherMapType, point, zl) {
+  var url = "";
   var km2XY = getKm2XYFromPoint(mapConfig, point);
-  if (km2XY != null) {
-    var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
-    var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
-    var kkpUrl =
-      "http://kansalaisen.karttapaikka.fi/kartanhaku/osoitehaku.html" +
-      "?cy=" + kkpUrlY + "500&amp;cx=" + kkpUrlX + "500&amp;scale=8000";
-  } else {
-    var kkpUrl =
-      "http://kansalaisen.karttapaikka.fi/kartanhaku/koordinaattihaku.html" +
-      "?y=" + point.lat() + "&amp;x=" + point.lng() +
-      "&amp;srsName=EPSG%3A4258&amp;scale=8000";
-  }
-  if (km2XY != null) {
-    var khfN = mapConfig.kkjStart.lat + km2XY.y;
-    var khfE = mapConfig.kkjStart.lng + km2XY.x;
-    var khfUrl =
-      "http://kartta.hel.fi/opas/main/?n=" + khfN + "500&amp;e=" + khfE + "500";
-  }
-  var googleUrl = "http://maps.google.com/?ll=" +
-    point.lat() +"," + point.lng() + "&amp;z=" + zl;
-  var msUrl = "http://www.bing.com/maps/default.aspx?cp=" +
-    point.lat() + "~" + point.lng() + "&amp;lvl=" + zl;
-  var osmUrl = "http://www.openstreetmap.org/?lat=" +
-    point.lat() + "&amp;lon=" + point.lng() + "&amp;zoom=" + zl;
 
-  var html = "Open location " + point + " to:<ul>";
-  html += "<li><a href='" + kkpUrl + "'>Kansalaisen karttapaikka</a></li>";
-  if (km2XY != null) {
-    html += "<li><a href='" + khfUrl + "'>kartta.hel.fi</a></li>";
-  }
-  html += "<li><a href='" + googleUrl + "'>Google Maps</a></li>";
-  html += "<li><a href='" + msUrl + "'>Bing Maps</a></li>";
-  html += "<li><a href='" + osmUrl + "'>OpenStreetMap</a></li>";
-  html += "</ul>";
+  if (otherMapType == "Kansalaisen karttapaikka") {
+    url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
 
-  html += "See other <a href='javascript:_setActionsHtml()'>Actions</a>";
-
-  return html;
-}
-
-function _setActionsHtml() {
-  var actionsHtml =
-    getActionsHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
-                   gMap.getZoom());
-  gMapConfig.infoWindow.setContent(actionsHtml);
-}
-
-function _setLinksHtml() {
-  var linksHtml =
-    getLinksHtml(gMapConfig, gMapConfig.infoWindow.getPosition(),
-                   gMap.getZoom());
-  gMapConfig.infoWindow.setContent(linksHtml);
-}
-
-function getActionsHtml(mapConfig, point, zl) {
-  var visitedDataList = "";
-  var showExtensionsTexts = {"true":"Hide", "false":"Show"};
-
-  if (gMapConfig.filenames.visitedData !=
-      gMapConfig.filenames.visitedData2008) {
-    visitedDataList +=
-        "<li><a href='javascript:changeVisitedData(2008)'>end of 2008</a></li>";
-  }
-  if (gMapConfig.filenames.visitedData !=
-      gMapConfig.filenames.visitedData2009) {
-    visitedDataList +=
-        "<li><a href='javascript:changeVisitedData(2009)'>end of 2009</a></li>";
-  }
-  if (gMapConfig.filenames.visitedData !=
-      gMapConfig.filenames.visitedDataLatest) {
-    visitedDataList +=
-      "<li><a href='javascript:changeVisitedData(\"latest\")'>latest</a></li>";
+    if (km2XY != null) {
+      var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
+      var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
+      url += "/osoitehaku.html?cy=" +
+        kkpUrlY + "500&cx=" + kkpUrlX + "500&scale=8000";
+    } else {
+      url += "/koordinaattihaku.html?y=" + point.lat() + "&x=" + point.lng() +
+        "&srsName=EPSG%3A4258&scale=8000";
+    }
+  } else if (otherMapType == "kartta.hel.fi") {
+    if (km2XY != null) {
+      var khfN = mapConfig.kkjStart.lat + km2XY.y;
+      var khfE = mapConfig.kkjStart.lng + km2XY.x;
+      url = "http://kartta.hel.fi/opas/main/?n=" +
+        khfN + "500&e=" + khfE + "500";
+    } else {
+      url = "http://kartta.hel.fi/";
+    }
+  } else if (otherMapType == "Google Maps") {
+    url = "http://maps.google.com/?ll=" +
+      point.lat() +"," + point.lng() + "&z=" + zl;
+  } else if (otherMapType == "Bing Maps") {
+    url = "http://www.bing.com/maps/default.aspx?cp=" +
+      point.lat() + "~" + point.lng() + "&lvl=" + zl;
+  } else if (otherMapType == "OpenStreetMap") {
+    url = "http://www.openstreetmap.org/?lat=" +
+      point.lat() + "&lon=" + point.lng() + "&zoom=" + zl;
   }
 
-  var html = "<ul>" +
-    "<li><a href='javascript:zoomToPoint(" + point.lat() + ", " + point.lng() +
-      ")'>Zoom to selected location</a></li>" +
-    "<li><a href='javascript:toggleOpacity()'>" +
-      "Change opacity of visited areas</a></li>" +
-    "<li><a href='javascript:toggleShowExtensions()'>" +
-      showExtensionsTexts[gMapConfig.showExtensions] + " extensions</a></li>" +
-    "</ul>" +
-    "Current visited data is " + gMapConfig.visitedDataDescription +
-    ". Change visited data to: <ul>" + visitedDataList + "</ul>";
-
-  html += "Back to <a href='javascript:_setLinksHtml()'>Links</a>";
-
-  return html;
+  window.open(url);
 }
 
 function zoomToPoint(lat, lng) {
@@ -905,22 +826,18 @@ function toggleShowExtensions() {
 
 function changeVisitedData(newTarget) {
   if (newTarget == 2008) {
-    setVisitedData(gMapConfig.filenames.visitedData2008, "from end of 2008");
+    setVisitedData(gMapConfig.filenames.visitedData2008);
   } else if (newTarget == 2009) {
-    setVisitedData(gMapConfig.filenames.visitedData2009, "from end of 2009");
+    setVisitedData(gMapConfig.filenames.visitedData2009);
   } else {
-    setVisitedData(gMapConfig.filenames.visitedDataLatest, "latest");
+    setVisitedData(gMapConfig.filenames.visitedDataLatest);
   }
-
-  showInfoWindow(gMapConfig, gMap, gMapConfig.infoWindow.getPosition(),
-                 "actions");
 }
 
-function setVisitedData(filename, visitedDataDescription) {
+function setVisitedData(filename) {
   removeOverlaysFromMap(gMapConfig, gMap);
 
   gMapConfig.filenames.visitedData = filename;
-  gMapConfig.visitedDataDescription = visitedDataDescription;
 
   setKm2sToMapConfig(gMapConfig, gMap);
 }
