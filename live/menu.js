@@ -93,7 +93,8 @@ function initMenu(map) {
 
           if (rowElement.textContent == "Open...") {
             var subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
-                                "Google Maps", "Bing Maps", "OpenStreetMap"];
+                                "Google Maps", "Nokia Maps", "Bing Maps",
+                                "OpenStreetMap"];
             hideSubMenu();
             showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
                      "subMenu");

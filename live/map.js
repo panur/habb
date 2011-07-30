@@ -777,6 +777,9 @@ function openOtherMap(mapConfig, otherMapType, point, zl) {
   } else if (otherMapType == "Google Maps") {
     url = "http://maps.google.com/?ll=" +
       point.lat() +"," + point.lng() + "&z=" + zl;
+  } else if (otherMapType == "Nokia Maps") {
+    url = "http://maps.nokia.com/#|" +
+      point.lat() +"|" + point.lng() + "|" + zl + "|0|0|normal.day?plcsDl=";
   } else if (otherMapType == "Bing Maps") {
     url = "http://www.bing.com/maps/default.aspx?cp=" +
       point.lat() + "~" + point.lng() + "&lvl=" + zl;
