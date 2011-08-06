@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110806.gpx"   visited_data="-"            distance="115" max_speed="40.9" avg_speed="23.5" duration="4:53:49" color="#FF8040" name="Hyvinkää-Espoo"/>
+  <trip gps_data="2011/20110805.gpx"   visited_data="-"            distance="116" max_speed="50.9" avg_speed="24.7" duration="4:42:44" color="#4080FF" name="Espoo-Hyvinkää"/>
   <trip gps_data="2011/20110801.gpx"   visited_data="-"            distance="143" max_speed="48.0" avg_speed="25.0" duration="5:43:16" color="#808040" name="Loviisa-Espoo"/>
   <trip gps_data="2011/20110731.gpx"   visited_data="-"            distance="101" max_speed="44.7" avg_speed="23.1" duration="4:21:58" color="#404080" name="Espoo-Loviisa"/>
   <trip gps_data="2011/20110728.gpx"   visited_data="-"            distance="138" max_speed="43.3" avg_speed="25.9" duration="5:19:47" color="#FFFF00" name="Lahti-Espoo"/>
