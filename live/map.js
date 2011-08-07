@@ -18,7 +18,7 @@ function load() {
 
   gMap = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
 
-  initMapConfig(gMapConfig, true);
+  initMapConfig(gMapConfig);
 
   initMap(gMap, gMapConfig);
 }
@@ -26,25 +26,18 @@ function load() {
 function initMap(map, mapConfig) {
   map.setOptions({center: mapConfig.initialLatLng, zoom: mapConfig.initialZL});
 
-  google.maps.event.addListener(map, "pointsAreInMapConfig", function() {
-    setKm2sToMapConfig(mapConfig, map);
-  });
-
-  google.maps.event.addListener(map, "km2sAreInMapConfig", function() {
-    updateMapGrid(mapConfig);
-    mapConfig.visitedStatusAreas = getVisitedStatusAreas(mapConfig, map);
+  google.maps.event.addListener(map, "areasConstructorIsReady", function() {
     updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
     setStatistics(mapConfig);
-    addOverlaysToMap(mapConfig, map);
     addMouseListeners(mapConfig, map);
     addHomeButton(mapConfig, map);
     addTripsControl(mapConfig, map);
     initStreetView(mapConfig, map);
     _resizeMap();
-    initMenu(map);
+    initMenu(mapConfig, map);
   });
 
-  setPointsToMapConfig(mapConfig, map);
+  mapConfig.areas = new Areas(mapConfig, map);
 }
 
 function setCenter(map, latLng, zoom) {
@@ -55,81 +48,15 @@ function setCenter(map, latLng, zoom) {
   map.panTo(latLng);
 }
 
-function initMapConfig(mapConfig, showExtensions) {
-  mapConfig.showExtensions = showExtensions;
+function initMapConfig(mapConfig) {
   mapConfig.initialStatistics = document.getElementById("statistics").innerHTML;
 
-  mapConfig.filenames = {points:"generated_points.xml",
-    visitedDataLatest:"visited_datas/latest.xml",
-    visitedData2008:"visited_datas/2008.xml",
-    visitedData2009:"visited_datas/2009.xml",
+  mapConfig.filenames = {
     tripsDatas:["tripsData2011.xml", "tripsData2010.xml", "tripsData2009.xml"]};
-  mapConfig.filenames.visitedData = mapConfig.filenames.visitedDataLatest;
 
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
   mapConfig.zoomToPointZoomLevel = 14;
-
-  mapConfig.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
-                    colors:{yes:"#00FF00", no:"#FF0000", np:"#808080"}}
-  mapConfig.grid = {weight:1, opacity:0.5,
-                    colors:{page:"#000000", km2:"#FFFFFF"}};
-  mapConfig.cursorParams = {strokeColor:"#000000", strokeWeight:2,
-                            strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
-
-  mapConfig.latKmPerP = 5;
-  mapConfig.latPages = 7;
-  mapConfig.lngKmPerP = 4;
-  mapConfig.lngPages = 9;
-  mapConfig.kkjStart = {lat:65, lng:30};
-  mapConfig.kkjOffset = {lat:-1, lng:-1}; /* will be read from file */
-
-  mapConfig.lats = [{n:5,  lngOffsetKm:4,  latOffsetKm:0,  lengthP:2},
-                    {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:8},
-                    {n:11, lngOffsetKm:0,  latOffsetKm:10, lengthP:9},
-                    {n:10, lngOffsetKm:4,  latOffsetKm:21, lengthP:8},
-                    {n:5,  lngOffsetKm:12, latOffsetKm:31, lengthP:2},
-                    {n:5,  lngOffsetKm:24, latOffsetKm:31, lengthP:2}];
-
-  mapConfig.lngs = [{n:4, lngOffsetKm:0,  latOffsetKm:5,  lengthP:3},
-                    {n:8, lngOffsetKm:4,  latOffsetKm:0,  lengthP:6},
-                    {n:1, lngOffsetKm:12, latOffsetKm:0,  lengthP:7},
-                    {n:8, lngOffsetKm:13, latOffsetKm:5,  lengthP:6},
-                    {n:3, lngOffsetKm:21, latOffsetKm:5,  lengthP:5},
-                    {n:9, lngOffsetKm:24, latOffsetKm:5,  lengthP:6},
-                    {n:4, lngOffsetKm:33, latOffsetKm:10, lengthP:4}];
-
-  mapConfig.pages = [0,  1,  2,  0,  0,  0,  0,  0,  0,
-                     3,  4,  5,  6,  7,  8,  9, 10,  0,
-                    11, 12, 13, 14, 15, 16, 17, 18, 19,
-                    20, 21, 22, 23, 24, 25, 26, 27, 28,
-                     0, 29, 30, 31, 32, 33, 34, 35, 36,
-                     0, 37, 38, 39, 40, 41, 42, 43, 44,
-                     0,  0,  0, 45, 46,  0, 47, 48];
-
-  if (mapConfig.showExtensions) {
-    mapConfig.filenames.points = "generated_points_ext.xml";
-    mapConfig.lngPages = 12;
-    mapConfig.kkjStart = {lat:65, lng:22};
-
-    mapConfig.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:5},
-                      {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:10},
-                      {n:26, lngOffsetKm:0,  latOffsetKm:10, lengthP:12}];
-
-
-    mapConfig.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:7},
-                      {n:20, lngOffsetKm:21, latOffsetKm:5,  lengthP:6},
-                      {n:8,  lngOffsetKm:41, latOffsetKm:10, lengthP:5}];
-
-
-    mapConfig.pages = ['a', 'A', 'B',   1,   2,  0,  0,   0,  0,  0,   0,   0,
-                       'b', 'C',   3,   4,   5,  6,  7,   8,  9, 10,   0,   0,
-                       'c', 'D',  11,  12,  13, 14, 15,  16, 17, 18,  19, 'E',
-                       'd', 'F',  20,  21,  22, 23, 24,  25, 26, 27,  28, 'G',
-                       'e', 'H', 'I',  29,  30, 31, 32,  33, 34, 35,  36, 'J',
-                       'f', 'K', 'L',  37,  38, 39, 40,  41, 42, 43,  44, 'M',
-                       'g', 'N', 'O', 'P', 'Q', 45, 46, 'R', 47, 48, 'S', 'T'];
-  }
 
   mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
                      numberOfVisibleTrips:0, directionMarkers:[],
@@ -205,16 +132,7 @@ function getIndexOf(array, value) {
 }
 
 function setStatistics(mapConfig) {
-  var s = {yes:0, no:0, np:0};
-
-  for (var y = 0; y < mapConfig.km2s.length; y++) {
-    for (var x = 0; x < mapConfig.km2s[y].length; x++) {
-      if (mapConfig.km2s[y][x].visited != "-") {
-        s[mapConfig.km2s[y][x].visited] += 1;
-      }
-    }
-  }
-
+  var s = mapConfig.areas.getVisitedStatistics();
   var total = s.yes + s.no + s.np;
   var p = {yes:Math.round(100 * s.yes / total),
             no:Math.round(100 * s.no / total),
@@ -233,47 +151,25 @@ function addMouseListeners(mapConfig, map) {
     if (mapConfig.tripGraph.player.state == "stop") {
       var info = getInfo(mapConfig, map, mouseEvent.latLng);
       updateStatusBar(info);
-      updateCursor(mapConfig, map, info);
+      mapConfig.areas.updateCursor(map, info);
     }
   });
 
   google.maps.event.addListener(map, "mouseout", function(mouseEvent) {
-    if (mapConfig.cursor) {
-      mapConfig.cursor.setMap(null);
-    }
+    mapConfig.areas.hideCursor();
   });
 }
 
 function getInfo(mc, map, point) {
   var info = {};
+  var areasInfo = mc.areas.getAreasInfo(point);
 
-  info.page = "-";
-  info.km2XY = getKm2XYFromPoint(mc, point);
-  info.kkjText = "-/-";
-  info.visited = "-";
+  info.page = areasInfo.page;
+  info.km2XY = areasInfo.km2XY;
+  info.kkjText = areasInfo.kkjText;
+  info.visited = areasInfo.visited;
   info.zl = map.getZoom();
   info.latLng = point.lat() + " / " + point.lng();
-
-  if (info.km2XY) {
-    var pageIndex = Math.floor(info.km2XY.y / mc.latKmPerP) * mc.lngPages +
-                    Math.floor(info.km2XY.x / mc.lngKmPerP);
-    if (pageIndex < mc.pages.length) {
-      if (mc.pages[pageIndex] != 0) {
-        info.page = mc.pages[pageIndex];
-        info.visited = mc.km2s[info.km2XY.y][info.km2XY.x].visited;
-      } else {
-        info.km2XY = null;
-      }
-    } else {
-      info.km2XY = null;
-    }
-  }
-
-  if (info.km2XY) {
-    var yKKJ = mc.kkjStart.lat + info.km2XY.y;
-    var xKKJ = mc.kkjStart.lng + info.km2XY.x;
-    info.kkjText = yKKJ + "/" + xKKJ;
-  }
 
   return info;
 }
@@ -292,26 +188,23 @@ function setStatusBarHtml(statusBarHtml) {
 
 function openOtherMap(mapConfig, otherMapType, point, zl) {
   var url = "";
-  var km2XY = getKm2XYFromPoint(mapConfig, point);
 
   if (otherMapType == "Kansalaisen karttapaikka") {
+    var kkjOffset = mapConfig.areas.getKkjOffsetOrStart(point, "offset");
     url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
 
-    if (km2XY != null) {
-      var kkpUrlY = mapConfig.kkjOffset.lat + km2XY.y;
-      var kkpUrlX = mapConfig.kkjOffset.lng + km2XY.x;
+    if (kkjOffset != null) {
       url += "/osoitehaku.html?cy=" +
-        kkpUrlY + "500&cx=" + kkpUrlX + "500&scale=8000";
+        kkjOffset.y + "500&cx=" + kkjOffset.x + "500&scale=8000";
     } else {
       url += "/koordinaattihaku.html?y=" + point.lat() + "&x=" + point.lng() +
         "&srsName=EPSG%3A4258&scale=8000";
     }
   } else if (otherMapType == "kartta.hel.fi") {
-    if (km2XY != null) {
-      var khfN = mapConfig.kkjStart.lat + km2XY.y;
-      var khfE = mapConfig.kkjStart.lng + km2XY.x;
+    var kkjStart = mapConfig.areas.getKkjOffsetOrStart(point, "start");
+    if (kkjStart != null) {
       url = "http://kartta.hel.fi/opas/main/?n=" +
-        khfN + "500&e=" + khfE + "500";
+        kkjStart.y + "500&e=" + kkjStart.x + "500";
     } else {
       url = "http://kartta.hel.fi/";
     }
