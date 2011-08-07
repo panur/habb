@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2010-08-27 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -11,20 +11,6 @@ function addTripsControl(mapConfig, map) {
   document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
   showTripsControl(mapConfig, map);
-}
-
-function addTripsOverlaysToMap(mapConfig, map) {
-  if (typeof(mapConfig.trips.data) == "undefined") {
-    return;
-  }
-
-  for (var i = 0; i < mapConfig.trips.data.length; i++) {
-    if (mapConfig.trips.data[i].visibility == "visible") {
-      mapConfig.trips.data[i].polyline.setMap(map);
-      mapConfig.trips.data[i].gpsMaxSpeed.marker.setMap(map);
-      mapConfig.trips.data[i].gpsMaxAltitude.marker.setMap(map);
-    }
-  }
 }
 
 function _showTripsTable() {
@@ -399,7 +385,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
   if (tripData.visibility == "hidden") {
     tripData.visibility = "visible";
     mapConfig.trips.numberOfVisibleTrips += 1;
-    setVisitedAreaOpacityToLow(mapConfig);
+    mapConfig.areas.setVisitedAreaOpacityToLow();
     tripData.polyline.setMap(map);
     tripData.gpsMaxSpeed.marker.setMap(map);
     tripData.gpsMaxAltitude.marker.setMap(map);
@@ -409,7 +395,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.visibility = "hidden";
     mapConfig.trips.numberOfVisibleTrips -= 1;
     if (mapConfig.trips.numberOfVisibleTrips == 0) {
-      setVisitedAreaOpacityToHigh(mapConfig);
+      mapConfig.areas.setVisitedAreaOpacityToHigh();
     }
     tripData.polyline.setMap(null);
     tripData.gpsMaxSpeed.marker.setMap(null);
@@ -543,16 +529,4 @@ function getMarker(mapConfig, map, point, letter, title) {
   });
 
   return marker;
-}
-
-function setVisitedAreaOpacityToLow(mapConfig) {
-  if (mapConfig.area.opacity == mapConfig.area.opacityHigh) {
-    toggleOpacity();
-  }
-}
-
-function setVisitedAreaOpacityToHigh(mapConfig) {
-  if (mapConfig.area.opacity == mapConfig.area.opacityLow) {
-    toggleOpacity();
-  }
 }

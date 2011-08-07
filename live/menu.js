@@ -1,6 +1,6 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-30 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
 
-function initMenu(map) {
+function initMenu(mapConfig, map) {
   var selectedMenuItem = "";
 
   google.maps.event.clearListeners(map, "click");
@@ -161,15 +161,15 @@ function initMenu(map) {
                          gMap.getZoom());
           } else if (selectedMenuItem == "Areas...") {
             if (rowElement.textContent == "Toggle opacity") {
-              toggleOpacity();
+              mapConfig.areas.toggleOpacity();
             } else if (rowElement.textContent == "Toggle extensions") {
-              toggleShowExtensions();
+              mapConfig.areas.toggleShowExtensions();
             } else if (rowElement.textContent == "Set end of 2008") {
-              changeVisitedData(2008);
+              mapConfig.areas.changeVisitedData(2008);
             } else if (rowElement.textContent == "Set end of 2009") {
-              changeVisitedData(2009);
+              mapConfig.areas.changeVisitedData(2009);
             } else if (rowElement.textContent == "Set latest") {
-              changeVisitedData("latest");
+              mapConfig.areas.changeVisitedData("latest");
             } else {
               alert("Error: unknown area command: " + rowElement.textContent);
             }
