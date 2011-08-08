@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
 
 function Areas(mapConfig, map) {
   var config = getConfig(true);
@@ -11,10 +11,8 @@ function Areas(mapConfig, map) {
     updateMapGrid(config);
     config.visitedStatusAreas = getVisitedStatusAreas(config, map);
     addOverlaysToMap(config, map);
-    google.maps.event.trigger(map, "areasConstructorIsReady");
+    google.maps.event.trigger(map, "areasInitIsReady");
   });
-
-  setPointsToConfig(config, map);
 
   function getConfig(showExtensions) {
     var c = {};
@@ -520,6 +518,10 @@ function Areas(mapConfig, map) {
     }
 
     return null;
+  }
+
+  this.init = function() {
+    setPointsToConfig(config, map);
   }
 
   this.getKkjOffsetOrStart = function(point, offsetOrStart) {

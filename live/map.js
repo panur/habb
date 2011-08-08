@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
 
 var gMap;
 var gMapConfig = {};
@@ -26,7 +26,7 @@ function load() {
 function initMap(map, mapConfig) {
   map.setOptions({center: mapConfig.initialLatLng, zoom: mapConfig.initialZL});
 
-  google.maps.event.addListener(map, "areasConstructorIsReady", function() {
+  google.maps.event.addListener(map, "areasInitIsReady", function() {
     updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
     setStatistics(mapConfig);
     addMouseListeners(mapConfig, map);
@@ -38,6 +38,7 @@ function initMap(map, mapConfig) {
   });
 
   mapConfig.areas = new Areas(mapConfig, map);
+  mapConfig.areas.init();
 }
 
 function setCenter(map, latLng, zoom) {
@@ -249,7 +250,7 @@ function initStreetView(mapConfig, map) {
   var panoramaOptions = {
     visible: false,
     enableCloseButton: true,
-    addressControl: false,
+    addressControl: false
   };
   var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
 
