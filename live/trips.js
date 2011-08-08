@@ -67,54 +67,59 @@ function _setVisitedData(tripIndex) {
 
   gMapConfig.trips.visitedDataIndex = tripIndex;
 
-  setVisitedData(filename, visitedDataDescription);
+  gMapConfig.areas.setVisitedData(filename, visitedDataDescription);
 }
 
 function _setVisitedDataToLatest() {
   gMapConfig.trips.visitedDataIndex = -1;
-  changeVisitedData("latest");
+  gMapConfig.areas.changeVisitedData("latest");
 }
 
 function showTripsControl(mapConfig, map) {
+  var tripsControl = document.getElementById("tripsControl");
+  tripsControl.innerHTML = "";
+
   if (mapConfig.isTableShown) {
     if (mapConfig.filenames.tripsDatas.length == mapConfig.trips.fileIndex) {
-      setTripsControlHtml(getTripsSummaryHtml(mapConfig, mapConfig.trips.data) +
-                          getTripsTableHtml(mapConfig, mapConfig.trips.data));
+      tripsControl.appendChild(
+        getTripsSummaryElement(mapConfig, mapConfig.trips.data));
+      tripsControl.appendChild(
+        getTripsTableElement(mapConfig, mapConfig.trips.data));
+      resizeTripsTable();
     } else {
-      setTripsControlHtml("Loading " + (1 + mapConfig.trips.fileIndex) + "/" +
-                          mapConfig.filenames.tripsDatas.length);
+      var text = "Loading " + (1 + mapConfig.trips.fileIndex) + "/" +
+                 mapConfig.filenames.tripsDatas.length;
+      tripsControl.appendChild(document.createTextNode(text));
       setTripsData(mapConfig, map);
     }
   } else {
-    setTripsControlHtml('<div class="showTripsTable" title="Show trips" ' +
-                        'onclick="javascript:_showTripsTable()">Trips</div>');
+    var e = document.createElement("div");
+    e.className = "showTripsTable";
+    e.title = "Show trips";
+    e.onclick = _showTripsTable;
+    e.textContent = "Trips";
+    tripsControl.appendChild(e);
   }
 }
 
-function setTripsControlHtml(html) {
-  var tripsControl = document.getElementById("tripsControl");
-  tripsControl.innerHTML = html;
-
+function resizeTripsTable() {
   var tripsTable = document.getElementById("tripsTable");
-  if (tripsTable) {
-    var mapDiv = document.getElementById("map_canvas");
-    var streetViewDiv = document.getElementById("street_view");
-    var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
-    tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
-    tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.58) + "px";
-  }
+  var mapDiv = document.getElementById("map_canvas");
+  var streetViewDiv = document.getElementById("street_view");
+  var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
+  tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
+  tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.58) + "px"; // tbd
 }
 
 function setTripsTableHideVisibility(mapConfig, visibility) {
   var tripsTableHide = document.getElementById("tripsTableHide");
-  var hideHtml = "";
+  var html = "";
 
   if (visibility == "visible") {
-    var hideHtml =
-      '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '">\n';
+    html = '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '">\n';
   }
 
-  tripsTableHide.innerHTML = hideHtml;
+  tripsTableHide.innerHTML = html;
 }
 
 function setTripsData(mapConfig, map) {
@@ -179,128 +184,168 @@ function mapLatLngFromV2ToV3(latLngV2) {
   return new google.maps.LatLng(latLngV2.y, latLngV2.x);
 }
 
-function getTripsSummaryHtml(mapConfig, tripsData) {
-  var summaryHtml = '<div class="tripsSummary">';
+function getTripsSummaryElement(mapConfig, tripsData) {
+  var allElements = [];
+  var summaryElement = document.createElement("div");
+  summaryElement.className = "tripsSummary";
 
-  summaryHtml += 'Loaded ' + tripsData.length + ' trips. ';
+  allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
 
   if (mapConfig.trips.numberOfVisibleTrips == tripsData.length) {
-    summaryHtml += 'Show All';
+    allElements.push(createTN("Show All"));
   } else {
-    summaryHtml +=
-      '<a title="Show all trips" ' +
-      'href="javascript:_setVisibilityOfAllTrips(\'visible\')">Show All</a>';
+    allElements.push(createControlElement("Show all trips", "Show All",
+                       function() {_setVisibilityOfAllTrips("visible")}));
   }
 
-  summaryHtml += ' | ';
+  allElements.push(createTN(" | "));
 
   if (mapConfig.trips.numberOfVisibleTrips == 0) {
-    summaryHtml += 'Hide All';
+    allElements.push(createTN("Hide All"));
   } else {
-    summaryHtml +=
-      '<a title="Hide all trips" ' +
-      'href="javascript:_setVisibilityOfAllTrips(\'hidden\')">Hide All</a>';
+    allElements.push(createControlElement("Hide all trips", "Hide All",
+                       function() {_setVisibilityOfAllTrips("hidden")}));
   }
 
   if (mapConfig.trips.numberOfVisibleTrips > 0) {
-    summaryHtml += ' | ';
+    allElements.push(createTN(" | "));
 
     if (mapConfig.trips.areMarkersVisible) {
-      summaryHtml +=
-        '<a title="Hide all trips markers" ' +
-        'href="javascript:_toggleTripMarkersVisibility()">Hide Markers</a>';
+      allElements.push(createControlElement("Hide all trips markers",
+                         "Hide Markers",
+                         function() {_toggleTripMarkersVisibility()}));
     } else {
-      summaryHtml +=
-        '<a title="Show all trips markers" ' +
-        'href="javascript:_toggleTripMarkersVisibility()">Show Markers</a>';
+      allElements.push(createControlElement("Show all trips markers",
+                         "Show Markers",
+                         function() {_toggleTripMarkersVisibility()}));
     }
   }
 
-  summaryHtml += '</div>\n';
+  for (var i = 0; i < allElements.length; i++) {
+    summaryElement.appendChild(allElements[i]);
+  }
 
-  return summaryHtml;
+  return summaryElement;
+
+  function createTN(text) {
+    return document.createTextNode(text);
+  }
 }
 
-function getTripsTableHtml(mapConfig, tripsData) {
-  var tableHtml = '<div id="tripsTable" class="tripsTable">' +
-                  '<table id="tripsTable" class="trips">\n';
+// tbd: move to utils.js
+function createControlElement(title, text, handler) {
+  var a = document.createElement("a");
 
-  tableHtml += '<tr>' +
-    '<th colspan="2" rowspan="3">Commands</th>' +
-    '<th rowspan="3">Trip name</th>' +
-    '<th rowspan="2">Date</th>' +
-    '<th colspan="4">GPS data</th>' +
-    '<th colspan="4">Cycle Computer data</th></tr>\n';
+  a.title = title;
+  a.onclick = handler;
+  a.textContent = text;
+  a.href = "javascript:";
 
-  tableHtml += '<tr>' +
-    '<th>Duration</th><th>Distance</th><th>Max speed</th>' +
-    '<th>Max altitude</th>' +
-    '<th>Duration</th><th>Distance</th><th>Max speed</th>' +
-    '<th>Avg speed</th></tr>\n';
+  return a;
+}
 
-  tableHtml += '<tr><th>yyyy-mm-dd</th>' +
-    '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>m</th>' +
-    '<th>hh:mm:ss</th><th>km</th><th>km/h</th><th>km/h</th></tr>\n';
+function getTripsTableElement(mapConfig, tripsData) {
+  var tableDiv = document.createElement("div");
+  tableDiv.id = "tripsTable";
+  tableDiv.className = "tripsTable";
+  var tableElement = document.createElement("table");
+  tableElement.id = "tripsTable";
+  tableElement.className = "trips";
+
+  var row = tableElement.insertRow(-1);
+
+  addCellWithSpansToRow("Commands", 2, 3, row);
+  addCellWithSpansToRow("Trip name", 1, 3, row);
+  addCellWithSpansToRow("Date", 1, 2, row);
+  addCellWithSpansToRow("GPS data", 4, 1, row);
+  addCellWithSpansToRow("Cycle Computer data", 4, 1, row);
+
+  row = tableElement.insertRow(-1);
+
+  addCellsToRow(["Duration", "Distance", "Max speed", "Max altitude",
+                 "Duration", "Distance", "Max speed", "Avg speed"], row, "th");
+
+  row = tableElement.insertRow(-1);
+
+  addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss", "km",
+                 "km/h", "km/h"], row, "th");
 
   for (var i = 0; i < tripsData.length; i++) {
+    row = tableElement.insertRow(-1);
     if (i == mapConfig.trips.selectedTripIndex) {
-      tableHtml += '<tr class="selectedTrip">';
+      row.className = "selectedTrip";
     } else {
-      tableHtml += '<tr>';
+      row.className = "";
     }
-    tableHtml += '<td>' + getVisibilityCommandHtml(tripsData[i], i) + '</td>';
-    tableHtml += '<td>' + getVisitedDataCommandHtml(mapConfig, i) + '</td>';
-    tableHtml += '<td>' + tripsData[i].name + '</td>';
-    tableHtml += '<td>' + tripsData[i].date + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsDuration + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsDistance + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsMaxSpeed.value + '</td>';
-    tableHtml += '<td>' + tripsData[i].gpsMaxAltitude.value + '</td>';
-    tableHtml += '<td>' + tripsData[i].ccDuration + '</td>';
-    tableHtml += '<td>' + tripsData[i].ccDistance + '</td>';
-    tableHtml += '<td>' + tripsData[i].ccMaxSpeed + '</td>';
-    tableHtml += '<td>' + tripsData[i].ccAvgSpeed + '</td>';
-    tableHtml += '</tr>\n';
+    addCellsToRow([
+      getVisibilityCommandElement(tripsData[i], i),
+      getVisitedDataCommandElement(mapConfig, i),
+      tripsData[i].name,
+      tripsData[i].date,
+      tripsData[i].gpsDuration,
+      tripsData[i].gpsDistance,
+      tripsData[i].gpsMaxSpeed.value,
+      tripsData[i].gpsMaxAltitude.value,
+      tripsData[i].ccDuration,
+      tripsData[i].ccDistance,
+      tripsData[i].ccMaxSpeed,
+      tripsData[i].ccAvgSpeed], row, "td");
   }
 
-  tableHtml += '</table></div>';
+  tableDiv.appendChild(tableElement);
 
-  return tableHtml;
+  return tableDiv;
+
+  function addCellWithSpansToRow(t, colSpan, rowSpan, r) {
+    var c = document.createElement("th");
+    c.colSpan = colSpan;
+    c.rowSpan = rowSpan;
+    c.appendChild(document.createTextNode(t));
+    r.appendChild(c);
+  }
+
+  function addCellsToRow(cells, r, thOrTd) {
+    for (var i = 0; i < cells.length; i++) {
+      var c = document.createElement(thOrTd);
+      if (typeof cells[i] == "object") {
+        c.appendChild(cells[i]);
+      } else {
+        c.appendChild(document.createTextNode(cells[i]));
+      }
+      r.appendChild(c);
+    }
+  }
 }
 
-function getVisibilityCommandHtml(tripsData, tripIndex) {
-  var linkText = (tripsData.visibility == 'hidden') ? 'Show' : 'Hide';
-  var linkTitle = 'Toggle trip visibility';
-  var style =
-    (linkText == 'Hide') ? 'color:' + tripsData.encodedPolyline.color : '';
-  var js = 'javascript:_toggleTripVisibility(' + tripIndex + ')';
-  var html = "<a title='" + linkTitle + "' style='" + style + "' href='" + js +
-    "'>" + linkText + "</a>";
+function getVisibilityCommandElement(tripsData, tripIndex) {
+  var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
+  var handler = function() {_toggleTripVisibility(tripIndex)};
+  var controlElement =
+    createControlElement("Toggle trip visibility", text, handler);
+  controlElement.style.color =
+    ((text == "Hide") ? tripsData.encodedPolyline.color : "");
 
-  return html;
+  return controlElement;
 }
 
-function getVisitedDataCommandHtml(mapConfig, tripIndex) {
+function getVisitedDataCommandElement(mapConfig, tripIndex) {
   var filename = mapConfig.trips.data[tripIndex].visitedDataFilename;
 
   if (filename.charAt(filename.length - 1) == "-") {
-    return "";
+    return document.createTextNode("");
   }
 
   if (mapConfig.trips.visitedDataIndex == tripIndex) {
-    var linkText = 'Unset';
-    var linkTitle = 'Set visited data to latest';
-    var js = 'javascript:_setVisitedDataToLatest()';
+    var text = "Unset";
+    var title = "Set visited data to latest";
+    var handler = function() {_setVisitedDataToLatest()};
   } else {
-    var linkText = 'Set';
-    var linkTitle = 'Set visited data as before this trip';
-    var js = 'javascript:_setVisitedData(' + tripIndex + ')';
+    var text = "Set";
+    var title = "Set visited data as before this trip";
+    var handler = function() {_setVisitedData(tripIndex)};
   }
 
-  var html =
-    "<a title='" + linkTitle + "' href='" + js + "'>" + linkText + "</a>";
-
-  return html;
+  return createControlElement(title, text, handler);
 }
 
 function getTripPolyline(encodedPolyline) {
