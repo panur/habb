@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -8,6 +8,8 @@ function addTripsControl(mapConfig, map) {
 
   var tripsTableHide = document.createElement("div");
   tripsTableHide.id = "tripsTableHide";
+  tripsTableHide.title = "Hide trips table";
+  tripsTableHide.onclick = _hideTripsTable;
   document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
   showTripsControl(mapConfig, map);
@@ -109,8 +111,7 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 
   if (visibility == "visible") {
     var hideHtml =
-      "<a title='Hide trips table' href='javascript:_hideTripsTable()'>" +
-      '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '"></a>\n';
+      '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '">\n';
   }
 
   tripsTableHide.innerHTML = hideHtml;
@@ -401,7 +402,7 @@ function toggleTripVisibility(mapConfig, map, tripIndex) {
     tripData.gpsMaxSpeed.marker.setMap(null);
     tripData.gpsMaxAltitude.marker.setMap(null);
     removeDirectionMarkers(mapConfig, map);
-    _hideTripGraph();
+    hideTripGraph(mapConfig, map)
     mapConfig.trips.selectedTripIndex = -1;
   }
 }

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-07-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -180,52 +180,62 @@ function getTimeString(seconds) {
   return timeString; /* 04:32:54 */
 }
 
-function _toggleTripGraphType() {
-  toggleTripGraphType(gMapConfig, gMap);
-}
-
 function toggleTripGraphType(mapConfig, map) {
   mapConfig.tripGraph.types.reverse();
   addTripGraph(mapConfig, map, mapConfig.tripGraph.tripData);
 }
 
 function setTripGraphControl(mapConfig) {
-  var play = "<a title='Start trip playing' " +
-             "href='javascript:_controlTripPlayer(\"play\")'>Play</a>";
-  var pause = "<a title='Pause trip playing' " +
-              "href='javascript:_controlTripPlayer(\"pause\")'>Pause</a>";
-  var stop = "<a title='Stop trip playing' " +
-             "href='javascript:_controlTripPlayer(\"stop\")'>Stop</a>";
-  var slower1x = "<a title='Slower (-1x)' " +
-                 "href='javascript:_controlTripPlayer(\"slower1x\")'><</a>";
-  var faster1x = "<a title='Faster (+1x)' " +
-                 "href='javascript:_controlTripPlayer(\"faster1x\")'>></a>";
-  var slower10x = "<a title='Slower (-10x)' " +
-                  "href='javascript:_controlTripPlayer(\"slower10x\")'><</a>";
-  var faster10x = "<a title='Faster (+10x)' " +
-                  "href='javascript:_controlTripPlayer(\"faster10x\")'>></a>";
+  var play = createControl("Start trip playing", "Play", getHandler("play"));
+  var pause = createControl("Pause trip playing", "Pause", getHandler("pause"));
+  var stop = createControl("Stop trip playing", "Stop", getHandler("stop"));
+  var slower1x = createControl("Slower (-1x)", "<", getHandler("slower1x"));
+  var faster1x = createControl("Faster (-1x)", ">", getHandler("faster1x"));
+  var slower10x = createControl("Slower (-10x)", "<", getHandler("slower10x"));
+  var faster10x = createControl("Faster (+10x)", ">", getHandler("faster10x"));
 
   var speed = " " + mapConfig.tripGraph.player.speed + "x ";
-  var speedControl = slower10x + slower1x + speed + faster1x + faster10x;
-  var html = "";
+  var speedElements =
+    [slower10x, slower1x, createTN(speed), faster1x, faster10x];
+  var allElements;
 
   if (mapConfig.tripGraph.player.state == "stop") {
-    html = play + " | Stop  | <<" + speed + ">>";
+    allElements = [play, createTN(" | Stop  | <<" + speed + ">>")];
   } else if (mapConfig.tripGraph.player.state == "play") {
-    html = pause + " | " + stop + " | " + speedControl;
+    allElements = [pause, createTN(" | "), stop, createTN(" | ")];
+    allElements = allElements.concat(speedElements);
   } else if (mapConfig.tripGraph.player.state == "pause") {
-    html = play + " | " + stop + " | " + speedControl;
+    allElements = [play, createTN(" | "), stop, createTN(" | ")];
+    allElements = allElements.concat(speedElements);
   }
 
-  html += " / <a title='Toggle type of trip graph' " +
-    "href='javascript:_toggleTripGraphType()'>Show " +
-    mapConfig.tripGraph.types[1] + "</a>";
+  allElements.push(createTN(" / "));
+  allElements.push(createControl("Toggle type of trip graph",
+                     "Show " + mapConfig.tripGraph.types[1],
+                     function () {toggleTripGraphType(mapConfig, gMap)}));
 
-  document.getElementById("trip_graph_control").innerHTML = html;
-}
+  document.getElementById("trip_graph_control").innerHTML = "";
 
-function _controlTripPlayer(controlType) {
-  controlTripPlayer(gMapConfig, gMap, controlType);
+  for (var i = 0; i < allElements.length; i++) {
+    document.getElementById("trip_graph_control").appendChild(allElements[i]);
+  }
+
+  function getHandler(controlType) {
+    return function() {controlTripPlayer(mapConfig, gMap, controlType)};
+  }
+
+  function createTN(text) {
+    return document.createTextNode(text);
+  }
+
+  function createControl(title, text, handler) {
+    var a = document.createElement("a");
+    a.title = title;
+    a.onclick = handler;
+    a.textContent = text;
+    a.href = "javascript:";
+    return a;
+  }
 }
 
 function controlTripPlayer(mapConfig, map, controlType) {
@@ -429,18 +439,14 @@ function addHideTripGraph(mapConfig) {
     tripGraphHide = document.createElement("div");
     tripGraphHide.id = "tripGraphHide";
     tripGraphHide.className = "tripGraphHide";
+    tripGraphHide.title = "Hide trip graph";
+    tripGraphHide.onclick = function () {hideTripGraph(mapConfig, gMap)};
     document.getElementById("dynamic_divs").appendChild(tripGraphHide);
   }
 
   tripGraphHide.style.top = document.getElementById("trip_graph").style.top;
-
   tripGraphHide.innerHTML =
-    "<a title='Hide trip graph' href='javascript:_hideTripGraph()'>" +
-    '<img class="hideTripGraph" src="' + mapConfig.closeImgUrl + '"></a>';
-}
-
-function _hideTripGraph() {
-  hideTripGraph(gMapConfig, gMap);
+    '<img class="hideTripGraph" src="' + mapConfig.closeImgUrl + '">';
 }
 
 function hideTripGraph(mapConfig, map) {
