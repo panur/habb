@@ -95,6 +95,7 @@ img.hideTripsTable {
   position: absolute;
   top: 5px;
   right: 110px;
+  cursor: pointer;
 }
 
 table.trips {
@@ -125,6 +126,7 @@ img.hideTripGraph {
   border: 0px;
   position: absolute;
   right: 0;
+  cursor: pointer;
 }
 
 div.trip_graph {
