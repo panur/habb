@@ -108,7 +108,7 @@ function resizeTripsTable() {
   var streetViewDiv = document.getElementById("street_view");
   var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
   tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
-  tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.58) + "px"; // tbd
+  tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.68) + "px";
 }
 
 function setTripsTableHideVisibility(mapConfig, visibility) {
