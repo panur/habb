@@ -18,7 +18,6 @@ function addTripsControl(mapConfig, map) {
 function _showTripsTable() {
   gMapConfig.isTableShown = true;
   showTripsControl(gMapConfig, gMap);
-  setTripsTableHideVisibility(gMapConfig, "visible");
 }
 
 function _hideTripsTable() {
@@ -81,6 +80,7 @@ function showTripsControl(mapConfig, map) {
 
   if (mapConfig.isTableShown) {
     if (mapConfig.filenames.tripsDatas.length == mapConfig.trips.fileIndex) {
+      setTripsTableHideVisibility(mapConfig, "visible");
       tripsControl.appendChild(
         getTripsSummaryElement(mapConfig, mapConfig.trips.data));
       tripsControl.appendChild(
