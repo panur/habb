@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
 
 function Areas(mapConfig, map) {
   var config = getConfig(true);
@@ -97,8 +97,9 @@ function Areas(mapConfig, map) {
       }
     }
 
-    downloadUrl(config.filenames.points, function(data, responseCode) {
-      var xml = parseXml(data);
+    mapConfig.utils.downloadUrl(config.filenames.points,
+                                function(data, responseCode) {
+      var xml = mapConfig.utils.parseXml(data);
       var p = xml.documentElement.getElementsByTagName("point");
       config.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
       config.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
@@ -137,8 +138,9 @@ function Areas(mapConfig, map) {
   }
 
   function setVisitedDataToKm2s(config, map) {
-    downloadUrl(config.filenames.visitedData, function(data, responseCode) {
-      var xml = parseXml(data);
+    mapConfig.utils.downloadUrl(config.filenames.visitedData,
+                                function(data, responseCode) {
+      var xml = mapConfig.utils.parseXml(data);
       var allInPage = [];
       var pages = xml.documentElement.getElementsByTagName("page");
 
@@ -152,7 +154,7 @@ function Areas(mapConfig, map) {
       }
 
       for (var i = 0; i < allInPage.length; i++) {
-        var page = getIndexOf(config.pages, allInPage[i]);
+        var page = mapConfig.utils.getIndexOf(config.pages, allInPage[i]);
         var initY = Math.floor(page / config.lngPages) * config.latKmPerP;
         var initX = (page % config.lngPages) * config.lngKmPerP;
 
@@ -298,7 +300,7 @@ function Areas(mapConfig, map) {
     points.push(points[0]);
 
     for (var loopEnd = 1; loopEnd < points.length; loopEnd++) {
-      var loopStart = getIndexOf(points, points[loopEnd]);
+      var loopStart = mapConfig.utils.getIndexOf(points, points[loopEnd]);
       if ((loopStart > 0) && (loopStart != loopEnd)) {
         splittedLoops[0] = points.slice(0);
         splittedLoops[1] =

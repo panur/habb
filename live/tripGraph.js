@@ -229,7 +229,7 @@ function setTripGraphControl(mapConfig) {
   }
 
   function createControl(title, text, handler) {
-    return createControlElement(title, text, handler);
+    return mapConfig.utils.createControlElement(title, text, handler);
   }
 }
 

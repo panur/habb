@@ -37,6 +37,7 @@ function initMap(map, mapConfig) {
     initMenu(mapConfig, map);
   });
 
+  mapConfig.utils = new Utils();
   mapConfig.areas = new Areas(mapConfig, map);
   mapConfig.areas.init();
 }

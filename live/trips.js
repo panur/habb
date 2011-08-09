@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
 
 function addTripsControl(mapConfig, map) {
   var tripsControl = document.createElement("div");
@@ -125,8 +125,8 @@ function setTripsTableHideVisibility(mapConfig, visibility) {
 function setTripsData(mapConfig, map) {
   var file = mapConfig.filenames.tripsDatas[mapConfig.trips.fileIndex++];
 
-  downloadUrl(file, function(data, responseCode) {
-    var xml = parseXml(data);
+  mapConfig.utils.downloadUrl(file, function(data, responseCode) {
+    var xml = mapConfig.utils.parseXml(data);
     var rawTripsData = xml.documentElement.getElementsByTagName("data");
     var tripsDataString = "";
 
@@ -194,7 +194,7 @@ function getTripsSummaryElement(mapConfig, tripsData) {
   if (mapConfig.trips.numberOfVisibleTrips == tripsData.length) {
     allElements.push(createTN("Show All"));
   } else {
-    allElements.push(createControlElement("Show all trips", "Show All",
+    allElements.push(createControl("Show all trips", "Show All",
                        function() {_setVisibilityOfAllTrips("visible")}));
   }
 
@@ -203,7 +203,7 @@ function getTripsSummaryElement(mapConfig, tripsData) {
   if (mapConfig.trips.numberOfVisibleTrips == 0) {
     allElements.push(createTN("Hide All"));
   } else {
-    allElements.push(createControlElement("Hide all trips", "Hide All",
+    allElements.push(createControl("Hide all trips", "Hide All",
                        function() {_setVisibilityOfAllTrips("hidden")}));
   }
 
@@ -211,12 +211,10 @@ function getTripsSummaryElement(mapConfig, tripsData) {
     allElements.push(createTN(" | "));
 
     if (mapConfig.trips.areMarkersVisible) {
-      allElements.push(createControlElement("Hide all trips markers",
-                         "Hide Markers",
+      allElements.push(createControl("Hide all trips markers", "Hide Markers",
                          function() {_toggleTripMarkersVisibility()}));
     } else {
-      allElements.push(createControlElement("Show all trips markers",
-                         "Show Markers",
+      allElements.push(createControl("Show all trips markers", "Show Markers",
                          function() {_toggleTripMarkersVisibility()}));
     }
   }
@@ -229,6 +227,10 @@ function getTripsSummaryElement(mapConfig, tripsData) {
 
   function createTN(text) {
     return document.createTextNode(text);
+  }
+
+  function createControl(title, text, handler) {
+    return mapConfig.utils.createControlElement(title, text, handler);
   }
 }
 
@@ -266,7 +268,7 @@ function getTripsTableElement(mapConfig, tripsData) {
       row.className = "";
     }
     addCellsToRow([
-      getVisibilityCommandElement(tripsData[i], i),
+      getVisibilityCommandElement(mapConfig, tripsData[i], i),
       getVisitedDataCommandElement(mapConfig, i),
       tripsData[i].name,
       tripsData[i].date,
@@ -305,15 +307,14 @@ function getTripsTableElement(mapConfig, tripsData) {
   }
 }
 
-function getVisibilityCommandElement(tripsData, tripIndex) {
+function getVisibilityCommandElement(mapConfig, tripsData, tripIndex) {
+  var title = "Toggle trip visibility";
   var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
   var handler = function() {_toggleTripVisibility(tripIndex)};
-  var controlElement =
-    createControlElement("Toggle trip visibility", text, handler);
-  controlElement.style.color =
-    ((text == "Hide") ? tripsData.encodedPolyline.color : "");
+  var e = mapConfig.utils.createControlElement(title, text, handler);
+  e.style.color = ((text == "Hide") ? tripsData.encodedPolyline.color : "");
 
-  return controlElement;
+  return e;
 }
 
 function getVisitedDataCommandElement(mapConfig, tripIndex) {
@@ -333,7 +334,7 @@ function getVisitedDataCommandElement(mapConfig, tripIndex) {
     var handler = function() {_setVisitedData(tripIndex)};
   }
 
-  return createControlElement(title, text, handler);
+  return mapConfig.utils.createControlElement(title, text, handler);
 }
 
 function getTripPolyline(encodedPolyline) {
