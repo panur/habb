@@ -33,6 +33,7 @@ function initMap(map, mapConfig) {
     addHomeButton(mapConfig, map);
     mapConfig.trips = new Trips(mapConfig, map);
     mapConfig.trips.init();
+    mapConfig.tripGraph = new TripGraph(mapConfig, map);
     initStreetView(mapConfig, map);
     _resizeMap();
     initMenu(mapConfig, map);
@@ -59,11 +60,6 @@ function initMapConfig(mapConfig) {
   mapConfig.zoomToPointZoomLevel = 14;
 
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
-  mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
-                         types:["Speed", "Altitude"], lastRatio:0,
-                         tripCursor:[], maxTripCursorLength:10,
-                         tickIntervalMs:200, player:{state:"stop", speed:50},
-                         lastDirection:0};
 }
 
 function setStatistics(mapConfig) {
@@ -83,7 +79,7 @@ function setStatistics(mapConfig) {
 
 function addMouseListeners(mapConfig, map) {
   google.maps.event.addListener(map, "mousemove", function(mouseEvent) {
-    if (mapConfig.tripGraph.player.state == "stop") {
+    if (mapConfig.tripGraph.isPlayerStopped()) {
       var info = getInfo(mapConfig, map, mouseEvent.latLng);
       updateStatusBar(info);
       mapConfig.areas.updateCursor(map, info);
@@ -226,7 +222,7 @@ function updateStreetView(mapConfig, map, position) {
     var svs = new google.maps.StreetViewService();
     svs.getPanoramaByLocation(position, 50, function(data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
-        var heading = mapConfig.tripGraph.lastDirection;
+        var heading = mapConfig.tripGraph.getLastDirection();
         map.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
         map.getStreetView().setPosition(position);
       }
@@ -239,8 +235,8 @@ function _resizeMap() {
     window.onresize = _resizeMap;
   }
 
-  if (gMapConfig.tripGraph.visibility == "visible") {
-    addTripGraph(gMapConfig, gMap, gMapConfig.tripGraph.tripData);
+  if (gMapConfig.tripGraph.isVisible()) {
+    gMapConfig.tripGraph.resize();
   } else {
     resizeDivs(gMap);
   }

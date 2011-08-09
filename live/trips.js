@@ -419,10 +419,10 @@ function Trips(mapConfig, map) {
 
       google.maps.event.addListener(tripData.polyline, "click",
                                     function(mouseEvent) {
-        if (mapConfig.tripGraph.tripData == tripData) {
+        if (mapConfig.tripGraph.isCurrentData(tripData)) {
           addDirectionMarker(mouseEvent.latLng, tripData.polyline);
         }
-        addTripGraph(mapConfig, map, tripData);
+        mapConfig.tripGraph.addTripGraph(tripData);
         config.selectedTripIndex = tripIndex;
         that.showTripsControl();
       });
@@ -442,7 +442,7 @@ function Trips(mapConfig, map) {
       tripData.polyline.setMap(map);
       tripData.gpsMaxSpeed.marker.setMap(map);
       tripData.gpsMaxAltitude.marker.setMap(map);
-      addTripGraph(mapConfig, map, tripData);
+      mapConfig.tripGraph.addTripGraph(tripData);
       config.selectedTripIndex = tripIndex;
     } else {
       tripData.visibility = "hidden";
@@ -454,7 +454,7 @@ function Trips(mapConfig, map) {
       tripData.gpsMaxSpeed.marker.setMap(null);
       tripData.gpsMaxAltitude.marker.setMap(null);
       removeDirectionMarkers();
-      hideTripGraph(mapConfig, map)
+      mapConfig.tripGraph.hideTripGraph();
       config.selectedTripIndex = -1;
     }
   }
