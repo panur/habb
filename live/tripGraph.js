@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-08 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
 
 function addTripGraph(mapConfig, map, tripData) {
   var tripGraph = document.getElementById("trip_graph");
@@ -229,12 +229,7 @@ function setTripGraphControl(mapConfig) {
   }
 
   function createControl(title, text, handler) {
-    var a = document.createElement("a");
-    a.title = title;
-    a.onclick = handler;
-    a.textContent = text;
-    a.href = "javascript:";
-    return a;
+    return createControlElement(title, text, handler);
   }
 }
 

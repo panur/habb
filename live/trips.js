@@ -232,18 +232,6 @@ function getTripsSummaryElement(mapConfig, tripsData) {
   }
 }
 
-// tbd: move to utils.js
-function createControlElement(title, text, handler) {
-  var a = document.createElement("a");
-
-  a.title = title;
-  a.onclick = handler;
-  a.textContent = text;
-  a.href = "javascript:";
-
-  return a;
-}
-
 function getTripsTableElement(mapConfig, tripsData) {
   var tableDiv = document.createElement("div");
   tableDiv.id = "tripsTable";
