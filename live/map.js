@@ -31,7 +31,8 @@ function initMap(map, mapConfig) {
     setStatistics(mapConfig);
     addMouseListeners(mapConfig, map);
     addHomeButton(mapConfig, map);
-    addTripsControl(mapConfig, map);
+    mapConfig.trips = new Trips(mapConfig, map);
+    mapConfig.trips.init();
     initStreetView(mapConfig, map);
     _resizeMap();
     initMenu(mapConfig, map);
@@ -53,17 +54,10 @@ function setCenter(map, latLng, zoom) {
 function initMapConfig(mapConfig) {
   mapConfig.initialStatistics = document.getElementById("statistics").innerHTML;
 
-  mapConfig.filenames = {
-    tripsDatas:["tripsData2011.xml", "tripsData2010.xml", "tripsData2009.xml"]};
-
   mapConfig.initialZL = 10;
   mapConfig.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
   mapConfig.zoomToPointZoomLevel = 14;
 
-  mapConfig.trips = {isTableShown:false, visitedDataIndex:-1,
-                     numberOfVisibleTrips:0, directionMarkers:[],
-                     areMarkersVisible:true, fileIndex:0, data:[],
-                     selectedTripIndex:-1};
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
   mapConfig.tripGraph = {visibility:"hidden", height:100, origo:{x:5, y:95},
                          types:["Speed", "Altitude"], lastRatio:0,
@@ -251,7 +245,7 @@ function _resizeMap() {
     resizeDivs(gMap);
   }
 
-  showTripsControl(gMapConfig, gMap);
+  gMapConfig.trips.showTripsControl(gMapConfig, gMap);
 }
 
 function resizeDivs(map) {

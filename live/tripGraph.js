@@ -143,10 +143,12 @@ function getTripGraphMarker(mapConfig, polyline, vertexIndex) {
   var p1 = polyline.getPath().getAt(vertexIndex);
   var p2 = polyline.getPath().getAt(vertexIndex + 1);
 
-  mapConfig.tripGraph.lastDirection = getLineDirection360(p1, p2);
+  mapConfig.tripGraph.lastDirection =
+    mapConfig.trips.getLineDirection360(p1, p2);
 
-  var direction = getLineDirection120(mapConfig.tripGraph.lastDirection);
-  var marker = getDirectionMarker(p1, direction);
+  var direction =
+    mapConfig.trips.getLineDirection120(mapConfig.tripGraph.lastDirection);
+  var marker = mapConfig.trips.getDirectionMarker(p1, direction);
 
   return marker;
 }
