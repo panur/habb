@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110810.gpx"   visited_data="-"            distance="107" max_speed="45.0" avg_speed="25.9" duration="4:07:29" color="#804080" name="Kehä III"/>
   <trip gps_data="2011/20110806.gpx"   visited_data="-"            distance="115" max_speed="40.9" avg_speed="23.5" duration="4:53:49" color="#FF8040" name="Hyvinkää-Espoo"/>
   <trip gps_data="2011/20110805.gpx"   visited_data="-"            distance="116" max_speed="50.9" avg_speed="24.7" duration="4:42:44" color="#4080FF" name="Espoo-Hyvinkää"/>
   <trip gps_data="2011/20110801.gpx"   visited_data="-"            distance="143" max_speed="48.0" avg_speed="25.0" duration="5:43:16" color="#808040" name="Loviisa-Espoo"/>
