@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
 function Utils() {
   this.downloadUrl = function(url, callback) {
@@ -71,5 +71,14 @@ function Utils() {
     a.href = "javascript:";
 
     return a;
+  }
+
+  this.createHideElement = function (className) {
+    var img = document.createElement("img");
+
+    img.className = className;
+    img.src = "http://maps.google.com/mapfiles/iw_close.gif";
+
+    return img;
   }
 }

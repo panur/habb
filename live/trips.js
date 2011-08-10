@@ -132,13 +132,13 @@ function Trips(master) {
 
   function setTripsTableHideVisibility(visibility) {
     var tripsTableHide = document.getElementById("tripsTableHide");
-    var html = "";
 
     if (visibility == "visible") {
-      html = '<img class="hideTripsTable" src="' + master.closeImgUrl + '">\n';
+      var hideElement = master.utils.createHideElement("hideTripsTable");
+      tripsTableHide.appendChild(hideElement);
+    } else {
+      tripsTableHide.innerHTML = "";
     }
-
-    tripsTableHide.innerHTML = html;
   }
 
   function setTripsData() {
@@ -578,8 +578,8 @@ function Trips(master) {
     });
 
     google.maps.event.addListener(marker, "click", function(event) {
-      setCenter(master.gm, marker.getPosition(), master.zoomToPointZoomLevel);
-      updateStreetView(master, marker.getPosition());
+      master.map.zoomToPoint(marker.getPosition());
+      master.map.updateStreetView(master, marker.getPosition());
     });
 
     return marker;

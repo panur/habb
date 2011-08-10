@@ -151,14 +151,13 @@ function initMenu(master) {
         if (isMenuItem(rowElement)) {
           if (rowElement.textContent == "Zoom") {
             hideMenu();
-            zoomToPoint(master, latLng.lat(), latLng.lng());
+            master.map.zoomToPoint(latLng);
           }
         } else {
           hideMenu();
 
           if (selectedMenuItem == "Open...") {
-            openOtherMap(master, rowElement.textContent, latLng,
-                         master.gm.getZoom());
+            master.map.openOtherMap(rowElement.textContent, latLng);
           } else if (selectedMenuItem == "Areas...") {
             if (rowElement.textContent == "Toggle opacity") {
               master.areas.toggleOpacity();

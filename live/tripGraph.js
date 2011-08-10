@@ -37,7 +37,7 @@ function TripGraph(master) {
       addTripGraphMouseListeners(tripGraph);
       setTripGraphControl();
       drawTripGraph();
-      resizeDivs(master.gm);
+      master.map.resizeDivs();
       addHideTripGraph();
     }
   }
@@ -102,12 +102,12 @@ function TripGraph(master) {
       if (config.player.state != "stop") {
         processTripGraphEvent(event);
       }
-      setCenter(master.gm, position, master.zoomToPointZoomLevel);
-      updateStreetView(master, master.gm, position);
+      master.map.zoomToPoint(position);
+      master.map.updateStreetView(position);
     };
 
     tripGraph.ondblclick = function(event) {
-      setCenter(master.gm, master.initialLatLng, master.initialZL);
+      master.map.resetLocationAndZoom();
     };
   }
 
@@ -126,7 +126,7 @@ function TripGraph(master) {
     marker.setMap(master.gm);
 
     if (config.player.state == "play") {
-      updateStreetView(master, master.gm, marker.getPosition());
+      master.map.updateStreetView(marker.getPosition());
 
       if (master.gm.getBounds().contains(marker.getPosition()) == false) {
         master.gm.panTo(marker.getPosition());
@@ -183,7 +183,7 @@ function TripGraph(master) {
       " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
       " s), Lat/Lng=" + latLng;
 
-    setStatusBarHtml(statusHtml);
+    master.map.setStatusBarHtml(statusHtml);
   }
 
   function getTimeString(seconds) {
@@ -454,8 +454,7 @@ function TripGraph(master) {
     }
 
     tripGraphHide.style.top = document.getElementById("trip_graph").style.top;
-    tripGraphHide.innerHTML =
-      '<img class="hideTripGraph" src="' + master.closeImgUrl + '">';
+    tripGraphHide.appendChild(master.utils.createHideElement("hideTripGraph"));
   }
 
   this.hideTripGraph = function() {
@@ -467,7 +466,7 @@ function TripGraph(master) {
       document.getElementById("trip_graph_control").innerHTML = "";
       document.getElementById("tripGraphHide").innerHTML = "";
 
-      resizeMap(master);
+      master.map.resizeMap();
     }
   }
 

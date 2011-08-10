@@ -648,7 +648,7 @@ function Areas(master) {
   this.toggleShowExtensions = function() {
     removeOverlaysFromMap();
 
-    document.getElementById("statistics").innerHTML = master.initialStatistics;
+    document.getElementById("statistics").innerHTML = master.initialStatistics; // tbd
 
     config = getConfig(!(config.showExtensions));
 
