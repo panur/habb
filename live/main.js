@@ -3,7 +3,8 @@
 function main() {
   /* note: master must not be modified outside of this function */
   var master = {};
-  var mOptions = {
+  var gmElement = document.getElementById("map_canvas");
+  var gmOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControlOptions:
       {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
@@ -14,17 +15,21 @@ function main() {
     streetViewControl: true
   };
 
-  master.gm =
-    new google.maps.Map(document.getElementById("map_canvas"), mOptions);
+  master.gm = new google.maps.Map(gmElement, gmOptions);
+
+  master.utils = new Utils();
+
   master.map = new Map(master);
   master.map.init();
-  master.utils = new Utils();
+
   master.areas = new Areas(master);
   master.areas.init();
 
   master.trips = new Trips(master);
   master.trips.init();
+
   master.tripGraph = new TripGraph(master);
 
-  initMenu(master);
+  var menu = new Menu(master);
+  menu.init();
 }

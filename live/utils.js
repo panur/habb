@@ -1,6 +1,8 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
 function Utils() {
+  var that = this; /* http://javascript.crockford.com/private.html */
+
   this.downloadUrl = function(url, callback) {
     var request = createXmlHttpRequest();
 

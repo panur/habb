@@ -1,18 +1,8 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
 function Areas(master) {
+  var that = this; /* http://javascript.crockford.com/private.html */
   var config = getConfig(true);
-
-  google.maps.event.addListener(master.gm, "pointsAreInConfig", function() {
-    setKm2sToConfig();
-  });
-
-  google.maps.event.addListener(master.gm, "km2sAreInConfig", function() {
-    updateMapGrid();
-    config.visitedStatusAreas = getVisitedStatusAreas();
-    addOverlaysToMap();
-    google.maps.event.trigger(master.gm, "areasInitIsReady");
-  });
 
   function getConfig(showExtensions) {
     var c = {};
@@ -85,6 +75,21 @@ function Areas(master) {
     }
 
     return c;
+  }
+
+  this.init = function() {
+    google.maps.event.addListener(master.gm, "pointsAreInConfig", function() {
+      setKm2sToConfig();
+    });
+
+    google.maps.event.addListener(master.gm, "km2sAreInConfig", function() {
+      updateMapGrid();
+      config.visitedStatusAreas = getVisitedStatusAreas();
+      addOverlaysToMap();
+      google.maps.event.trigger(master.gm, "areasInitIsReady");
+    });
+
+    setPointsToConfig();
   }
 
   function setPointsToConfig() {
@@ -522,10 +527,6 @@ function Areas(master) {
     return null;
   }
 
-  this.init = function() {
-    setPointsToConfig();
-  }
-
   this.getKkjOffsetOrStart = function(point, offsetOrStart) {
     var km2XY = getKm2XYFromPoint(point);
     var kkj = null;
@@ -635,13 +636,13 @@ function Areas(master) {
 
   this.setVisitedAreaOpacityToLow = function() {
     if (config.area.opacity == config.area.opacityHigh) {
-      this.toggleOpacity();
+      that.toggleOpacity();
     }
   }
 
   this.setVisitedAreaOpacityToHigh = function() {
     if (config.area.opacity == config.area.opacityLow) {
-      this.toggleOpacity();
+      that.toggleOpacity();
     }
   }
 
@@ -657,11 +658,11 @@ function Areas(master) {
 
   this.changeVisitedData = function(newTarget) {
     if (newTarget == 2008) {
-      this.setVisitedData(config.filenames.visitedData2008);
+      that.setVisitedData(config.filenames.visitedData2008);
     } else if (newTarget == 2009) {
-      this.setVisitedData(config.filenames.visitedData2009);
+      that.setVisitedData(config.filenames.visitedData2009);
     } else {
-      this.setVisitedData(config.filenames.visitedDataLatest);
+      that.setVisitedData(config.filenames.visitedDataLatest);
     }
   }
 

@@ -1,36 +1,47 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function initMenu(master) {
-  var selectedMenuItem = "";
+function Menu(master) {
+  var that = this; /* http://javascript.crockford.com/private.html */
+  var config = getConfig();
 
-  google.maps.event.clearListeners(master.gm, "click");
+  function getConfig() {
+    var c = {};
 
-  google.maps.event.addListener(master.gm, "click", function(mouseEvent) {
-    if (document.getElementById("menu")) {
-      hideMenu();
-    } else {
-      var menuItems = ["Open...", "Areas...", "Zoom"];
-      showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel), menuItems,
-               "menu");
-    }
+    c.selectedMenuItem = "";
 
-    function getMenuLocation(pixel) {
-      var menuLocation = {};
+    return c;
+  }
 
-      if (pixel.y > (window.innerHeight / 2)) {
-        menuLocation.bottom = (window.innerHeight - pixel.y) + "px";
+  this.init = function() {
+    google.maps.event.clearListeners(master.gm, "click");
+
+    google.maps.event.addListener(master.gm, "click", function(mouseEvent) {
+      if (document.getElementById("menu")) {
+        hideMenu();
       } else {
-        menuLocation.top = pixel.y + "px";
-      }
-      if (pixel.x > (window.innerWidth / 2)) {
-        menuLocation.right = (window.innerWidth - pixel.x) + "px";
-      } else {
-        menuLocation.left = pixel.x + "px";
+        var menuItems = ["Open...", "Areas...", "Zoom"];
+        showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel), menuItems,
+                 "menu");
       }
 
-      return menuLocation;
-    }
-  });
+      function getMenuLocation(pixel) {
+        var menuLocation = {};
+
+        if (pixel.y > (window.innerHeight / 2)) {
+          menuLocation.bottom = (window.innerHeight - pixel.y) + "px";
+        } else {
+          menuLocation.top = pixel.y + "px";
+        }
+        if (pixel.x > (window.innerWidth / 2)) {
+          menuLocation.right = (window.innerWidth - pixel.x) + "px";
+        } else {
+          menuLocation.left = pixel.x + "px";
+        }
+
+        return menuLocation;
+      }
+    });
+  }
 
   function hideMenu() {
     var parent = document.getElementById("dynamic_divs");
@@ -89,7 +100,7 @@ function initMenu(master) {
         selectMenuItem(rowElement);
 
         if (isMenuItem(rowElement)) {
-          selectedMenuItem = rowElement.textContent;
+          config.selectedMenuItem = rowElement.textContent;
 
           if (rowElement.textContent == "Open...") {
             var subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
@@ -156,9 +167,9 @@ function initMenu(master) {
         } else {
           hideMenu();
 
-          if (selectedMenuItem == "Open...") {
+          if (config.selectedMenuItem == "Open...") {
             master.map.openOtherMap(rowElement.textContent, latLng);
-          } else if (selectedMenuItem == "Areas...") {
+          } else if (config.selectedMenuItem == "Areas...") {
             if (rowElement.textContent == "Toggle opacity") {
               master.areas.toggleOpacity();
             } else if (rowElement.textContent == "Toggle extensions") {
@@ -173,7 +184,7 @@ function initMenu(master) {
               alert("Error: unknown area command: " + rowElement.textContent);
             }
           } else {
-            alert("Error: unknown selected menu item: " + selectedMenuItem);
+            alert("Error: unknown menu item: " + config.selectedMenuItem);
           }
         }
       }
