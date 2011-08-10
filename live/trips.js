@@ -1,6 +1,6 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function Trips(mapConfig, map) {
+function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
   var config = getConfig();
 
@@ -87,12 +87,12 @@ function Trips(mapConfig, map) {
 
     config.visitedDataIndex = tripIndex;
 
-    mapConfig.areas.setVisitedData(filename, visitedDataDescription);
+    master.areas.setVisitedData(filename, visitedDataDescription);
   }
 
   function _setVisitedDataToLatest() {
     config.visitedDataIndex = -1;
-    mapConfig.areas.changeVisitedData("latest");
+    master.areas.changeVisitedData("latest");
   }
 
   this.showTripsControl = function() {
@@ -135,7 +135,7 @@ function Trips(mapConfig, map) {
     var html = "";
 
     if (visibility == "visible") {
-      html = '<img class="hideTripsTable" src="' + mapConfig.closeImgUrl + '">\n';
+      html = '<img class="hideTripsTable" src="' + master.closeImgUrl + '">\n';
     }
 
     tripsTableHide.innerHTML = html;
@@ -144,8 +144,8 @@ function Trips(mapConfig, map) {
   function setTripsData() {
     var file = config.filenames.tripsDatas[config.fileIndex++];
 
-    mapConfig.utils.downloadUrl(file, function(data, responseCode) {
-      var xml = mapConfig.utils.parseXml(data);
+    master.utils.downloadUrl(file, function(data, responseCode) {
+      var xml = master.utils.parseXml(data);
       var rawTripsData = xml.documentElement.getElementsByTagName("data");
       var tripsDataString = "";
 
@@ -249,7 +249,7 @@ function Trips(mapConfig, map) {
     }
 
     function createControl(title, text, handler) {
-      return mapConfig.utils.createControlElement(title, text, handler);
+      return master.utils.createControlElement(title, text, handler);
     }
   }
 
@@ -330,7 +330,7 @@ function Trips(mapConfig, map) {
     var title = "Toggle trip visibility";
     var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
     var handler = function() {_toggleTripVisibility(tripIndex)};
-    var e = mapConfig.utils.createControlElement(title, text, handler);
+    var e = master.utils.createControlElement(title, text, handler);
     e.style.color = ((text == "Hide") ? tripsData.encodedPolyline.color : "");
 
     return e;
@@ -353,7 +353,7 @@ function Trips(mapConfig, map) {
       var handler = function() {_setVisitedData(tripIndex)};
     }
 
-    return mapConfig.utils.createControlElement(title, text, handler);
+    return master.utils.createControlElement(title, text, handler);
   }
 
   function getTripPolyline(encodedPolyline) {
@@ -419,10 +419,10 @@ function Trips(mapConfig, map) {
 
       google.maps.event.addListener(tripData.polyline, "click",
                                     function(mouseEvent) {
-        if (mapConfig.tripGraph.isCurrentData(tripData)) {
+        if (master.tripGraph.isCurrentData(tripData)) {
           addDirectionMarker(mouseEvent.latLng, tripData.polyline);
         }
-        mapConfig.tripGraph.addTripGraph(tripData);
+        master.tripGraph.addTripGraph(tripData);
         config.selectedTripIndex = tripIndex;
         that.showTripsControl();
       });
@@ -438,23 +438,23 @@ function Trips(mapConfig, map) {
     if (tripData.visibility == "hidden") {
       tripData.visibility = "visible";
       config.numberOfVisibleTrips += 1;
-      mapConfig.areas.setVisitedAreaOpacityToLow();
-      tripData.polyline.setMap(map);
-      tripData.gpsMaxSpeed.marker.setMap(map);
-      tripData.gpsMaxAltitude.marker.setMap(map);
-      mapConfig.tripGraph.addTripGraph(tripData);
+      master.areas.setVisitedAreaOpacityToLow();
+      tripData.polyline.setMap(master.gm);
+      tripData.gpsMaxSpeed.marker.setMap(master.gm);
+      tripData.gpsMaxAltitude.marker.setMap(master.gm);
+      master.tripGraph.addTripGraph(tripData);
       config.selectedTripIndex = tripIndex;
     } else {
       tripData.visibility = "hidden";
       config.numberOfVisibleTrips -= 1;
       if (config.numberOfVisibleTrips == 0) {
-        mapConfig.areas.setVisitedAreaOpacityToHigh();
+        master.areas.setVisitedAreaOpacityToHigh();
       }
       tripData.polyline.setMap(null);
       tripData.gpsMaxSpeed.marker.setMap(null);
       tripData.gpsMaxAltitude.marker.setMap(null);
       removeDirectionMarkers();
-      mapConfig.tripGraph.hideTripGraph();
+      master.tripGraph.hideTripGraph();
       config.selectedTripIndex = -1;
     }
   }
@@ -475,7 +475,7 @@ function Trips(mapConfig, map) {
         google.maps.event.addListener(marker, "click", function(event) {
           marker.setMap(null);
         });
-        marker.setMap(map);
+        marker.setMap(master.gm);
         config.directionMarkers.push(marker);
         break;
       }
@@ -491,7 +491,7 @@ function Trips(mapConfig, map) {
   function isPointInLineSegment(point, p1, p2) {
     var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
                             getDistance(p1, p2));
-    var tolerance = 391817 * Math.pow(0.445208, map.getZoom());
+    var tolerance = 391817 * Math.pow(0.445208, master.gm.getZoom());
 
     return (distance < tolerance);
   }
@@ -578,8 +578,8 @@ function Trips(mapConfig, map) {
     });
 
     google.maps.event.addListener(marker, "click", function(event) {
-      setCenter(map, marker.getPosition(), mapConfig.zoomToPointZoomLevel);
-      updateStreetView(mapConfig, map, marker.getPosition());
+      setCenter(master.gm, marker.getPosition(), master.zoomToPointZoomLevel);
+      updateStreetView(master, marker.getPosition());
     });
 
     return marker;

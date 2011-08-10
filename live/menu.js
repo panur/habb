@@ -1,11 +1,11 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-07 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function initMenu(mapConfig, map) {
+function initMenu(master) {
   var selectedMenuItem = "";
 
-  google.maps.event.clearListeners(map, "click");
+  google.maps.event.clearListeners(master.gm, "click");
 
-  google.maps.event.addListener(map, "click", function(mouseEvent) {
+  google.maps.event.addListener(master.gm, "click", function(mouseEvent) {
     if (document.getElementById("menu")) {
       hideMenu();
     } else {
@@ -151,25 +151,25 @@ function initMenu(mapConfig, map) {
         if (isMenuItem(rowElement)) {
           if (rowElement.textContent == "Zoom") {
             hideMenu();
-            zoomToPoint(latLng.lat(), latLng.lng());
+            zoomToPoint(master, latLng.lat(), latLng.lng());
           }
         } else {
           hideMenu();
 
           if (selectedMenuItem == "Open...") {
-            openOtherMap(gMapConfig, rowElement.textContent, latLng,
-                         gMap.getZoom());
+            openOtherMap(master, rowElement.textContent, latLng,
+                         master.gm.getZoom());
           } else if (selectedMenuItem == "Areas...") {
             if (rowElement.textContent == "Toggle opacity") {
-              mapConfig.areas.toggleOpacity();
+              master.areas.toggleOpacity();
             } else if (rowElement.textContent == "Toggle extensions") {
-              mapConfig.areas.toggleShowExtensions();
+              master.areas.toggleShowExtensions();
             } else if (rowElement.textContent == "Set end of 2008") {
-              mapConfig.areas.changeVisitedData(2008);
+              master.areas.changeVisitedData(2008);
             } else if (rowElement.textContent == "Set end of 2009") {
-              mapConfig.areas.changeVisitedData(2009);
+              master.areas.changeVisitedData(2009);
             } else if (rowElement.textContent == "Set latest") {
-              mapConfig.areas.changeVisitedData("latest");
+              master.areas.changeVisitedData("latest");
             } else {
               alert("Error: unknown area command: " + rowElement.textContent);
             }

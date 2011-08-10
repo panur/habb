@@ -1,6 +1,6 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function TripGraph(mapConfig, map) {
+function TripGraph(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
   var config = getConfig();
 
@@ -37,7 +37,7 @@ function TripGraph(mapConfig, map) {
       addTripGraphMouseListeners(tripGraph);
       setTripGraphControl();
       drawTripGraph();
-      resizeDivs(map);
+      resizeDivs(master.gm);
       addHideTripGraph();
     }
   }
@@ -102,12 +102,12 @@ function TripGraph(mapConfig, map) {
       if (config.player.state != "stop") {
         processTripGraphEvent(event);
       }
-      setCenter(map, position, mapConfig.zoomToPointZoomLevel);
-      updateStreetView(mapConfig, map, position);
+      setCenter(master.gm, position, master.zoomToPointZoomLevel);
+      updateStreetView(master, master.gm, position);
     };
 
     tripGraph.ondblclick = function(event) {
-      setCenter(map, mapConfig.initialLatLng, mapConfig.initialZL);
+      setCenter(master.gm, master.initialLatLng, master.initialZL);
     };
   }
 
@@ -123,13 +123,13 @@ function TripGraph(mapConfig, map) {
 
     config.tripCursor.unshift(marker);
 
-    marker.setMap(map);
+    marker.setMap(master.gm);
 
     if (config.player.state == "play") {
-      updateStreetView(mapConfig, map, marker.getPosition());
+      updateStreetView(master, master.gm, marker.getPosition());
 
-      if (map.getBounds().contains(marker.getPosition()) == false) {
-        map.panTo(marker.getPosition());
+      if (master.gm.getBounds().contains(marker.getPosition()) == false) {
+        master.gm.panTo(marker.getPosition());
       }
     }
   }
@@ -157,10 +157,10 @@ function TripGraph(mapConfig, map) {
     var p1 = polyline.getPath().getAt(vertexIndex);
     var p2 = polyline.getPath().getAt(vertexIndex + 1);
 
-    config.lastDirection = mapConfig.trips.getLineDirection360(p1, p2);
+    config.lastDirection = master.trips.getLineDirection360(p1, p2);
 
-    var direction = mapConfig.trips.getLineDirection120(config.lastDirection);
-    var marker = mapConfig.trips.getDirectionMarker(p1, direction);
+    var direction = master.trips.getLineDirection120(config.lastDirection);
+    var marker = master.trips.getDirectionMarker(p1, direction);
 
     return marker;
   }
@@ -243,7 +243,7 @@ function TripGraph(mapConfig, map) {
     }
 
     function createControl(title, text, handler) {
-      return mapConfig.utils.createControlElement(title, text, handler);
+      return master.utils.createControlElement(title, text, handler);
     }
   }
 
@@ -455,7 +455,7 @@ function TripGraph(mapConfig, map) {
 
     tripGraphHide.style.top = document.getElementById("trip_graph").style.top;
     tripGraphHide.innerHTML =
-      '<img class="hideTripGraph" src="' + mapConfig.closeImgUrl + '">';
+      '<img class="hideTripGraph" src="' + master.closeImgUrl + '">';
   }
 
   this.hideTripGraph = function() {
@@ -467,7 +467,7 @@ function TripGraph(mapConfig, map) {
       document.getElementById("trip_graph_control").innerHTML = "";
       document.getElementById("tripGraphHide").innerHTML = "";
 
-      _resizeMap();
+      resizeMap(master);
     }
   }
 

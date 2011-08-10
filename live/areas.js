@@ -1,17 +1,17 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function Areas(mapConfig, map) {
+function Areas(master) {
   var config = getConfig(true);
 
-  google.maps.event.addListener(map, "pointsAreInConfig", function() {
-    setKm2sToConfig(config, map);
+  google.maps.event.addListener(master.gm, "pointsAreInConfig", function() {
+    setKm2sToConfig();
   });
 
-  google.maps.event.addListener(map, "km2sAreInConfig", function() {
-    updateMapGrid(config);
-    config.visitedStatusAreas = getVisitedStatusAreas(config, map);
-    addOverlaysToMap(config, map);
-    google.maps.event.trigger(map, "areasInitIsReady");
+  google.maps.event.addListener(master.gm, "km2sAreInConfig", function() {
+    updateMapGrid();
+    config.visitedStatusAreas = getVisitedStatusAreas();
+    addOverlaysToMap();
+    google.maps.event.trigger(master.gm, "areasInitIsReady");
   });
 
   function getConfig(showExtensions) {
@@ -87,7 +87,7 @@ function Areas(mapConfig, map) {
     return c;
   }
 
-  function setPointsToConfig(config, map) {
+  function setPointsToConfig() {
     var points = [];
 
     for (var y = 0; y <= (config.latPages * config.latKmPerP); y++) {
@@ -97,9 +97,9 @@ function Areas(mapConfig, map) {
       }
     }
 
-    mapConfig.utils.downloadUrl(config.filenames.points,
-                                function(data, responseCode) {
-      var xml = mapConfig.utils.parseXml(data);
+    master.utils.downloadUrl(config.filenames.points,
+                             function(data, responseCode) {
+      var xml = master.utils.parseXml(data);
       var p = xml.documentElement.getElementsByTagName("point");
       config.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
       config.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
@@ -113,11 +113,11 @@ function Areas(mapConfig, map) {
       }
 
       config.points = points;
-      google.maps.event.trigger(map, "pointsAreInConfig");
+      google.maps.event.trigger(master.gm, "pointsAreInConfig");
     });
   }
 
-  function setKm2sToConfig(config, map) {
+  function setKm2sToConfig() {
     var km2s = [];
 
     for (var y = 0; y < (config.latPages * config.latKmPerP); y++) {
@@ -134,13 +134,13 @@ function Areas(mapConfig, map) {
 
     config.km2s = km2s;
 
-    setVisitedDataToKm2s(config, map);
+    setVisitedDataToKm2s();
   }
 
-  function setVisitedDataToKm2s(config, map) {
-    mapConfig.utils.downloadUrl(config.filenames.visitedData,
-                                function(data, responseCode) {
-      var xml = mapConfig.utils.parseXml(data);
+  function setVisitedDataToKm2s() {
+    master.utils.downloadUrl(config.filenames.visitedData,
+                             function(data, responseCode) {
+      var xml = master.utils.parseXml(data);
       var allInPage = [];
       var pages = xml.documentElement.getElementsByTagName("page");
 
@@ -154,7 +154,7 @@ function Areas(mapConfig, map) {
       }
 
       for (var i = 0; i < allInPage.length; i++) {
-        var page = mapConfig.utils.getIndexOf(config.pages, allInPage[i]);
+        var page = master.utils.getIndexOf(config.pages, allInPage[i]);
         var initY = Math.floor(page / config.lngPages) * config.latKmPerP;
         var initX = (page % config.lngPages) * config.lngKmPerP;
 
@@ -176,11 +176,11 @@ function Areas(mapConfig, map) {
         }
       }
 
-      google.maps.event.trigger(map, "km2sAreInConfig");
+      google.maps.event.trigger(master.gm, "km2sAreInConfig");
     });
   }
 
-  function updateMapGrid(config) {
+  function updateMapGrid() {
     var color;
 
     config.grid.latPolylines = [];
@@ -222,11 +222,11 @@ function Areas(mapConfig, map) {
     }
   }
 
-  function getVisitedStatusAreas(config) {
+  function getVisitedStatusAreas() {
     var polygonGroups = {};
-    polygonGroups.np = getPolygonGroup(config, "np");
-    polygonGroups.no = getPolygonGroup(config, "no");
-    polygonGroups.yes = getPolygonGroup(config, "yes");
+    polygonGroups.np = getPolygonGroup("np");
+    polygonGroups.no = getPolygonGroup("no");
+    polygonGroups.yes = getPolygonGroup("yes");
     var polygons = [];
     polygons = polygons.concat(polygonGroups.no);
     polygons = polygons.concat(polygonGroups.np);
@@ -261,10 +261,10 @@ function Areas(mapConfig, map) {
     return visitedStatusAreas;
   }
 
-  function getPolygonGroup(config, visitedStatus) {
+  function getPolygonGroup(visitedStatus) {
     var polygons = [];
     var params =
-      {visitedStatus:visitedStatus, km2NeedsToBeTested:getKm2sInMap(config)};
+      {visitedStatus:visitedStatus, km2NeedsToBeTested:getKm2sInMap()};
 
     for (var y = 0; y < config.km2s.length; y++) {
       for (var x = 0; x < config.km2s[y].length; x++) {
@@ -275,7 +275,7 @@ function Areas(mapConfig, map) {
 
           params.initXY = {y:y, x:x};
 
-          getPolylinePoints(y, x, "right", config, points, params);
+          getPolylinePoints(y, x, "right", points, params);
 
           var splittedLoops = splitLoops(points);
           for (var i = 0; i < splittedLoops.length; i++) {
@@ -300,7 +300,7 @@ function Areas(mapConfig, map) {
     points.push(points[0]);
 
     for (var loopEnd = 1; loopEnd < points.length; loopEnd++) {
-      var loopStart = mapConfig.utils.getIndexOf(points, points[loopEnd]);
+      var loopStart = master.utils.getIndexOf(points, points[loopEnd]);
       if ((loopStart > 0) && (loopStart != loopEnd)) {
         splittedLoops[0] = points.slice(0);
         splittedLoops[1] =
@@ -317,7 +317,7 @@ function Areas(mapConfig, map) {
     return splittedLoops;
   }
 
-  function getKm2sInMap(config) {
+  function getKm2sInMap() {
     var km2s = [];
 
     for (var y = 0; y < config.km2s.length; y++) {
@@ -378,7 +378,7 @@ function Areas(mapConfig, map) {
     return oddNodes;
   }
 
-  function getPolylinePoints(y, x, direction, config, points, params) {
+  function getPolylinePoints(y, x, direction, points, params) {
     var newY = y;
     var newX = x;
     var newDirection = -1;
@@ -437,34 +437,34 @@ function Areas(mapConfig, map) {
 
       if ((newY >= 0) && (newX >= 0) &&
           ((newY != params.initXY.y) || (newX != params.initXY.x))) {
-        getPolylinePoints(newY, newX, newDirection, config, points, params);
+        getPolylinePoints(newY, newX, newDirection, points, params);
       }
     }
   }
 
-  function addOverlaysToMap(config, map) {
-    addOrRemoveOverlays(config, map, map);
+  function addOverlaysToMap() {
+    addOrRemoveOverlays(master.gm);
   }
 
-  function removeOverlaysFromMap(config, map) {
-    addOrRemoveOverlays(config, map, null);
+  function removeOverlaysFromMap() {
+    addOrRemoveOverlays(null);
   }
 
-  function addOrRemoveOverlays(config, map, mapOrNull) {
+  function addOrRemoveOverlays(gmOrNull) {
     for (var i = 0; i < config.visitedStatusAreas.length; i++) {
       if (config.visitedStatusAreas[i].getPath()) {
         config.visitedStatusAreas[i].setOptions({fillOpacity:
                                                  config.area.opacity});
-        config.visitedStatusAreas[i].setMap(mapOrNull);
+        config.visitedStatusAreas[i].setMap(gmOrNull);
       }
     }
 
     for (var i = 0; i < config.grid.latPolylines.length; i++) {
-      config.grid.latPolylines[i].setMap(mapOrNull);
+      config.grid.latPolylines[i].setMap(gmOrNull);
     }
 
     for (var i = 0; i < config.grid.lngPolylines.length; i++) {
-      config.grid.lngPolylines[i].setMap(mapOrNull);
+      config.grid.lngPolylines[i].setMap(gmOrNull);
     }
   }
 
@@ -499,13 +499,13 @@ function Areas(mapConfig, map) {
     }
 
     if ((guessXY.y >= 0) && (guessXY.x >= 0)) {
-      return getKm2XYFromGuess(config, point, guessXY);
+      return getKm2XYFromGuess(point, guessXY);
     }
 
     return null;
   }
 
-  function getKm2XYFromGuess(config, point, guessXY) {
+  function getKm2XYFromGuess(point, guessXY) {
     for (var y = guessXY.y - 1; y < guessXY.y + 2; y++) {
       for (var x = guessXY.x - 1; x < guessXY.x + 2; x++) {
         if ((y >= 0) && (x >= 0) &&
@@ -523,7 +523,7 @@ function Areas(mapConfig, map) {
   }
 
   this.init = function() {
-    setPointsToConfig(config, map);
+    setPointsToConfig();
   }
 
   this.getKkjOffsetOrStart = function(point, offsetOrStart) {
@@ -589,7 +589,7 @@ function Areas(mapConfig, map) {
     return s;
   }
 
-  this.updateCursor = function(map, info) {
+  this.updateCursor = function(info) {
     if (config.cursor)  {
       if (config.cursorParams.kkj == info.kkjText) {
         return;
@@ -599,7 +599,8 @@ function Areas(mapConfig, map) {
       }
     }
 
-    if ((info.km2XY) && (map.getZoom() < config.cursorParams.maxZoomLevel)) {
+    if ((info.km2XY) &&
+        (master.gm.getZoom() < config.cursorParams.maxZoomLevel)) {
       var points = config.km2s[info.km2XY.y][info.km2XY.x].points;
       config.cursor = new google.maps.Polyline({
         path: points,
@@ -609,7 +610,7 @@ function Areas(mapConfig, map) {
         clickable: false,
         zIndex: 1
       });
-      config.cursor.setMap(map);
+      config.cursor.setMap(master.gm);
       config.cursorParams.kkj = info.kkjText;
     }
   }
@@ -621,7 +622,7 @@ function Areas(mapConfig, map) {
   }
 
   this.toggleOpacity = function() {
-    removeOverlaysFromMap(config, map);
+    removeOverlaysFromMap();
 
     if (config.area.opacity == config.area.opacityHigh) {
       config.area.opacity = config.area.opacityLow;
@@ -629,7 +630,7 @@ function Areas(mapConfig, map) {
       config.area.opacity = config.area.opacityHigh;
     }
 
-    addOverlaysToMap(config, map);
+    addOverlaysToMap();
   }
 
   this.setVisitedAreaOpacityToLow = function() {
@@ -645,14 +646,13 @@ function Areas(mapConfig, map) {
   }
 
   this.toggleShowExtensions = function() {
-    removeOverlaysFromMap(config, map);
+    removeOverlaysFromMap();
 
-    document.getElementById("statistics").innerHTML =
-      mapConfig.initialStatistics;
+    document.getElementById("statistics").innerHTML = master.initialStatistics;
 
     config = getConfig(!(config.showExtensions));
 
-    setPointsToConfig(config, map);
+    setPointsToConfig();
   }
 
   this.changeVisitedData = function(newTarget) {
@@ -666,10 +666,10 @@ function Areas(mapConfig, map) {
   }
 
   this.setVisitedData = function(filename) {
-    removeOverlaysFromMap(config, map);
+    removeOverlaysFromMap();
 
     config.filenames.visitedData = filename;
 
-    setKm2sToConfig(config, map);
+    setKm2sToConfig();
   }
 }

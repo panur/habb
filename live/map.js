@@ -1,9 +1,8 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-09 */
-
-var gMap;
-var gMapConfig = {};
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
 function load() {
+  var gm;
+  var master = {};
   var mOptions = {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControlOptions:
@@ -16,40 +15,42 @@ function load() {
     streetViewControl: true
   };
 
-  gMap = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
+  gm = new google.maps.Map(document.getElementById("map_canvas"), mOptions);
 
-  initMapConfig(gMapConfig);
+  initMapConfig(master);
 
-  initMap(gMap, gMapConfig);
+  initMap(gm, master);
 }
 
-function initMap(map, mapConfig) {
-  map.setOptions({center: mapConfig.initialLatLng, zoom: mapConfig.initialZL});
+function initMap(gm, master) {
+  gm.setOptions({center: master.initialLatLng, zoom: master.initialZL});
 
-  google.maps.event.addListener(map, "areasInitIsReady", function() {
-    updateStatusBar(getInfo(mapConfig, map, mapConfig.initialLatLng));
-    setStatistics(mapConfig);
-    addMouseListeners(mapConfig, map);
-    addHomeButton(mapConfig, map);
-    mapConfig.trips = new Trips(mapConfig, map);
-    mapConfig.trips.init();
-    mapConfig.tripGraph = new TripGraph(mapConfig, map);
-    initStreetView(mapConfig, map);
-    _resizeMap();
-    initMenu(mapConfig, map);
+  google.maps.event.addListener(gm, "areasInitIsReady", function() {
+    updateStatusBar(getInfo(master, master.initialLatLng));
+    setStatistics(master);
+    addMouseListeners(master);
+    addHomeButton(master);
+    master.trips = new Trips(master);
+    master.trips.init();
+    master.tripGraph = new TripGraph(master);
+    initStreetView(master);
+    window.onresize = function() {resizeMap(master)};
+    resizeMap(master);
+    initMenu(master);
   });
 
-  mapConfig.utils = new Utils();
-  mapConfig.areas = new Areas(mapConfig, map);
-  mapConfig.areas.init();
+  master.gm = gm;
+  master.utils = new Utils();
+  master.areas = new Areas(master);
+  master.areas.init();
 }
 
-function setCenter(map, latLng, zoom) {
+function setCenter(gm, latLng, zoom) {
   /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
-  if (zoom != map.getZoom()) {
-    map.setZoom(zoom);
+  if (zoom != gm.getZoom()) {
+    gm.setZoom(zoom);
   }
-  map.panTo(latLng);
+  gm.panTo(latLng);
 }
 
 function initMapConfig(mapConfig) {
@@ -62,8 +63,8 @@ function initMapConfig(mapConfig) {
   mapConfig.closeImgUrl = "http://maps.google.com/mapfiles/iw_close.gif";
 }
 
-function setStatistics(mapConfig) {
-  var s = mapConfig.areas.getVisitedStatistics();
+function setStatistics(master) {
+  var s = master.areas.getVisitedStatistics();
   var total = s.yes + s.no + s.np;
   var p = {yes:Math.round(100 * s.yes / total),
             no:Math.round(100 * s.no / total),
@@ -74,32 +75,32 @@ function setStatistics(mapConfig) {
                          "%), total=" + total;
 
   document.getElementById("statistics").innerHTML =
-    statistics + ", " + mapConfig.initialStatistics;
+    statistics + ", " + master.initialStatistics;
 }
 
-function addMouseListeners(mapConfig, map) {
-  google.maps.event.addListener(map, "mousemove", function(mouseEvent) {
-    if (mapConfig.tripGraph.isPlayerStopped()) {
-      var info = getInfo(mapConfig, map, mouseEvent.latLng);
+function addMouseListeners(master) {
+  google.maps.event.addListener(master.gm, "mousemove", function(mouseEvent) {
+    if (master.tripGraph.isPlayerStopped()) {
+      var info = getInfo(master, mouseEvent.latLng);
       updateStatusBar(info);
-      mapConfig.areas.updateCursor(map, info);
+      master.areas.updateCursor(info);
     }
   });
 
-  google.maps.event.addListener(map, "mouseout", function(mouseEvent) {
-    mapConfig.areas.hideCursor();
+  google.maps.event.addListener(master.gm, "mouseout", function(mouseEvent) {
+    master.areas.hideCursor();
   });
 }
 
-function getInfo(mc, map, point) {
+function getInfo(master, point) {
   var info = {};
-  var areasInfo = mc.areas.getAreasInfo(point);
+  var areasInfo = master.areas.getAreasInfo(point);
 
   info.page = areasInfo.page;
   info.km2XY = areasInfo.km2XY;
   info.kkjText = areasInfo.kkjText;
   info.visited = areasInfo.visited;
-  info.zl = map.getZoom();
+  info.zl = master.gm.getZoom();
   info.latLng = point.lat() + " / " + point.lng();
 
   return info;
@@ -117,11 +118,11 @@ function setStatusBarHtml(statusBarHtml) {
   document.getElementById("status_bar").innerHTML = statusBarHtml;
 }
 
-function openOtherMap(mapConfig, otherMapType, point, zl) {
+function openOtherMap(master, otherMapType, point, zl) {
   var url = "";
 
   if (otherMapType == "Kansalaisen karttapaikka") {
-    var kkjOffset = mapConfig.areas.getKkjOffsetOrStart(point, "offset");
+    var kkjOffset = master.areas.getKkjOffsetOrStart(point, "offset");
     url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
 
     if (kkjOffset != null) {
@@ -132,7 +133,7 @@ function openOtherMap(mapConfig, otherMapType, point, zl) {
         "&srsName=EPSG%3A4258&scale=8000";
     }
   } else if (otherMapType == "kartta.hel.fi") {
-    var kkjStart = mapConfig.areas.getKkjOffsetOrStart(point, "start");
+    var kkjStart = master.areas.getKkjOffsetOrStart(point, "start");
     if (kkjStart != null) {
       url = "http://kartta.hel.fi/opas/main/?n=" +
         kkjStart.y + "500&e=" + kkjStart.x + "500";
@@ -156,13 +157,13 @@ function openOtherMap(mapConfig, otherMapType, point, zl) {
   window.open(url);
 }
 
-function zoomToPoint(lat, lng) {
+function zoomToPoint(master, lat, lng) {
   var latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
-  setCenter(gMap, latLng, gMapConfig.zoomToPointZoomLevel);
+  setCenter(master.gm, latLng, master.zoomToPointZoomLevel);
 }
 
-function addHomeButton(mapConfig, map) {
+function addHomeButton(master) {
   var homeButton = document.createElement("div");
   homeButton.id = "homeButton";
   homeButton.className = "homeButton";
@@ -171,11 +172,11 @@ function addHomeButton(mapConfig, map) {
   homeButton.title = "Return to initial location";
 
   homeButton.onclick = function() {
-    setCenter(map, mapConfig.initialLatLng, mapConfig.initialZL);
+    setCenter(master.gm, master.initialLatLng, master.initialZL);
   };
 }
 
-function initStreetView(mapConfig, map) {
+function initStreetView(master) {
   var div = document.getElementById("street_view");
   var panoramaOptions = {
     visible: false,
@@ -187,76 +188,72 @@ function initStreetView(mapConfig, map) {
   google.maps.event.addListener(panorama, "visible_changed", function() {
     if (panorama.getVisible()) {
       if (div.clientHeight == 0) {
-        showStreetView(map);
+        showStreetView(master.gm);
       }
     }
   });
 
   google.maps.event.addListener(panorama, "closeclick", function() {
-    hideStreetView(map);
+    hideStreetView(master.gm);
   });
 
-  map.setStreetView(panorama);
+  master.gm.setStreetView(panorama);
 }
 
-function showStreetView(map) {
+function showStreetView(gm) {
   document.getElementById("street_view").style.height =
     (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
-  google.maps.event.trigger(map.getStreetView(), "resize");
-  resizeMapCanvas(map);
-  map.setOptions({panControl: false, zoomControlOptions:
-                  {style: google.maps.ZoomControlStyle.SMALL}});
-  setCenter(map, map.getStreetView().getPosition(), map.getZoom());
+  google.maps.event.trigger(gm.getStreetView(), "resize");
+  resizeMapCanvas(gm);
+  gm.setOptions({panControl: false, zoomControlOptions:
+                {style: google.maps.ZoomControlStyle.SMALL}});
+  setCenter(gm, gm.getStreetView().getPosition(), gm.getZoom());
 }
 
-function hideStreetView(map) {
+function hideStreetView(gm) {
   document.getElementById("street_view").style.height = "0px";
-  google.maps.event.trigger(map.getStreetView(), "resize");
-  resizeMapCanvas(map);
-  map.setOptions({panControl: true, zoomControlOptions:
-                  {style: google.maps.ZoomControlStyle.DEFAULT}});
+  google.maps.event.trigger(gm.getStreetView(), "resize");
+  resizeMapCanvas(gm);
+  gm.setOptions({panControl: true, zoomControlOptions:
+                {style: google.maps.ZoomControlStyle.DEFAULT}});
 }
 
-function updateStreetView(mapConfig, map, position) {
+function updateStreetView(master, position) {
   if (document.getElementById("street_view").clientHeight != 0) {
     var svs = new google.maps.StreetViewService();
     svs.getPanoramaByLocation(position, 50, function(data, status) {
       if (status == google.maps.StreetViewStatus.OK) {
-        var heading = mapConfig.tripGraph.getLastDirection();
-        map.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
-        map.getStreetView().setPosition(position);
+        var heading = master.tripGraph.getLastDirection();
+        master.gm.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
+        master.gm.getStreetView().setPosition(position);
       }
     });
   }
 }
 
-function _resizeMap() {
-  if (window.onresize != _resizeMap) {
-    window.onresize = _resizeMap;
-  }
-
-  if (gMapConfig.tripGraph.isVisible()) {
-    gMapConfig.tripGraph.resize();
+function resizeMap(master) {
+  if (master.tripGraph.isVisible()) {
+    master.tripGraph.resize();
   } else {
-    resizeDivs(gMap);
+    resizeDivs(master.gm);
   }
 
-  gMapConfig.trips.showTripsControl(gMapConfig, gMap);
+  master.trips.showTripsControl();
 }
 
-function resizeDivs(map) {
+function resizeDivs(gm) {
   var oldStreetViewHeight = document.getElementById("street_view").clientHeight;
 
   document.getElementById("street_view").style.height = "0px";
 
-  resizeMapCanvas(map);
+  resizeMapCanvas(gm);
 
   if (oldStreetViewHeight != 0) {
-    showStreetView(map);
+    showStreetView(gm);
   }
 }
 
-function resizeMapCanvas(map) {
+function resizeMapCanvas(gm) {
   document.getElementById("map_canvas").style.height =
     document.documentElement.clientHeight -
     document.getElementById("street_view").clientHeight -
@@ -265,5 +262,5 @@ function resizeMapCanvas(map) {
     document.getElementById("status_bar").clientHeight -
     document.getElementById("statistics").clientHeight + "px";
 
-  google.maps.event.trigger(map, "resize");
+  google.maps.event.trigger(gm, "resize");
 }
