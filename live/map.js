@@ -1,34 +1,5 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
 
-function load() {
-  var _master = {};
-  var mOptions = {
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    mapTypeControlOptions:
-      {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
-    zoomControlOptions:
-      {style: google.maps.ZoomControlStyle.DEFAULT},
-    panControl: true,
-    zoomControl: true,
-    scaleControl: true,
-    streetViewControl: true
-  };
-
-  _master.gm =
-    new google.maps.Map(document.getElementById("map_canvas"), mOptions);
-  _master.map = new Map(_master);
-  _master.map.init();
-  _master.utils = new Utils();
-  _master.areas = new Areas(_master);
-  _master.areas.init();
-
-  _master.trips = new Trips(_master);
-  _master.trips.init();
-  _master.tripGraph = new TripGraph(_master);
-
-  initMenu(_master);
-}
-
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
   var config = getConfig();
@@ -65,7 +36,7 @@ function Map(master) {
                            "%), total=" + total;
 
     document.getElementById("statistics").innerHTML =
-      statistics + ", " + master.initialStatistics;
+      statistics + ", " + config.initialStatistics;
   }
 
   function addMouseListeners() {
