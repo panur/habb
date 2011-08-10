@@ -69,8 +69,8 @@ function TripGraph(master) {
     }
 
     tripData.graphData = [];
-    resizeArray(originalGpsData, config.tripData.graphData,
-                canvas.width - config.origo.x);
+    master.utils.resizeArray(originalGpsData, config.tripData.graphData,
+                             canvas.width - config.origo.x);
   }
 
   function processTripGraphEvent(event) {
@@ -171,7 +171,7 @@ function TripGraph(master) {
     var ratio = config.lastRatio;
     var value = tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
     var unit = config.unit;
-    var time = getTimeString(ratio * tripData.gpsDurationSeconds);
+    var time = master.utils.getTimeString(ratio * tripData.gpsDurationSeconds);
     var yScale = 1 / config.yUnitToPixelRatio;
     var xScale =
       Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
@@ -184,14 +184,6 @@ function TripGraph(master) {
       " s), Lat/Lng=" + latLng;
 
     master.map.setStatusBarHtml(statusHtml);
-  }
-
-  function getTimeString(seconds) {
-    var date = new Date(Math.round(seconds) * 1000);
-    var timeString = date.toUTCString();
-    timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
-
-    return timeString; /* 04:32:54 */
   }
 
   function toggleTripGraphType() {
@@ -400,44 +392,6 @@ function TripGraph(master) {
       ctx.moveTo(origo.x, y);
       ctx.lineTo(canvas.width, y);
       ctx.stroke();
-    }
-  }
-
-  function resizeArray(originalArray, newArray, newSize) {
-    if (newSize < originalArray.length) {
-      downsampleArray(originalArray, newArray, newSize);
-    } else {
-      for (var x = 0; x < newSize; x++) {
-        var newX = Math.floor((x / newSize) * originalArray.length);
-        newArray.push(originalArray[newX]);
-      }
-    }
-  }
-
-  function downsampleArray(originalArray, newArray, newSize) {
-    var xRatio = Math.round(originalArray.length / newSize);
-    var middleX = 0;
-    var lowX = 0;
-    var highX = 0;
-    var newY = 0;
-
-    for (var x = 0; x < newSize; x++) {
-      middleX = Math.round((x / newSize) * originalArray.length);
-      lowX = Math.round(middleX - (xRatio / 2));
-      highX = Math.round(middleX + (xRatio / 2));
-      newY = 0;
-
-      if ((lowX > 0) && (highX < originalArray.length)) {
-        for (var i = 0; i < xRatio; i++) {
-          newY += originalArray[lowX + i];
-        }
-        newY = newY / xRatio;
-      } else {
-        newY = originalArray[middleX];
-      }
-
-      newY = Math.round(newY);
-      newArray.push(newY);
     }
   }
 

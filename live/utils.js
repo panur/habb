@@ -62,6 +62,52 @@ function Utils() {
     return -1;
   }
 
+  this.resizeArray = function (originalArray, newArray, newSize) {
+    if (newSize < originalArray.length) {
+      downsampleArray(originalArray, newArray, newSize);
+    } else {
+      for (var x = 0; x < newSize; x++) {
+        var newX = Math.floor((x / newSize) * originalArray.length);
+        newArray.push(originalArray[newX]);
+      }
+    }
+  }
+
+  function downsampleArray(originalArray, newArray, newSize) {
+    var xRatio = Math.round(originalArray.length / newSize);
+    var middleX = 0;
+    var lowX = 0;
+    var highX = 0;
+    var newY = 0;
+
+    for (var x = 0; x < newSize; x++) {
+      middleX = Math.round((x / newSize) * originalArray.length);
+      lowX = Math.round(middleX - (xRatio / 2));
+      highX = Math.round(middleX + (xRatio / 2));
+      newY = 0;
+
+      if ((lowX > 0) && (highX < originalArray.length)) {
+        for (var i = 0; i < xRatio; i++) {
+          newY += originalArray[lowX + i];
+        }
+        newY = newY / xRatio;
+      } else {
+        newY = originalArray[middleX];
+      }
+
+      newY = Math.round(newY);
+      newArray.push(newY);
+    }
+  }
+
+  this.getTimeString = function(seconds) {
+    var date = new Date(Math.round(seconds) * 1000);
+    var timeString = date.toUTCString();
+    timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
+
+    return timeString; /* 04:32:54 */
+  }
+
   this.createControlElement = function (title, text, handler) {
     var a = document.createElement("a");
 

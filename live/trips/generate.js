@@ -1,4 +1,6 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-06-05 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+
+var utils = new Utils();
 
 function generateAll() {
   generate(2009);
@@ -194,7 +196,7 @@ function getPointTime(times, index) {
 
 function getDuration(times) {
   var durationInSeconds = getDurationSeconds(times);
-  var duration = getTimeString(durationInSeconds);
+  var duration = utils.getTimeString(durationInSeconds);
 
   return duration;
 }
@@ -268,7 +270,7 @@ function getEncodedGpsData(measurements, scale) {
       gpsData[i] = Math.round(tmpArray[i]);
     }
   } else {
-    resizeArray(tmpArray, gpsData, maxLength);
+    utils.resizeArray(tmpArray, gpsData, maxLength);
   }
 
   var encodedGpsData = arrayToStringEncode(gpsData, scale);
