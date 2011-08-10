@@ -18,17 +18,16 @@ function main() {
   master.gm = new google.maps.Map(gmElement, gmOptions);
 
   master.utils = new Utils();
+  master.tripGraph = new TripGraph(master);
+
+  master.trips = new Trips(master);
+  master.trips.init();
 
   master.map = new Map(master);
   master.map.init();
 
   master.areas = new Areas(master);
   master.areas.init();
-
-  master.trips = new Trips(master);
-  master.trips.init();
-
-  master.tripGraph = new TripGraph(master);
 
   var menu = new Menu(master);
   menu.init();
