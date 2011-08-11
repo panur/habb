@@ -342,12 +342,7 @@ function Trips(master) {
   }
 
   function getTripPolyline(encodedPolyline) {
-    var points = decodeLine(encodedPolyline.points);
-    var path = [];
-
-    for (var i = 0; i < points.length; i++) {
-      path.push(new google.maps.LatLng(points[i][0], points[i][1]));
-    }
+    var path = google.maps.geometry.encoding.decodePath(encodedPolyline.points);
 
     return new google.maps.Polyline({
       path: path,
@@ -357,43 +352,6 @@ function Trips(master) {
       clickable: true,
       zIndex: 10
     });
-  }
-
-  // http://code.google.com/apis/maps/documentation/utilities/include/polyline.js
-  // Decode an encoded polyline into a list of lat/lng tuples.
-  function decodeLine(encoded) {
-    var len = encoded.length;
-    var index = 0;
-    var array = [];
-    var lat = 0;
-    var lng = 0;
-
-    while (index < len) {
-      var b;
-      var shift = 0;
-      var result = 0;
-      do {
-        b = encoded.charCodeAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-      var dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-      lat += dlat;
-
-      shift = 0;
-      result = 0;
-      do {
-        b = encoded.charCodeAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-      var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-      lng += dlng;
-
-      array.push([lat * 1e-5, lng * 1e-5]);
-    }
-
-    return array;
   }
 
   function toggleTripVisibility(tripIndex) {
@@ -479,25 +437,10 @@ function Trips(master) {
     var tolerance = 391817 * Math.pow(0.445208, master.gm.getZoom());
 
     return (distance < tolerance);
-  }
 
-  /* based on http://www.movable-type.co.uk/scripts/latlong.html */
-  function getDistance(p1, p2) {
-    var R = 6378137; /* earth's radius in meters */
-    var lat1 = getRadians(p1.lat());
-    var lon1 = getRadians(p1.lng());
-    var lat2 = getRadians(p2.lat());
-    var lon2 = getRadians(p2.lng());
-    var dLat = lat2 - lat1;
-    var dLon = lon2 - lon1;
-
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1) * Math.cos(lat2) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-
-    return d; /* distance between p1 and p2 in meters */
+    function getDistance(from, to) {
+      return google.maps.geometry.spherical.computeDistanceBetween(from, to);
+    }
   }
 
   this.getLineDirection120 = function(direction360) {
@@ -511,35 +454,15 @@ function Trips(master) {
   }
 
   this.getLineDirection360 = function(from, to) {
-    var direction = getBearing(from, to);
+    var direction = google.maps.geometry.spherical.computeHeading(from, to);
+
+    if (direction < 0)  {
+      direction += 360;
+    }
 
     direction = Math.round(direction / 3) * 3;
 
     return direction;
-  }
-
-  function getBearing(from, to) {
-    var lat1 = getRadians(from.lat());
-    var lng1 = getRadians(from.lng());
-    var lat2 = getRadians(to.lat());
-    var lng2 = getRadians(to.lng());
-    var y = Math.sin(lng1 - lng2) * Math.cos(lat2);
-    var x = (Math.cos(lat1) * Math.sin(lat2)) -
-      (Math.sin(lat1) * Math.cos(lat2) * Math.cos(lng1 - lng2));
-    var angle = - Math.atan2(y ,x);
-
-    if (angle < 0.0) {
-      angle += Math.PI * 2.0;
-    }
-
-    angle = angle * (180.0 / Math.PI);
-    angle = angle.toFixed(1);
-
-    return angle;
-  }
-
-  function getRadians(latOrLng) {
-    return latOrLng * Math.PI / 180;
   }
 
   this.getDirectionMarker = function(point, direction) {
