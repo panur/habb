@@ -103,7 +103,7 @@ function TripGraph(master) {
         processTripGraphEvent(event);
       }
       master.map.zoomToPoint(position);
-      master.map.updateStreetView(position);
+      master.map.updateStreetView(position, config.lastDirection);
     };
 
     tripGraph.ondblclick = function (event) {
@@ -126,7 +126,7 @@ function TripGraph(master) {
     marker.setMap(master.gm);
 
     if (config.player.state == "play") {
-      master.map.updateStreetView(marker.getPosition());
+      master.map.updateStreetView(marker.getPosition(), config.lastDirection);
 
       if (master.gm.getBounds().contains(marker.getPosition()) == false) {
         master.gm.panTo(marker.getPosition());
@@ -435,10 +435,6 @@ function TripGraph(master) {
 
   this.isCurrentData = function (tripData) {
     return (config.tripData == tripData);
-  }
-
-  this.getLastDirection = function () {
-    return config.lastDirection;
   }
 
   this.resize = function () {

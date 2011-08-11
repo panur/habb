@@ -488,7 +488,7 @@ function Trips(master) {
 
     google.maps.event.addListener(marker, "click", function (event) {
       master.map.zoomToPoint(marker.getPosition());
-      master.map.updateStreetView(master, marker.getPosition());
+      master.map.updateStreetView(marker.getPosition(), 0); // tbd: add heading
     });
 
     return marker;
