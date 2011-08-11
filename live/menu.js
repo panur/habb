@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -12,16 +12,16 @@ function Menu(master) {
     return c;
   }
 
-  this.init = function() {
+  this.init = function () {
     google.maps.event.clearListeners(master.gm, "click");
 
-    google.maps.event.addListener(master.gm, "click", function(mouseEvent) {
+    google.maps.event.addListener(master.gm, "click", function (mouseEvent) {
       if (document.getElementById("menu")) {
         hideMenu();
       } else {
         var menuItems = ["Open...", "Areas...", "Zoom"];
-        showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel), menuItems,
-                 "menu");
+        showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel),
+                 menuItems, "menu");
       }
 
       function getMenuLocation(pixel) {
@@ -93,7 +93,7 @@ function Menu(master) {
       var cell = row.insertCell(-1);
       cell.appendChild(document.createTextNode(menuItem));
       row.className = "menuItem";
-      row.onmouseover = function() {processMouseOver(row);};
+      row.onmouseover = function () {processMouseOver(row);};
       row.onclick = function () {processMenuClick(row);};
 
       function processMouseOver(rowElement) {
@@ -173,7 +173,7 @@ function Menu(master) {
             if (rowElement.textContent == "Toggle opacity") {
               master.areas.toggleOpacity();
             } else if (rowElement.textContent == "Toggle extensions") {
-              master.areas.toggleShowExtensions();
+              master.areas.toggleExtensionsVisibility();
             } else if (rowElement.textContent == "Set end of 2008") {
               master.areas.changeVisitedData(2008);
             } else if (rowElement.textContent == "Set end of 2009") {

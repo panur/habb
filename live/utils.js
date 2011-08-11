@@ -1,22 +1,22 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function Utils() {
   var that = this; /* http://javascript.crockford.com/private.html */
 
-  this.downloadUrl = function(url, callback) {
+  this.downloadUrl = function (url, callback) {
     var request = createXmlHttpRequest();
 
     if (request == null) {
       return false;
     }
 
-    request.onreadystatechange = function() {
+    request.onreadystatechange = function () {
       if (request.readyState == 4) {
         try {
           var status = request.status;
           if ((status == 0) || (status == 200)) {
             callback(request.responseText, status);
-            request.onreadystatechange = function() {};
+            request.onreadystatechange = function () {};
           }
         } catch (e) {
           alert(e);
@@ -44,7 +44,7 @@ function Utils() {
     return null;
   }
 
-  this.parseXml = function(string) {
+  this.parseXml = function (string) {
     if (window.ActiveXObject) {
       var doc = new ActiveXObject('Microsoft.XMLDOM');
       doc.loadXML(string);
@@ -54,7 +54,7 @@ function Utils() {
     }
   }
 
-  this.getIndexOf = function(array, value) {
+  this.getIndexOf = function (array, value) {
     for (var i = 0; i < array.length; i++) {
       if (array[i] == value) {
         return i;
@@ -102,7 +102,7 @@ function Utils() {
     }
   }
 
-  this.getTimeString = function(seconds) {
+  this.getTimeString = function (seconds) {
     var date = new Date(Math.round(seconds) * 1000);
     var timeString = date.toUTCString();
     timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */

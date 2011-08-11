@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function TripGraph(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -25,7 +25,7 @@ function TripGraph(master) {
     return c;
   }
 
-  this.addTripGraph = function(tripData) {
+  this.show = function (tripData) {
     var tripGraph = document.getElementById("trip_graph");
     tripGraph.innerHTML = '<canvas id="tripGraphCanvas" width="' +
       tripGraph.clientWidth + '" height="' + config.height + '"></canvas>';
@@ -34,11 +34,11 @@ function TripGraph(master) {
 
     if (canvas && canvas.getContext) {
       setTripGraphConfig(tripData, canvas);
-      addTripGraphMouseListeners(tripGraph);
+      addMouseListeners(tripGraph);
       setTripGraphControl();
       drawTripGraph();
       master.map.resizeDivs();
-      addHideTripGraph();
+      showHideElement();
     }
   }
 
@@ -51,7 +51,7 @@ function TripGraph(master) {
     if (typeof(config.tickInterval) == "undefined") {
       var intervalMs = config.tickIntervalMs;
       config.tickInterval =
-        window.setInterval(function() {processTripGraphTick();}, intervalMs);
+        window.setInterval(function () {processTripGraphTick();}, intervalMs);
     }
 
     if (config.types[0] == "Speed") {
@@ -84,20 +84,20 @@ function TripGraph(master) {
     }
   }
 
-  function addTripGraphMouseListeners(tripGraph) {
-    tripGraph.onmousemove = function(event) {
+  function addMouseListeners(tripGraph) {
+    tripGraph.onmousemove = function (event) {
       if (config.player.state == "stop") {
         processTripGraphEvent(event);
       }
     };
 
-    tripGraph.onmouseout = function() {
+    tripGraph.onmouseout = function () {
       if (config.player.state == "stop") {
         stopTrip();
       }
     };
 
-    tripGraph.onclick = function(event) {
+    tripGraph.onclick = function (event) {
       var position = config.tripCursor[0].getPosition();
       if (config.player.state != "stop") {
         processTripGraphEvent(event);
@@ -106,7 +106,7 @@ function TripGraph(master) {
       master.map.updateStreetView(position);
     };
 
-    tripGraph.ondblclick = function(event) {
+    tripGraph.ondblclick = function (event) {
       master.map.resetLocationAndZoom();
     };
   }
@@ -169,7 +169,8 @@ function TripGraph(master) {
     var type = config.types[0];
     var tripData = config.tripData;
     var ratio = config.lastRatio;
-    var value = tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
+    var value =
+      tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
     var unit = config.unit;
     var time = master.utils.getTimeString(ratio * tripData.gpsDurationSeconds);
     var yScale = 1 / config.yUnitToPixelRatio;
@@ -188,17 +189,17 @@ function TripGraph(master) {
 
   function toggleTripGraphType() {
     config.types.reverse();
-    that.addTripGraph(config.tripData);
+    that.show(config.tripData);
   }
 
   function setTripGraphControl() {
-    var play = createControl("Start trip playing", "Play", getHandler("play"));
-    var pause = createControl("Pause trip playing", "Pause", getHandler("pause"));
-    var stop = createControl("Stop trip playing", "Stop", getHandler("stop"));
-    var slower1x = createControl("Slower (-1x)", "<", getHandler("slower1x"));
-    var faster1x = createControl("Faster (-1x)", ">", getHandler("faster1x"));
-    var slower10x = createControl("Slower (-10x)", "<", getHandler("slower10x"));
-    var faster10x = createControl("Faster (+10x)", ">", getHandler("faster10x"));
+    var play = getControl("Start trip playing", "Play", getHandler("play"));
+    var pause = getControl("Pause trip playing", "Pause", getHandler("pause"));
+    var stop = getControl("Stop trip playing", "Stop", getHandler("stop"));
+    var slower1x = getControl("Slower (-1x)", "<", getHandler("slower1x"));
+    var faster1x = getControl("Faster (-1x)", ">", getHandler("faster1x"));
+    var slower10x = getControl("Slower (-10x)", "<", getHandler("slower10x"));
+    var faster10x = getControl("Faster (+10x)", ">", getHandler("faster10x"));
 
     var speed = " " + config.player.speed + "x ";
     var speedElements =
@@ -216,7 +217,7 @@ function TripGraph(master) {
     }
 
     allElements.push(createTN(" / "));
-    allElements.push(createControl("Toggle type of trip graph",
+    allElements.push(getControl("Toggle type of trip graph",
                        "Show " + config.types[1],
                        function () {toggleTripGraphType()}));
 
@@ -227,14 +228,14 @@ function TripGraph(master) {
     }
 
     function getHandler(controlType) {
-      return function() {controlTripPlayer(controlType)};
+      return function () {controlTripPlayer(controlType)};
     }
 
     function createTN(text) {
       return document.createTextNode(text);
     }
 
-    function createControl(title, text, handler) {
+    function getControl(title, text, handler) {
       return master.utils.createControlElement(title, text, handler);
     }
   }
@@ -384,7 +385,7 @@ function TripGraph(master) {
     /* scale */
     var steps =
       origo.y / (config.yUnitToPixelRatio * config.yUnitsPerScaleLine);
-    var yStep = origo.y / steps
+    var yStep = origo.y / steps;
     for (var i = 1; i <= Math.floor(steps); i++) {
       var y = origo.y - (yStep * i);
       ctx.beginPath();
@@ -395,7 +396,7 @@ function TripGraph(master) {
     }
   }
 
-  function addHideTripGraph() {
+  function showHideElement() {
     var tripGraphHide = document.getElementById("tripGraphHide");
 
     if (tripGraphHide == null) {
@@ -403,7 +404,7 @@ function TripGraph(master) {
       tripGraphHide.id = "tripGraphHide";
       tripGraphHide.className = "tripGraphHide";
       tripGraphHide.title = "Hide trip graph";
-      tripGraphHide.onclick = function () {that.hideTripGraph()};
+      tripGraphHide.onclick = function () {that.hide()};
       document.getElementById("dynamic_divs").appendChild(tripGraphHide);
     }
 
@@ -411,7 +412,7 @@ function TripGraph(master) {
     tripGraphHide.appendChild(master.utils.createHideElement("hideTripGraph"));
   }
 
-  this.hideTripGraph = function() {
+  this.hide = function () {
     if (config.visibility == "visible") {
       config.visibility = "hidden";
       stopTrip();
@@ -424,23 +425,23 @@ function TripGraph(master) {
     }
   }
 
-  this.isVisible = function() {
+  this.isVisible = function () {
     return (config.visibility == "visible");
   }
 
-  this.isPlayerStopped = function() {
+  this.isPlayerStopped = function () {
     return (config.player.state == "stop");
   }
 
-  this.isCurrentData = function(tripData) {
+  this.isCurrentData = function (tripData) {
     return (config.tripData == tripData);
   }
 
-  this.getLastDirection = function() {
+  this.getLastDirection = function () {
     return config.lastDirection;
   }
 
-  this.resize = function() {
-    that.addTripGraph(config.tripData);
+  this.resize = function () {
+    that.show(config.tripData);
   }
 }

@@ -1,13 +1,13 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
   var config = getConfig(true);
 
-  function getConfig(showExtensions) {
+  function getConfig(isExtensionsShown) {
     var c = {};
 
-    c.showExtensions = showExtensions;
+    c.isExtensionsShown = isExtensionsShown;
 
     c.filenames = {points:"generated_points.xml",
       visitedDataLatest:"visited_datas/latest.xml",
@@ -52,7 +52,7 @@ function Areas(master) {
                0, 37, 38, 39, 40, 41, 42, 43, 44,
                0,  0,  0, 45, 46,  0, 47, 48];
 
-    if (c.showExtensions) {
+    if (c.isExtensionsShown) {
       c.filenames.points = "generated_points_ext.xml";
       c.lngPages = 12;
       c.kkjStart = {lat:65, lng:22};
@@ -77,12 +77,12 @@ function Areas(master) {
     return c;
   }
 
-  this.init = function() {
-    google.maps.event.addListener(master.gm, "pointsAreInConfig", function() {
+  this.init = function () {
+    google.maps.event.addListener(master.gm, "pointsAreInConfig", function () {
       setKm2sToConfig();
     });
 
-    google.maps.event.addListener(master.gm, "km2sAreInConfig", function() {
+    google.maps.event.addListener(master.gm, "km2sAreInConfig", function () {
       updateMapGrid();
       config.visitedStatusAreas = getVisitedStatusAreas();
       addOverlaysToMap();
@@ -103,7 +103,7 @@ function Areas(master) {
     }
 
     master.utils.downloadUrl(config.filenames.points,
-                             function(data, responseCode) {
+                             function (data, responseCode) {
       var xml = master.utils.parseXml(data);
       var p = xml.documentElement.getElementsByTagName("point");
       config.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
@@ -144,14 +144,14 @@ function Areas(master) {
 
   function setVisitedDataToKm2s() {
     master.utils.downloadUrl(config.filenames.visitedData,
-                             function(data, responseCode) {
+                             function (data, responseCode) {
       var xml = master.utils.parseXml(data);
       var allInPage = [];
       var pages = xml.documentElement.getElementsByTagName("page");
 
       for (var i = 0; i < pages.length; i++) {
         if (pages[i].getAttribute("visited_all") == "true") {
-          if ((config.showExtensions) ||
+          if ((config.isExtensionsShown) ||
               (pages[i].getAttribute("number") < "A")) {
             allInPage.push(pages[i].getAttribute("number"));
           }
@@ -176,7 +176,8 @@ function Areas(master) {
         var y = parseInt(km2s[i].getAttribute("kkj_lat")) - config.kkjStart.lat;
         var x = parseInt(km2s[i].getAttribute("kkj_lng")) - config.kkjStart.lng;
 
-        if ((config.showExtensions) || (km2s[i].getAttribute("page") < "A")) {
+        if ((config.isExtensionsShown) ||
+            (km2s[i].getAttribute("page") < "A")) {
           config.km2s[y][x].visited = km2s[i].getAttribute("visited");
         }
       }
@@ -375,7 +376,7 @@ function Areas(master) {
         if ((polygon[i].lng() + ((lat - polygon[i].lat()) /
             (polygon[j].lat() - polygon[i].lat()) *
             (polygon[j].lng() - polygon[i].lng()))) < lng) {
-          oddNodes = !oddNodes
+          oddNodes = !oddNodes;
         }
       }
     }
@@ -527,7 +528,7 @@ function Areas(master) {
     return null;
   }
 
-  this.getKkjOffsetOrStart = function(point, offsetOrStart) {
+  this.getKkjOffsetOrStart = function (point, offsetOrStart) {
     var km2XY = getKm2XYFromPoint(point);
     var kkj = null;
 
@@ -546,7 +547,7 @@ function Areas(master) {
     return kkj;
   }
 
-  this.getAreasInfo = function(point) {
+  this.getInfo = function (point) {
     var info = {page:"-", km2XY:null, kkjText:"-/-", visited:"-"};
     var km2XY = getKm2XYFromPoint(point);
 
@@ -576,7 +577,7 @@ function Areas(master) {
     return info;
   }
 
-  this.getVisitedStatistics = function() {
+  this.getVisitedStatistics = function () {
     var s = {yes:0, no:0, np:0};
 
     for (var y = 0; y < config.km2s.length; y++) {
@@ -590,7 +591,7 @@ function Areas(master) {
     return s;
   }
 
-  this.updateCursor = function(info) {
+  this.updateCursor = function (info) {
     if (config.cursor)  {
       if (config.cursorParams.kkj == info.kkjText) {
         return;
@@ -622,7 +623,7 @@ function Areas(master) {
     }
   }
 
-  this.toggleOpacity = function() {
+  this.toggleOpacity = function () {
     removeOverlaysFromMap();
 
     if (config.area.opacity == config.area.opacityHigh) {
@@ -634,27 +635,27 @@ function Areas(master) {
     addOverlaysToMap();
   }
 
-  this.setVisitedAreaOpacityToLow = function() {
+  this.setVisitedAreaOpacityToLow = function () {
     if (config.area.opacity == config.area.opacityHigh) {
       that.toggleOpacity();
     }
   }
 
-  this.setVisitedAreaOpacityToHigh = function() {
+  this.setVisitedAreaOpacityToHigh = function () {
     if (config.area.opacity == config.area.opacityLow) {
       that.toggleOpacity();
     }
   }
 
-  this.toggleShowExtensions = function() {
+  this.toggleExtensionsVisibility = function () {
     removeOverlaysFromMap();
 
-    config = getConfig(!(config.showExtensions));
+    config = getConfig(!(config.isExtensionsShown));
 
     setPointsToConfig();
   }
 
-  this.changeVisitedData = function(newTarget) {
+  this.changeVisitedData = function (newTarget) {
     if (newTarget == 2008) {
       that.setVisitedData(config.filenames.visitedData2008);
     } else if (newTarget == 2009) {
@@ -664,7 +665,7 @@ function Areas(master) {
     }
   }
 
-  this.setVisitedData = function(filename) {
+  this.setVisitedData = function (filename) {
     removeOverlaysFromMap();
 
     config.filenames.visitedData = filename;

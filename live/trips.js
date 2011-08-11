@@ -32,12 +32,12 @@ function Trips(master) {
     tripsTableHide.title = "Hide trips table";
     tripsTableHide.onclick = function () {
       config.isTableShown = false;
-      that.showTripsControl();
+      that.showControl();
       setTripsTableHideVisibility("hidden");
     };
     document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
-    that.showTripsControl();
+    that.showControl();
   }
 
   function setVisibilityOfAllTrips(visibility) {
@@ -51,7 +51,7 @@ function Trips(master) {
       }
     }
 
-    that.showTripsControl();
+    that.showControl();
   }
 
   function toggleTripMarkersVisibility() {
@@ -65,10 +65,10 @@ function Trips(master) {
       }
     }
 
-    that.showTripsControl();
+    that.showControl();
   }
 
-  this.showTripsControl = function() {
+  this.showControl = function () {
     var tripsControl = document.getElementById("tripsControl");
     tripsControl.innerHTML = "";
 
@@ -88,9 +88,9 @@ function Trips(master) {
       var e = document.createElement("div");
       e.className = "showTripsTable";
       e.title = "Show trips";
-      e.onclick = function() {
+      e.onclick = function () {
         config.isTableShown = true;
-        that.showTripsControl();
+        that.showControl();
       };
       e.textContent = "Trips";
       tripsControl.appendChild(e);
@@ -120,7 +120,7 @@ function Trips(master) {
   function setTripsData() {
     var file = config.filenames.tripsDatas[config.fileIndex++];
 
-    master.utils.downloadUrl(file, function(data, responseCode) {
+    master.utils.downloadUrl(file, function (data, responseCode) {
       var xml = master.utils.parseXml(data);
       var rawTripsData = xml.documentElement.getElementsByTagName("data");
       var tripsDataString = "";
@@ -146,7 +146,7 @@ function Trips(master) {
 
       config.data = config.data.concat(tripsData);
 
-      that.showTripsControl();
+      that.showControl();
     });
   }
 
@@ -190,7 +190,7 @@ function Trips(master) {
       allElements.push(createTN("Show All"));
     } else {
       allElements.push(createControl("Show all trips", "Show All",
-                         function() {setVisibilityOfAllTrips("visible")}));
+                         function () {setVisibilityOfAllTrips("visible")}));
     }
 
     allElements.push(createTN(" | "));
@@ -199,7 +199,7 @@ function Trips(master) {
       allElements.push(createTN("Hide All"));
     } else {
       allElements.push(createControl("Hide all trips", "Hide All",
-                         function() {setVisibilityOfAllTrips("hidden")}));
+                         function () {setVisibilityOfAllTrips("hidden")}));
     }
 
     if (config.numberOfVisibleTrips > 0) {
@@ -207,10 +207,10 @@ function Trips(master) {
 
       if (config.areMarkersVisible) {
         allElements.push(createControl("Hide all trips markers", "Hide Markers",
-                           function() {toggleTripMarkersVisibility()}));
+                           function () {toggleTripMarkersVisibility()}));
       } else {
         allElements.push(createControl("Show all trips markers", "Show Markers",
-                           function() {toggleTripMarkersVisibility()}));
+                           function () {toggleTripMarkersVisibility()}));
       }
     }
 
@@ -248,12 +248,13 @@ function Trips(master) {
     row = tableElement.insertRow(-1);
 
     addCellsToRow(["Duration", "Distance", "Max speed", "Max altitude",
-                   "Duration", "Distance", "Max speed", "Avg speed"], row, "th");
+                   "Duration", "Distance", "Max speed", "Avg speed"],
+                   row, "th");
 
     row = tableElement.insertRow(-1);
 
-    addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss", "km",
-                   "km/h", "km/h"], row, "th");
+    addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss",
+                   "km", "km/h", "km/h"], row, "th");
 
     for (var i = 0; i < tripsData.length; i++) {
       row = tableElement.insertRow(-1);
@@ -305,9 +306,9 @@ function Trips(master) {
   function getVisibilityCommandElement(tripsData, tripIndex) {
     var title = "Toggle trip visibility";
     var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
-    var handler = function() {
+    var handler = function () {
       toggleTripVisibility(tripIndex);
-      that.showTripsControl();
+      that.showControl();
     };
     var e = master.utils.createControlElement(title, text, handler);
     e.style.color = ((text == "Hide") ? tripsData.encodedPolyline.color : "");
@@ -325,14 +326,14 @@ function Trips(master) {
     if (config.visitedDataIndex == tripIndex) {
       var text = "Unset";
       var title = "Set visited data to latest";
-      var handler = function() {
+      var handler = function () {
         config.visitedDataIndex = -1;
         master.areas.changeVisitedData("latest");
       };
     } else {
       var text = "Set";
       var title = "Set visited data as before this trip";
-      var handler = function() {
+      var handler = function () {
         config.visitedDataIndex = tripIndex;
         master.areas.setVisitedData(config.data[tripIndex].visitedDataFilename);
       };
@@ -361,13 +362,13 @@ function Trips(master) {
       tripData.polyline = getTripPolyline(tripData.encodedPolyline);
 
       google.maps.event.addListener(tripData.polyline, "click",
-                                    function(mouseEvent) {
+                                    function (mouseEvent) {
         if (master.tripGraph.isCurrentData(tripData)) {
           addDirectionMarker(mouseEvent.latLng, tripData.polyline);
         }
-        master.tripGraph.addTripGraph(tripData);
+        master.tripGraph.show(tripData);
         config.selectedTripIndex = tripIndex;
-        that.showTripsControl();
+        that.showControl();
       });
 
       tripData.gpsMaxSpeed.marker = getMarker(
@@ -385,7 +386,7 @@ function Trips(master) {
       tripData.polyline.setMap(master.gm);
       tripData.gpsMaxSpeed.marker.setMap(master.gm);
       tripData.gpsMaxAltitude.marker.setMap(master.gm);
-      master.tripGraph.addTripGraph(tripData);
+      master.tripGraph.show(tripData);
       config.selectedTripIndex = tripIndex;
     } else {
       tripData.visibility = "hidden";
@@ -397,7 +398,7 @@ function Trips(master) {
       tripData.gpsMaxSpeed.marker.setMap(null);
       tripData.gpsMaxAltitude.marker.setMap(null);
       removeDirectionMarkers();
-      master.tripGraph.hideTripGraph();
+      master.tripGraph.hide();
       config.selectedTripIndex = -1;
     }
   }
@@ -415,7 +416,7 @@ function Trips(master) {
         var direction =
           that.getLineDirection120(that.getLineDirection360(p1, p2));
         var marker = that.getDirectionMarker(point, direction);
-        google.maps.event.addListener(marker, "click", function(event) {
+        google.maps.event.addListener(marker, "click", function (event) {
           marker.setMap(null);
         });
         marker.setMap(master.gm);
@@ -443,7 +444,7 @@ function Trips(master) {
     }
   }
 
-  this.getLineDirection120 = function(direction360) {
+  this.getLineDirection120 = function (direction360) {
     var direction = direction360;
 
     while (direction >= 120) {
@@ -453,7 +454,7 @@ function Trips(master) {
     return direction;
   }
 
-  this.getLineDirection360 = function(from, to) {
+  this.getLineDirection360 = function (from, to) {
     var direction = google.maps.geometry.spherical.computeHeading(from, to);
 
     if (direction < 0)  {
@@ -465,7 +466,7 @@ function Trips(master) {
     return direction;
   }
 
-  this.getDirectionMarker = function(point, direction) {
+  this.getDirectionMarker = function (point, direction) {
     var image = new google.maps.MarkerImage(
       "http://www.google.com/mapfiles/dir_" + direction + ".png",
       new google.maps.Size(24, 24), /* size */
@@ -485,7 +486,7 @@ function Trips(master) {
       position: point, icon: image, title: title
     });
 
-    google.maps.event.addListener(marker, "click", function(event) {
+    google.maps.event.addListener(marker, "click", function (event) {
       master.map.zoomToPoint(marker.getPosition());
       master.map.updateStreetView(master, marker.getPosition());
     });
@@ -493,7 +494,7 @@ function Trips(master) {
     return marker;
   }
 
-  this.init = function() {
+  this.init = function () {
     addTripsControl();
   }
 }

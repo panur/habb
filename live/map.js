@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -40,7 +40,8 @@ function Map(master) {
   }
 
   function addMouseListeners() {
-    google.maps.event.addListener(master.gm, "mousemove", function(mouseEvent) {
+    google.maps.event.addListener(master.gm, "mousemove",
+                                  function (mouseEvent) {
       if (master.tripGraph.isPlayerStopped()) {
         var info = getInfo(mouseEvent.latLng);
         updateStatusBar(info);
@@ -48,14 +49,14 @@ function Map(master) {
       }
     });
 
-    google.maps.event.addListener(master.gm, "mouseout", function(mouseEvent) {
+    google.maps.event.addListener(master.gm, "mouseout", function (mouseEvent) {
       master.areas.hideCursor();
     });
   }
 
   function getInfo(point) {
     var info = {};
-    var areasInfo = master.areas.getAreasInfo(point);
+    var areasInfo = master.areas.getInfo(point);
 
     info.page = areasInfo.page;
     info.km2XY = areasInfo.km2XY;
@@ -75,11 +76,11 @@ function Map(master) {
     that.setStatusBarHtml(statusHtml);
   }
 
-  this.setStatusBarHtml = function(statusBarHtml) {
+  this.setStatusBarHtml = function (statusBarHtml) {
     document.getElementById("status_bar").innerHTML = statusBarHtml;
   }
 
-  this.openOtherMap = function(otherMapType, point) {
+  this.openOtherMap = function (otherMapType, point) {
     var zl = master.gm.getZoom();
     var url = "";
 
@@ -119,7 +120,7 @@ function Map(master) {
     window.open(url);
   }
 
-  this.zoomToPoint = function(latLng) {
+  this.zoomToPoint = function (latLng) {
     setCenter(latLng, config.zoomToPointZoomLevel);
   }
 
@@ -131,7 +132,7 @@ function Map(master) {
 
     homeButton.title = "Return to initial location";
 
-    homeButton.onclick = function() {
+    homeButton.onclick = function () {
       that.resetLocationAndZoom();
     };
   }
@@ -145,7 +146,7 @@ function Map(master) {
     };
     var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
 
-    google.maps.event.addListener(panorama, "visible_changed", function() {
+    google.maps.event.addListener(panorama, "visible_changed", function () {
       if (panorama.getVisible()) {
         if (div.clientHeight == 0) {
           showStreetView(master.gm);
@@ -153,7 +154,7 @@ function Map(master) {
       }
     });
 
-    google.maps.event.addListener(panorama, "closeclick", function() {
+    google.maps.event.addListener(panorama, "closeclick", function () {
       hideStreetView(master.gm);
     });
 
@@ -181,10 +182,11 @@ function Map(master) {
   this.updateStreetView = function (position) {
     if (document.getElementById("street_view").clientHeight != 0) {
       var svs = new google.maps.StreetViewService();
-      svs.getPanoramaByLocation(position, 50, function(data, status) {
+      svs.getPanoramaByLocation(position, 50, function (data, status) {
         if (status == google.maps.StreetViewStatus.OK) {
           var heading = master.tripGraph.getLastDirection();
-          master.gm.getStreetView().setPov({heading: heading, zoom: 1, pitch: 0});
+          var pov = {heading: heading, zoom: 1, pitch: 0};
+          master.gm.getStreetView().setPov(pov);
           master.gm.getStreetView().setPosition(position);
         }
       });
@@ -198,10 +200,10 @@ function Map(master) {
       that.resizeDivs();
     }
 
-    master.trips.showTripsControl();
+    master.trips.showControl();
   }
 
-  this.resizeDivs = function() {
+  this.resizeDivs = function () {
     var oldStreetViewHeight =
       document.getElementById("street_view").clientHeight;
 
@@ -226,21 +228,21 @@ function Map(master) {
     google.maps.event.trigger(master.gm, "resize");
   }
 
-  this.resetLocationAndZoom = function() {
+  this.resetLocationAndZoom = function () {
     setCenter(config.initialLatLng, config.initialZL);
   }
 
-  this.init = function() {
+  this.init = function () {
     master.gm.setOptions({center: config.initialLatLng,
                           zoom: config.initialZL});
     addMouseListeners();
     addHomeButton();
     initStreetView();
 
-    google.maps.event.addListener(master.gm, "areasInitIsReady", function() {
+    google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
       updateStatusBar(getInfo(config.initialLatLng));
       setStatistics();
-      window.onresize = function() {that.resizeMap()};
+      window.onresize = function () {that.resizeMap()};
       that.resizeMap();
     });
   }
