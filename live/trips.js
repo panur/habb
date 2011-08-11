@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -30,29 +30,17 @@ function Trips(master) {
     var tripsTableHide = document.createElement("div");
     tripsTableHide.id = "tripsTableHide";
     tripsTableHide.title = "Hide trips table";
-    tripsTableHide.onclick = _hideTripsTable;
+    tripsTableHide.onclick = function () {
+      config.isTableShown = false;
+      that.showTripsControl();
+      setTripsTableHideVisibility("hidden");
+    };
     document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
     that.showTripsControl();
   }
 
-  function _showTripsTable() {
-    config.isTableShown = true;
-    that.showTripsControl();
-  }
-
-  function _hideTripsTable() {
-    config.isTableShown = false;
-    that.showTripsControl();
-    setTripsTableHideVisibility("hidden");
-  }
-
-  function _toggleTripVisibility(tripIndex) {
-    toggleTripVisibility(tripIndex);
-    that.showTripsControl();
-  }
-
-  function _setVisibilityOfAllTrips(visibility) {
+  function setVisibilityOfAllTrips(visibility) {
     if (typeof(config.data) == "undefined") {
       return;
     }
@@ -66,7 +54,7 @@ function Trips(master) {
     that.showTripsControl();
   }
 
-  function _toggleTripMarkersVisibility() {
+  function toggleTripMarkersVisibility() {
     config.areMarkersVisible = !(config.areMarkersVisible);
     var isVisible = config.areMarkersVisible;
 
@@ -78,21 +66,6 @@ function Trips(master) {
     }
 
     that.showTripsControl();
-  }
-
-  function _setVisitedData(tripIndex) {
-    var filename = config.data[tripIndex].visitedDataFilename;
-    var visitedDataDescription =
-      "from " + filename.split("/").pop().split(".")[0];
-
-    config.visitedDataIndex = tripIndex;
-
-    master.areas.setVisitedData(filename, visitedDataDescription);
-  }
-
-  function _setVisitedDataToLatest() {
-    config.visitedDataIndex = -1;
-    master.areas.changeVisitedData("latest");
   }
 
   this.showTripsControl = function() {
@@ -115,7 +88,10 @@ function Trips(master) {
       var e = document.createElement("div");
       e.className = "showTripsTable";
       e.title = "Show trips";
-      e.onclick = _showTripsTable;
+      e.onclick = function() {
+        config.isTableShown = true;
+        that.showTripsControl();
+      };
       e.textContent = "Trips";
       tripsControl.appendChild(e);
     }
@@ -214,7 +190,7 @@ function Trips(master) {
       allElements.push(createTN("Show All"));
     } else {
       allElements.push(createControl("Show all trips", "Show All",
-                         function() {_setVisibilityOfAllTrips("visible")}));
+                         function() {setVisibilityOfAllTrips("visible")}));
     }
 
     allElements.push(createTN(" | "));
@@ -223,7 +199,7 @@ function Trips(master) {
       allElements.push(createTN("Hide All"));
     } else {
       allElements.push(createControl("Hide all trips", "Hide All",
-                         function() {_setVisibilityOfAllTrips("hidden")}));
+                         function() {setVisibilityOfAllTrips("hidden")}));
     }
 
     if (config.numberOfVisibleTrips > 0) {
@@ -231,10 +207,10 @@ function Trips(master) {
 
       if (config.areMarkersVisible) {
         allElements.push(createControl("Hide all trips markers", "Hide Markers",
-                           function() {_toggleTripMarkersVisibility()}));
+                           function() {toggleTripMarkersVisibility()}));
       } else {
         allElements.push(createControl("Show all trips markers", "Show Markers",
-                           function() {_toggleTripMarkersVisibility()}));
+                           function() {toggleTripMarkersVisibility()}));
       }
     }
 
@@ -329,7 +305,10 @@ function Trips(master) {
   function getVisibilityCommandElement(tripsData, tripIndex) {
     var title = "Toggle trip visibility";
     var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
-    var handler = function() {_toggleTripVisibility(tripIndex)};
+    var handler = function() {
+      toggleTripVisibility(tripIndex);
+      that.showTripsControl();
+    };
     var e = master.utils.createControlElement(title, text, handler);
     e.style.color = ((text == "Hide") ? tripsData.encodedPolyline.color : "");
 
@@ -346,11 +325,17 @@ function Trips(master) {
     if (config.visitedDataIndex == tripIndex) {
       var text = "Unset";
       var title = "Set visited data to latest";
-      var handler = function() {_setVisitedDataToLatest()};
+      var handler = function() {
+        config.visitedDataIndex = -1;
+        master.areas.changeVisitedData("latest");
+      };
     } else {
       var text = "Set";
       var title = "Set visited data as before this trip";
-      var handler = function() {_setVisitedData(tripIndex)};
+      var handler = function() {
+        config.visitedDataIndex = tripIndex;
+        master.areas.setVisitedData(config.data[tripIndex].visitedDataFilename);
+      };
     }
 
     return master.utils.createControlElement(title, text, handler);
