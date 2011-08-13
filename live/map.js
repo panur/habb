@@ -1,19 +1,19 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
-  var config = getConfig();
+  var state = getState();
 
-  function getConfig() {
-    var c = {};
+  function getState() {
+    var s = {};
 
-    c.initialStatistics = document.getElementById("statistics").innerHTML;
+    s.initialStatistics = document.getElementById("statistics").innerHTML;
 
-    c.initialZL = 10;
-    c.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
-    c.zoomToPointZoomLevel = 14;
+    s.initialZL = 10;
+    s.initialLatLng = new google.maps.LatLng(60.2558, 24.8275);
+    s.zoomToPointZoomLevel = 14;
 
-    return c;
+    return s;
   }
 
   function setCenter(latLng, zoom) {
@@ -36,7 +36,7 @@ function Map(master) {
                            "%), total=" + total;
 
     document.getElementById("statistics").innerHTML =
-      statistics + ", " + config.initialStatistics;
+      statistics + ", " + state.initialStatistics;
   }
 
   function addMouseListeners() {
@@ -121,7 +121,7 @@ function Map(master) {
   }
 
   this.zoomToPoint = function (latLng) {
-    setCenter(latLng, config.zoomToPointZoomLevel);
+    setCenter(latLng, state.zoomToPointZoomLevel);
   }
 
   function addHomeButton() {
@@ -228,18 +228,17 @@ function Map(master) {
   }
 
   this.resetLocationAndZoom = function () {
-    setCenter(config.initialLatLng, config.initialZL);
+    setCenter(state.initialLatLng, state.initialZL);
   }
 
   this.init = function () {
-    master.gm.setOptions({center: config.initialLatLng,
-                          zoom: config.initialZL});
+    master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL});
     addMouseListeners();
     addHomeButton();
     initStreetView();
 
     google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
-      updateStatusBar(getInfo(config.initialLatLng));
+      updateStatusBar(getInfo(state.initialLatLng));
       setStatistics();
       window.onresize = function () {that.resizeMap()};
       that.resizeMap();

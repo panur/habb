@@ -1,15 +1,15 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
-  var config = getConfig();
+  var state = getState();
 
-  function getConfig() {
-    var c = {};
+  function getState() {
+    var s = {};
 
-    c.selectedMenuItem = "";
+    s.selectedMenuItem = "";
 
-    return c;
+    return s;
   }
 
   this.init = function () {
@@ -100,7 +100,7 @@ function Menu(master) {
         selectMenuItem(rowElement);
 
         if (isMenuItem(rowElement)) {
-          config.selectedMenuItem = rowElement.textContent;
+          state.selectedMenuItem = rowElement.textContent;
 
           if (rowElement.textContent == "Open...") {
             var subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
@@ -167,9 +167,9 @@ function Menu(master) {
         } else {
           hideMenu();
 
-          if (config.selectedMenuItem == "Open...") {
+          if (state.selectedMenuItem == "Open...") {
             master.map.openOtherMap(rowElement.textContent, latLng);
-          } else if (config.selectedMenuItem == "Areas...") {
+          } else if (state.selectedMenuItem == "Areas...") {
             if (rowElement.textContent == "Toggle opacity") {
               master.areas.toggleOpacity();
             } else if (rowElement.textContent == "Toggle extensions") {
@@ -184,7 +184,7 @@ function Menu(master) {
               alert("Error: unknown area command: " + rowElement.textContent);
             }
           } else {
-            alert("Error: unknown menu item: " + config.selectedMenuItem);
+            alert("Error: unknown menu item: " + state.selectedMenuItem);
           }
         }
       }

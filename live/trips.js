@@ -1,24 +1,24 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
-  var config = getConfig();
+  var state = getState();
 
-  function getConfig() {
-    var c = {};
+  function getState() {
+    var s = {};
 
-    c.filenames = {tripsDatas:["tripsData2011.xml", "tripsData2010.xml",
+    s.filenames = {tripsDatas:["tripsData2011.xml", "tripsData2010.xml",
                                "tripsData2009.xml"]};
-    c.isTableShown = false;
-    c.visitedDataIndex = -1;
-    c.numberOfVisibleTrips = 0;
-    c.directionMarkers = [];
-    c.areMarkersVisible = true;
-    c.fileIndex = 0;
-    c.data = [];
-    c.selectedTripIndex = -1;
+    s.isTableShown = false;
+    s.visitedDataIndex = -1;
+    s.numberOfVisibleTrips = 0;
+    s.directionMarkers = [];
+    s.areMarkersVisible = true;
+    s.fileIndex = 0;
+    s.data = [];
+    s.selectedTripIndex = -1;
 
-    return c;
+    return s;
   }
 
   function addTripsControl() {
@@ -31,7 +31,7 @@ function Trips(master) {
     tripsTableHide.id = "tripsTableHide";
     tripsTableHide.title = "Hide trips table";
     tripsTableHide.onclick = function () {
-      config.isTableShown = false;
+      state.isTableShown = false;
       that.showControl();
       setTripsTableHideVisibility("hidden");
     };
@@ -41,12 +41,12 @@ function Trips(master) {
   }
 
   function setVisibilityOfAllTrips(visibility) {
-    if (typeof(config.data) == "undefined") {
+    if (typeof(state.data) == "undefined") {
       return;
     }
 
-    for (var i = config.data.length - 1; i >= 0; i--) {
-      if (config.data[i].visibility != visibility) {
+    for (var i = state.data.length - 1; i >= 0; i--) {
+      if (state.data[i].visibility != visibility) {
         toggleTripVisibility(i);
       }
     }
@@ -55,13 +55,13 @@ function Trips(master) {
   }
 
   function toggleTripMarkersVisibility() {
-    config.areMarkersVisible = !(config.areMarkersVisible);
-    var isVisible = config.areMarkersVisible;
+    state.areMarkersVisible = !(state.areMarkersVisible);
+    var isVisible = state.areMarkersVisible;
 
-    for (var i = 0; i < config.data.length; i++) {
-      if (config.data[i].gpsMaxSpeed.marker) {
-        config.data[i].gpsMaxSpeed.marker.setVisible(isVisible);
-        config.data[i].gpsMaxAltitude.marker.setVisible(isVisible);
+    for (var i = 0; i < state.data.length; i++) {
+      if (state.data[i].gpsMaxSpeed.marker) {
+        state.data[i].gpsMaxSpeed.marker.setVisible(isVisible);
+        state.data[i].gpsMaxAltitude.marker.setVisible(isVisible);
       }
     }
 
@@ -72,15 +72,15 @@ function Trips(master) {
     var tripsControl = document.getElementById("tripsControl");
     tripsControl.innerHTML = "";
 
-    if (config.isTableShown) {
-      if (config.filenames.tripsDatas.length == config.fileIndex) {
+    if (state.isTableShown) {
+      if (state.filenames.tripsDatas.length == state.fileIndex) {
         setTripsTableHideVisibility("visible");
-        tripsControl.appendChild(getTripsSummaryElement(config.data));
-        tripsControl.appendChild(getTripsTableElement(config.data));
+        tripsControl.appendChild(getTripsSummaryElement(state.data));
+        tripsControl.appendChild(getTripsTableElement(state.data));
         resizeTripsTable();
       } else {
-        var text = "Loading " + (1 + config.fileIndex) + "/" +
-                   config.filenames.tripsDatas.length;
+        var text = "Loading " + (1 + state.fileIndex) + "/" +
+                   state.filenames.tripsDatas.length;
         tripsControl.appendChild(document.createTextNode(text));
         setTripsData();
       }
@@ -89,7 +89,7 @@ function Trips(master) {
       e.className = "showTripsTable";
       e.title = "Show trips";
       e.onclick = function () {
-        config.isTableShown = true;
+        state.isTableShown = true;
         that.showControl();
       };
       e.textContent = "Trips";
@@ -118,7 +118,7 @@ function Trips(master) {
   }
 
   function setTripsData() {
-    var file = config.filenames.tripsDatas[config.fileIndex++];
+    var file = state.filenames.tripsDatas[state.fileIndex++];
 
     master.utils.downloadUrl(file, function (data, responseCode) {
       var xml = master.utils.parseXml(data);
@@ -144,7 +144,7 @@ function Trips(master) {
           mapLatLngFromV2ToV3(tripsData[i].gpsMaxAltitude.location);
       }
 
-      config.data = config.data.concat(tripsData);
+      state.data = state.data.concat(tripsData);
 
       that.showControl();
     });
@@ -186,7 +186,7 @@ function Trips(master) {
 
     allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
 
-    if (config.numberOfVisibleTrips == tripsData.length) {
+    if (state.numberOfVisibleTrips == tripsData.length) {
       allElements.push(createTN("Show All"));
     } else {
       allElements.push(createControl("Show all trips", "Show All",
@@ -195,17 +195,17 @@ function Trips(master) {
 
     allElements.push(createTN(" | "));
 
-    if (config.numberOfVisibleTrips == 0) {
+    if (state.numberOfVisibleTrips == 0) {
       allElements.push(createTN("Hide All"));
     } else {
       allElements.push(createControl("Hide all trips", "Hide All",
                          function () {setVisibilityOfAllTrips("hidden")}));
     }
 
-    if (config.numberOfVisibleTrips > 0) {
+    if (state.numberOfVisibleTrips > 0) {
       allElements.push(createTN(" | "));
 
-      if (config.areMarkersVisible) {
+      if (state.areMarkersVisible) {
         allElements.push(createControl("Hide all trips markers", "Hide Markers",
                            function () {toggleTripMarkersVisibility()}));
       } else {
@@ -258,7 +258,7 @@ function Trips(master) {
 
     for (var i = 0; i < tripsData.length; i++) {
       row = tableElement.insertRow(-1);
-      if (i == config.selectedTripIndex) {
+      if (i == state.selectedTripIndex) {
         row.className = "selectedTrip";
       } else {
         row.className = "";
@@ -317,25 +317,25 @@ function Trips(master) {
   }
 
   function getVisitedDataCommandElement(tripIndex) {
-    var filename = config.data[tripIndex].visitedDataFilename;
+    var filename = state.data[tripIndex].visitedDataFilename;
 
     if (filename.charAt(filename.length - 1) == "-") {
       return document.createTextNode("");
     }
 
-    if (config.visitedDataIndex == tripIndex) {
+    if (state.visitedDataIndex == tripIndex) {
       var text = "Unset";
       var title = "Set visited data to latest";
       var handler = function () {
-        config.visitedDataIndex = -1;
+        state.visitedDataIndex = -1;
         master.areas.changeVisitedData("latest");
       };
     } else {
       var text = "Set";
       var title = "Set visited data as before this trip";
       var handler = function () {
-        config.visitedDataIndex = tripIndex;
-        master.areas.setVisitedData(config.data[tripIndex].visitedDataFilename);
+        state.visitedDataIndex = tripIndex;
+        master.areas.setVisitedData(state.data[tripIndex].visitedDataFilename);
       };
     }
 
@@ -356,7 +356,7 @@ function Trips(master) {
   }
 
   function toggleTripVisibility(tripIndex) {
-    var tripData = config.data[tripIndex];
+    var tripData = state.data[tripIndex];
 
     if (typeof(tripData.polyline) == "undefined") {
       tripData.polyline = getTripPolyline(tripData.encodedPolyline);
@@ -367,7 +367,7 @@ function Trips(master) {
           addDirectionMarker(mouseEvent.latLng, tripData.polyline);
         }
         master.tripGraph.show(tripData);
-        config.selectedTripIndex = tripIndex;
+        state.selectedTripIndex = tripIndex;
         that.showControl();
       });
 
@@ -381,17 +381,17 @@ function Trips(master) {
 
     if (tripData.visibility == "hidden") {
       tripData.visibility = "visible";
-      config.numberOfVisibleTrips += 1;
+      state.numberOfVisibleTrips += 1;
       master.areas.setVisitedAreaOpacityToLow();
       tripData.polyline.setMap(master.gm);
       tripData.gpsMaxSpeed.marker.setMap(master.gm);
       tripData.gpsMaxAltitude.marker.setMap(master.gm);
       master.tripGraph.show(tripData);
-      config.selectedTripIndex = tripIndex;
+      state.selectedTripIndex = tripIndex;
     } else {
       tripData.visibility = "hidden";
-      config.numberOfVisibleTrips -= 1;
-      if (config.numberOfVisibleTrips == 0) {
+      state.numberOfVisibleTrips -= 1;
+      if (state.numberOfVisibleTrips == 0) {
         master.areas.setVisitedAreaOpacityToHigh();
       }
       tripData.polyline.setMap(null);
@@ -399,7 +399,7 @@ function Trips(master) {
       tripData.gpsMaxAltitude.marker.setMap(null);
       removeDirectionMarkers();
       master.tripGraph.hide();
-      config.selectedTripIndex = -1;
+      state.selectedTripIndex = -1;
     }
   }
 
@@ -420,15 +420,15 @@ function Trips(master) {
           marker.setMap(null);
         });
         marker.setMap(master.gm);
-        config.directionMarkers.push(marker);
+        state.directionMarkers.push(marker);
         break;
       }
     }
   }
 
   function removeDirectionMarkers() {
-    for (var i = 0; i < config.directionMarkers.length; i++) {
-      config.directionMarkers[i].setMap(null);
+    for (var i = 0; i < state.directionMarkers.length; i++) {
+      state.directionMarkers[i].setMap(null);
     }
   }
 
