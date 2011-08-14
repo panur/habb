@@ -679,21 +679,47 @@ function Areas(master) {
   }
 
   this.getMenuItems = function () {
-    var menuItems = ["Toggle opacity", "Toggle extensions",
-                     "Set end of 2008", "Set end of 2009", "Set latest"];
+    var menuItems = [];
+
+    if (state.area.opacity == state.area.opacityHigh) {
+      menuItems.push("Decrease opacity");
+    } else {
+      menuItems.push("Increase opacity");
+    }
+
+    if (state.isExtensionsShown) {
+      menuItems.push("Hide extensions");
+    } else {
+      menuItems.push("Show extensions");
+    }
+
+    if (state.filenames.visitedData != state.filenames.visitedData2008) {
+      menuItems.push("View end of 2008");
+    }
+
+    if (state.filenames.visitedData != state.filenames.visitedData2009) {
+      menuItems.push("View end of 2009");
+    }
+
+    if (state.filenames.visitedData != state.filenames.visitedDataLatest) {
+      menuItems.push("View latest");
+    }
+
     return menuItems;
   }
 
   this.processMenuCommand = function (command) {
-    if (command == "Toggle opacity") {
+    if ((command == "Decrease opacity") ||
+        (command == "Increase opacity")) {
       toggleOpacity();
-    } else if (command == "Toggle extensions") {
+    } else if ((command == "Hide extensions") ||
+               (command == "Show extensions")) {
       toggleExtensionsVisibility();
-    } else if (command == "Set end of 2008") {
+    } else if (command == "View end of 2008") {
       that.changeVisitedData(2008);
-    } else if (command == "Set end of 2009") {
+    } else if (command == "View end of 2009") {
       that.changeVisitedData(2009);
-    } else if (command == "Set latest") {
+    } else if (command == "View latest") {
       that.changeVisitedData("latest");
     }
   }
