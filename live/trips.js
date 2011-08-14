@@ -447,7 +447,18 @@ function Trips(master) {
     }
 
     if (state.data.length > 0) {
-      menuItems.push("Show all", "Hide all");
+      if (state.numberOfVisibleTrips != state.data.length) {
+        menuItems.push("Show all");
+      }
+      if (state.numberOfVisibleTrips > 0) {
+        menuItems.push("Hide all");
+
+        if (state.areMarkersVisible) {
+          menuItems.push("Hide markers");
+        } else {
+          menuItems.push("Show markers");
+        }
+      }
     }
 
     return menuItems;
@@ -461,6 +472,8 @@ function Trips(master) {
       setVisibilityOfAllTrips("visible");
     } else if (command == "Hide all") {
       setVisibilityOfAllTrips("hidden");
+    } else if ((command == "Hide markers") || (command == "Show markers")) {
+      toggleMaxMarkersVisibility();
     }
   }
 }

@@ -8,6 +8,7 @@ function Areas(master) {
     var s = {};
 
     s.isExtensionsShown = isExtensionsShown;
+    s.isShown = true;
 
     s.filenames = {points:"generated_points.xml",
       visitedDataLatest:"visited_datas/latest.xml",
@@ -623,6 +624,16 @@ function Areas(master) {
     }
   }
 
+  function toggleVisibility() {
+    if (state.isShown) {
+      removeOverlaysFromMap();
+    } else {
+      addOverlaysToMap();
+    }
+
+    state.isShown = !(state.isShown);
+  }
+
   function toggleOpacity() {
     removeOverlaysFromMap();
 
@@ -636,14 +647,18 @@ function Areas(master) {
   }
 
   this.setVisitedAreaOpacityToLow = function () {
-    if (state.area.opacity == state.area.opacityHigh) {
-      toggleOpacity();
+    if (state.isShown) {
+      if (state.area.opacity == state.area.opacityHigh) {
+        toggleOpacity();
+      }
     }
   }
 
   this.setVisitedAreaOpacityToHigh = function () {
-    if (state.area.opacity == state.area.opacityLow) {
-      toggleOpacity();
+    if (state.isShown) {
+      if (state.area.opacity == state.area.opacityLow) {
+        toggleOpacity();
+      }
     }
   }
 
@@ -681,35 +696,43 @@ function Areas(master) {
   this.getMenuItems = function () {
     var menuItems = [];
 
-    if (state.area.opacity == state.area.opacityHigh) {
-      menuItems.push("Decrease opacity");
+    if (state.isShown) {
+      menuItems.push("Hide");
+
+      if (state.area.opacity == state.area.opacityHigh) {
+        menuItems.push("Decrease opacity");
+      } else {
+        menuItems.push("Increase opacity");
+      }
+
+      if (state.isExtensionsShown) {
+        menuItems.push("Hide extensions");
+      } else {
+        menuItems.push("Show extensions");
+      }
+
+      if (state.filenames.visitedData != state.filenames.visitedData2008) {
+        menuItems.push("View end of 2008");
+      }
+
+      if (state.filenames.visitedData != state.filenames.visitedData2009) {
+        menuItems.push("View end of 2009");
+      }
+
+      if (state.filenames.visitedData != state.filenames.visitedDataLatest) {
+        menuItems.push("View latest");
+      }
     } else {
-      menuItems.push("Increase opacity");
-    }
-
-    if (state.isExtensionsShown) {
-      menuItems.push("Hide extensions");
-    } else {
-      menuItems.push("Show extensions");
-    }
-
-    if (state.filenames.visitedData != state.filenames.visitedData2008) {
-      menuItems.push("View end of 2008");
-    }
-
-    if (state.filenames.visitedData != state.filenames.visitedData2009) {
-      menuItems.push("View end of 2009");
-    }
-
-    if (state.filenames.visitedData != state.filenames.visitedDataLatest) {
-      menuItems.push("View latest");
+      menuItems.push("Show");
     }
 
     return menuItems;
   }
 
   this.processMenuCommand = function (command) {
-    if ((command == "Decrease opacity") ||
+    if ((command == "Hide") || (command == "Show")) {
+      toggleVisibility();
+    } else if ((command == "Decrease opacity") ||
         (command == "Increase opacity")) {
       toggleOpacity();
     } else if ((command == "Hide extensions") ||
