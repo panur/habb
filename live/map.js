@@ -16,6 +16,20 @@ function Map(master) {
     return s;
   }
 
+  this.init = function () {
+    master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL});
+    addMouseListeners();
+    addHomeButton();
+    initStreetView();
+
+    google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
+      updateStatusBar(getInfo(state.initialLatLng));
+      setStatistics();
+      window.onresize = function () {that.resizeMap()};
+      that.resizeMap();
+    });
+  }
+
   function setCenter(latLng, zoom) {
     /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
     if (zoom != master.gm.getZoom()) {
@@ -229,19 +243,5 @@ function Map(master) {
 
   this.resetLocationAndZoom = function () {
     setCenter(state.initialLatLng, state.initialZL);
-  }
-
-  this.init = function () {
-    master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL});
-    addMouseListeners();
-    addHomeButton();
-    initStreetView();
-
-    google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
-      updateStatusBar(getInfo(state.initialLatLng));
-      setStatistics();
-      window.onresize = function () {that.resizeMap()};
-      that.resizeMap();
-    });
   }
 }

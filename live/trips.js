@@ -21,6 +21,10 @@ function Trips(master) {
     return s;
   }
 
+  this.init = function () {
+    addTripsControl();
+  }
+
   function addTripsControl() {
     var tripsControl = document.createElement("div");
     tripsControl.id = "tripsControl";
@@ -437,10 +441,6 @@ function Trips(master) {
     });
 
     return marker;
-  }
-
-  this.init = function () {
-    addTripsControl();
   }
 
   this.getMenuItems = function () {
