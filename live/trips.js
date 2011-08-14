@@ -22,10 +22,6 @@ function Trips(master) {
   }
 
   this.init = function () {
-    addTripsControl();
-  }
-
-  function addTripsControl() {
     var tripsControl = document.createElement("div");
     tripsControl.id = "tripsControl";
     tripsControl.className = "tripsControl";
@@ -37,7 +33,7 @@ function Trips(master) {
     tripsTableHide.onclick = function () {
       state.isTableShown = false;
       that.showControl();
-      setTripsTableHideVisibility("hidden");
+      setTableHideVisibility("hidden");
     };
     document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
@@ -58,7 +54,7 @@ function Trips(master) {
     that.showControl();
   }
 
-  function toggleTripMarkersVisibility() {
+  function toggleMaxMarkersVisibility() {
     state.areMarkersVisible = !(state.areMarkersVisible);
     var isVisible = state.areMarkersVisible;
 
@@ -78,15 +74,15 @@ function Trips(master) {
 
     if (state.isTableShown) {
       if (state.filenames.tripsDatas.length == state.fileIndex) {
-        setTripsTableHideVisibility("visible");
-        tripsControl.appendChild(getTripsSummaryElement(state.data));
-        tripsControl.appendChild(getTripsTableElement(state.data));
-        resizeTripsTable();
+        setTableHideVisibility("visible");
+        tripsControl.appendChild(getTableHeaderElement(state.data));
+        tripsControl.appendChild(getTableElement(state.data));
+        resizeTable();
       } else {
         var text = "Loading " + (1 + state.fileIndex) + "/" +
                    state.filenames.tripsDatas.length;
         tripsControl.appendChild(document.createTextNode(text));
-        setTripsData();
+        setDataToState();
       }
     } else {
       var e = document.createElement("div");
@@ -101,7 +97,7 @@ function Trips(master) {
     }
   }
 
-  function resizeTripsTable() {
+  function resizeTable() {
     var tripsTable = document.getElementById("tripsTable");
     var mapDiv = document.getElementById("map_canvas");
     var streetViewDiv = document.getElementById("street_view");
@@ -110,7 +106,7 @@ function Trips(master) {
     tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.68) + "px";
   }
 
-  function setTripsTableHideVisibility(visibility) {
+  function setTableHideVisibility(visibility) {
     var tripsTableHide = document.getElementById("tripsTableHide");
 
     if (visibility == "visible") {
@@ -121,7 +117,7 @@ function Trips(master) {
     }
   }
 
-  function setTripsData() {
+  function setDataToState() {
     var file = state.filenames.tripsDatas[state.fileIndex++];
 
     master.utils.downloadUrl(file, function (data, responseCode) {
@@ -183,10 +179,10 @@ function Trips(master) {
     return new google.maps.LatLng(latLngV2.y, latLngV2.x);
   }
 
-  function getTripsSummaryElement(tripsData) {
+  function getTableHeaderElement(tripsData) {
     var allElements = [];
-    var summaryElement = document.createElement("div");
-    summaryElement.className = "tripsSummary";
+    var headerElement = document.createElement("div");
+    headerElement.className = "tripsSummary";
 
     allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
 
@@ -211,18 +207,18 @@ function Trips(master) {
 
       if (state.areMarkersVisible) {
         allElements.push(createControl("Hide all trips markers", "Hide Markers",
-                           function () {toggleTripMarkersVisibility()}));
+                           function () {toggleMaxMarkersVisibility()}));
       } else {
         allElements.push(createControl("Show all trips markers", "Show Markers",
-                           function () {toggleTripMarkersVisibility()}));
+                           function () {toggleMaxMarkersVisibility()}));
       }
     }
 
     for (var i = 0; i < allElements.length; i++) {
-      summaryElement.appendChild(allElements[i]);
+      headerElement.appendChild(allElements[i]);
     }
 
-    return summaryElement;
+    return headerElement;
 
     function createTN(text) {
       return document.createTextNode(text);
@@ -233,7 +229,7 @@ function Trips(master) {
     }
   }
 
-  function getTripsTableElement(tripsData) {
+  function getTableElement(tripsData) {
     var tableDiv = document.createElement("div");
     tableDiv.id = "tripsTable";
     tableDiv.className = "tripsTable";
@@ -346,7 +342,7 @@ function Trips(master) {
     return master.utils.createControlElement(title, text, handler);
   }
 
-  function getTripPolyline(encodedPolyline) {
+  function createPolyline(encodedPolyline) {
     var path = google.maps.geometry.encoding.decodePath(encodedPolyline.points);
 
     return new google.maps.Polyline({
@@ -363,7 +359,7 @@ function Trips(master) {
     var tripData = state.data[tripIndex];
 
     if (typeof(tripData.polyline) == "undefined") {
-      tripData.polyline = getTripPolyline(tripData.encodedPolyline);
+      tripData.polyline = createPolyline(tripData.encodedPolyline);
 
       google.maps.event.addListener(tripData.polyline, "click",
                                     function (mouseEvent) {
