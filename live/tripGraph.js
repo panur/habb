@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
 
 function TripGraph(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -16,7 +16,6 @@ function TripGraph(master) {
     s.maxTripCursorLength = 10;
     s.tickIntervalMs = 200;
     s.player = {state:"stop", speed:50};
-    s.lastDirection = 0;
     s.unit = "";
     s.yUnitsPerScaleLine = 0;
     s.yUnitToPixelRatio = 0;
@@ -103,7 +102,8 @@ function TripGraph(master) {
         processTripGraphEvent(event);
       }
       master.map.zoomToPoint(position);
-      master.map.updateStreetView(position, state.lastDirection);
+      var heading = master.trips.getHeading(position, state.tripData.polyline);
+      master.map.updateStreetView(position, heading);
     };
 
     tripGraph.ondblclick = function (event) {
@@ -115,7 +115,9 @@ function TripGraph(master) {
     var tripData = state.tripData;
     var vertexTime = state.lastRatio * tripData.gpsDurationSeconds;
     var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
-    var marker = getTripGraphMarker(tripData.polyline, vertexIndex);
+    var point = tripData.polyline.getPath().getAt(vertexIndex);
+    var heading = master.trips.getHeading(point, tripData.polyline);
+    var marker = master.trips.getDirectionMarker(point, heading);
 
     if (state.tripCursor.length > state.maxTripCursorLength) {
       state.tripCursor.pop().setMap(null);
@@ -126,7 +128,7 @@ function TripGraph(master) {
     marker.setMap(master.gm);
 
     if (state.player.state == "play") {
-      master.map.updateStreetView(marker.getPosition(), state.lastDirection);
+      master.map.updateStreetView(marker.getPosition(), heading);
 
       if (master.gm.getBounds().contains(marker.getPosition()) == false) {
         master.gm.panTo(marker.getPosition());
@@ -151,18 +153,6 @@ function TripGraph(master) {
     }
 
     return -1;
-  }
-
-  function getTripGraphMarker(polyline, vertexIndex) {
-    var p1 = polyline.getPath().getAt(vertexIndex);
-    var p2 = polyline.getPath().getAt(vertexIndex + 1);
-
-    state.lastDirection = master.trips.getLineDirection360(p1, p2);
-
-    var direction = master.trips.getLineDirection120(state.lastDirection);
-    var marker = master.trips.getDirectionMarker(p1, direction);
-
-    return marker;
   }
 
   function updateTripCraphStatusBar() {

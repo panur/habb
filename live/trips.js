@@ -371,10 +371,10 @@ function Trips(master) {
         that.showControl();
       });
 
-      tripData.gpsMaxSpeed.marker = getMarker(
+      tripData.gpsMaxSpeed.marker = getMaxMarker(tripData.polyline,
         tripData.gpsMaxSpeed.location,
         "S", "Max speed: " + tripData.gpsMaxSpeed.value + " km/h");
-      tripData.gpsMaxAltitude.marker = getMarker(
+      tripData.gpsMaxAltitude.marker = getMaxMarker(tripData.polyline,
         tripData.gpsMaxAltitude.location,
         "A", "Max altitude: " + tripData.gpsMaxAltitude.value + " m");
     }
@@ -403,26 +403,34 @@ function Trips(master) {
     }
   }
 
+  this.getHeading = function (point, polyline) {
+    var tolerances = [0.0001, 391817 * Math.pow(0.445208, master.gm.getZoom())];
+
+    for (var t = 0; t < tolerances.length; t++) {
+      for (var i = 0; i < polyline.getPath().length - 1; i++) {
+        var p1 = polyline.getPath().getAt(i);
+        var p2 = polyline.getPath().getAt(i + 1);
+
+        if (isPointInLineSegment(point, p1, p2, tolerances[t]) == true) {
+          return getLineDirection360(p1, p2);
+        }
+      }
+    }
+
+    return -1;
+  }
+
   function addDirectionMarker(point, polyline) {
     /* modified from: http://econym.org.uk/gmap/arrows.htm */
-    var p1;
-    var p2;
+    var heading = that.getHeading(point, polyline);
 
-    for (var i = 0; i < polyline.getPath().length - 1; i++) {
-      p1 = polyline.getPath().getAt(i);
-      p2 = polyline.getPath().getAt(i + 1);
-
-      if (isPointInLineSegment(point, p1, p2) == true) {
-        var direction =
-          that.getLineDirection120(that.getLineDirection360(p1, p2));
-        var marker = that.getDirectionMarker(point, direction);
-        google.maps.event.addListener(marker, "click", function (event) {
-          marker.setMap(null);
-        });
-        marker.setMap(master.gm);
-        state.directionMarkers.push(marker);
-        break;
-      }
+    if (heading != -1) {
+      var marker = that.getDirectionMarker(point, heading);
+      google.maps.event.addListener(marker, "click", function (event) {
+        marker.setMap(null);
+      });
+      marker.setMap(master.gm);
+      state.directionMarkers.push(marker);
     }
   }
 
@@ -432,11 +440,9 @@ function Trips(master) {
     }
   }
 
-  function isPointInLineSegment(point, p1, p2) {
+  function isPointInLineSegment(point, p1, p2, tolerance) {
     var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
                             getDistance(p1, p2));
-    var tolerance = 391817 * Math.pow(0.445208, master.gm.getZoom());
-
     return (distance < tolerance);
 
     function getDistance(from, to) {
@@ -444,7 +450,7 @@ function Trips(master) {
     }
   }
 
-  this.getLineDirection120 = function (direction360) {
+  function getLineDirection120(direction360) {
     var direction = direction360;
 
     while (direction >= 120) {
@@ -454,7 +460,7 @@ function Trips(master) {
     return direction;
   }
 
-  this.getLineDirection360 = function (from, to) {
+  function getLineDirection360(from, to) {
     var direction = google.maps.geometry.spherical.computeHeading(from, to);
 
     if (direction < 0)  {
@@ -466,7 +472,8 @@ function Trips(master) {
     return direction;
   }
 
-  this.getDirectionMarker = function (point, direction) {
+  this.getDirectionMarker = function (point, heading) {
+    var direction = getLineDirection120(heading);
     var image = new google.maps.MarkerImage(
       "http://www.google.com/mapfiles/dir_" + direction + ".png",
       new google.maps.Size(24, 24), /* size */
@@ -480,7 +487,7 @@ function Trips(master) {
     });
   }
 
-  function getMarker(point, letter, title) {
+  function getMaxMarker(polyline, point, letter, title) {
     var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
     var marker = new google.maps.Marker({
       position: point, icon: image, title: title
@@ -488,7 +495,8 @@ function Trips(master) {
 
     google.maps.event.addListener(marker, "click", function (event) {
       master.map.zoomToPoint(marker.getPosition());
-      master.map.updateStreetView(marker.getPosition(), 0); // tbd: add heading
+      var heading = that.getHeading(marker.getPosition(), polyline);
+      master.map.updateStreetView(marker.getPosition(), heading);
     });
 
     return marker;
