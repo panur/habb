@@ -168,9 +168,8 @@ function TripGraph(master) {
     var yScale = 1 / state.yUnitToPixelRatio;
     var xScale =
       Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
-    var latLng = state.tripCursor[0].getPosition();
-    latLng = Math.round(latLng.lat() * 10000)/10000 + " / " +
-             Math.round(latLng.lng() * 10000)/10000;
+    var latLng =
+      state.tripCursor[0].getPosition().toUrlValue(4).replace(",", " / ");
 
     var statusHtml = type + "=" + value + " " + unit + ", time=" + time +
       " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
