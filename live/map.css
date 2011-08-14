@@ -24,6 +24,7 @@ div.menu {
   color: #000000;
   background-color: #FFFFFF;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.347656);
+  z-index: 10;
 }
 
 table.menu {
@@ -56,6 +57,7 @@ div.tripsControl {
   color: #000000;
   background-color: #FFFFFF;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.347656);
+  z-index: 10;
 }
 
 div.showTripsTable {
@@ -96,6 +98,7 @@ img.hideTripsTable {
   top: 5px;
   right: 110px;
   cursor: pointer;
+  z-index: 10;
 }
 
 table.trips {
