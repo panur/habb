@@ -403,29 +403,12 @@ function Trips(master) {
     }
   }
 
-  this.getHeading = function (point, polyline) {
-    var tolerances = [0.0001, 391817 * Math.pow(0.445208, master.gm.getZoom())];
-
-    for (var t = 0; t < tolerances.length; t++) {
-      for (var i = 0; i < polyline.getPath().length - 1; i++) {
-        var p1 = polyline.getPath().getAt(i);
-        var p2 = polyline.getPath().getAt(i + 1);
-
-        if (isPointInLineSegment(point, p1, p2, tolerances[t]) == true) {
-          return getLineDirection360(p1, p2);
-        }
-      }
-    }
-
-    return -1;
-  }
-
   function addDirectionMarker(point, polyline) {
     /* modified from: http://econym.org.uk/gmap/arrows.htm */
-    var heading = that.getHeading(point, polyline);
+    var heading = master.utils.getHeading(point, polyline, master.gm.getZoom());
 
     if (heading != -1) {
-      var marker = that.getDirectionMarker(point, heading);
+      var marker = master.utils.createDirectionMarker(point, heading);
       google.maps.event.addListener(marker, "click", function (event) {
         marker.setMap(null);
       });
@@ -440,53 +423,6 @@ function Trips(master) {
     }
   }
 
-  function isPointInLineSegment(point, p1, p2, tolerance) {
-    var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
-                            getDistance(p1, p2));
-    return (distance < tolerance);
-
-    function getDistance(from, to) {
-      return google.maps.geometry.spherical.computeDistanceBetween(from, to);
-    }
-  }
-
-  function getLineDirection120(direction360) {
-    var direction = direction360;
-
-    while (direction >= 120) {
-      direction -= 120;
-    }
-
-    return direction;
-  }
-
-  function getLineDirection360(from, to) {
-    var direction = google.maps.geometry.spherical.computeHeading(from, to);
-
-    if (direction < 0)  {
-      direction += 360;
-    }
-
-    direction = Math.round(direction / 3) * 3;
-
-    return direction;
-  }
-
-  this.getDirectionMarker = function (point, heading) {
-    var direction = getLineDirection120(heading);
-    var image = new google.maps.MarkerImage(
-      "http://www.google.com/mapfiles/dir_" + direction + ".png",
-      new google.maps.Size(24, 24), /* size */
-      new google.maps.Point(0, 0), /* origin */
-      new google.maps.Point(12, 12) /* anchor */
-    );
-
-    return new google.maps.Marker({
-      position: point,
-      icon: image
-    });
-  }
-
   function getMaxMarker(polyline, point, letter, title) {
     var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
     var marker = new google.maps.Marker({
@@ -495,7 +431,8 @@ function Trips(master) {
 
     google.maps.event.addListener(marker, "click", function (event) {
       master.map.zoomToPoint(marker.getPosition());
-      var heading = that.getHeading(marker.getPosition(), polyline);
+      var heading = master.utils.getHeading(marker.getPosition(), polyline,
+                                            master.gm.getZoom());
       master.map.updateStreetView(marker.getPosition(), heading);
     });
 

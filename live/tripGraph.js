@@ -102,7 +102,8 @@ function TripGraph(master) {
         processTripGraphEvent(event);
       }
       master.map.zoomToPoint(position);
-      var heading = master.trips.getHeading(position, state.tripData.polyline);
+      var heading = master.utils.getHeading(position, state.tripData.polyline,
+                                            master.gm.getZoom());
       master.map.updateStreetView(position, heading);
     };
 
@@ -116,8 +117,9 @@ function TripGraph(master) {
     var vertexTime = state.lastRatio * tripData.gpsDurationSeconds;
     var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
     var point = tripData.polyline.getPath().getAt(vertexIndex);
-    var heading = master.trips.getHeading(point, tripData.polyline);
-    var marker = master.trips.getDirectionMarker(point, heading);
+    var heading = master.utils.getHeading(point, tripData.polyline,
+                                          master.gm.getZoom());
+    var marker = master.utils.createDirectionMarker(point, heading);
 
     if (state.tripCursor.length > state.maxTripCursorLength) {
       state.tripCursor.pop().setMap(null);

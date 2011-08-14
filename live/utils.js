@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
 
 function Utils() {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -108,6 +108,70 @@ function Utils() {
     timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
 
     return timeString; /* 04:32:54 */
+  }
+
+  this.getHeading = function (point, polyline, zoom) {
+    var tolerances = [0.0001, 391817 * Math.pow(0.445208, zoom)];
+
+    for (var t = 0; t < tolerances.length; t++) {
+      for (var i = 0; i < polyline.getPath().length - 1; i++) {
+        var p1 = polyline.getPath().getAt(i);
+        var p2 = polyline.getPath().getAt(i + 1);
+
+        if (isPointInLineSegment(point, p1, p2, tolerances[t]) == true) {
+          return computeHeading(p1, p2);
+        }
+      }
+    }
+
+    return -1;
+
+    function isPointInLineSegment(point, p1, p2, tolerance) {
+      var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
+                              getDistance(p1, p2));
+      return (distance < tolerance);
+
+      function getDistance(from, to) {
+        return google.maps.geometry.spherical.computeDistanceBetween(from, to);
+      }
+    }
+
+    function computeHeading(from, to) {
+      var heading = google.maps.geometry.spherical.computeHeading(from, to);
+
+      if (heading < 0)  {
+        heading += 360;
+      }
+
+      heading = Math.round(heading / 3) * 3;
+
+      return heading;
+    }
+  }
+
+  this.createDirectionMarker = function (point, heading) {
+    var direction = getLineDirection(heading);
+    var image = new google.maps.MarkerImage(
+      "http://www.google.com/mapfiles/dir_" + direction + ".png",
+      new google.maps.Size(24, 24), /* size */
+      new google.maps.Point(0, 0), /* origin */
+      new google.maps.Point(12, 12) /* anchor */
+    );
+
+    return new google.maps.Marker({
+      position: point,
+      icon: image
+    });
+
+    function getLineDirection(heading) {
+      var direction = heading;
+
+      while (direction >= 120) {
+        direction -= 120;
+      }
+
+      return direction;
+    }
   }
 
   this.createControlElement = function (title, text, handler) {
