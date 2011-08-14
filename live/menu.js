@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -110,9 +110,7 @@ function Menu(master) {
             showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
                      "subMenu");
           } else if (rowElement.textContent == "Areas...") {
-            var subMenuItems = ["Toggle opacity", "Toggle extensions",
-                                "Set end of 2008", "Set end of 2009",
-                                "Set latest"];
+            var subMenuItems = master.areas.getMenuItems();
             hideSubMenu();
             showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
                      "subMenu");
@@ -170,19 +168,7 @@ function Menu(master) {
           if (state.selectedMenuItem == "Open...") {
             master.map.openOtherMap(rowElement.textContent, latLng);
           } else if (state.selectedMenuItem == "Areas...") {
-            if (rowElement.textContent == "Toggle opacity") {
-              master.areas.toggleOpacity();
-            } else if (rowElement.textContent == "Toggle extensions") {
-              master.areas.toggleExtensionsVisibility();
-            } else if (rowElement.textContent == "Set end of 2008") {
-              master.areas.changeVisitedData(2008);
-            } else if (rowElement.textContent == "Set end of 2009") {
-              master.areas.changeVisitedData(2009);
-            } else if (rowElement.textContent == "Set latest") {
-              master.areas.changeVisitedData("latest");
-            } else {
-              alert("Error: unknown area command: " + rowElement.textContent);
-            }
+            master.areas.processMenuCommand(rowElement.textContent);
           } else {
             alert("Error: unknown menu item: " + state.selectedMenuItem);
           }

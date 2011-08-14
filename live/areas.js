@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -623,7 +623,7 @@ function Areas(master) {
     }
   }
 
-  this.toggleOpacity = function () {
+  function toggleOpacity() {
     removeOverlaysFromMap();
 
     if (state.area.opacity == state.area.opacityHigh) {
@@ -637,20 +637,25 @@ function Areas(master) {
 
   this.setVisitedAreaOpacityToLow = function () {
     if (state.area.opacity == state.area.opacityHigh) {
-      that.toggleOpacity();
+      toggleOpacity();
     }
   }
 
   this.setVisitedAreaOpacityToHigh = function () {
     if (state.area.opacity == state.area.opacityLow) {
-      that.toggleOpacity();
+      toggleOpacity();
     }
   }
 
-  this.toggleExtensionsVisibility = function () {
+  function toggleExtensionsVisibility() {
+    var opacity = state.area.opacity;
+    var visitedData = state.filenames.visitedData;
+
     removeOverlaysFromMap();
 
     state = getState(!(state.isExtensionsShown));
+    state.area.opacity = opacity;
+    state.filenames.visitedData = visitedData;
 
     setPointsToState();
   }
@@ -671,5 +676,25 @@ function Areas(master) {
     state.filenames.visitedData = filename;
 
     setKm2sToState();
+  }
+
+  this.getMenuItems = function () {
+    var menuItems = ["Toggle opacity", "Toggle extensions",
+                     "Set end of 2008", "Set end of 2009", "Set latest"];
+    return menuItems;
+  }
+
+  this.processMenuCommand = function (command) {
+    if (command == "Toggle opacity") {
+      toggleOpacity();
+    } else if (command == "Toggle extensions") {
+      toggleExtensionsVisibility();
+    } else if (command == "Set end of 2008") {
+      that.changeVisitedData(2008);
+    } else if (command == "Set end of 2009") {
+      that.changeVisitedData(2009);
+    } else if (command == "Set latest") {
+      that.changeVisitedData("latest");
+    }
   }
 }
