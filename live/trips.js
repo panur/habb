@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-13 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -496,5 +496,30 @@ function Trips(master) {
 
   this.init = function () {
     addTripsControl();
+  }
+
+  this.getMenuItems = function () {
+    var menuItems = [];
+
+    if (state.isTableShown == false) {
+      menuItems.push("Show table");
+    }
+
+    if (state.data.length > 0) {
+      menuItems.push("Show all", "Hide all");
+    }
+
+    return menuItems;
+  }
+
+  this.processMenuCommand = function (command) {
+    if (command == "Show table") {
+      state.isTableShown = true;
+      that.showControl();
+    } else if (command == "Show all") {
+      setVisibilityOfAllTrips("visible");
+    } else if (command == "Hide all") {
+      setVisibilityOfAllTrips("hidden");
+    }
   }
 }

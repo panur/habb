@@ -19,7 +19,7 @@ function Menu(master) {
       if (document.getElementById("menu")) {
         hideMenu();
       } else {
-        var menuItems = ["Open...", "Areas...", "Zoom"];
+        var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
         showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel),
                  menuItems, "menu");
       }
@@ -101,21 +101,22 @@ function Menu(master) {
 
         if (isMenuItem(rowElement)) {
           state.selectedMenuItem = rowElement.textContent;
+          hideSubMenu();
+          var subMenuItems = [];
 
           if (rowElement.textContent == "Open...") {
-            var subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
-                                "Google Maps", "Nokia Maps", "Bing Maps",
-                                "OpenStreetMap"];
-            hideSubMenu();
-            showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
-                     "subMenu");
+            subMenuItems = ["Kansalaisen karttapaikka", "kartta.hel.fi",
+                            "Google Maps", "Nokia Maps", "Bing Maps",
+                            "OpenStreetMap"];
           } else if (rowElement.textContent == "Areas...") {
-            var subMenuItems = master.areas.getMenuItems();
-            hideSubMenu();
+            subMenuItems = master.areas.getMenuItems();
+          } else if (rowElement.textContent == "Trips...") {
+            subMenuItems = master.trips.getMenuItems();
+          }
+
+          if (subMenuItems.length > 0) {
             showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
                      "subMenu");
-          } else {
-            hideSubMenu();
           }
         }
 
@@ -169,6 +170,8 @@ function Menu(master) {
             master.map.openOtherMap(rowElement.textContent, latLng);
           } else if (state.selectedMenuItem == "Areas...") {
             master.areas.processMenuCommand(rowElement.textContent);
+          } else if (state.selectedMenuItem == "Trips...") {
+            master.trips.processMenuCommand(rowElement.textContent);
           } else {
             alert("Error: unknown menu item: " + state.selectedMenuItem);
           }
