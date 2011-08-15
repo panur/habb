@@ -4,12 +4,12 @@ use warnings;
 use strict;
 
 my $lat_start = 6665000;
-my $lng_start = 2526000; # was 2530000
+my $lng_start = 2522000; # was 2526000, 2530000
 
 my $lat_lng_mult = 1000;
 
 my $lats = 36;
-my $lngs = 45; # was 37
+my $lngs = 49; # was 45, 37
 
 my $kkj_lat = 0;
 my $kkj_lng = 0;
@@ -29,7 +29,7 @@ for (my $i_lat = 0; $i_lat < $lats; $i_lat++) {
     if (defined($input_fh)) {
       $line = readline($input_fh);
       if ($line =~ /(.+) (.+\d)/) {
-        printf("<point kkj_lat=\"%d\" kkj_lng=\"%d\" lat=\"%s\" lng=\"%s\"/>\n", 
+        printf("<point kkj_lat=\"%d\" kkj_lng=\"%d\" lat=\"%s\" lng=\"%s\"/>\n",
                $kkj_lat / $lat_lng_mult, $kkj_lng / $lat_lng_mult, $1, $2);
       }
     } else {
