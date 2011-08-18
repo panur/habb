@@ -11,11 +11,12 @@ function Areas(master) {
     s.isShown = true;
 
     s.filenames = {points:"generated_points.xml",
-      visitedDataLatest:"visited_datas/latest.xml",
-      visitedData2008:"visited_datas/2008.xml",
-      visitedData2009:"visited_datas/2009.xml",
-      visitedData2010:"visited_datas/2010.xml"};
-    s.filenames.visitedData = s.filenames.visitedDataLatest;
+      visitedDatas:{
+        "2008":"visited_datas/2008.xml",
+        "2009":"visited_datas/2009.xml",
+        "2010":"visited_datas/2010.xml",
+        "latest":"visited_datas/latest.xml"}};
+    s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
     s.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
               colors:{yes:"#00FF00", no:"#FF0000", np:"#808080"}}
@@ -678,16 +679,8 @@ function Areas(master) {
     setPointsToState();
   }
 
-  this.changeVisitedData = function (newTarget) {
-    if (newTarget == 2008) {
-      that.setVisitedData(state.filenames.visitedData2008);
-    } else if (newTarget == 2009) {
-      that.setVisitedData(state.filenames.visitedData2009);
-    } else if (newTarget == 2010) {
-      that.setVisitedData(state.filenames.visitedData2010);
-    } else {
-      that.setVisitedData(state.filenames.visitedDataLatest);
-    }
+  this.changeVisitedData = function (key) {
+    that.setVisitedData(state.filenames.visitedDatas[key]);
   }
 
   this.setVisitedData = function (filename) {
@@ -716,20 +709,14 @@ function Areas(master) {
         menuItems.push("Show extensions");
       }
 
-      if (state.filenames.visitedData != state.filenames.visitedData2008) {
-        menuItems.push("View end of 2008");
-      }
-
-      if (state.filenames.visitedData != state.filenames.visitedData2009) {
-        menuItems.push("View end of 2009");
-      }
-
-      if (state.filenames.visitedData != state.filenames.visitedData2010) {
-        menuItems.push("View end of 2010");
-      }
-
-      if (state.filenames.visitedData != state.filenames.visitedDataLatest) {
-        menuItems.push("View latest");
+      for (var i in state.filenames.visitedDatas) {
+        if (state.filenames.visitedData != state.filenames.visitedDatas[i]) {
+          if (i == "latest") {
+            menuItems.push("View latest");
+          } else {
+            menuItems.push("View end of " + i);
+          }
+        }
       }
     } else {
       menuItems.push("Show");
@@ -747,14 +734,10 @@ function Areas(master) {
     } else if ((command == "Hide extensions") ||
                (command == "Show extensions")) {
       toggleExtensionsVisibility();
-    } else if (command == "View end of 2008") {
-      that.changeVisitedData(2008);
-    } else if (command == "View end of 2009") {
-      that.changeVisitedData(2009);
-    } else if (command == "View end of 2010") {
-      that.changeVisitedData(2010);
     } else if (command == "View latest") {
       that.changeVisitedData("latest");
+    } else if (/View end of \d\d\d\d/.test(command)) {
+      that.changeVisitedData(command.substr(12, 4));
     }
   }
 }
