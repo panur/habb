@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-18 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -139,9 +139,11 @@ function Trips(master) {
         tripsData[i].gpsAltitudeData =
           arrayToStringDecode(tripsData[i].encodedGpsAltitudeData);
         tripsData[i].gpsMaxSpeed.location =
-          mapLatLngFromV2ToV3(tripsData[i].gpsMaxSpeed.location);
+          new google.maps.LatLng(tripsData[i].gpsMaxSpeed.location.y,
+                                 tripsData[i].gpsMaxSpeed.location.x)
         tripsData[i].gpsMaxAltitude.location =
-          mapLatLngFromV2ToV3(tripsData[i].gpsMaxAltitude.location);
+          new google.maps.LatLng(tripsData[i].gpsMaxAltitude.location.y,
+                                 tripsData[i].gpsMaxAltitude.location.x)
       }
 
       state.data = state.data.concat(tripsData);
@@ -173,10 +175,6 @@ function Trips(master) {
     }
 
     return decodedArray;
-  }
-
-  function mapLatLngFromV2ToV3(latLngV2) {
-    return new google.maps.LatLng(latLngV2.y, latLngV2.x);
   }
 
   function getTableHeaderElement(tripsData) {

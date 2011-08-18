@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-18 */
 
 var utils = new Utils();
 
@@ -239,7 +239,8 @@ function getMaxSpeed(speedMeasurements, points) {
   var maxSpeed = {};
 
   maxSpeed.value = Math.round(maxMeasurement.value * 10) / 10;
-  maxSpeed.location = points[maxMeasurement.index];
+  maxSpeed.location = {x:points[maxMeasurement.index].lng(),
+                       y:points[maxMeasurement.index].lat()};
 
   return maxSpeed;
 }
@@ -249,7 +250,8 @@ function getMaxAltitude(altitudeMeasurements, points) {
   var maxAltitude = {};
 
   maxAltitude.value = Math.round(maxMeasurement.value);
-  maxAltitude.location = points[maxMeasurement.index];
+  maxAltitude.location = {x:points[maxMeasurement.index].lng(),
+                          y:points[maxMeasurement.index].lat()};
 
   return maxAltitude;
 }
