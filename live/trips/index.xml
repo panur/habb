@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110821.gpx"   visited_data="2011/20110806.xml" distance="120" max_speed="46.8" avg_speed="25.1" duration="4:46:11" color="#FFFF80" name="Paippinen"/>
   <trip gps_data="2011/20110813.gpx"   visited_data="-"                 distance="120" max_speed="49.9" avg_speed="24.5" duration="4:53:15" color="#008080" name="Karjalohja-Espoo"/>
   <trip gps_data="2011/20110812.gpx"   visited_data="-"                 distance="123" max_speed="49.5" avg_speed="25.8" duration="4:45:34" color="#FF00FF" name="Espoo-Karjalohja"/>
   <trip gps_data="2011/20110810.gpx"   visited_data="-"                 distance="107" max_speed="45.0" avg_speed="25.9" duration="4:07:29" color="#804080" name="Kehä III"/>
