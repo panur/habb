@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110907.gpx"   visited_data="2011/20110904.xml" distance="111" max_speed="48.7" avg_speed="23.8" duration="4:41:17" color="#404040" name="Rusutjärvi-Klaukkala"/>
   <trip gps_data="2011/20110904.gpx"   visited_data="2011/20110902.xml" distance="124" max_speed="51.6" avg_speed="25.4" duration="4:52:44" color="#400080" name="Nummela-Haimoo"/>
   <trip gps_data="2011/20110902.gpx"   visited_data="2011/20110821.xml" distance="45"  max_speed="40.7" avg_speed="25.7" duration="1:46:02" color="#FF4080" name="Airport"/>
   <trip gps_data="2011/20110821.gpx"   visited_data="2011/20110806.xml" distance="120" max_speed="46.8" avg_speed="25.1" duration="4:46:11" color="#FFFF80" name="Paippinen"/>
