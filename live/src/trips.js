@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-09-24 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -70,17 +70,24 @@ function Trips(master) {
 
   this.showControl = function () {
     var tripsControl = document.getElementById("tripsControl");
-    tripsControl.innerHTML = "";
 
     if (state.isTableShown) {
       if (state.filenames.tripsDatas.length == state.fileIndex) {
         setTableHideVisibility("visible");
-        tripsControl.appendChild(getTableHeaderElement(state.data));
-        tripsControl.appendChild(getTableElement(state.data));
+        if (document.getElementById("tripsTable")) {
+          tripsControl.replaceChild(getTableHeaderElement(state.data),
+                                    document.getElementById("tripsSummary"));
+          updateTable(state.data);
+        } else {
+          tripsControl.innerHTML = "";
+          tripsControl.appendChild(getTableHeaderElement(state.data));
+          tripsControl.appendChild(getTableElement(state.data));
+        }
         resizeTable();
       } else {
         var text = "Loading " + (1 + state.fileIndex) + "/" +
                    state.filenames.tripsDatas.length;
+        tripsControl.innerHTML = "";
         tripsControl.appendChild(document.createTextNode(text));
         setDataToState();
       }
@@ -93,12 +100,13 @@ function Trips(master) {
         that.showControl();
       };
       e.textContent = "Trips";
+      tripsControl.innerHTML = "";
       tripsControl.appendChild(e);
     }
   }
 
   function resizeTable() {
-    var tripsTable = document.getElementById("tripsTable");
+    var tripsTable = document.getElementById("tripsTableDiv");
     var mapDiv = document.getElementById("map_canvas");
     var streetViewDiv = document.getElementById("street_view");
     var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
@@ -180,6 +188,7 @@ function Trips(master) {
   function getTableHeaderElement(tripsData) {
     var allElements = [];
     var headerElement = document.createElement("div");
+    headerElement.id = "tripsSummary";
     headerElement.className = "tripsSummary";
 
     allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
@@ -229,7 +238,7 @@ function Trips(master) {
 
   function getTableElement(tripsData) {
     var tableDiv = document.createElement("div");
-    tableDiv.id = "tripsTable";
+    tableDiv.id = "tripsTableDiv";
     tableDiv.className = "tripsTable";
     var tableElement = document.createElement("table");
     tableElement.id = "tripsTable";
@@ -256,24 +265,7 @@ function Trips(master) {
 
     for (var i = 0; i < tripsData.length; i++) {
       row = tableElement.insertRow(-1);
-      if (i == state.selectedTripIndex) {
-        row.className = "selectedTrip";
-      } else {
-        row.className = "";
-      }
-      addCellsToRow([
-        getVisibilityCommandElement(tripsData[i], i),
-        getVisitedDataCommandElement(i),
-        tripsData[i].name,
-        tripsData[i].date,
-        tripsData[i].gpsDuration,
-        tripsData[i].gpsDistance,
-        tripsData[i].gpsMaxSpeed.value,
-        tripsData[i].gpsMaxAltitude.value,
-        tripsData[i].ccDuration,
-        tripsData[i].ccDistance,
-        tripsData[i].ccMaxSpeed,
-        tripsData[i].ccAvgSpeed], row, "td");
+      createTripRow(tripsData[i], i, row);
     }
 
     tableDiv.appendChild(tableElement);
@@ -287,16 +279,52 @@ function Trips(master) {
       c.appendChild(document.createTextNode(t));
       r.appendChild(c);
     }
+  }
 
-    function addCellsToRow(cells, r, thOrTd) {
-      for (var i = 0; i < cells.length; i++) {
-        var c = document.createElement(thOrTd);
-        if (typeof cells[i] == "object") {
-          c.appendChild(cells[i]);
+  function addCellsToRow(cells, r, thOrTd) {
+    for (var i = 0; i < cells.length; i++) {
+      var c = document.createElement(thOrTd);
+      if (typeof cells[i] == "object") {
+        c.appendChild(cells[i]);
+      } else {
+        c.appendChild(document.createTextNode(cells[i]));
+      }
+      r.appendChild(c);
+    }
+  }
+
+  function createTripRow(tripsData, i, row) {
+    addCellsToRow([
+      getVisibilityCommandElement(tripsData, i),
+      getVisitedDataCommandElement(i),
+      tripsData.name,
+      tripsData.date,
+      tripsData.gpsDuration,
+      tripsData.gpsDistance,
+      tripsData.gpsMaxSpeed.value,
+      tripsData.gpsMaxAltitude.value,
+      tripsData.ccDuration,
+      tripsData.ccDistance,
+      tripsData.ccMaxSpeed,
+      tripsData.ccAvgSpeed], row, "td");
+  }
+
+  function updateTable(tripsData) {
+    var tripsTable = document.getElementById("tripsTable");
+    var rows = tripsTable.rows;
+
+    for (var i = 0, tripI = 0; i < rows.length; i++) {
+      if (rows[i].firstChild.nodeName == "TD") {
+        tripsTable.deleteRow(i);
+        var newRow = tripsTable.insertRow(i);
+        createTripRow(tripsData[tripI], tripI, newRow);
+
+        if (tripI == state.selectedTripIndex) {
+          newRow.className = "selectedTrip";
         } else {
-          c.appendChild(document.createTextNode(cells[i]));
+          newRow.className = "";
         }
-        r.appendChild(c);
+        tripI += 1;
       }
     }
   }
