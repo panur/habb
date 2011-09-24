@@ -398,10 +398,10 @@ function Trips(master) {
       });
 
       tripData.gpsMaxSpeed.marker = getMaxMarker(tripData.polyline,
-        tripData.gpsMaxSpeed.location,
+        tripData.gpsMaxSpeed.location, state.areMarkersVisible,
         "S", "Max speed: " + tripData.gpsMaxSpeed.value + " km/h");
       tripData.gpsMaxAltitude.marker = getMaxMarker(tripData.polyline,
-        tripData.gpsMaxAltitude.location,
+        tripData.gpsMaxAltitude.location, state.areMarkersVisible,
         "A", "Max altitude: " + tripData.gpsMaxAltitude.value + " m");
     }
 
@@ -449,12 +449,11 @@ function Trips(master) {
     }
   }
 
-  function getMaxMarker(polyline, point, letter, title) {
+  function getMaxMarker(polyline, point, isVisible, letter, title) {
     var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
     var marker = new google.maps.Marker({
-      position: point, icon: image, title: title
+      visible: isVisible, position: point, icon: image, title: title
     });
-
     google.maps.event.addListener(marker, "click", function (event) {
       master.map.zoomToPoint(marker.getPosition());
       var heading = master.utils.getHeading(marker.getPosition(), polyline,
