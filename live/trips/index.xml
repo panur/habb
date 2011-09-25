@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2011/20110925.gpx"   visited_data="2011/20110917.xml" distance="104" max_speed="40.0" avg_speed="23.0" duration="4:31:00" color="#808080" name="Talma"/>
   <trip gps_data="2011/20110917.gpx"   visited_data="2011/20110911.xml" distance="106" max_speed="45.5" avg_speed="24.2" duration="4:23:55" color="#800040" name="Klaukkala-Nurmijärvi"/>
   <trip gps_data="2011/20110911.gpx"   visited_data="2011/20110907.xml" distance="100" max_speed="41.9" avg_speed="24.8" duration="4:01:34" color="#408040" name="Kerava-Hyrylä"/>
   <trip gps_data="2011/20110907.gpx"   visited_data="2011/20110904.xml" distance="111" max_speed="48.7" avg_speed="23.8" duration="4:41:17" color="#404040" name="Rusutjärvi-Klaukkala"/>
