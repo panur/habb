@@ -4,12 +4,12 @@ use warnings;
 use strict;
 
 my $lat_start = 6665000;
-my $lng_start = 2522000;
+my $lng_start = 2518000;
 
 my $lat_lng_mult = 1000;
 
 my $lats = 41;
-my $lngs = 49;
+my $lngs = 53;
 
 my $kkj_lat = 0;
 my $kkj_lng = 0;

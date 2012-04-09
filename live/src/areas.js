@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-04-09 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -15,6 +15,7 @@ function Areas(master) {
         "2008":"visited_datas/2008.xml",
         "2009":"visited_datas/2009.xml",
         "2010":"visited_datas/2010.xml",
+        "2011":"visited_datas/2011.xml",
         "latest":"visited_datas/latest.xml"}};
     s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
@@ -58,25 +59,25 @@ function Areas(master) {
     if (s.isExtensionsShown) {
       s.filenames.points = "generated_points_ext.xml";
       s.latPages = 8;
-      s.lngPages = 12;
-      s.kkjStart = {lat:65, lng:22};
+      s.lngPages = 13;
+      s.kkjStart = {lat:65, lng:18};
 
-      s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:5},
-                {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:10},
-                {n:31, lngOffsetKm:0,  latOffsetKm:10, lengthP:12}];
+      s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:6},
+                {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:11},
+                {n:31, lngOffsetKm:0,  latOffsetKm:10, lengthP:13}];
 
-      s.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:8},
-                {n:20, lngOffsetKm:21, latOffsetKm:5,  lengthP:7},
-                {n:8,  lngOffsetKm:41, latOffsetKm:10, lengthP:6}];
+      s.lngs = [{n:25, lngOffsetKm:0,  latOffsetKm:0,  lengthP:8},
+                {n:20, lngOffsetKm:25, latOffsetKm:5,  lengthP:7},
+                {n:8,  lngOffsetKm:45, latOffsetKm:10, lengthP:6}];
 
-      s.pages = ['a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,
-                 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,
-                 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',
-                 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G',
-                 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J',
-                 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M',
-                 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T',
-                 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'];
+      s.pages = [49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,
+                 50, 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,
+                 51, 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',
+                 52, 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G',
+                 53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J',
+                 54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M',
+                 55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T',
+                 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's'];
     }
 
     return s;
