@@ -183,7 +183,7 @@ function Areas(master) {
         var x = parseInt(km2s[i].getAttribute("kkj_lng")) - state.kkjStart.lng;
 
         if ((state.isExtensionsShown) ||
-            (km2s[i].getAttribute("page") < "A")) {
+            (km2s[i].getAttribute("page") < 49)) {
           state.km2s[y][x].visited = km2s[i].getAttribute("visited");
         }
       }
