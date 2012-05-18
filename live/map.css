@@ -52,35 +52,27 @@ tr.menuItem {
 div.tripsControl {
   position: absolute;
   top: 5px;
-  right: 110px;
+  right: 120px;
   overflow: hidden;
   color: #000000;
   background-color: #FFFFFF;
-  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.347656);
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 4px;
   z-index: 10;
 }
 
 div.showTripsTable {
-  border-bottom-color: #A9BBDF;
-  border-left-color: #A9BBDF;
-  border-right-color: #A9BBDF;
-  border-top-color: #A9BBDF;
-  border-style: solid;
-  border-width: 1px;
-  padding-top: 0px;
-  padding-right: 6px;
-  padding-bottom: 0px;
-  padding-left: 6px;
-  display: block;
-  font-size: 12px;
-  line-height: 160%;
-  height: 19px;
-  width: 35px;
+  border: 1px solid #717B87;
+  padding: 1px 6px;
+  font-size: 13px;
   font-family: Arial,sans-serif;
   text-align: center;
   color: #000000;
   background-color: #FFFFFF;
   cursor: pointer;
+}
+
+div.showTripsTable:hover {
+  background: #F3F3F3;
 }
 
 div.tripsSummary {
@@ -96,7 +88,7 @@ img.hideTripsTable {
   border: 0px;
   position: absolute;
   top: 5px;
-  right: 110px;
+  right: 120px;
   cursor: pointer;
   z-index: 10;
 }
