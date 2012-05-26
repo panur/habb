@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120526.gpx"   visited_data="2012/20120519.xml" distance="87"  max_speed="44.3" avg_speed="23.3" duration="3:44:24" color="#C00000" name="Vols-Kylmälä"/>
   <trip gps_data="2012/20120519.gpx"   visited_data="2012/20120101.xml" distance="100" max_speed="42.2" avg_speed="19.8" duration="5:03:51" color="#C0C000" name="Meiko-järvi"/>
   <trip gps_data="2011/20111008.gpx"   visited_data="2011/20111002.xml" distance="108" max_speed="41.6" avg_speed="24.2" duration="4:27:20" color="#00C0C0" name="Martinkylä"/>
   <trip gps_data="2011/20111002.gpx"   visited_data="2011/20110930.xml" distance="109" max_speed="43.6" avg_speed="24.0" duration="4:32:14" color="#C000C0" name="Järvenpää"/>
