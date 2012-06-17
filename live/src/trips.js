@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-05-19 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-06-17 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -38,6 +38,62 @@ function Trips(master) {
     document.getElementById("dynamic_divs").appendChild(tripsTableHide);
 
     that.showControl();
+
+    initDragAndDrop();
+  }
+
+  function initDragAndDrop() {
+    var dropArea = document.getElementById("map_canvas");
+    dropArea.addEventListener("dragenter", dragenter, false);
+    dropArea.addEventListener("dragover", dragover, false);
+    dropArea.addEventListener("drop", drop, false);
+
+    function dragenter(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function dragover(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function drop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      if (e.dataTransfer.files.length == 1) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          addDroppedTrip(e.target.result);
+        };
+        reader.readAsText(e.dataTransfer.files[0]);
+      } else {
+        alert("Please drop only one file at a time.");
+      }
+    }
+
+    function addDroppedTrip(gpxFile) {
+      var xml = master.utils.parseXml(gpxFile);
+      var points = xml.documentElement.getElementsByTagName("trkpt");
+      var tripPath = [];
+
+      for (var i = 0; i < points.length; i++) {
+        var lat = points[i].getAttribute("lat");
+        var lng = points[i].getAttribute("lon");
+        tripPath.push(new google.maps.LatLng(lat, lng));
+      }
+
+      var tripPolyline = new google.maps.Polyline({
+        path: tripPath,
+        strokeColor: "#000000",
+        strokeOpacity: 0.9,
+        strokeWeight: 3
+      });
+
+      master.areas.setVisitedAreaOpacityToLow();
+      tripPolyline.setMap(master.gm);
+    }
   }
 
   function setVisibilityOfAllTrips(visibility) {

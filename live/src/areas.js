@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-04-09 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-06-17 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -113,7 +113,7 @@ function Areas(master) {
       var xml = master.utils.parseXml(data);
       var p = xml.documentElement.getElementsByTagName("point");
       state.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
-      state.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));;
+      state.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));
 
       for (var i = 0; i < p.length; i++) {
         var y = parseInt(p[i].getAttribute("kkj_lat")) - state.kkjOffset.lat;
