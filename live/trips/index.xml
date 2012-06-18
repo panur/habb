@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120618.gpx"   visited_data="2012/20120610.xml" distance="119" max_speed="51.3" avg_speed="22.4" duration="5:19:54" color="#C0C0C0" name="Vihti"/>
   <trip gps_data="2012/20120610.gpx"   visited_data="2012/20120605.xml" distance="92"  max_speed="46.9" avg_speed="22.2" duration="4:09:12" color="#00C000" name="Yövilä-Tervalampi"/>
   <trip gps_data="2012/20120605.gpx"   visited_data="2012/20120526.xml" distance="112" max_speed="46.4" avg_speed="22.6" duration="4:55:37" color="#0000C0" name="Palojärvi-Evitskog"/>
   <trip gps_data="2012/20120526.gpx"   visited_data="2012/20120519.xml" distance="87"  max_speed="44.3" avg_speed="23.3" duration="3:44:24" color="#C00000" name="Vols-Kylmälä"/>
