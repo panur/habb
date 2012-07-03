@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-07-03 */
 
 var utils = new Utils();
 
@@ -6,6 +6,7 @@ function generateAll() {
   generate(2009);
   generate(2010);
   generate(2011);
+  generate(2012);
 }
 
 function generate(year) {
@@ -56,14 +57,65 @@ function setTripsData(tripsConfig, filenameFilter) {
   });
 }
 
+function getTrk(xml) {
+  var trks = xml.documentElement.getElementsByTagName("trk");
+  var trkpt = trks[0].getElementsByTagName("trkpt");
+  var time = trks[0].getElementsByTagName("time");
+  var speed = trks[0].getElementsByTagName("speed");
+  var ele = trks[0].getElementsByTagName("ele");
+  var trk = [];
+
+  for (var i = 0; i < trkpt.length; i++) {
+    var trkElement = {};
+    trkElement["trkpt"] = trkpt[i];
+    trkElement["time"] = time[i];
+    trkElement["speed"] = speed[i];
+    trkElement["ele"] = ele[i];
+    trk.push(trkElement);
+
+    if (i < trkpt.length - 1) {
+      fillGap();
+    }
+  }
+
+  return trk;
+
+  function fillGap() {
+    var gapStart = time[i].firstChild.nodeValue;
+    var gapEnd = time[i + 1].firstChild.nodeValue;
+    var gapInSeconds =
+      secondsSinceMidnight(gapEnd) - secondsSinceMidnight(gapStart);
+
+    if (gapInSeconds > 10) {
+      console.info("Gap: i=" + i + ", seconds=" + gapInSeconds +
+                   ", start=" + gapStart);
+      var fillElement = trkElement;
+      fillElement["speed"].firstChild.nodeValue = 0;
+      for (var j = 0; j < Math.floor(gapInSeconds / 4); j++) {
+        trk.push(fillElement);
+      }
+    }
+  }
+}
+
+function getTrkArray(trk, name) {
+  var trkArray = [];
+
+  for (var i = 0; i < trk.length; i++) {
+    trkArray.push(trk[i][name]);
+  }
+
+  return trkArray;
+}
+
 function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
   var polylineEncoder = new PolylineEncoder(18, 2, 0.000005);
 
   GDownloadUrl(gpsDataFilename, function(data, responseCode) {
     var xml = GXml.parse(data);
-    var trks = xml.documentElement.getElementsByTagName("trk");
-    var points = getPoints(trks[0].getElementsByTagName("trkpt"));
-    var times = trks[0].getElementsByTagName("time");
+    var trk = getTrk(xml);
+    var points = getPoints(getTrkArray(trk, "trkpt"));
+    var times = getTrkArray(trk, "time");
     var color = tripsConfig.data[tripIndex].color;
 
     tripsConfig.data[tripIndex].encodedPolyline =
@@ -82,19 +134,19 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
     tripsConfig.data[tripIndex].gpsDurationSeconds = getDurationSeconds(times);
 
     tripsConfig.data[tripIndex].gpsDistance =
-      Math.round((new GPolyline(points)).getLength() / 1000);
+      getDistance(points, gpsDataFilename);
 
     tripsConfig.data[tripIndex].gpsMaxSpeed =
-      getMaxSpeed(trks[0].getElementsByTagName("speed"), points);
+      getMaxSpeed(getTrkArray(trk, "speed"), points);
 
     tripsConfig.data[tripIndex].gpsMaxAltitude =
-      getMaxAltitude(trks[0].getElementsByTagName("ele"), points);
+      getMaxAltitude(getTrkArray(trk, "ele"), points);
 
     tripsConfig.data[tripIndex].encodedGpsSpeedData =
-      getEncodedGpsData(trks[0].getElementsByTagName("speed"), 1);
+      getEncodedGpsData(getTrkArray(trk, "speed"), 1);
 
     tripsConfig.data[tripIndex].encodedGpsAltitudeData =
-      getEncodedGpsData(trks[0].getElementsByTagName("ele"), 2);
+      getEncodedGpsData(getTrkArray(trk, "ele"), 2);
 
     tripsConfig.readyTrips += 1;
 
@@ -232,6 +284,21 @@ function getMaxMeasurement(measurements) {
   }
 
   return maxMeasurement;
+}
+
+function getDistance(points, gpsDataFilename) {
+  var distance = (new GPolyline(points)).getLength();
+
+  for (var i = 0; i < points.length - 1; i++) {
+    var d = Math.round((new GPolyline([points[i], points[i + 1]])).getLength());
+    if (d > 1000) {
+      console.info("Gap in " + gpsDataFilename + ": i=" + i + ", meters=" + d +
+                   ", point=" + points[i]);
+      distance -= d;
+    }
+  }
+
+  return Math.round(distance / 1000);
 }
 
 function getMaxSpeed(speedMeasurements, points) {
