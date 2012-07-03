@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120701.gpx"   visited_data="-"                 distance="132" max_speed="44.7" avg_speed="21.2" duration="6:14:18" color="#C000FF" name="Vääksy-Espoo"/>
+  <trip gps_data="2012/20120630.gpx"   visited_data="-"                 distance="127" max_speed="43.3" avg_speed="21.5" duration="5:54:50" color="#00FFC0" name="Tampere-Vääksy"/>
+  <trip gps_data="2012/20120629.gpx"   visited_data="-"                 distance="115" max_speed="43.3" avg_speed="22.8" duration="5:02:27" color="#FF00C0" name="Pori-Tampere"/>
+  <trip gps_data="2012/20120628.gpx"   visited_data="-"                 distance="157" max_speed="39.0" avg_speed="21.7" duration="7:13:24" color="#FFC000" name="Turku-Pori"/>
+  <trip gps_data="2012/20120627.gpx"   visited_data="-"                 distance="134" max_speed="44.0" avg_speed="22.5" duration="5:57:41" color="#00C0FF" name="Hanko-Turku"/>
+  <trip gps_data="2012/20120626.gpx"   visited_data="-"                 distance="130" max_speed="46.4" avg_speed="26.7" duration="4:52:37" color="#C0FF00" name="Espoo-Hanko"/>
   <trip gps_data="2012/20120622.gpx"   visited_data="-"                 distance="98"  max_speed="40.9" avg_speed="27.1" duration="3:38:16" color="#C0FFFF" name="Hämeenlinna-Espoo"/>
   <trip gps_data="2012/20120621.gpx"   visited_data="-"                 distance="103" max_speed="44.7" avg_speed="21.3" duration="4:48:51" color="#FFC0FF" name="Hämeenlinna"/>
   <trip gps_data="2012/20120620.gpx"   visited_data="-"                 distance="100" max_speed="38.4" avg_speed="24.4" duration="4:04:47" color="#FFFFC0" name="Espoo-Hämeenlinna"/>
