@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-06-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-07-05 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -158,7 +158,7 @@ function Areas(master) {
       for (var i = 0; i < pages.length; i++) {
         if (pages[i].getAttribute("visited_all") == "true") {
           if ((state.isExtensionsShown) ||
-              (pages[i].getAttribute("number") < "A")) {
+              (pages[i].getAttribute("number") < 49)) {
             allInPage.push(pages[i].getAttribute("number"));
           }
         }
