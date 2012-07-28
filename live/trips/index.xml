@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120728.gpx"   visited_data="-"                 distance="125" max_speed="47.2" avg_speed="24.8" duration="5:02:52" color="#00C080" name="Riihimäki-Espoo"/>
+  <trip gps_data="2012/20120727.gpx"   visited_data="2012/20120618.xml" distance="109" max_speed="47.3" avg_speed="23.9" duration="4:34:56" color="#4000C0" name="Espoo-Riihimäki"/>
   <trip gps_data="2012/20120720.gpx"   visited_data="-"                 distance="135" max_speed="41.9" avg_speed="21.2" duration="6:21:10" color="#0040C0" name="Tampere-Riihimäki"/>
   <trip gps_data="2012/20120719.gpx"   visited_data="-"                 distance="99"  max_speed="44.0" avg_speed="22.9" duration="4:20:16" color="#40C000" name="Forssa-Tampere"/>
   <trip gps_data="2012/20120718.gpx"   visited_data="-"                 distance="120" max_speed="44.0" avg_speed="23.9" duration="5:01:09" color="#C00040" name="Karjaa-Forssa"/>
