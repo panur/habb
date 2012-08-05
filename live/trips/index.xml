@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120803.gpx"   visited_data="-"                 distance="103" max_speed="39.3" avg_speed="22.7" duration="4:31:33" color="#0080C0" name="Hartola-Lahti"/>
+  <trip gps_data="2012/20120802.gpx"   visited_data="-"                 distance="112" max_speed="46.4" avg_speed="22.5" duration="4:58:24" color="#80C000" name="Jyväskylä-Hartola"/>
+  <trip gps_data="2012/20120801.gpx"   visited_data="-"                 distance="125" max_speed="40.6" avg_speed="25.6" duration="4:52:37" color="#C00080" name="Jämsä-Jyväskylä"/>
+  <trip gps_data="2012/20120731.gpx"   visited_data="-"                 distance="126" max_speed="48.7" avg_speed="24.9" duration="5:05:08" color="#C08000" name="Lahti-Jämsä"/>
   <trip gps_data="2012/20120728.gpx"   visited_data="-"                 distance="125" max_speed="47.2" avg_speed="24.8" duration="5:02:52" color="#00C080" name="Riihimäki-Espoo"/>
   <trip gps_data="2012/20120727.gpx"   visited_data="2012/20120618.xml" distance="109" max_speed="47.3" avg_speed="23.9" duration="4:34:56" color="#4000C0" name="Espoo-Riihimäki"/>
   <trip gps_data="2012/20120720.gpx"   visited_data="-"                 distance="135" max_speed="41.9" avg_speed="21.2" duration="6:21:10" color="#0040C0" name="Tampere-Riihimäki"/>
