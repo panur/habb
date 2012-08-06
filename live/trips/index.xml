@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120805.gpx"   visited_data="-"                 distance="121" max_speed="44.0" avg_speed="23.5" duration="5:08:59" color="#C0C080" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="2012/20120804.gpx"   visited_data="-"                 distance="137" max_speed="43.0" avg_speed="30.2" duration="4:32:56" color="#8000C0" name="Turku-Hämeenlinna"/>
   <trip gps_data="2012/20120803.gpx"   visited_data="-"                 distance="103" max_speed="39.3" avg_speed="22.7" duration="4:31:33" color="#0080C0" name="Hartola-Lahti"/>
   <trip gps_data="2012/20120802.gpx"   visited_data="-"                 distance="112" max_speed="46.4" avg_speed="22.5" duration="4:58:24" color="#80C000" name="Jyväskylä-Hartola"/>
   <trip gps_data="2012/20120801.gpx"   visited_data="-"                 distance="125" max_speed="40.6" avg_speed="25.6" duration="4:52:37" color="#C00080" name="Jämsä-Jyväskylä"/>
