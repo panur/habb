@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2012/20120818.gpx"   visited_data="-"                 distance="130" max_speed="43.3" avg_speed="23.8" duration="5:27:53" color="#C0FF40" name="Mikkeli-Lahti"/>
+  <trip gps_data="2012/20120817.gpx"   visited_data="-"                 distance="105" max_speed="43.0" avg_speed="24.5" duration="4:18:03" color="#8040C0" name="Savonlinna-Mikkeli"/>
+  <trip gps_data="2012/20120816.gpx"   visited_data="-"                 distance="119" max_speed="49.5" avg_speed="23.3" duration="5:07:38" color="#C04080" name="Imatra-Savonlinna"/>
+  <trip gps_data="2012/20120815.gpx"   visited_data="-"                 distance="128" max_speed="47.2" avg_speed="21.8" duration="5:51:47" color="#4080C0" name="Hamina-Imatra"/>
+  <trip gps_data="2012/20120814.gpx"   visited_data="-"                 distance="131" max_speed="40.3" avg_speed="23.7" duration="5:31:31" color="#80C040" name="Lahti-Hamina"/>
   <trip gps_data="2012/20120811.gpx"   visited_data="-"                 distance="134" max_speed="51.7" avg_speed="24.3" duration="5:30:29" color="#C08040" name="Loimaa-Inkoo"/>
   <trip gps_data="2012/20120810.gpx"   visited_data="-"                 distance="139" max_speed="36.7" avg_speed="24.0" duration="5:48:25" color="#40C080" name="Pori-Loimaa"/>
   <trip gps_data="2012/20120809.gpx"   visited_data="-"                 distance="108" max_speed="36.0" avg_speed="24.7" duration="4:21:43" color="#C080C0" name="Kristiinankaupunki-Pori"/>
