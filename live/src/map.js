@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-04-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-08-19 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -156,7 +156,8 @@ function Map(master) {
     var panoramaOptions = {
       visible: false,
       enableCloseButton: true,
-      addressControl: false
+      addressControl: false,
+      imageDateControl: true
     };
     var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
 
@@ -170,6 +171,10 @@ function Map(master) {
 
     google.maps.event.addListener(panorama, "closeclick", function () {
       hideStreetView(master.gm);
+    });
+
+    google.maps.event.addListener(panorama, "position_changed", function () {
+      setCenter(master.gm.getStreetView().getPosition(), master.gm.getZoom());
     });
 
     master.gm.setStreetView(panorama);
