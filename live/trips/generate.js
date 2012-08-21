@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-07-03 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-08-21 */
 
 var utils = new Utils();
 
@@ -15,7 +15,7 @@ function generate(year) {
     dataFilename:
       "D:\\post\\omat\\ohjelmat\\habb\\live\\tripsData" + year + ".xml",
     visitedDataDirectory:"visited_datas", readyTrips:0, polylineWeight:3,
-    polylineOpacity:0.9
+    polylineOpacity:0.9, data:[]
   };
 
   setStatus("Please wait...");
@@ -28,8 +28,6 @@ function setStatus(statusText) {
 }
 
 function setTripsData(tripsConfig, filenameFilter) {
-  var tripsData = [];
-
   GDownloadUrl(tripsConfig.indexFilename, function(data, responseCode) {
     var xml = GXml.parse(data);
     var trips = xml.documentElement.getElementsByTagName("trip");
@@ -47,13 +45,13 @@ function setTripsData(tripsConfig, filenameFilter) {
         tripData.ccDuration = trips[i].getAttribute("duration");
         tripData.ccMaxSpeed = trips[i].getAttribute("max_speed");
         tripData.ccAvgSpeed = trips[i].getAttribute("avg_speed");
-        tripsData.push(tripData);
-        setTripGpsData(tripsConfig, trips[i].getAttribute("gps_data"),
-                       tripsData.length - 1);
+        tripData.gpsData = trips[i].getAttribute("gps_data");
+
+        tripsConfig.data.push(tripData);
       }
     }
 
-    tripsConfig.data = tripsData;
+    setTripGpsData(tripsConfig, 0);
   });
 }
 
@@ -108,7 +106,9 @@ function getTrkArray(trk, name) {
   return trkArray;
 }
 
-function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
+function setTripGpsData(tripsConfig, tripIndex) {
+  var gpsDataFilename = tripsConfig.data[tripIndex].gpsData;
+  delete tripsConfig.data[tripIndex].gpsData;
   var polylineEncoder = new PolylineEncoder(18, 2, 0.000005);
 
   GDownloadUrl(gpsDataFilename, function(data, responseCode) {
@@ -155,6 +155,8 @@ function setTripGpsData(tripsConfig, gpsDataFilename, tripIndex) {
 
     if (tripsConfig.readyTrips == tripsConfig.data.length) {
       writeToFile(tripsConfig);
+    } else {
+      setTripGpsData(tripsConfig, tripIndex + 1);
     }
   });
 }
