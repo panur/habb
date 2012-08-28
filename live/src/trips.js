@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-06-17 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-08-28 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -357,12 +357,16 @@ function Trips(master) {
       tripsData.date,
       tripsData.gpsDuration,
       tripsData.gpsDistance,
-      tripsData.gpsMaxSpeed.value,
+      formatSpeed(tripsData.gpsMaxSpeed.value),
       tripsData.gpsMaxAltitude.value,
       tripsData.ccDuration,
       tripsData.ccDistance,
       tripsData.ccMaxSpeed,
       tripsData.ccAvgSpeed], row, "td");
+
+      function formatSpeed(v) {
+        return (v + ".0").substr(0, 4); /* returns 45.0 for 45 */
+      }
   }
 
   function updateTable(tripsData) {
