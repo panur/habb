@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-08-21 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-11-04 */
 
 var utils = new Utils();
 
@@ -154,7 +154,7 @@ function setTripGpsData(tripsConfig, tripIndex) {
               tripsConfig.data.length);
 
     if (tripsConfig.readyTrips == tripsConfig.data.length) {
-      writeToFile(tripsConfig);
+      sendFileToExtension(tripsConfig);
     } else {
       setTripGpsData(tripsConfig, tripIndex + 1);
     }
@@ -360,27 +360,16 @@ function arrayToStringEncode(sourceArray, scale) {
   return encodeURI(string);
 }
 
-function writeToFile(tripsConfig) {
+function sendFileToExtension(tripsConfig) {
   var filename = tripsConfig.dataFilename;
-  netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
-  var fileOut = FileIO.open(filename);
-  var statusText;
-
-  if (fileOut == false) {
-    statusText = "Failed to open file: " + filename;
-  } else {
-    var myJSONText = JSON.stringify(tripsConfig.data);
-    var outputText =
-      "<trips>\n<data>\n" + myJSONText + "\n</data>\n</trips>\n";
-    var rv = FileIO.write(fileOut, outputText, '', 'UTF-8');
-
-    if (rv == false) {
-      statusText = "Failed to write file: " + filename;
-    } else {
-      statusText =
-        "Wrote tripsData (" + tripsConfig.data.length + ") to: " + filename;
-    }
-  }
+  var myJSONText = JSON.stringify(tripsConfig.data);
+  var outputText = "<trips>\n<data>\n" + myJSONText + "\n</data>\n</trips>\n";
+  var statusText =
+    "Wrote tripsData (" + tripsConfig.data.length + ") to: " + filename;
+  var file = {name:filename, data:outputText};
+  var event = document.createEvent("CustomEvent");
+  event.initCustomEvent("habbGeneratedFile", true, true, file);
+  document.body.dispatchEvent(event);
 
   setStatus(statusText);
 }
