@@ -1,119 +1,4 @@
 <pages>
-  <page number="57" visited_all="false"/>
-    <km2s>
-      <km2 page="57" kkj_lat="60" kkj_lng="18" visited="np"/>
-      <km2 page="57" kkj_lat="60" kkj_lng="19" visited="np"/>
-      <km2 page="57" kkj_lat="60" kkj_lng="20" visited="no"/>
-      <km2 page="57" kkj_lat="60" kkj_lng="21" visited="no"/>
-      <km2 page="57" kkj_lat="61" kkj_lng="18" visited="np"/>
-      <km2 page="57" kkj_lat="61" kkj_lng="19" visited="np"/>
-      <km2 page="57" kkj_lat="61" kkj_lng="20" visited="no"/>
-      <km2 page="57" kkj_lat="61" kkj_lng="21" visited="no"/>
-      <km2 page="57" kkj_lat="62" kkj_lng="18" visited="np"/>
-      <km2 page="57" kkj_lat="62" kkj_lng="19" visited="np"/>
-      <km2 page="57" kkj_lat="62" kkj_lng="20" visited="no"/>
-      <km2 page="57" kkj_lat="62" kkj_lng="21" visited="no"/>
-      <km2 page="57" kkj_lat="63" kkj_lng="18" visited="no"/>
-      <km2 page="57" kkj_lat="63" kkj_lng="19" visited="np"/>
-      <km2 page="57" kkj_lat="63" kkj_lng="20" visited="no"/>
-      <km2 page="57" kkj_lat="63" kkj_lng="21" visited="no"/>
-      <km2 page="57" kkj_lat="64" kkj_lng="18" visited="no"/>
-      <km2 page="57" kkj_lat="64" kkj_lng="19" visited="no"/>
-      <km2 page="57" kkj_lat="64" kkj_lng="20" visited="no"/>
-      <km2 page="57" kkj_lat="64" kkj_lng="21" visited="yes"/>
-    </km2s>
-  <page number="58" visited_all="false"/>
-    <km2s>
-      <km2 page="58" kkj_lat="60" kkj_lng="22" visited="no"/>
-      <km2 page="58" kkj_lat="60" kkj_lng="23" visited="no"/>
-      <km2 page="58" kkj_lat="60" kkj_lng="24" visited="no"/>
-      <km2 page="58" kkj_lat="60" kkj_lng="25" visited="no"/>
-      <km2 page="58" kkj_lat="61" kkj_lng="22" visited="no"/>
-      <km2 page="58" kkj_lat="61" kkj_lng="23" visited="no"/>
-      <km2 page="58" kkj_lat="61" kkj_lng="24" visited="no"/>
-      <km2 page="58" kkj_lat="61" kkj_lng="25" visited="no"/>
-      <km2 page="58" kkj_lat="62" kkj_lng="22" visited="no"/>
-      <km2 page="58" kkj_lat="62" kkj_lng="23" visited="no"/>
-      <km2 page="58" kkj_lat="62" kkj_lng="24" visited="no"/>
-      <km2 page="58" kkj_lat="62" kkj_lng="25" visited="yes"/>
-      <km2 page="58" kkj_lat="63" kkj_lng="22" visited="yes"/>
-      <km2 page="58" kkj_lat="63" kkj_lng="23" visited="yes"/>
-      <km2 page="58" kkj_lat="63" kkj_lng="24" visited="yes"/>
-      <km2 page="58" kkj_lat="63" kkj_lng="25" visited="yes"/>
-      <km2 page="58" kkj_lat="64" kkj_lng="22" visited="yes"/>
-      <km2 page="58" kkj_lat="64" kkj_lng="23" visited="yes"/>
-      <km2 page="58" kkj_lat="64" kkj_lng="24" visited="no"/>
-      <km2 page="58" kkj_lat="64" kkj_lng="25" visited="no"/>
-    </km2s>
-  <page number="59" visited_all="false"/>
-    <km2s>
-      <km2 page="59" kkj_lat="60" kkj_lng="26" visited="no"/>
-      <km2 page="59" kkj_lat="60" kkj_lng="27" visited="yes"/>
-      <km2 page="59" kkj_lat="60" kkj_lng="28" visited="yes"/>
-      <km2 page="59" kkj_lat="60" kkj_lng="29" visited="no"/>
-      <km2 page="59" kkj_lat="61" kkj_lng="26" visited="yes"/>
-      <km2 page="59" kkj_lat="61" kkj_lng="27" visited="yes"/>
-      <km2 page="59" kkj_lat="61" kkj_lng="28" visited="no"/>
-      <km2 page="59" kkj_lat="61" kkj_lng="29" visited="no"/>
-      <km2 page="59" kkj_lat="62" kkj_lng="26" visited="yes"/>
-      <km2 page="59" kkj_lat="62" kkj_lng="27" visited="yes"/>
-      <km2 page="59" kkj_lat="62" kkj_lng="28" visited="yes"/>
-      <km2 page="59" kkj_lat="62" kkj_lng="29" visited="no"/>
-      <km2 page="59" kkj_lat="63" kkj_lng="26" visited="no"/>
-      <km2 page="59" kkj_lat="63" kkj_lng="27" visited="yes"/>
-      <km2 page="59" kkj_lat="63" kkj_lng="28" visited="yes"/>
-      <km2 page="59" kkj_lat="63" kkj_lng="29" visited="no"/>
-      <km2 page="59" kkj_lat="64" kkj_lng="26" visited="no"/>
-      <km2 page="59" kkj_lat="64" kkj_lng="27" visited="yes"/>
-      <km2 page="59" kkj_lat="64" kkj_lng="28" visited="yes"/>
-      <km2 page="59" kkj_lat="64" kkj_lng="29" visited="no"/>
-    </km2s>
-  <page number="60" visited_all="false"/>
-    <km2s>
-      <km2 page="60" kkj_lat="60" kkj_lng="30" visited="no"/>
-      <km2 page="60" kkj_lat="60" kkj_lng="31" visited="no"/>
-      <km2 page="60" kkj_lat="60" kkj_lng="32" visited="no"/>
-      <km2 page="60" kkj_lat="60" kkj_lng="33" visited="no"/>
-      <km2 page="60" kkj_lat="61" kkj_lng="30" visited="no"/>
-      <km2 page="60" kkj_lat="61" kkj_lng="31" visited="no"/>
-      <km2 page="60" kkj_lat="61" kkj_lng="32" visited="no"/>
-      <km2 page="60" kkj_lat="61" kkj_lng="33" visited="no"/>
-      <km2 page="60" kkj_lat="62" kkj_lng="30" visited="no"/>
-      <km2 page="60" kkj_lat="62" kkj_lng="31" visited="no"/>
-      <km2 page="60" kkj_lat="62" kkj_lng="32" visited="no"/>
-      <km2 page="60" kkj_lat="62" kkj_lng="33" visited="no"/>
-      <km2 page="60" kkj_lat="63" kkj_lng="30" visited="no"/>
-      <km2 page="60" kkj_lat="63" kkj_lng="31" visited="no"/>
-      <km2 page="60" kkj_lat="63" kkj_lng="32" visited="no"/>
-      <km2 page="60" kkj_lat="63" kkj_lng="33" visited="no"/>
-      <km2 page="60" kkj_lat="64" kkj_lng="30" visited="no"/>
-      <km2 page="60" kkj_lat="64" kkj_lng="31" visited="no"/>
-      <km2 page="60" kkj_lat="64" kkj_lng="32" visited="no"/>
-      <km2 page="60" kkj_lat="64" kkj_lng="33" visited="no"/>
-    </km2s>
-  <page number="61" visited_all="false"/>
-    <km2s>
-      <km2 page="61" kkj_lat="60" kkj_lng="34" visited="np"/>
-      <km2 page="61" kkj_lat="60" kkj_lng="35" visited="np"/>
-      <km2 page="61" kkj_lat="60" kkj_lng="36" visited="np"/>
-      <km2 page="61" kkj_lat="60" kkj_lng="37" visited="np"/>
-      <km2 page="61" kkj_lat="61" kkj_lng="34" visited="no"/>
-      <km2 page="61" kkj_lat="61" kkj_lng="35" visited="np"/>
-      <km2 page="61" kkj_lat="61" kkj_lng="36" visited="np"/>
-      <km2 page="61" kkj_lat="61" kkj_lng="37" visited="np"/>
-      <km2 page="61" kkj_lat="62" kkj_lng="34" visited="no"/>
-      <km2 page="61" kkj_lat="62" kkj_lng="35" visited="np"/>
-      <km2 page="61" kkj_lat="62" kkj_lng="36" visited="np"/>
-      <km2 page="61" kkj_lat="62" kkj_lng="37" visited="np"/>
-      <km2 page="61" kkj_lat="63" kkj_lng="34" visited="no"/>
-      <km2 page="61" kkj_lat="63" kkj_lng="35" visited="np"/>
-      <km2 page="61" kkj_lat="63" kkj_lng="36" visited="np"/>
-      <km2 page="61" kkj_lat="63" kkj_lng="37" visited="np"/>
-      <km2 page="61" kkj_lat="64" kkj_lng="34" visited="no"/>
-      <km2 page="61" kkj_lat="64" kkj_lng="35" visited="no"/>
-      <km2 page="61" kkj_lat="64" kkj_lng="36" visited="np"/>
-      <km2 page="61" kkj_lat="64" kkj_lng="37" visited="np"/>
-    </km2s>
   <page number="49" visited_all="true"/>
   <page number="a" visited_all="true"/>
   <page number="A" visited_all="true"/>
@@ -443,29 +328,6 @@
       <km2 page="G" kkj_lat="84" kkj_lng="68" visited="yes"/>
       <km2 page="G" kkj_lat="84" kkj_lng="69" visited="yes"/>
     </km2s>
-  <page number="62" visited_all="false"/>
-    <km2s>
-      <km2 page="62" kkj_lat="80" kkj_lng="70" visited="np"/>
-      <km2 page="62" kkj_lat="80" kkj_lng="71" visited="np"/>
-      <km2 page="62" kkj_lat="80" kkj_lng="72" visited="np"/>
-      <km2 page="62" kkj_lat="80" kkj_lng="73" visited="np"/>
-      <km2 page="62" kkj_lat="81" kkj_lng="70" visited="np"/>
-      <km2 page="62" kkj_lat="81" kkj_lng="71" visited="np"/>
-      <km2 page="62" kkj_lat="81" kkj_lng="72" visited="np"/>
-      <km2 page="62" kkj_lat="81" kkj_lng="73" visited="np"/>
-      <km2 page="62" kkj_lat="82" kkj_lng="70" visited="no"/>
-      <km2 page="62" kkj_lat="82" kkj_lng="71" visited="np"/>
-      <km2 page="62" kkj_lat="82" kkj_lng="72" visited="np"/>
-      <km2 page="62" kkj_lat="82" kkj_lng="73" visited="np"/>
-      <km2 page="62" kkj_lat="83" kkj_lng="70" visited="no"/>
-      <km2 page="62" kkj_lat="83" kkj_lng="71" visited="yes"/>
-      <km2 page="62" kkj_lat="83" kkj_lng="72" visited="yes"/>
-      <km2 page="62" kkj_lat="83" kkj_lng="73" visited="yes"/>
-      <km2 page="62" kkj_lat="84" kkj_lng="70" visited="yes"/>
-      <km2 page="62" kkj_lat="84" kkj_lng="71" visited="yes"/>
-      <km2 page="62" kkj_lat="84" kkj_lng="72" visited="no"/>
-      <km2 page="62" kkj_lat="84" kkj_lng="73" visited="yes"/>
-    </km2s>
   <page number="53" visited_all="true"/>
   <page number="e" visited_all="true"/>
   <page number="H" visited_all="true"/>
@@ -479,29 +341,6 @@
   <page number="35" visited_all="true"/>
   <page number="36" visited_all="true"/>
   <page number="J" visited_all="true"/>
-  <page number="63" visited_all="false"/>
-    <km2s>
-      <km2 page="63" kkj_lat="85" kkj_lng="70" visited="no"/>
-      <km2 page="63" kkj_lat="85" kkj_lng="71" visited="yes"/>
-      <km2 page="63" kkj_lat="85" kkj_lng="72" visited="yes"/>
-      <km2 page="63" kkj_lat="85" kkj_lng="73" visited="yes"/>
-      <km2 page="63" kkj_lat="86" kkj_lng="70" visited="yes"/>
-      <km2 page="63" kkj_lat="86" kkj_lng="71" visited="yes"/>
-      <km2 page="63" kkj_lat="86" kkj_lng="72" visited="yes"/>
-      <km2 page="63" kkj_lat="86" kkj_lng="73" visited="no"/>
-      <km2 page="63" kkj_lat="87" kkj_lng="70" visited="yes"/>
-      <km2 page="63" kkj_lat="87" kkj_lng="71" visited="no"/>
-      <km2 page="63" kkj_lat="87" kkj_lng="72" visited="yes"/>
-      <km2 page="63" kkj_lat="87" kkj_lng="73" visited="yes"/>
-      <km2 page="63" kkj_lat="88" kkj_lng="70" visited="yes"/>
-      <km2 page="63" kkj_lat="88" kkj_lng="71" visited="yes"/>
-      <km2 page="63" kkj_lat="88" kkj_lng="72" visited="yes"/>
-      <km2 page="63" kkj_lat="88" kkj_lng="73" visited="yes"/>
-      <km2 page="63" kkj_lat="89" kkj_lng="70" visited="yes"/>
-      <km2 page="63" kkj_lat="89" kkj_lng="71" visited="yes"/>
-      <km2 page="63" kkj_lat="89" kkj_lng="72" visited="no"/>
-      <km2 page="63" kkj_lat="89" kkj_lng="73" visited="no"/>
-    </km2s>
   <page number="54" visited_all="true"/>
   <page number="f" visited_all="true"/>
   <page number="K" visited_all="true"/>
@@ -537,29 +376,6 @@
   <page number="43" visited_all="true"/>
   <page number="44" visited_all="true"/>
   <page number="M" visited_all="true"/>
-  <page number="64" visited_all="false"/>
-    <km2s>
-      <km2 page="64" kkj_lat="90" kkj_lng="70" visited="yes"/>
-      <km2 page="64" kkj_lat="90" kkj_lng="71" visited="no"/>
-      <km2 page="64" kkj_lat="90" kkj_lng="72" visited="no"/>
-      <km2 page="64" kkj_lat="90" kkj_lng="73" visited="no"/>
-      <km2 page="64" kkj_lat="91" kkj_lng="70" visited="no"/>
-      <km2 page="64" kkj_lat="91" kkj_lng="71" visited="no"/>
-      <km2 page="64" kkj_lat="91" kkj_lng="72" visited="no"/>
-      <km2 page="64" kkj_lat="91" kkj_lng="73" visited="no"/>
-      <km2 page="64" kkj_lat="92" kkj_lng="70" visited="no"/>
-      <km2 page="64" kkj_lat="92" kkj_lng="71" visited="no"/>
-      <km2 page="64" kkj_lat="92" kkj_lng="72" visited="yes"/>
-      <km2 page="64" kkj_lat="92" kkj_lng="73" visited="yes"/>
-      <km2 page="64" kkj_lat="93" kkj_lng="70" visited="yes"/>
-      <km2 page="64" kkj_lat="93" kkj_lng="71" visited="yes"/>
-      <km2 page="64" kkj_lat="93" kkj_lng="72" visited="yes"/>
-      <km2 page="64" kkj_lat="93" kkj_lng="73" visited="no"/>
-      <km2 page="64" kkj_lat="94" kkj_lng="70" visited="yes"/>
-      <km2 page="64" kkj_lat="94" kkj_lng="71" visited="no"/>
-      <km2 page="64" kkj_lat="94" kkj_lng="72" visited="no"/>
-      <km2 page="64" kkj_lat="94" kkj_lng="73" visited="no"/>
-    </km2s>
   <page number="55" visited_all="true"/>
   <page number="g" visited_all="true"/>
   <page number="N" visited_all="true"/>
@@ -573,29 +389,6 @@
   <page number="48" visited_all="true"/>
   <page number="S" visited_all="true"/>
   <page number="T" visited_all="true"/>
-  <page number="65" visited_all="false"/>
-    <km2s>
-      <km2 page="65" kkj_lat="95" kkj_lng="70" visited="yes"/>
-      <km2 page="65" kkj_lat="95" kkj_lng="71" visited="yes"/>
-      <km2 page="65" kkj_lat="95" kkj_lng="72" visited="yes"/>
-      <km2 page="65" kkj_lat="95" kkj_lng="73" visited="yes"/>
-      <km2 page="65" kkj_lat="96" kkj_lng="70" visited="yes"/>
-      <km2 page="65" kkj_lat="96" kkj_lng="71" visited="yes"/>
-      <km2 page="65" kkj_lat="96" kkj_lng="72" visited="yes"/>
-      <km2 page="65" kkj_lat="96" kkj_lng="73" visited="yes"/>
-      <km2 page="65" kkj_lat="97" kkj_lng="70" visited="yes"/>
-      <km2 page="65" kkj_lat="97" kkj_lng="71" visited="no"/>
-      <km2 page="65" kkj_lat="97" kkj_lng="72" visited="no"/>
-      <km2 page="65" kkj_lat="97" kkj_lng="73" visited="no"/>
-      <km2 page="65" kkj_lat="98" kkj_lng="70" visited="yes"/>
-      <km2 page="65" kkj_lat="98" kkj_lng="71" visited="yes"/>
-      <km2 page="65" kkj_lat="98" kkj_lng="72" visited="no"/>
-      <km2 page="65" kkj_lat="98" kkj_lng="73" visited="no"/>
-      <km2 page="65" kkj_lat="99" kkj_lng="70" visited="yes"/>
-      <km2 page="65" kkj_lat="99" kkj_lng="71" visited="yes"/>
-      <km2 page="65" kkj_lat="99" kkj_lng="72" visited="no"/>
-      <km2 page="65" kkj_lat="99" kkj_lng="73" visited="no"/>
-    </km2s>
   <page number="56" visited_all="true"/>
   <page number="h" visited_all="true"/>
   <page number="i" visited_all="true"/>
@@ -609,27 +402,4 @@
   <page number="q" visited_all="true"/>
   <page number="r" visited_all="true"/>
   <page number="s" visited_all="true"/>
-  <page number="66" visited_all="false"/>
-    <km2s>
-      <km2 page="66" kkj_lat="100" kkj_lng="70" visited="yes"/>
-      <km2 page="66" kkj_lat="100" kkj_lng="71" visited="yes"/>
-      <km2 page="66" kkj_lat="100" kkj_lng="72" visited="yes"/>
-      <km2 page="66" kkj_lat="100" kkj_lng="73" visited="yes"/>
-      <km2 page="66" kkj_lat="101" kkj_lng="70" visited="no"/>
-      <km2 page="66" kkj_lat="101" kkj_lng="71" visited="no"/>
-      <km2 page="66" kkj_lat="101" kkj_lng="72" visited="no"/>
-      <km2 page="66" kkj_lat="101" kkj_lng="73" visited="yes"/>
-      <km2 page="66" kkj_lat="102" kkj_lng="70" visited="no"/>
-      <km2 page="66" kkj_lat="102" kkj_lng="71" visited="no"/>
-      <km2 page="66" kkj_lat="102" kkj_lng="72" visited="no"/>
-      <km2 page="66" kkj_lat="102" kkj_lng="73" visited="yes"/>
-      <km2 page="66" kkj_lat="103" kkj_lng="70" visited="yes"/>
-      <km2 page="66" kkj_lat="103" kkj_lng="71" visited="no"/>
-      <km2 page="66" kkj_lat="103" kkj_lng="72" visited="no"/>
-      <km2 page="66" kkj_lat="103" kkj_lng="73" visited="no"/>
-      <km2 page="66" kkj_lat="104" kkj_lng="70" visited="yes"/>
-      <km2 page="66" kkj_lat="104" kkj_lng="71" visited="yes"/>
-      <km2 page="66" kkj_lat="104" kkj_lng="72" visited="no"/>
-      <km2 page="66" kkj_lat="104" kkj_lng="73" visited="no"/>
-    </km2s>
 </pages>

@@ -3,13 +3,13 @@
 use warnings;
 use strict;
 
-my $lat_start = 6665000;
+my $lat_start = 6660000;
 my $lng_start = 2518000;
 
 my $lat_lng_mult = 1000;
 
-my $lats = 41;
-my $lngs = 53;
+my $lats = 46;
+my $lngs = 57;
 
 my $kkj_lat = 0;
 my $kkj_lng = 0;

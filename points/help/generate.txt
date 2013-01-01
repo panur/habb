@@ -4,7 +4,7 @@ EurefMuunnos.exe:
   Lähtötiedosto: generated_kkjs.txt
   Muunnostaulu tiedostoon: generated_wgs84s_.txt
 
-UltraEdit:
+UltraEdit (tyhjät rivit!):
   input: generated_wgs84s_.txt
   output: generated_wgs84s.txt
 
