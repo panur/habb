@@ -188,7 +188,7 @@ function TripGraph(master) {
     var pause = getControl("Pause trip playing", "Pause", getHandler("pause"));
     var stop = getControl("Stop trip playing", "Stop", getHandler("stop"));
     var slower1x = getControl("Slower (-1x)", "<", getHandler("slower1x"));
-    var faster1x = getControl("Faster (-1x)", ">", getHandler("faster1x"));
+    var faster1x = getControl("Faster (+1x)", ">", getHandler("faster1x"));
     var slower10x = getControl("Slower (-10x)", "<", getHandler("slower10x"));
     var faster10x = getControl("Faster (+10x)", ">", getHandler("faster10x"));
 
