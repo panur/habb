@@ -167,7 +167,15 @@ function Trips(master) {
     var streetViewDiv = document.getElementById("street_view");
     var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
     tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
-    tripsTable.style.width = Math.round(mapDiv.clientWidth * 0.68) + "px";
+    tripsTable.style.width = getWidth(Math.round(mapDiv.clientWidth * 0.68));
+
+    function getWidth(width) {
+      if (tripsTable.scrollWidth > width) {
+        return width + "px";
+      } else {
+        return "auto";
+      }
+    }
   }
 
   function setTableHideVisibility(visibility) {
