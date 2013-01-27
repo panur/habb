@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2012-08-28 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-01-27 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -372,9 +372,15 @@ function Trips(master) {
       tripsData.ccMaxSpeed,
       tripsData.ccAvgSpeed], row, "td");
 
-      function formatSpeed(v) {
-        return (v + ".0").substr(0, 4); /* returns 45.0 for 45 */
-      }
+    if ((master.tripGraph.isVisible()) && (i == state.selectedTripIndex)) {
+      row.className = "selectedTrip";
+    } else {
+      row.className = "";
+    }
+
+    function formatSpeed(v) {
+      return (v + ".0").substr(0, 4); /* returns 45.0 for 45 */
+    }
   }
 
   function updateTable(tripsData) {
@@ -386,12 +392,6 @@ function Trips(master) {
         tripsTable.deleteRow(i);
         var newRow = tripsTable.insertRow(i);
         createTripRow(tripsData[tripI], tripI, newRow);
-
-        if (tripI == state.selectedTripIndex) {
-          newRow.className = "selectedTrip";
-        } else {
-          newRow.className = "";
-        }
         tripI += 1;
       }
     }
