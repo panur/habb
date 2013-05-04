@@ -62,12 +62,18 @@ function getTrk(xml) {
   var speed = trks[0].getElementsByTagName("speed");
   var ele = trks[0].getElementsByTagName("ele");
   var trk = [];
+  var speedUnit = 1;
+
+  if (xml.documentElement.getAttribute("creator").indexOf("1.1") != -1) {
+    speedUnit = 3.6;
+  }
 
   for (var i = 0; i < trkpt.length; i++) {
     var trkElement = {};
     trkElement["trkpt"] = trkpt[i];
     trkElement["time"] = time[i];
     trkElement["speed"] = speed[i];
+    trkElement["speed"].firstChild.nodeValue *= speedUnit;
     trkElement["ele"] = ele[i];
     trk.push(trkElement);
 
