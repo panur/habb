@@ -3439,6 +3439,11 @@
 <time>2013-05-04T09:35:55Z</time>
 <speed>5.79</speed>
 </trkpt>
+<trkpt lat="60.191751" lon="24.605464">
+<ele>0.230000</ele>
+<time>2013-05-04T09:35:59Z</time>
+<speed>5.79</speed>
+</trkpt>
 <trkpt lat="60.191902" lon="24.605030">
 <ele>-3.000000</ele>
 <time>2013-05-04T09:36:09Z</time>
