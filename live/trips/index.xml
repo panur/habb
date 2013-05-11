@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130511.gpx"   visited_data="2013/20130508.xml" distance="95"  max_speed="46.4" avg_speed="22.2" duration="4:16:20" color="#C080FF" name="Hirsala-Medvastö"/>
   <trip gps_data="2013/20130508.gpx"   visited_data="2013/20130504.xml" distance="93"  max_speed="43.6" avg_speed="22.5" duration="4:07:10" color="#FFC080" name="Gumbostrand"/>
   <trip gps_data="2013/20130504.gpx"   visited_data="2013/20130101.xml" distance="86"  max_speed="42.4" avg_speed="21.6" duration="3:57:58" color="#FF80C0" name="Båtvik"/>
   <trip gps_data="2012/20120909.gpx"   visited_data="-"                 distance="143" max_speed="57.3" avg_speed="25.2" duration="5:40:40" color="#40C0FF" name="Hämeenlinna-Espoo"/>
