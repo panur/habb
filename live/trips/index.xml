@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130524.gpx"   visited_data="2013/20130519.xml" distance="117" max_speed="40.9" avg_speed="23.2" duration="5:03:44" color="#C04040" name="Nikkilä"/>
   <trip gps_data="2013/20130519.gpx"   visited_data="2013/20130514.xml" distance="102" max_speed="45.4" avg_speed="21.5" duration="4:43:50" color="#40C040" name="Eestinkylä-Långvik"/>
   <trip gps_data="2013/20130514.gpx"   visited_data="2013/20130511.xml" distance="110" max_speed="47.6" avg_speed="22.0" duration="4:58:34" color="#80C0FF" name="Söderkulla-Hindsby"/>
   <trip gps_data="2013/20130511.gpx"   visited_data="2013/20130508.xml" distance="95"  max_speed="46.4" avg_speed="22.2" duration="4:16:20" color="#C080FF" name="Hirsala-Medvastö"/>
