@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130529.gpx"   visited_data="-"                 distance="99"  max_speed="43.3" avg_speed="25.0" duration="3:56:41" color="#C0FFC0" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="2013/20130528.gpx"   visited_data="-"                 distance="99"  max_speed="42.2" avg_speed="26.5" duration="3:44:07" color="#FFC0C0" name="Espoo-Hämeenlinna"/>
   <trip gps_data="2013/20130524.gpx"   visited_data="2013/20130519.xml" distance="117" max_speed="40.9" avg_speed="23.2" duration="5:03:44" color="#C04040" name="Nikkilä"/>
   <trip gps_data="2013/20130519.gpx"   visited_data="2013/20130514.xml" distance="102" max_speed="45.4" avg_speed="21.5" duration="4:43:50" color="#40C040" name="Eestinkylä-Långvik"/>
   <trip gps_data="2013/20130514.gpx"   visited_data="2013/20130511.xml" distance="110" max_speed="47.6" avg_speed="22.0" duration="4:58:34" color="#80C0FF" name="Söderkulla-Hindsby"/>
