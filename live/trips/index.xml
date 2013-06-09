@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130609.gpx"   visited_data="2013/20130524.xml" distance="109" max_speed="45.7" avg_speed="22.4" duration="4:51:05" color="#FFC0C0" name="Upinniemi"/>
   <trip gps_data="2013/20130605.gpx"   visited_data="-"                 distance="124" max_speed="43.6" avg_speed="26.5" duration="4:40:47" color="#4040C0" name="Rovaniemi-Kemi"/>
   <trip gps_data="2013/20130604.gpx"   visited_data="-"                 distance="88"  max_speed="49.9" avg_speed="24.8" duration="3:32:23" color="#80C080" name="Kemijärvi-Rovaniemi"/>
   <trip gps_data="2013/20130603.gpx"   visited_data="-"                 distance="135" max_speed="44.7" avg_speed="24.7" duration="5:27:54" color="#8080C0" name="Kuusamo-Kemijärvi"/>
   <trip gps_data="2013/20130602.gpx"   visited_data="-"                 distance="134" max_speed="45.0" avg_speed="24.8" duration="5:24:16" color="#C08080" name="Pudasjärvi-Kuusamo"/>
   <trip gps_data="2013/20130601.gpx"   visited_data="-"                 distance="87"  max_speed="34.6" avg_speed="25.9" duration="3:22:59" color="#C0C0FF" name="Oulu-Pudasjärvi"/>
   <trip gps_data="2013/20130529.gpx"   visited_data="-"                 distance="99"  max_speed="43.3" avg_speed="25.0" duration="3:56:41" color="#C0FFC0" name="Hämeenlinna-Espoo"/>
-  <trip gps_data="2013/20130528.gpx"   visited_data="-"                 distance="99"  max_speed="42.2" avg_speed="26.5" duration="3:44:07" color="#FFC0C0" name="Espoo-Hämeenlinna"/>
+  <trip gps_data="2013/20130528.gpx"   visited_data="-"                 distance="99"  max_speed="42.2" avg_speed="26.5" duration="3:44:07" color="#C0FF80" name="Espoo-Hämeenlinna"/>
   <trip gps_data="2013/20130524.gpx"   visited_data="2013/20130519.xml" distance="117" max_speed="40.9" avg_speed="23.2" duration="5:03:44" color="#C04040" name="Nikkilä"/>
   <trip gps_data="2013/20130519.gpx"   visited_data="2013/20130514.xml" distance="102" max_speed="45.4" avg_speed="21.5" duration="4:43:50" color="#40C040" name="Eestinkylä-Långvik"/>
   <trip gps_data="2013/20130514.gpx"   visited_data="2013/20130511.xml" distance="110" max_speed="47.6" avg_speed="22.0" duration="4:58:34" color="#80C0FF" name="Söderkulla-Hindsby"/>
