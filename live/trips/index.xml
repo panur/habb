@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130620.gpx"   visited_data="-"                 distance="125" max_speed="50.3" avg_speed="23.1" duration="5:25:57" color="#804020" name="Mikkeli-Kouvola"/>
+  <trip gps_data="2013/20130619.gpx"   visited_data="-"                 distance="119" max_speed="45.7" avg_speed="25.7" duration="4:37:20" color="#208040" name="Jyväskylä-Mikkeli"/>
+  <trip gps_data="2013/20130618.gpx"   visited_data="-"                 distance="109" max_speed="48.0" avg_speed="24.7" duration="4:24:11" color="#204080" name="Orivesi-Jyväskylä"/>
+  <trip gps_data="2013/20130617.gpx"   visited_data="-"                 distance="117" max_speed="44.0" avg_speed="24.3" duration="4:49:39" color="#802040" name="Hämeenlinna-Orivesi"/>
   <trip gps_data="2013/20130615.gpx"   visited_data="-"                 distance="130" max_speed="45.7" avg_speed="25.8" duration="5:02:05" color="#002000" name="Inkoo-Kerava"/>
   <trip gps_data="2013/20130609.gpx"   visited_data="2013/20130524.xml" distance="109" max_speed="45.7" avg_speed="22.4" duration="4:51:05" color="#FFC0C0" name="Upinniemi"/>
   <trip gps_data="2013/20130605.gpx"   visited_data="-"                 distance="124" max_speed="43.6" avg_speed="26.5" duration="4:40:47" color="#4040C0" name="Rovaniemi-Kemi"/>
