@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130630.gpx"   visited_data="2013/20130609.xml" distance="154" max_speed="41.2" avg_speed="24.1" duration="6:23:50" color="#000020" name="Pornainen"/>
   <trip gps_data="2013/20130620.gpx"   visited_data="-"                 distance="125" max_speed="50.3" avg_speed="23.1" duration="5:25:57" color="#804020" name="Mikkeli-Kouvola"/>
   <trip gps_data="2013/20130619.gpx"   visited_data="-"                 distance="119" max_speed="45.7" avg_speed="25.7" duration="4:37:20" color="#208040" name="Jyväskylä-Mikkeli"/>
   <trip gps_data="2013/20130618.gpx"   visited_data="-"                 distance="109" max_speed="48.0" avg_speed="24.7" duration="4:24:11" color="#204080" name="Orivesi-Jyväskylä"/>
