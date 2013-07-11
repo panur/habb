@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130710.gpx"   visited_data="-"                 distance="143" max_speed="35.1" avg_speed="26.5" duration="5:24:34" color="#FF2080" name="Kokkola-Seinäjoki"/>
+  <trip gps_data="2013/20130709.gpx"   visited_data="-"                 distance="141" max_speed="41.9" avg_speed="27.9" duration="5:02:51" color="#80FF20" name="Kankaanpää-Seinäjoki"/>
+  <trip gps_data="2013/20130708.gpx"   visited_data="-"                 distance="120" max_speed="35.4" avg_speed="23.0" duration="5:14:25" color="#402080" name="Säkylä-Kankaanpää"/>
+  <trip gps_data="2013/20130707.gpx"   visited_data="-"                 distance="131" max_speed="37.2" avg_speed="24.2" duration="5:23:31" color="#408020" name="Salo-Säkylä"/>
+  <trip gps_data="2013/20130706.gpx"   visited_data="-"                 distance="108" max_speed="46.4" avg_speed="22.3" duration="4:50:23" color="#FF8020" name="Karjaa-Salo"/>
   <trip gps_data="2013/20130630.gpx"   visited_data="2013/20130609.xml" distance="154" max_speed="41.2" avg_speed="24.1" duration="6:23:50" color="#000020" name="Pornainen"/>
   <trip gps_data="2013/20130620.gpx"   visited_data="-"                 distance="125" max_speed="50.3" avg_speed="23.1" duration="5:25:57" color="#804020" name="Mikkeli-Kouvola"/>
   <trip gps_data="2013/20130619.gpx"   visited_data="-"                 distance="119" max_speed="45.7" avg_speed="25.7" duration="4:37:20" color="#208040" name="Jyväskylä-Mikkeli"/>
