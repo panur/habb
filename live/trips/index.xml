@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130713.gpx"   visited_data="-"                 distance="131" max_speed="46.4" avg_speed="25.7" duration="5:06:34" color="#20FF80" name="Hämeenlinna-Haarajoki"/>
+  <trip gps_data="2013/20130712.gpx"   visited_data="-"                 distance="130" max_speed="53.3" avg_speed="24.5" duration="5:20:05" color="#200000" name="Salo-Hämeenlinna"/>
   <trip gps_data="2013/20130710.gpx"   visited_data="-"                 distance="143" max_speed="35.1" avg_speed="26.5" duration="5:24:34" color="#FF2080" name="Kokkola-Seinäjoki"/>
   <trip gps_data="2013/20130709.gpx"   visited_data="-"                 distance="141" max_speed="41.9" avg_speed="27.9" duration="5:02:51" color="#80FF20" name="Kankaanpää-Seinäjoki"/>
   <trip gps_data="2013/20130708.gpx"   visited_data="-"                 distance="120" max_speed="35.4" avg_speed="23.0" duration="5:14:25" color="#402080" name="Säkylä-Kankaanpää"/>
