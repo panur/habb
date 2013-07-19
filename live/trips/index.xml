@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130719.gpx"   visited_data="-"                 distance="136" max_speed="38.1" avg_speed="24.9" duration="5:27:33" color="#FFC020" name="Joensuu-Parikkala"/>
+  <trip gps_data="2013/20130718.gpx"   visited_data="-"                 distance="138" max_speed="43.3" avg_speed="26.2" duration="5:16:23" color="#FF20C0" name="Kuopio-Joensuu"/>
+  <trip gps_data="2013/20130717.gpx"   visited_data="-"                 distance="140" max_speed="42.2" avg_speed="24.7" duration="5:40:20" color="#20FFC0" name="Suolahti-Kuopio"/>
+  <trip gps_data="2013/20130716.gpx"   visited_data="-"                 distance="124" max_speed="50.3" avg_speed="24.8" duration="5:00:42" color="#8020FF" name="Mänttä-Suolahti"/>
+  <trip gps_data="2013/20130715.gpx"   visited_data="-"                 distance="128" max_speed="51.1" avg_speed="24.5" duration="5:14:02" color="#2080FF" name="Tampere-Mänttä"/>
   <trip gps_data="2013/20130713.gpx"   visited_data="-"                 distance="131" max_speed="46.4" avg_speed="25.7" duration="5:06:34" color="#20FF80" name="Hämeenlinna-Haarajoki"/>
   <trip gps_data="2013/20130712.gpx"   visited_data="-"                 distance="130" max_speed="53.3" avg_speed="24.5" duration="5:20:05" color="#200000" name="Salo-Hämeenlinna"/>
   <trip gps_data="2013/20130710.gpx"   visited_data="-"                 distance="143" max_speed="35.1" avg_speed="26.5" duration="5:24:34" color="#FF2080" name="Kokkola-Seinäjoki"/>
