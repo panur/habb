@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-05-04 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-07-20 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -14,7 +14,7 @@ function Trips(master) {
     s.visitedDataIndex = -1;
     s.numberOfVisibleTrips = 0;
     s.directionMarkers = [];
-    s.areMarkersVisible = true;
+    s.areMarkersVisible = false;
     s.fileIndex = 0;
     s.data = [];
     s.selectedTripIndex = -1;
