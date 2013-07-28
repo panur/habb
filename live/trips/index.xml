@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130726.gpx"   visited_data="-"                 distance="101" max_speed="52.4" avg_speed="22.8" duration="4:25:47" color="#8020C0" name="Iisalmi-Kuopio"/>
+  <trip gps_data="2013/20130725.gpx"   visited_data="-"                 distance="121" max_speed="52.5" avg_speed="23.9" duration="5:03:13" color="#80C020" name="Nurmes-Iisalmi"/>
+  <trip gps_data="2013/20130724.gpx"   visited_data="-"                 distance="124" max_speed="42.6" avg_speed="24.4" duration="5:05:34" color="#20C0FF" name="Kajaani-Nurmes"/>
+  <trip gps_data="2013/20130723.gpx"   visited_data="-"                 distance="110" max_speed="30.7" avg_speed="21.6" duration="5:06:31" color="#C0FF20" name="Kärsämäki-Kajaani"/>
+  <trip gps_data="2013/20130722.gpx"   visited_data="-"                 distance="139" max_speed="39.1" avg_speed="24.0" duration="5:47:25" color="#C020FF" name="Kokkola-Kärsämäki"/>
   <trip gps_data="2013/20130719.gpx"   visited_data="-"                 distance="136" max_speed="38.1" avg_speed="24.9" duration="5:27:33" color="#FFC020" name="Joensuu-Parikkala"/>
   <trip gps_data="2013/20130718.gpx"   visited_data="-"                 distance="138" max_speed="43.3" avg_speed="26.2" duration="5:16:23" color="#FF20C0" name="Kuopio-Joensuu"/>
   <trip gps_data="2013/20130717.gpx"   visited_data="-"                 distance="140" max_speed="42.2" avg_speed="24.7" duration="5:40:20" color="#20FFC0" name="Suolahti-Kuopio"/>
