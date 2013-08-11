@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130811.gpx"   visited_data="2013/20130630.xml" distance="118" max_speed="41.9" avg_speed="23.8" duration="4:56:06" color="#2080C0" name="Nikkilä-Karhusaari"/>
   <trip gps_data="2013/20130726.gpx"   visited_data="-"                 distance="101" max_speed="52.4" avg_speed="22.8" duration="4:25:47" color="#8020C0" name="Iisalmi-Kuopio"/>
   <trip gps_data="2013/20130725.gpx"   visited_data="-"                 distance="121" max_speed="52.5" avg_speed="23.9" duration="5:03:13" color="#80C020" name="Nurmes-Iisalmi"/>
   <trip gps_data="2013/20130724.gpx"   visited_data="-"                 distance="124" max_speed="42.6" avg_speed="24.4" duration="5:05:34" color="#20C0FF" name="Kajaani-Nurmes"/>
