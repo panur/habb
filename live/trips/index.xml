@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2013/20130824.gpx"   visited_data="-"                 distance="117" max_speed="47.3" avg_speed="24.4" duration="4:49:14" color="#C08020" name="Siuntio-Kerava"/>
   <trip gps_data="2013/20130818.gpx"   visited_data="-"                 distance="130" max_speed="43.6" avg_speed="25.0" duration="5:12:40" color="#20C080" name="Hämeenlinna-Lahti"/>
   <trip gps_data="2013/20130816.gpx"   visited_data="-"                 distance="130" max_speed="45.1" avg_speed="30.9" duration="4:12:55" color="#C02080" name="Turku-Toijala"/>
   <trip gps_data="2013/20130811.gpx"   visited_data="2013/20130630.xml" distance="118" max_speed="41.9" avg_speed="23.8" duration="4:56:06" color="#2080C0" name="Nikkilä-Karhusaari"/>
