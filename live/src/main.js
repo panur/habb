@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-10 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-10-18 */
 
 function main() {
   /* note: master must not be modified outside of this function */
@@ -12,8 +12,15 @@ function main() {
     panControl: true,
     zoomControl: true,
     scaleControl: true,
-    streetViewControl: true
+    streetViewControl: true,
+    styles: [{
+      featureType: "road.arterial",
+      elementType: "geometry.fill",
+      stylers: [{color: "#FBF8A5" }]
+    }]
   };
+
+  google.maps.visualRefresh = true;
 
   master.gm = new google.maps.Map(gmElement, gmOptions);
 

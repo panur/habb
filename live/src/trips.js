@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-07-20 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-10-18 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -145,7 +145,10 @@ function Trips(master) {
         var text = "Loading " + (1 + state.fileIndex) + "/" +
                    state.filenames.tripsDatas.length;
         tripsControl.innerHTML = "";
-        tripsControl.appendChild(document.createTextNode(text));
+        var e = document.createElement("div");
+        e.className = "tripsTable";
+        e.appendChild(document.createTextNode(text));
+        tripsControl.appendChild(e);
         setDataToState();
       }
     } else {

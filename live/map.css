@@ -52,27 +52,27 @@ tr.menuItem {
 div.tripsControl {
   position: absolute;
   top: 5px;
-  right: 120px;
+  right: 105px;
   overflow: hidden;
   color: #000000;
-  background-color: #FFFFFF;
-  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 4px;
+  box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
 
 div.showTripsTable {
-  border: 1px solid #717B87;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   padding: 1px 6px;
-  font-size: 13px;
-  font-family: Arial,sans-serif;
+  font-size: 11px;
+  font-family: Roboto,Arial,sans-serif;
   text-align: center;
-  color: #000000;
+  color: #565656;
   background-color: #FFFFFF;
+  background-clip: padding-box;
   cursor: pointer;
 }
 
 div.showTripsTable:hover {
-  background: #F3F3F3;
+  background: #EBEBEB;
 }
 
 div.tripsSummary {
@@ -82,13 +82,15 @@ div.tripsSummary {
 
 div.tripsTable {
   overflow: auto;
+  color: #000000;
+  background-color: #FFFFFF;
 }
 
 img.hideTripsTable {
   border: 0px;
   position: absolute;
   top: 5px;
-  right: 120px;
+  right: 105px;
   cursor: pointer;
   z-index: 10;
 }
@@ -130,21 +132,21 @@ div.trip_graph {
 }
 
 a.real_link:link {
-  color: #0000ff;
-  background-color: #ffffff;
+  color: #0000FF;
+  background-color: #FFFFFF;
 }
 
 a.real_link:link:hover {
-  color: #ffffff;
-  background-color: #0000ff;
+  color: #FFFFFF;
+  background-color: #0000FF;
 }
 
 a.real_link:visited {
   color: #606060;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 a.real_link:visited:hover {
-  color: #ffffff;
+  color: #FFFFFF;
   background-color: #606060;
 }
