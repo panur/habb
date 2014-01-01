@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-01-01 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-01-01 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -17,6 +17,7 @@ function Areas(master) {
         "2010":"visited_datas/2010.xml",
         "2011":"visited_datas/2011.xml",
         "2012":"visited_datas/2012.xml",
+        "2013":"visited_datas/2013.xml",
         "latest":"visited_datas/latest.xml"}};
     s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
@@ -59,7 +60,7 @@ function Areas(master) {
 
     if (s.isExtensionsShown) {
       s.filenames.points = "generated_points_ext.xml";
-      s.latPages = 9;
+      s.latPages = 10;
       s.lngPages = 14;
       s.kkjStart = {lat:60, lng:18};
 
@@ -67,13 +68,13 @@ function Areas(master) {
                 {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:6},
                 {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:11},
                 {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:13},
-                {n:26, lngOffsetKm:0,  latOffsetKm:20, lengthP:14}];
+                {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:14}];
 
-      s.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:9},
-                {n:4,  lngOffsetKm:21, latOffsetKm:5,  lengthP:8},
-                {n:20, lngOffsetKm:25, latOffsetKm:10, lengthP:7},
-                {n:8,  lngOffsetKm:45, latOffsetKm:15, lengthP:6},
-                {n:4,  lngOffsetKm:53, latOffsetKm:20, lengthP:5}];
+      s.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:10},
+                {n:4,  lngOffsetKm:21, latOffsetKm:5,  lengthP:9},
+                {n:20, lngOffsetKm:25, latOffsetKm:10, lengthP:8},
+                {n:8,  lngOffsetKm:45, latOffsetKm:15, lengthP:7},
+                {n:4,  lngOffsetKm:53, latOffsetKm:20, lengthP:6}];
 
       s.pages = [57,  58,  59,  60,  61,   0,   0,   0,   0,   0,   0,   0,   0,  0,
                  49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,  0,
@@ -83,7 +84,8 @@ function Areas(master) {
                  53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J', 63,
                  54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M', 64,
                  55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T', 65,
-                 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66];
+                 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66,
+                 67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, 80];
     }
 
     return s;
