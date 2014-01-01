@@ -20,8 +20,6 @@ function main() {
     }]
   };
 
-  google.maps.visualRefresh = true;
-
   master.gm = new google.maps.Map(gmElement, gmOptions);
 
   master.utils = new Utils();
