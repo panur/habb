@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-12 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -7,6 +7,7 @@ function Menu(master) {
   function getState() {
     var s = {};
 
+    s.selectedParentMenuItem = "";
     s.selectedMenuItem = "";
 
     return s;
@@ -20,40 +21,43 @@ function Menu(master) {
         hideMenu();
       } else {
         var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
-        showMenu(mouseEvent.latLng, getMenuLocation(mouseEvent.pixel),
-                 menuItems, "menu");
-      }
-
-      function getMenuLocation(pixel) {
-        var menuLocation = {};
-
-        if (pixel.y > (window.innerHeight / 2)) {
-          menuLocation.bottom = (window.innerHeight - pixel.y) + "px";
-        } else {
-          menuLocation.top = pixel.y + "px";
-        }
-        if (pixel.x > (window.innerWidth / 2)) {
-          menuLocation.right = (window.innerWidth - pixel.x) + "px";
-        } else {
-          menuLocation.left = pixel.x + "px";
-        }
-
-        return menuLocation;
+        var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
+                    "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
+        showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
       }
     });
   }
 
-  function hideMenu() {
-    var parent = document.getElementById("dynamic_divs");
-    parent.removeChild(document.getElementById("menu"));
-    hideSubMenu();
+  function getMenuLocation(rect) {
+    var menuLocation = {};
+
+    if (rect.top > (window.innerHeight / 2)) {
+      menuLocation.bottom = (window.innerHeight - rect.bottom) + "px";
+    } else {
+      menuLocation.top = rect.top + "px";
+    }
+    if (rect.right > (window.innerWidth / 2)) {
+      menuLocation.right = (window.innerWidth - rect.left) + "px";
+    } else {
+      menuLocation.left = rect.right + "px";
+    }
+
+    return menuLocation;
   }
 
-  function hideSubMenu() {
+  function hideMenu() {
+    hideSubMenu("menu");
+  }
+
+  function hideSubMenu(baseDivId) {
     var parent = document.getElementById("dynamic_divs");
     if (parent) {
-      if (document.getElementById("subMenu")) {
-        parent.removeChild(document.getElementById("subMenu"));
+      for (var divId = baseDivId; true; divId = "sub" + divId) {
+        if (document.getElementById(divId)) {
+          parent.removeChild(document.getElementById(divId));
+        } else {
+          break;
+        }
       }
     }
   }
@@ -62,7 +66,7 @@ function Menu(master) {
     var menu = document.createElement("div");
     menu.id = divId;
     menu.className = "menu";
-    menu.appendChild(createMenuTable(latLng, menuItems));
+    menu.appendChild(createMenuTable(latLng, menuItems, divId));
 
     if (menuLocation.bottom) {
       menu.style.bottom = menuLocation.bottom;
@@ -80,7 +84,7 @@ function Menu(master) {
     document.getElementById("dynamic_divs").appendChild(menu);
   }
 
-  function createMenuTable(latLng, menuItems) {
+  function createMenuTable(latLng, menuItems, divId) {
     var table = document.createElement("table");
     table.className = "menu";
 
@@ -97,11 +101,20 @@ function Menu(master) {
       row.onclick = function () {processMenuClick(row);};
 
       function processMouseOver(rowElement) {
-        selectMenuItem(rowElement);
+        var subMenuItems = getSubMenuItems();
+        selectMenuItem();
+        hideSubMenu("sub" + divId);
 
-        if (isMenuItem(rowElement)) {
+        if (subMenuItems.length > 0) {
+          state.selectedParentMenuItem = rowElement.textContent;
+          state.selectedMenuItem = "";
+          var rect = rowElement.getBoundingClientRect();
+          showMenu(latLng, getMenuLocation(rect), subMenuItems, "sub" + divId);
+        } else {
           state.selectedMenuItem = rowElement.textContent;
-          hideSubMenu();
+        }
+
+        function getSubMenuItems() {
           var subMenuItems = [];
 
           if (rowElement.textContent == "Open...") {
@@ -110,70 +123,40 @@ function Menu(master) {
                             "OpenStreetMap"];
           } else if (rowElement.textContent == "Areas...") {
             subMenuItems = master.areas.getMenuItems();
+          } else if (rowElement.textContent == "View...") {
+            subMenuItems = master.areas.getViewMenuItems();
           } else if (rowElement.textContent == "Trips...") {
             subMenuItems = master.trips.getMenuItems();
           }
 
-          if (subMenuItems.length > 0) {
-            showMenu(latLng, getSubMenuLocation(rowElement), subMenuItems,
-                     "subMenu");
-          }
+          return subMenuItems;
         }
 
-        function getSubMenuLocation(rowElement) {
-          var rect = rowElement.getBoundingClientRect();
-          var subMenuLocation = {};
-
-          if (rect.top > (window.innerHeight / 2)) {
-            subMenuLocation.bottom = (window.innerHeight - rect.bottom) + "px";
-          } else {
-            subMenuLocation.top = rect.top + "px";
-          }
-          if (rect.right > (window.innerWidth / 2)) {
-            subMenuLocation.right = (window.innerWidth - rect.left) + "px";
-          } else {
-            subMenuLocation.left = rect.right + "px";
-          }
-
-          return subMenuLocation;
-        }
-
-        function selectMenuItem(rowElement) {
+        function selectMenuItem() {
           var rows = rowElement.parentNode.parentNode.rows;
           for (var i = 0; i < rows.length; i++) {
             rows[i].className = "menuItem";
           }
           rowElement.className = "selectedMenuItem";
         }
-
-      }
-
-      function isMenuItem(rowElement) {
-        var node = rowElement;
-        while (node = node.parentNode) {
-          if (node.nodeName == "DIV") {
-            return node.id == "menu";
-          }
-        }
       }
 
       function processMenuClick(rowElement) {
-        if (isMenuItem(rowElement)) {
-          if (rowElement.textContent == "Zoom") {
-            hideMenu();
-            master.map.zoomToPoint(latLng);
-          }
-        } else {
+        if (state.selectedMenuItem == "Zoom") {
+          hideMenu();
+          master.map.zoomToPoint(latLng);
+        } else if (state.selectedMenuItem != "") {
           hideMenu();
 
-          if (state.selectedMenuItem == "Open...") {
+          if (state.selectedParentMenuItem == "Open...") {
             master.map.openOtherMap(rowElement.textContent, latLng);
-          } else if (state.selectedMenuItem == "Areas...") {
+          } else if ((state.selectedParentMenuItem == "Areas...") ||
+                     (state.selectedParentMenuItem == "View...")) {
             master.areas.processMenuCommand(rowElement.textContent);
-          } else if (state.selectedMenuItem == "Trips...") {
+          } else if (state.selectedParentMenuItem == "Trips...") {
             master.trips.processMenuCommand(rowElement.textContent);
           } else {
-            alert("Error: unknown menu item: " + state.selectedMenuItem);
+            alert("Error: unknown menu item: " + state.selectedParentMenuItem);
           }
         }
       }

@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-01-01 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-12 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -718,17 +718,25 @@ function Areas(master) {
         menuItems.push("Show extensions");
       }
 
-      for (var i in state.filenames.visitedDatas) {
-        if (state.filenames.visitedData != state.filenames.visitedDatas[i]) {
-          if (i == "latest") {
-            menuItems.push("View latest");
-          } else {
-            menuItems.push("View end of " + i);
-          }
-        }
-      }
+      menuItems.push("View...");
     } else {
       menuItems.push("Show");
+    }
+
+    return menuItems;
+  }
+
+  this.getViewMenuItems = function () {
+    var menuItems = [];
+
+    for (var i in state.filenames.visitedDatas) {
+      if (state.filenames.visitedData != state.filenames.visitedDatas[i]) {
+        if (i == "latest") {
+          menuItems.push("latest");
+        } else {
+          menuItems.push("end of " + i);
+        }
+      }
     }
 
     return menuItems;
@@ -743,10 +751,10 @@ function Areas(master) {
     } else if ((command == "Hide extensions") ||
                (command == "Show extensions")) {
       toggleExtensionsVisibility();
-    } else if (command == "View latest") {
+    } else if (command == "latest") {
       that.changeVisitedData("latest");
-    } else if (/View end of \d\d\d\d/.test(command)) {
-      that.changeVisitedData(command.substr(12, 4));
+    } else if (/end of \d\d\d\d/.test(command)) {
+      that.changeVisitedData(command.substr(7, 4));
     }
   }
 }
