@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-12 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-19 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -127,6 +127,10 @@ function Menu(master) {
             subMenuItems = master.areas.getViewMenuItems();
           } else if (rowElement.textContent == "Trips...") {
             subMenuItems = master.trips.getMenuItems();
+          } else if (rowElement.textContent == "Show...") {
+            subMenuItems = master.trips.getShowMenuItems();
+          } else if (rowElement.textContent == "Hide...") {
+            subMenuItems = master.trips.getHideMenuItems();
           }
 
           return subMenuItems;
@@ -153,8 +157,11 @@ function Menu(master) {
           } else if ((state.selectedParentMenuItem == "Areas...") ||
                      (state.selectedParentMenuItem == "View...")) {
             master.areas.processMenuCommand(rowElement.textContent);
-          } else if (state.selectedParentMenuItem == "Trips...") {
-            master.trips.processMenuCommand(rowElement.textContent);
+          } else if ((state.selectedParentMenuItem == "Trips...") ||
+                     (state.selectedParentMenuItem == "Show...") ||
+                     (state.selectedParentMenuItem == "Hide...")) {
+            master.trips.processMenuCommand(state.selectedParentMenuItem,
+                                            rowElement.textContent);
           } else {
             alert("Error: unknown menu item: " + state.selectedParentMenuItem);
           }

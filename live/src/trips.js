@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-10-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-19 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -98,13 +98,19 @@ function Trips(master) {
   }
 
   function setVisibilityOfAllTrips(visibility) {
+    setVisibilityOfTripsByYear(visibility, "all");
+  }
+
+  function setVisibilityOfTripsByYear(visibility, year) {
     if (typeof(state.data) == "undefined") {
       return;
     }
 
     for (var i = state.data.length - 1; i >= 0; i--) {
       if (state.data[i].visibility != visibility) {
-        toggleTripVisibility(i);
+        if ((year == "all") || (year == state.data[i].date.substr(0, 4))) {
+          toggleTripVisibility(i);
+        }
       }
     }
 
@@ -540,16 +546,15 @@ function Trips(master) {
     var menuItems = [];
 
     if (state.isTableShown == false) {
-      menuItems.push("Show table");
+      menuItems.push("Open table");
     }
 
     if (state.data.length > 0) {
       if (state.numberOfVisibleTrips != state.data.length) {
-        menuItems.push("Show all");
+        menuItems.push("Show...");
       }
       if (state.numberOfVisibleTrips > 0) {
-        menuItems.push("Hide all");
-
+        menuItems.push("Hide...");
         if (state.areMarkersVisible) {
           menuItems.push("Hide markers");
         } else {
@@ -561,14 +566,59 @@ function Trips(master) {
     return menuItems;
   }
 
-  this.processMenuCommand = function (command) {
-    if (command == "Show table") {
+  this.getShowMenuItems = function () {
+    var menuItems = [];
+
+    addYearMenuItems(menuItems, "visible")
+
+    if (state.numberOfVisibleTrips != state.data.length) {
+      menuItems.push("all");
+    }
+
+    return menuItems;
+  }
+
+  this.getHideMenuItems = function () {
+    var menuItems = [];
+
+    addYearMenuItems(menuItems, "hidden")
+
+    if (state.numberOfVisibleTrips > 0) {
+      menuItems.push("all");
+    }
+
+    return menuItems;
+  }
+
+  function addYearMenuItems(menuItems, visibility) {
+    var years = []
+
+    for (var i = 0; i < state.data.length; i++) {
+      if (state.data[i].visibility != visibility) {
+        var year = state.data[i].date.substr(0, 4)
+        if (years.indexOf(year) == -1) {
+          years.push(year)
+        }
+      }
+    }
+
+    years.reverse()
+
+    for (var i = 0; i < years.length; i++) {
+      menuItems.push("year " + years[i]);
+    }
+  }
+
+  this.processMenuCommand = function (menuItem, command) {
+    var visibility = {"Show...":"visible", "Hide...":"hidden"}[menuItem]
+
+    if (command == "Open table") {
       state.isTableShown = true;
       that.showControl();
-    } else if (command == "Show all") {
-      setVisibilityOfAllTrips("visible");
-    } else if (command == "Hide all") {
-      setVisibilityOfAllTrips("hidden");
+    } else if (/year \d\d\d\d/.test(command)) {
+      setVisibilityOfTripsByYear(visibility, command.substr(5, 4))
+    } else if (command == "all") {
+      setVisibilityOfAllTrips(visibility);
     } else if ((command == "Hide markers") || (command == "Show markers")) {
       toggleMaxMarkersVisibility();
     }
