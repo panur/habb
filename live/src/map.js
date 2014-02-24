@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-01-01 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-24 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -99,7 +99,7 @@ function Map(master) {
     var url = "";
 
     if (otherMapType == "Kansalaisen karttapaikka") {
-      var kkjOffset = master.areas.getKkjOffsetOrStart(point, "offset");
+      var kkjOffset = master.areas.getKkjOffset(point);
       url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
 
       if (kkjOffset != null) {
@@ -109,26 +109,18 @@ function Map(master) {
         url += "/koordinaattihaku.html?y=" + point.lat() + "&x=" + point.lng() +
           "&srsName=EPSG%3A4258&scale=8000";
       }
-    } else if (otherMapType == "kartta.hel.fi") {
-      var kkjStart = master.areas.getKkjOffsetOrStart(point, "start");
-      if (kkjStart != null) {
-        url = "http://kartta.hel.fi/opas/main/?n=" +
-          kkjStart.y + "500&e=" + kkjStart.x + "500";
-      } else {
-        url = "http://kartta.hel.fi/";
-      }
     } else if (otherMapType == "Google Maps") {
       url = "http://maps.google.com/?ll=" +
         point.lat() +"," + point.lng() + "&z=" + zl;
-    } else if (otherMapType == "Nokia Maps") {
-      url = "http://maps.nokia.com/#|" +
-        point.lat() +"|" + point.lng() + "|" + zl + "|0|0|normal.day?plcsDl=";
+    } else if (otherMapType == "HERE Maps") {
+      url = "http://here.com/" +
+        point.lat() +"," + point.lng() + "," + zl + ",0,0,normal.day";
     } else if (otherMapType == "Bing Maps") {
       url = "http://www.bing.com/maps/default.aspx?cp=" +
         point.lat() + "~" + point.lng() + "&lvl=" + zl;
     } else if (otherMapType == "OpenStreetMap") {
-      url = "http://www.openstreetmap.org/?lat=" +
-        point.lat() + "&lon=" + point.lng() + "&zoom=" + zl;
+      url = "http://www.openstreetmap.org/#map=" +
+        zl + "/" + point.lat() + "/" + point.lng();
     }
 
     window.open(url);

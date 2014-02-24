@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-12 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-24 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -542,20 +542,14 @@ function Areas(master) {
     return null;
   }
 
-  this.getKkjOffsetOrStart = function (point, offsetOrStart) {
+  this.getKkjOffset = function (point) {
     var km2XY = getKm2XYFromPoint(point);
     var kkj = null;
 
     if (km2XY != null) {
       kkj = {y: km2XY.y, x: km2XY.x};
-
-      if (offsetOrStart == "offset") {
-        kkj.y += state.kkjOffset.lat;
-        kkj.x += state.kkjOffset.lng;
-      } else {
-        kkj.y += state.kkjStart.lat;
-        kkj.x += state.kkjStart.lng;
-      }
+      kkj.y += state.kkjOffset.lat;
+      kkj.x += state.kkjOffset.lng;
     }
 
     return kkj;
