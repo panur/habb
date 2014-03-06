@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-24 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-03-06 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -118,7 +118,8 @@ function Menu(master) {
           var subMenuItems = [];
 
           if (rowElement.textContent == "Open...") {
-            subMenuItems = ["Kansalaisen karttapaikka", "Google Maps",
+            subMenuItems = ["Kansalaisen karttapaikka",
+                            "Helsingin seudun opaskartta", "Google Maps",
                             "HERE Maps", "Bing Maps", "OpenStreetMap"];
           } else if (rowElement.textContent == "Areas...") {
             subMenuItems = master.areas.getMenuItems();
