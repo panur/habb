@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-03-06 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-03-16 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -118,7 +118,7 @@ function Map(master) {
           "lat=" + point.lat() + "&lon=" + point.lng() + "&zoom=3";
       }
     } else if (otherMapType == "Google Maps") {
-      url = "http://maps.google.com/?ll=" +
+      url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
         point.lat() +"," + point.lng() + "&z=" + zl;
     } else if (otherMapType == "HERE Maps") {
       url = "http://here.com/" +
