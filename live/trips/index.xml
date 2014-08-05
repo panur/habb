@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2014/20140805.gpx"   visited_data="2014/20140803.xml" distance="96"  max_speed="42.2" avg_speed="20.6" duration="4:40:05" color="#0020FF" name="Karhunkorpi"/>
   <trip gps_data="2014/20140803.gpx"   visited_data="2014/20140101.xml" distance="45"  max_speed="38.7" avg_speed="20.0" duration="2:13:52" color="#FF0020" name="Sääksjärvi-Espoo"/>
   <trip gps_data="2013/20130914.gpx"   visited_data="-"                 distance="123" max_speed="42.9" avg_speed="26.5" duration="4:39:19" color="#00FF20" name="Lahti-Kerava"/>
   <trip gps_data="2013/20130831.gpx"   visited_data="-"                 distance="106" max_speed="46.1" avg_speed="25.6" duration="4:08:50" color="#FFFF20" name="Kehä III"/>
