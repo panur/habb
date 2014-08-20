@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2014/20140820.gpx"   visited_data="2014/20140805.xml" distance="116" max_speed="44.3" avg_speed="23.0" duration="5:02:10" color="#002080" name="Nurmijärvi-Röykkä"/>
   <trip gps_data="2014/20140816.gpx"   visited_data="-"                 distance="130" max_speed="46.8" avg_speed="22.3" duration="5:51:04" color="#FF20FF" name="Varkaus-Jyväskylä"/>
   <trip gps_data="2014/20140815.gpx"   visited_data="-"                 distance="127" max_speed="48.0" avg_speed="21.8" duration="5:49:47" color="#0020C0" name="Kuopio-Varkaus"/>
   <trip gps_data="2014/20140814.gpx"   visited_data="-"                 distance="139" max_speed="47.3" avg_speed="22.1" duration="6:16:45" color="#C02040" name="Viitasaari-Kuopio"/>
