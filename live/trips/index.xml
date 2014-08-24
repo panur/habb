@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2014/20140824.gpx"   visited_data="-"                 distance="108" max_speed="42.2" avg_speed="24.1" duration="4:29:28" color="#20C040" name="Kehä III"/>
   <trip gps_data="2014/20140822.gpx"   visited_data="2014/20140821.xml" distance="128" max_speed="46.1" avg_speed="21.4" duration="5:59:36" color="#FF2020" name="Haimoo-Nummenpää"/>
   <trip gps_data="2014/20140821.gpx"   visited_data="2014/20140820.xml" distance="107" max_speed="44.0" avg_speed="20.8" duration="5:07:50" color="#208080" name="Tuusula-Järvenpää"/>
   <trip gps_data="2014/20140820.gpx"   visited_data="2014/20140805.xml" distance="116" max_speed="44.3" avg_speed="23.0" duration="5:02:10" color="#002080" name="Nurmijärvi-Röykkä"/>
