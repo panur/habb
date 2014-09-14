@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2014/20140914.gpx"   visited_data="-"                 distance="128" max_speed="41.9" avg_speed="23.5" duration="5:26:34" color="#802020" name="Mänttä-Tampere"/>
+  <trip gps_data="2014/20140913.gpx"   visited_data="-"                 distance="135" max_speed="38.8" avg_speed="25.8" duration="5:14:18" color="#FF4020" name="Toijala-Mänttä"/>
   <trip gps_data="2014/20140911.gpx"   visited_data="2014/20140904.xml" distance="146" max_speed="38.4" avg_speed="23.9" duration="6:07:02" color="#802080" name="Pornainen"/>
   <trip gps_data="2014/20140907.gpx"   visited_data="-"                 distance="131" max_speed="45.0" avg_speed="25.2" duration="5:11:22" color="#C02000" name="Hämeenlinna-Lahti"/>
   <trip gps_data="2014/20140906.gpx"   visited_data="-"                 distance="122" max_speed="51.6" avg_speed="24.3" duration="5:01:52" color="#002020" name="Viiala-Tampere"/>
