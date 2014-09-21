@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2014/20140921.gpx"   visited_data="-"                 distance="136" max_speed="40.9" avg_speed="23.5" duration="5:47:53" color="#4020C0" name="Vammala-Salo"/>
+  <trip gps_data="2014/20140920.gpx"   visited_data="-"                 distance="142" max_speed="47.7" avg_speed="25.5" duration="5:33:29" color="#20FF00" name="Turku-Vammala"/>
+  <trip gps_data="2014/20140919.gpx"   visited_data="-"                 distance="126" max_speed="44.7" avg_speed="24.2" duration="5:12:51" color="#C02020" name="Salo-Turku"/>
   <trip gps_data="2014/20140914.gpx"   visited_data="-"                 distance="128" max_speed="41.9" avg_speed="23.5" duration="5:26:34" color="#802020" name="Mänttä-Tampere"/>
   <trip gps_data="2014/20140913.gpx"   visited_data="-"                 distance="135" max_speed="38.8" avg_speed="25.8" duration="5:14:18" color="#FF4020" name="Toijala-Mänttä"/>
   <trip gps_data="2014/20140911.gpx"   visited_data="2014/20140904.xml" distance="146" max_speed="38.4" avg_speed="23.9" duration="6:07:02" color="#802080" name="Pornainen"/>
