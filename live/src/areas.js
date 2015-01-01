@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-02-24 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-01-01 */
 
 function Areas(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -18,6 +18,7 @@ function Areas(master) {
         "2011":"visited_datas/2011.xml",
         "2012":"visited_datas/2012.xml",
         "2013":"visited_datas/2013.xml",
+        "2014":"visited_datas/2014.xml",
         "latest":"visited_datas/latest.xml"}};
     s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
@@ -61,31 +62,31 @@ function Areas(master) {
     if (s.isExtensionsShown) {
       s.filenames.points = "generated_points_ext.xml";
       s.latPages = 10;
-      s.lngPages = 14;
-      s.kkjStart = {lat:60, lng:18};
+      s.lngPages = 15;
+      s.kkjStart = {lat:60, lng:14};
 
-      s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:5},
-                {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:6},
-                {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:11},
-                {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:13},
-                {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:14}];
+      s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:6},
+                {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:7},
+                {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:12},
+                {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:14},
+                {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:15}];
 
-      s.lngs = [{n:21, lngOffsetKm:0,  latOffsetKm:0,  lengthP:10},
-                {n:4,  lngOffsetKm:21, latOffsetKm:5,  lengthP:9},
-                {n:20, lngOffsetKm:25, latOffsetKm:10, lengthP:8},
-                {n:8,  lngOffsetKm:45, latOffsetKm:15, lengthP:7},
-                {n:4,  lngOffsetKm:53, latOffsetKm:20, lengthP:6}];
+      s.lngs = [{n:25, lngOffsetKm:0,  latOffsetKm:0,  lengthP:10},
+                {n:4,  lngOffsetKm:25, latOffsetKm:5,  lengthP:9},
+                {n:20, lngOffsetKm:29, latOffsetKm:10, lengthP:8},
+                {n:8,  lngOffsetKm:49, latOffsetKm:15, lengthP:7},
+                {n:4,  lngOffsetKm:57, latOffsetKm:20, lengthP:6}];
 
-      s.pages = [57,  58,  59,  60,  61,   0,   0,   0,   0,   0,   0,   0,   0,  0,
-                 49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,  0,
-                 50, 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,  0,
-                 51, 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',  0,
-                 52, 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G', 62,
-                 53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J', 63,
-                 54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M', 64,
-                 55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T', 65,
-                 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66,
-                 67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, 80];
+      s.pages = [81, 57,  58,  59,  60,  61,   0,   0,   0,   0,   0,   0,   0,   0,  0,
+                 82, 49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,  0,
+                 83, 50, 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,  0,
+                 84, 51, 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',  0,
+                 85, 52, 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G', 62,
+                 86, 53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J', 63,
+                 87, 54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M', 64,
+                 88, 55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T', 65,
+                 89, 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66,
+                 90, 67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, 80];
     }
 
     return s;

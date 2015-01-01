@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-03-16 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-01-01 */
 
 function Map(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -10,7 +10,7 @@ function Map(master) {
     s.initialStatistics = document.getElementById("statistics").innerHTML;
 
     s.initialZL = 10;
-    s.initialLatLng = new google.maps.LatLng(60.2737, 24.8280);
+    s.initialLatLng = new google.maps.LatLng(60.273969, 24.791911);
     s.zoomToPointZoomLevel = 14;
 
     return s;
