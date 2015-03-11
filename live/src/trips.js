@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-08-03 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-03-11 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -84,6 +84,9 @@ function Trips(master) {
         var lng = points[i].getAttribute("lon");
         tripPath.push(new google.maps.LatLng(lat, lng));
       }
+
+      var tripLength = google.maps.geometry.spherical.computeLength(tripPath);
+      console.info("trip length (m): " + Math.round(tripLength));
 
       var tripPolyline = new google.maps.Polyline({
         path: tripPath,
