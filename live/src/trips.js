@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-03-11 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-05-03 */
 
 function Trips(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -7,7 +7,8 @@ function Trips(master) {
   function getState() {
     var s = {};
 
-    s.filenames = {tripsDatas:["tripsData2014.xml", "tripsData2013.xml",
+    s.filenames = {tripsDatas:["tripsData2015.xml",
+                               "tripsData2014.xml", "tripsData2013.xml",
                                "tripsData2012.xml", "tripsData2011.xml",
                                "tripsData2010.xml", "tripsData2009.xml"]};
     s.isTableShown = false;

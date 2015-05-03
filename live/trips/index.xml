@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150503.gpx"   visited_data="2015/20150101.xml" distance="93"  max_speed="44.1" avg_speed="19.6" duration="4:43:02" color="#4020FF" name="Pikkala-Störsvik"/>
   <trip gps_data="2014/20140928.gpx"   visited_data="-"                 distance="130" max_speed="40.9" avg_speed="25.9" duration="5:00:20" color="#C04020" name="Kouvola-Joutseno"/>
   <trip gps_data="2014/20140927.gpx"   visited_data="-"                 distance="141" max_speed="46.4" avg_speed="27.6" duration="5:06:40" color="#400020" name="Mäntsälä-Kouvola"/>
   <trip gps_data="2014/20140921.gpx"   visited_data="-"                 distance="136" max_speed="40.9" avg_speed="23.5" duration="5:47:53" color="#4020C0" name="Vammala-Salo"/>
