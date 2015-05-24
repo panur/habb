@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150524.gpx"   visited_data="2015/20150509.xml" distance="111" max_speed="42.5" avg_speed="22.6" duration="4:54:56" color="#002040" name="Siuntio-Degerby"/>
   <trip gps_data="2015/20150517.gpx"   visited_data="-"                 distance="107" max_speed="38.3" avg_speed="24.1" duration="4:25:56" color="#808020" name="Hämeenlinna-Espoo"/>
   <trip gps_data="2015/20150516.gpx"   visited_data="-"                 distance="108" max_speed="41.6" avg_speed="22.1" duration="4:52:41" color="#40FF20" name="Espoo-Hämeenlinna"/>
   <trip gps_data="2015/20150509.gpx"   visited_data="2015/20150503.xml" distance="92"  max_speed="44.8" avg_speed="20.4" duration="4:29:02" color="#004020" name="Kela-Evitskog"/>
