@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150621.gpx"   visited_data="2015/20150619.xml" distance="159" max_speed="47.2" avg_speed="21.3" duration="7:25:02" color="#404020" name="Vanjärvi-Ahmoo"/>
   <trip gps_data="2015/20150619.gpx"   visited_data="2015/20150615.xml" distance="133" max_speed="49.8" avg_speed="21.9" duration="6:04:49" color="#402040" name="Nummela-Muijala"/>
   <trip gps_data="2015/20150615.gpx"   visited_data="2015/20150530.xml" distance="142" max_speed="43.5" avg_speed="21.7" duration="6:31:13" color="#208020" name="Pääkslahti"/>
   <trip gps_data="2015/20150607.gpx"   visited_data="-"                 distance="147" max_speed="47.5" avg_speed="28.1" duration="5:14:10" color="#802000" name="Rauma-Toijala"/>
