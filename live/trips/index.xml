@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150707.gpx"   visited_data="-"                 distance="144" max_speed="42.5" avg_speed="22.0" duration="6:32:58" color="#204040" name="Hämeenlinna-Espoo"/>
+  <trip gps_data="2015/20150706.gpx"   visited_data="-"                 distance="162" max_speed="46.0" avg_speed="22.7" duration="7:06:31" color="#008020" name="Tampere-Hämeenlinna"/>
+  <trip gps_data="2015/20150705.gpx"   visited_data="-"                 distance="166" max_speed="41.8" avg_speed="23.7" duration="6:59:38" color="#402020" name="Lahti-Tampere"/>
   <trip gps_data="2015/20150628.gpx"   visited_data="-"                 distance="98"  max_speed="39.9" avg_speed="25.7" duration="3:48:35" color="#20FF20" name="Joensuu-Kitee"/>
   <trip gps_data="2015/20150627.gpx"   visited_data="-"                 distance="145" max_speed="47.0" avg_speed="25.4" duration="5:41:12" color="#2040C0" name="Värtsilä-Joensuu"/>
   <trip gps_data="2015/20150626.gpx"   visited_data="-"                 distance="130" max_speed="50.4" avg_speed="24.4" duration="5:18:48" color="#200020" name="Savonlinna-Värtsilä"/>
