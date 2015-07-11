@@ -6,11 +6,6 @@
 <trkseg>
 <trkpt lat="60.159348" lon="24.741793">
 <ele>-4.160000</ele>
-<time>2015-05-24T07:26:29Z</time>
-<speed>5.26</speed>
-</trkpt>
-<trkpt lat="60.159348" lon="24.741793">
-<ele>-4.160000</ele>
 <time>2015-05-24T07:26:46Z</time>
 <speed>3.45</speed>
 </trkpt>
@@ -1131,12 +1126,12 @@
 </trkpt>
 <trkpt lat="60.157558" lon="24.661182">
 <ele>33.439999</ele>
-<time>2015-05-24T07:41:43Z</time>
+<time>2015-05-24T07:41:44Z</time>
 <speed>3.62</speed>
 </trkpt>
 <trkpt lat="60.158150" lon="24.660961">
 <ele>34.639999</ele>
-<time>2015-05-24T07:41:54Z</time>
+<time>2015-05-24T07:41:53Z</time>
 <speed>5.73</speed>
 </trkpt>
 <trkpt lat="60.158318" lon="24.660418">
