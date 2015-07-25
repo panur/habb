@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150724.gpx"   visited_data="-"                 distance="107" max_speed="43.1" avg_speed="23.3" duration="4:34:28" color="#20FF40" name="Viitasaari-Jyväskylä"/>
+  <trip gps_data="2015/20150723.gpx"   visited_data="-"                 distance="138" max_speed="42.7" avg_speed="26.3" duration="5:13:41" color="#204020" name="Kärsämäki-Viitasaari"/>
+  <trip gps_data="2015/20150722.gpx"   visited_data="-"                 distance="143" max_speed="34.7" avg_speed="26.3" duration="5:24:44" color="#20C000" name="Oulu-Kärsämäki"/>
+  <trip gps_data="2015/20150721.gpx"   visited_data="-"                 distance="151" max_speed="34.9" avg_speed="24.2" duration="6:14:39" color="#200040" name="Ylivieska-Oulu"/>
+  <trip gps_data="2015/20150720.gpx"   visited_data="-"                 distance="142" max_speed="36.6" avg_speed="27.4" duration="5:10:07" color="#20C0C0" name="Pietarsaari-Ylivieska"/>
+  <trip gps_data="2015/20150719.gpx"   visited_data="-"                 distance="153" max_speed="37.2" avg_speed="26.9" duration="5:39:35" color="#402000" name="Kurikka-Pietarsaari"/>
+  <trip gps_data="2015/20150718.gpx"   visited_data="-"                 distance="134" max_speed="38.1" avg_speed="26.6" duration="5:02:05" color="#2000C0" name="Haapamäki-Kurikka"/>
   <trip gps_data="2015/20150707.gpx"   visited_data="-"                 distance="144" max_speed="42.5" avg_speed="22.0" duration="6:32:58" color="#204040" name="Hämeenlinna-Espoo"/>
   <trip gps_data="2015/20150706.gpx"   visited_data="-"                 distance="162" max_speed="46.0" avg_speed="22.7" duration="7:06:31" color="#008020" name="Tampere-Hämeenlinna"/>
   <trip gps_data="2015/20150705.gpx"   visited_data="-"                 distance="166" max_speed="41.8" avg_speed="23.7" duration="6:59:38" color="#402020" name="Lahti-Tampere"/>
