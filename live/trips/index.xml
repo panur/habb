@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150730.gpx"   visited_data="-"                 distance="156" max_speed="43.7" avg_speed="24.7" duration="6:17:18" color="#600000" name="Raippaluoto"/>
+  <trip gps_data="2015/20150729.gpx"   visited_data="-"                 distance="134" max_speed="35.6" avg_speed="24.6" duration="5:25:06" color="#208000" name="Kuortane-Vaasa"/>
+  <trip gps_data="2015/20150728.gpx"   visited_data="-"                 distance="145" max_speed="39.3" avg_speed="26.2" duration="5:31:52" color="#204000" name="Parkano-Kuortane"/>
+  <trip gps_data="2015/20150727.gpx"   visited_data="-"                 distance="120" max_speed="51.7" avg_speed="26.0" duration="4:35:13" color="#200080" name="Lempäälä-Parkano"/>
   <trip gps_data="2015/20150724.gpx"   visited_data="-"                 distance="107" max_speed="43.1" avg_speed="23.3" duration="4:34:28" color="#20FF40" name="Viitasaari-Jyväskylä"/>
   <trip gps_data="2015/20150723.gpx"   visited_data="-"                 distance="138" max_speed="42.7" avg_speed="26.3" duration="5:13:41" color="#204020" name="Kärsämäki-Viitasaari"/>
   <trip gps_data="2015/20150722.gpx"   visited_data="-"                 distance="143" max_speed="34.7" avg_speed="26.3" duration="5:24:44" color="#20C000" name="Oulu-Kärsämäki"/>
@@ -204,3 +208,5 @@
   <trip gps_data="2009/20090728.gpx"   visited_data="2009/20090719.xml" distance="105" max_speed="45.1" avg_speed="21.7" duration="4:49:34" color="#808000" name="Helsinki-Sipoo"/>
   <trip gps_data="2009/20090719.gpx"   visited_data="2009/20090711.xml" distance="104" max_speed="47.6" avg_speed="23.0" duration="4:31:10" color="#400040" name="Klaukkala"/>
 </trips>
+
+
