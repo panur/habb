@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2014-03-06 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-08-02 */
 
 function Menu(master) {
   var that = this; /* http://javascript.crockford.com/private.html */
@@ -14,12 +14,23 @@ function Menu(master) {
   }
 
   this.init = function () {
-    google.maps.event.clearListeners(master.gm, "click");
+    var downStartTime;
 
-    google.maps.event.addListener(master.gm, "click", function (mouseEvent) {
+    google.maps.event.clearListeners(master.gm, "mousedown");
+    google.maps.event.clearListeners(master.gm, "mouseup");
+
+    google.maps.event.addListener(master.gm, "mousedown", function () {
+      downStartTime = Date.now();
+    });
+
+    google.maps.event.addListener(master.gm, "mouseup", function (mouseEvent) {
       if (document.getElementById("menu")) {
         hideMenu();
       } else {
+        var downDurationMs = Date.now() - downStartTime;
+        if (downDurationMs > 150) {
+          return; // probably drag or drop but not click
+        }
         var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
         var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
                     "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
