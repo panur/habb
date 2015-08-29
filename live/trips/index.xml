@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150827.gpx"   visited_data="-"                 distance="129" max_speed="41.3" avg_speed="25.0" duration="5:09:46" color="#60C000" name="Rovaniemi-Kemi"/>
+  <trip gps_data="2015/20150826.gpx"   visited_data="-"                 distance="125" max_speed="43.7" avg_speed="24.9" duration="5:01:30" color="#6000C0" name="Luosto-Rovaniemi"/>
+  <trip gps_data="2015/20150825.gpx"   visited_data="-"                 distance="146" max_speed="52.5" avg_speed="24.5" duration="5:57:03" color="#606000" name="Levi-Luosto"/>
+  <trip gps_data="2015/20150824.gpx"   visited_data="-"                 distance="147" max_speed="48.9" avg_speed="23.9" duration="6:07:46" color="#0060C0" name="Hetta-Levi"/>
+  <trip gps_data="2015/20150823.gpx"   visited_data="-"                 distance="145" max_speed="49.1" avg_speed="24.5" duration="5:54:15" color="#C06000" name="Ylläs-Hetta"/>
+  <trip gps_data="2015/20150822.gpx"   visited_data="-"                 distance="136" max_speed="45.8" avg_speed="21.1" duration="6:27:07" color="#006060" name="Pello-Ylläs"/>
+  <trip gps_data="2015/20150821.gpx"   visited_data="-"                 distance="158" max_speed="40.9" avg_speed="25.3" duration="6:12:10" color="#C00060" name="Kemi-Pello"/>
   <trip gps_data="2015/20150815.gpx"   visited_data="-"                 distance="130" max_speed="47.9" avg_speed="24.1" duration="5:22:34" color="#600060" name="Lahti-Hämeenlinna"/>
   <trip gps_data="2015/20150812_2.gpx" visited_data="-"                 distance="73"  max_speed="43.7" avg_speed="24.9" duration="2:56:17" color="#FF6000" name="Hanka-Turku"/>
   <trip gps_data="2015/20150812_1.gpx" visited_data="-"                 distance="58"  max_speed="40.3" avg_speed="22.8" duration="2:32:11" color="#00FF60" name="Turku-Nauvo"/>
