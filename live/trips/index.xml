@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150901.gpx"   visited_data="2015/20150621.xml" distance="141" max_speed="53.7" avg_speed="21.2" duration="6:38:04" color="#00C060" name="Metsäkylä"/>
   <trip gps_data="2015/20150827.gpx"   visited_data="-"                 distance="129" max_speed="41.3" avg_speed="25.0" duration="5:09:46" color="#60C000" name="Rovaniemi-Kemi"/>
   <trip gps_data="2015/20150826.gpx"   visited_data="-"                 distance="125" max_speed="43.7" avg_speed="24.9" duration="5:01:30" color="#6000C0" name="Luosto-Rovaniemi"/>
   <trip gps_data="2015/20150825.gpx"   visited_data="-"                 distance="146" max_speed="52.5" avg_speed="24.5" duration="5:57:03" color="#606000" name="Levi-Luosto"/>
