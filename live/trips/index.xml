@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <trips>
+  <trip gps_data="2015/20150914.gpx"   visited_data="-"                 distance="181" max_speed="47.7" avg_speed="24.7" duration="7:17:56" color="#60C0FF" name="Lappeenranta-Lahti"/>
+  <trip gps_data="2015/20150913.gpx"   visited_data="-"                 distance="160" max_speed="42.3" avg_speed="24.3" duration="6:34:51" color="#FF60C0" name="Pyhtää-Lappeenranta"/>
+  <trip gps_data="2015/20150912.gpx"   visited_data="-"                 distance="151" max_speed="39.9" avg_speed="23.9" duration="6:19:36" color="#C0FF60" name="Mäntsälä-Pyhtää"/>
   <trip gps_data="2015/20150906.gpx"   visited_data="-"                 distance="94"  max_speed="40.7" avg_speed="24.5" duration="3:51:08" color="#00FF60" name="Kehä III"/>
   <trip gps_data="2015/20150901.gpx"   visited_data="2015/20150621.xml" distance="141" max_speed="53.7" avg_speed="21.2" duration="6:38:04" color="#00C060" name="Metsäkylä"/>
   <trip gps_data="2015/20150827.gpx"   visited_data="-"                 distance="129" max_speed="41.3" avg_speed="25.0" duration="5:09:46" color="#60C000" name="Rovaniemi-Kemi"/>
