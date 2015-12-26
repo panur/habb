@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2013-10-18 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-12-26 */
 
 function main() {
   /* note: master must not be modified outside of this function */
@@ -20,6 +20,7 @@ function main() {
     }]
   };
 
+  google.maps.controlStyle = 'azteca';
   master.gm = new google.maps.Map(gmElement, gmOptions);
 
   master.utils = new Utils();

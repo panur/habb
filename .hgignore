@@ -1,1 +1,2 @@
-relre:^old\\*
+^old/.*
+^tmp/.*
