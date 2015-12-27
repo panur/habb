@@ -1,185 +1,185 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-08-02 */
 
 function Menu(master) {
-  var that = this; /* http://javascript.crockford.com/private.html */
-  var state = getState();
+    var that = this; /* http://javascript.crockford.com/private.html */
+    var state = getState();
 
-  function getState() {
-    var s = {};
+    function getState() {
+        var s = {};
 
-    s.selectedParentMenuItem = "";
-    s.selectedMenuItem = "";
+        s.selectedParentMenuItem = "";
+        s.selectedMenuItem = "";
 
-    return s;
-  }
-
-  this.init = function () {
-    var downStartTime;
-
-    google.maps.event.clearListeners(master.gm, "mousedown");
-    google.maps.event.clearListeners(master.gm, "mouseup");
-
-    google.maps.event.addListener(master.gm, "mousedown", function () {
-      downStartTime = Date.now();
-    });
-
-    google.maps.event.addListener(master.gm, "mouseup", function (mouseEvent) {
-      if (document.getElementById("menu")) {
-        hideMenu();
-      } else {
-        var downDurationMs = Date.now() - downStartTime;
-        if (downDurationMs > 150) {
-          return; // probably drag or drop but not click
-        }
-        var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
-        var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
-                    "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
-        showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
-      }
-    });
-  }
-
-  function getMenuLocation(rect) {
-    var menuLocation = {};
-
-    if (rect.top > (window.innerHeight / 2)) {
-      menuLocation.bottom = (window.innerHeight - rect.bottom) + "px";
-    } else {
-      menuLocation.top = rect.top + "px";
-    }
-    if (rect.right > (window.innerWidth / 2)) {
-      menuLocation.right = (window.innerWidth - rect.left) + "px";
-    } else {
-      menuLocation.left = rect.right + "px";
+        return s;
     }
 
-    return menuLocation;
-  }
+    this.init = function () {
+        var downStartTime;
 
-  function hideMenu() {
-    hideSubMenu("menu");
-  }
+        google.maps.event.clearListeners(master.gm, "mousedown");
+        google.maps.event.clearListeners(master.gm, "mouseup");
 
-  function hideSubMenu(baseDivId) {
-    var parent = document.getElementById("dynamic_divs");
-    if (parent) {
-      for (var divId = baseDivId; true; divId = "sub" + divId) {
-        if (document.getElementById(divId)) {
-          parent.removeChild(document.getElementById(divId));
+        google.maps.event.addListener(master.gm, "mousedown", function () {
+            downStartTime = Date.now();
+        });
+
+        google.maps.event.addListener(master.gm, "mouseup", function (mouseEvent) {
+            if (document.getElementById("menu")) {
+                hideMenu();
+            } else {
+                var downDurationMs = Date.now() - downStartTime;
+                if (downDurationMs > 150) {
+                    return; // probably drag or drop but not click
+                }
+                var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
+                var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
+                                        "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
+                showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
+            }
+        });
+    }
+
+    function getMenuLocation(rect) {
+        var menuLocation = {};
+
+        if (rect.top > (window.innerHeight / 2)) {
+            menuLocation.bottom = (window.innerHeight - rect.bottom) + "px";
         } else {
-          break;
+            menuLocation.top = rect.top + "px";
         }
-      }
-    }
-  }
-
-  function showMenu(latLng, menuLocation, menuItems, divId) {
-    var menu = document.createElement("div");
-    menu.id = divId;
-    menu.className = "menu";
-    menu.appendChild(createMenuTable(latLng, menuItems, divId));
-
-    if (menuLocation.bottom) {
-      menu.style.bottom = menuLocation.bottom;
-    }
-    if (menuLocation.top) {
-      menu.style.top = menuLocation.top;
-    }
-    if (menuLocation.right) {
-      menu.style.right = menuLocation.right;
-    }
-    if (menuLocation.left) {
-      menu.style.left = menuLocation.left;
-    }
-
-    document.getElementById("dynamic_divs").appendChild(menu);
-  }
-
-  function createMenuTable(latLng, menuItems, divId) {
-    var table = document.createElement("table");
-    table.className = "menu";
-
-    for (var i = 0; i < menuItems.length; i++) {
-      createRow(menuItems[i]);
-    }
-
-    function createRow(menuItem) {
-      var row = table.insertRow(-1);
-      var cell = row.insertCell(-1);
-      cell.appendChild(document.createTextNode(menuItem));
-      row.className = "menuItem";
-      row.onmouseover = function () {processMouseOver(row);};
-      row.onclick = function () {processMenuClick(row);};
-
-      function processMouseOver(rowElement) {
-        var subMenuItems = getSubMenuItems();
-        selectMenuItem();
-        hideSubMenu("sub" + divId);
-
-        if (subMenuItems.length > 0) {
-          state.selectedParentMenuItem = rowElement.textContent;
-          state.selectedMenuItem = "";
-          var rect = rowElement.getBoundingClientRect();
-          showMenu(latLng, getMenuLocation(rect), subMenuItems, "sub" + divId);
+        if (rect.right > (window.innerWidth / 2)) {
+            menuLocation.right = (window.innerWidth - rect.left) + "px";
         } else {
-          state.selectedMenuItem = rowElement.textContent;
+            menuLocation.left = rect.right + "px";
         }
 
-        function getSubMenuItems() {
-          var subMenuItems = [];
-
-          if (rowElement.textContent == "Open...") {
-            subMenuItems = ["Kansalaisen karttapaikka",
-                            "Helsingin seudun opaskartta", "Google Maps",
-                            "HERE Maps", "Bing Maps", "OpenStreetMap"];
-          } else if (rowElement.textContent == "Areas...") {
-            subMenuItems = master.areas.getMenuItems();
-          } else if (rowElement.textContent == "View...") {
-            subMenuItems = master.areas.getViewMenuItems();
-          } else if (rowElement.textContent == "Trips...") {
-            subMenuItems = master.trips.getMenuItems();
-          } else if (rowElement.textContent == "Show...") {
-            subMenuItems = master.trips.getShowMenuItems();
-          } else if (rowElement.textContent == "Hide...") {
-            subMenuItems = master.trips.getHideMenuItems();
-          }
-
-          return subMenuItems;
-        }
-
-        function selectMenuItem() {
-          var rows = rowElement.parentNode.parentNode.rows;
-          for (var i = 0; i < rows.length; i++) {
-            rows[i].className = "menuItem";
-          }
-          rowElement.className = "selectedMenuItem";
-        }
-      }
-
-      function processMenuClick(rowElement) {
-        if (state.selectedMenuItem == "Zoom") {
-          hideMenu();
-          master.map.zoomToPoint(latLng);
-        } else if (state.selectedMenuItem != "") {
-          hideMenu();
-
-          if (state.selectedParentMenuItem == "Open...") {
-            master.map.openOtherMap(rowElement.textContent, latLng);
-          } else if ((state.selectedParentMenuItem == "Areas...") ||
-                     (state.selectedParentMenuItem == "View...")) {
-            master.areas.processMenuCommand(rowElement.textContent);
-          } else if ((state.selectedParentMenuItem == "Trips...") ||
-                     (state.selectedParentMenuItem == "Show...") ||
-                     (state.selectedParentMenuItem == "Hide...")) {
-            master.trips.processMenuCommand(state.selectedParentMenuItem,
-                                            rowElement.textContent);
-          } else {
-            alert("Error: unknown menu item: " + state.selectedParentMenuItem);
-          }
-        }
-      }
+        return menuLocation;
     }
 
-    return table;
-  }
+    function hideMenu() {
+        hideSubMenu("menu");
+    }
+
+    function hideSubMenu(baseDivId) {
+        var parent = document.getElementById("dynamic_divs");
+        if (parent) {
+            for (var divId = baseDivId; true; divId = "sub" + divId) {
+                if (document.getElementById(divId)) {
+                    parent.removeChild(document.getElementById(divId));
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+
+    function showMenu(latLng, menuLocation, menuItems, divId) {
+        var menu = document.createElement("div");
+        menu.id = divId;
+        menu.className = "menu";
+        menu.appendChild(createMenuTable(latLng, menuItems, divId));
+
+        if (menuLocation.bottom) {
+            menu.style.bottom = menuLocation.bottom;
+        }
+        if (menuLocation.top) {
+            menu.style.top = menuLocation.top;
+        }
+        if (menuLocation.right) {
+            menu.style.right = menuLocation.right;
+        }
+        if (menuLocation.left) {
+            menu.style.left = menuLocation.left;
+        }
+
+        document.getElementById("dynamic_divs").appendChild(menu);
+    }
+
+    function createMenuTable(latLng, menuItems, divId) {
+        var table = document.createElement("table");
+        table.className = "menu";
+
+        for (var i = 0; i < menuItems.length; i++) {
+            createRow(menuItems[i]);
+        }
+
+        function createRow(menuItem) {
+            var row = table.insertRow(-1);
+            var cell = row.insertCell(-1);
+            cell.appendChild(document.createTextNode(menuItem));
+            row.className = "menuItem";
+            row.onmouseover = function () {processMouseOver(row);};
+            row.onclick = function () {processMenuClick(row);};
+
+            function processMouseOver(rowElement) {
+                var subMenuItems = getSubMenuItems();
+                selectMenuItem();
+                hideSubMenu("sub" + divId);
+
+                if (subMenuItems.length > 0) {
+                    state.selectedParentMenuItem = rowElement.textContent;
+                    state.selectedMenuItem = "";
+                    var rect = rowElement.getBoundingClientRect();
+                    showMenu(latLng, getMenuLocation(rect), subMenuItems, "sub" + divId);
+                } else {
+                    state.selectedMenuItem = rowElement.textContent;
+                }
+
+                function getSubMenuItems() {
+                    var subMenuItems = [];
+
+                    if (rowElement.textContent == "Open...") {
+                        subMenuItems = ["Kansalaisen karttapaikka",
+                                                        "Helsingin seudun opaskartta", "Google Maps",
+                                                        "HERE Maps", "Bing Maps", "OpenStreetMap"];
+                    } else if (rowElement.textContent == "Areas...") {
+                        subMenuItems = master.areas.getMenuItems();
+                    } else if (rowElement.textContent == "View...") {
+                        subMenuItems = master.areas.getViewMenuItems();
+                    } else if (rowElement.textContent == "Trips...") {
+                        subMenuItems = master.trips.getMenuItems();
+                    } else if (rowElement.textContent == "Show...") {
+                        subMenuItems = master.trips.getShowMenuItems();
+                    } else if (rowElement.textContent == "Hide...") {
+                        subMenuItems = master.trips.getHideMenuItems();
+                    }
+
+                    return subMenuItems;
+                }
+
+                function selectMenuItem() {
+                    var rows = rowElement.parentNode.parentNode.rows;
+                    for (var i = 0; i < rows.length; i++) {
+                        rows[i].className = "menuItem";
+                    }
+                    rowElement.className = "selectedMenuItem";
+                }
+            }
+
+            function processMenuClick(rowElement) {
+                if (state.selectedMenuItem == "Zoom") {
+                    hideMenu();
+                    master.map.zoomToPoint(latLng);
+                } else if (state.selectedMenuItem != "") {
+                    hideMenu();
+
+                    if (state.selectedParentMenuItem == "Open...") {
+                        master.map.openOtherMap(rowElement.textContent, latLng);
+                    } else if ((state.selectedParentMenuItem == "Areas...") ||
+                                         (state.selectedParentMenuItem == "View...")) {
+                        master.areas.processMenuCommand(rowElement.textContent);
+                    } else if ((state.selectedParentMenuItem == "Trips...") ||
+                                         (state.selectedParentMenuItem == "Show...") ||
+                                         (state.selectedParentMenuItem == "Hide...")) {
+                        master.trips.processMenuCommand(state.selectedParentMenuItem,
+                                                                                        rowElement.textContent);
+                    } else {
+                        alert("Error: unknown menu item: " + state.selectedParentMenuItem);
+                    }
+                }
+            }
+        }
+
+        return table;
+    }
 }
