@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-01-01 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function Areas(master) {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
     var state = getState(true);
 
     function getState(isExtensionsShown) {
@@ -23,11 +23,10 @@ function Areas(master) {
         s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
         s.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
-                            colors:{yes:"#00FF00", no:"#FF0000", np:"#808080"}}
-        s.grid = {weight:1, opacity:0.5,
-                            colors:{page:"#000000", km2:"#FFFFFF"}};
-        s.cursorParams = {strokeColor:"#000000", strokeWeight:2,
-                                            strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
+                  colors:{yes:"#00FF00", no:"#FF0000", np:"#808080"}}
+        s.grid = {weight:1, opacity:0.5, colors:{page:"#000000", km2:"#FFFFFF"}};
+        s.cursorParams =
+            {strokeColor:"#000000", strokeWeight:2, strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
 
         s.latKmPerP = 5;
         s.latPages = 7;
@@ -37,27 +36,27 @@ function Areas(master) {
         s.kkjOffset = {lat:-1, lng:-1}; /* will be read from file */
 
         s.lats = [{n:5,  lngOffsetKm:4,  latOffsetKm:0,  lengthP:2},
-                            {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:8},
-                            {n:11, lngOffsetKm:0,  latOffsetKm:10, lengthP:9},
-                            {n:10, lngOffsetKm:4,  latOffsetKm:21, lengthP:8},
-                            {n:5,  lngOffsetKm:12, latOffsetKm:31, lengthP:2},
-                            {n:5,  lngOffsetKm:24, latOffsetKm:31, lengthP:2}];
+                  {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:8},
+                  {n:11, lngOffsetKm:0,  latOffsetKm:10, lengthP:9},
+                  {n:10, lngOffsetKm:4,  latOffsetKm:21, lengthP:8},
+                  {n:5,  lngOffsetKm:12, latOffsetKm:31, lengthP:2},
+                  {n:5,  lngOffsetKm:24, latOffsetKm:31, lengthP:2}];
 
         s.lngs = [{n:4, lngOffsetKm:0,  latOffsetKm:5,  lengthP:3},
-                            {n:8, lngOffsetKm:4,  latOffsetKm:0,  lengthP:6},
-                            {n:1, lngOffsetKm:12, latOffsetKm:0,  lengthP:7},
-                            {n:8, lngOffsetKm:13, latOffsetKm:5,  lengthP:6},
-                            {n:3, lngOffsetKm:21, latOffsetKm:5,  lengthP:5},
-                            {n:9, lngOffsetKm:24, latOffsetKm:5,  lengthP:6},
-                            {n:4, lngOffsetKm:33, latOffsetKm:10, lengthP:4}];
+                  {n:8, lngOffsetKm:4,  latOffsetKm:0,  lengthP:6},
+                  {n:1, lngOffsetKm:12, latOffsetKm:0,  lengthP:7},
+                  {n:8, lngOffsetKm:13, latOffsetKm:5,  lengthP:6},
+                  {n:3, lngOffsetKm:21, latOffsetKm:5,  lengthP:5},
+                  {n:9, lngOffsetKm:24, latOffsetKm:5,  lengthP:6},
+                  {n:4, lngOffsetKm:33, latOffsetKm:10, lengthP:4}];
 
         s.pages = [0,  1,  2,  0,  0,  0,  0,  0,  0,
-                             3,  4,  5,  6,  7,  8,  9, 10,  0,
-                            11, 12, 13, 14, 15, 16, 17, 18, 19,
-                            20, 21, 22, 23, 24, 25, 26, 27, 28,
-                             0, 29, 30, 31, 32, 33, 34, 35, 36,
-                             0, 37, 38, 39, 40, 41, 42, 43, 44,
-                             0,  0,  0, 45, 46,  0, 47, 48];
+                   3,  4,  5,  6,  7,  8,  9, 10,  0,
+                  11, 12, 13, 14, 15, 16, 17, 18, 19,
+                  20, 21, 22, 23, 24, 25, 26, 27, 28,
+                   0, 29, 30, 31, 32, 33, 34, 35, 36,
+                   0, 37, 38, 39, 40, 41, 42, 43, 44,
+                   0,  0,  0, 45, 46,  0, 47, 48];
 
         if (s.isExtensionsShown) {
             s.filenames.points = "generated_points_ext.xml";
@@ -66,27 +65,27 @@ function Areas(master) {
             s.kkjStart = {lat:60, lng:14};
 
             s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:6},
-                                {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:7},
-                                {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:12},
-                                {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:14},
-                                {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:15}];
+                      {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:7},
+                      {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:12},
+                      {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:14},
+                      {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:15}];
 
             s.lngs = [{n:25, lngOffsetKm:0,  latOffsetKm:0,  lengthP:10},
-                                {n:4,  lngOffsetKm:25, latOffsetKm:5,  lengthP:9},
-                                {n:20, lngOffsetKm:29, latOffsetKm:10, lengthP:8},
-                                {n:8,  lngOffsetKm:49, latOffsetKm:15, lengthP:7},
-                                {n:4,  lngOffsetKm:57, latOffsetKm:20, lengthP:6}];
+                      {n:4,  lngOffsetKm:25, latOffsetKm:5,  lengthP:9},
+                      {n:20, lngOffsetKm:29, latOffsetKm:10, lengthP:8},
+                      {n:8,  lngOffsetKm:49, latOffsetKm:15, lengthP:7},
+                      {n:4,  lngOffsetKm:57, latOffsetKm:20, lengthP:6}];
 
             s.pages = [81, 57,  58,  59,  60,  61,   0,   0,   0,   0,   0,   0,   0,   0,  0,
-                                 82, 49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,  0,
-                                 83, 50, 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,  0,
-                                 84, 51, 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',  0,
-                                 85, 52, 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G', 62,
-                                 86, 53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J', 63,
-                                 87, 54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M', 64,
-                                 88, 55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T', 65,
-                                 89, 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66,
-                                 90, 67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, 80];
+                       82, 49, 'a', 'A', 'B',   1,   2,   0,   0,   0,   0,   0,   0,   0,  0,
+                       83, 50, 'b', 'C',   3,   4,   5,   6,   7,   8,   9,  10,   0,   0,  0,
+                       84, 51, 'c', 'D',  11,  12,  13,  14,  15,  16,  17,  18,  19, 'E',  0,
+                       85, 52, 'd', 'F',  20,  21,  22,  23,  24,  25,  26,  27,  28, 'G', 62,
+                       86, 53, 'e', 'H', 'I',  29,  30,  31,  32,  33,  34,  35,  36, 'J', 63,
+                       87, 54, 'f', 'K', 'L',  37,  38,  39,  40,  41,  42,  43,  44, 'M', 64,
+                       88, 55, 'g', 'N', 'O', 'P', 'Q',  45,  46, 'R',  47,  48, 'S', 'T', 65,
+                       89, 56, 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 66,
+                       90, 67,  68,  69,  70,  71,  72,  73,  74,  75,  76,  77,  78,  79, 80];
         }
 
         return s;
@@ -117,8 +116,7 @@ function Areas(master) {
             }
         }
 
-        master.utils.downloadUrl(state.filenames.points,
-                                                         function (data, responseCode) {
+        master.utils.downloadUrl(state.filenames.points, function (data, responseCode) {
             var xml = master.utils.parseXml(data);
             var p = xml.documentElement.getElementsByTagName("point");
             state.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
@@ -144,8 +142,8 @@ function Areas(master) {
             km2s[y] = [];
             for (var x = 0; x < (state.lngPages * state.lngKmPerP); x++) {
                 var points = [state.points[y][x], state.points[y][x + 1],
-                                            state.points[y + 1][x + 1], state.points[y + 1][x],
-                                            state.points[y][x]];
+                              state.points[y + 1][x + 1], state.points[y + 1][x],
+                              state.points[y][x]];
                 km2s[y][x] = {};
                 km2s[y][x].points = points;
                 km2s[y][x].visited = "-";
@@ -158,16 +156,14 @@ function Areas(master) {
     }
 
     function setVisitedDataToKm2s() {
-        master.utils.downloadUrl(state.filenames.visitedData,
-                                                         function (data, responseCode) {
+        master.utils.downloadUrl(state.filenames.visitedData, function (data, responseCode) {
             var xml = master.utils.parseXml(data);
             var allInPage = [];
             var pages = xml.documentElement.getElementsByTagName("page");
 
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i].getAttribute("visited_all") == "true") {
-                    if ((state.isExtensionsShown) ||
-                            (pages[i].getAttribute("number") < 49)) {
+                    if ((state.isExtensionsShown) || (pages[i].getAttribute("number") < 49)) {
                         allInPage.push(pages[i].getAttribute("number"));
                     }
                 }
@@ -191,8 +187,7 @@ function Areas(master) {
                 var y = parseInt(km2s[i].getAttribute("kkj_lat")) - state.kkjStart.lat;
                 var x = parseInt(km2s[i].getAttribute("kkj_lng")) - state.kkjStart.lng;
 
-                if ((state.isExtensionsShown) ||
-                        (km2s[i].getAttribute("page") < 49)) {
+                if ((state.isExtensionsShown) || (km2s[i].getAttribute("page") < 49)) {
                     state.km2s[y][x].visited = km2s[i].getAttribute("visited");
                 }
             }
@@ -215,7 +210,7 @@ function Areas(master) {
                     points.push(state.points[lat][state.lats[i].lngOffsetKm + k]);
                 }
                 color = ((lines++ % state.latKmPerP) == 0) ?
-                                state.grid.colors.page : state.grid.colors.km2;
+                    state.grid.colors.page : state.grid.colors.km2;
                 var lat = new google.maps.Polyline({
                     path: points, strokeColor: color, strokeWeight: state.grid.weight,
                     strokeOpacity: state.grid.opacity, clickable: false, zIndex: 1
@@ -233,7 +228,7 @@ function Areas(master) {
                 }
 
                 color = ((lines++ % state.lngKmPerP) == 0) ?
-                                state.grid.colors.page : state.grid.colors.km2;
+                    state.grid.colors.page : state.grid.colors.km2;
                 var lng = new google.maps.Polyline({
                     path: points, strokeColor: color, strokeWeight: state.grid.weight,
                     strokeOpacity: state.grid.opacity, clickable: false, zIndex: 1
@@ -290,8 +285,8 @@ function Areas(master) {
         for (var y = 0; y < state.km2s.length; y++) {
             for (var x = 0; x < state.km2s[y].length; x++) {
                 if ((state.km2s[y][x].visited == visitedStatus) &&
-                        (params.km2NeedsToBeTested[y][x] == true) &&
-                        (isPointInPolygons(state.points[y][x], polygons) == false)) {
+                    (params.km2NeedsToBeTested[y][x] == true) &&
+                    (isPointInPolygons(state.points[y][x], polygons) == false)) {
                     var points = [];
 
                     params.initXY = {y:y, x:x};
@@ -324,8 +319,7 @@ function Areas(master) {
             var loopStart = master.utils.getIndexOf(points, points[loopEnd]);
             if ((loopStart > 0) && (loopStart != loopEnd)) {
                 splittedLoops[0] = points.slice(0);
-                splittedLoops[1] =
-                    splittedLoops[0].splice(loopStart, (loopEnd - loopStart));
+                splittedLoops[1] = splittedLoops[0].splice(loopStart, (loopEnd - loopStart));
                 splittedLoops[1].push(points[loopStart]);
                 break;
             }
@@ -387,10 +381,10 @@ function Areas(master) {
             }
 
             if (((polygon[i].lat() < lat) && (polygon[j].lat() >= lat)) ||
-                    ((polygon[j].lat() < lat) && (polygon[i].lat() >= lat))) {
+                ((polygon[j].lat() < lat) && (polygon[i].lat() >= lat))) {
                 if ((polygon[i].lng() + ((lat - polygon[i].lat()) /
-                        (polygon[j].lat() - polygon[i].lat()) *
-                        (polygon[j].lng() - polygon[i].lng()))) < lng) {
+                    (polygon[j].lat() - polygon[i].lat()) *
+                    (polygon[j].lng() - polygon[i].lng()))) < lng) {
                     oddNodes = !oddNodes;
                 }
             }
@@ -457,7 +451,7 @@ function Areas(master) {
             }
 
             if ((newY >= 0) && (newX >= 0) &&
-                    ((newY != params.initXY.y) || (newX != params.initXY.x))) {
+                ((newY != params.initXY.y) || (newX != params.initXY.x))) {
                 getPolylinePoints(newY, newX, newDirection, points, params);
             }
         }
@@ -474,8 +468,7 @@ function Areas(master) {
     function addOrRemoveOverlays(gmOrNull) {
         for (var i = 0; i < state.visitedStatusAreas.length; i++) {
             if (state.visitedStatusAreas[i].getPath()) {
-                state.visitedStatusAreas[i].setOptions({fillOpacity:
-                                                                                                 state.area.opacity});
+                state.visitedStatusAreas[i].setOptions({fillOpacity: state.area.opacity});
                 state.visitedStatusAreas[i].setMap(gmOrNull);
             }
         }
@@ -530,8 +523,8 @@ function Areas(master) {
         for (var y = guessXY.y - 1; y < guessXY.y + 2; y++) {
             for (var x = guessXY.x - 1; x < guessXY.x + 2; x++) {
                 if ((y >= 0) && (x >= 0) &&
-                        (y < (state.points.length - 1) &&
-                        (x < (state.points[y].length - 1)))) {
+                    (y < (state.points.length - 1) &&
+                    (x < (state.points[y].length - 1)))) {
 
                     if (isPointInPolygon(point, state.km2s[y][x].points)) {
                         return {y:y, x:x};
@@ -562,7 +555,7 @@ function Areas(master) {
 
         if (km2XY) {
             var pageIndex = Math.floor(km2XY.y / state.latKmPerP) * state.lngPages +
-                                            Math.floor(km2XY.x / state.lngKmPerP);
+                Math.floor(km2XY.x / state.lngKmPerP);
             if (pageIndex < state.pages.length) {
                 if (state.pages[pageIndex] != 0) {
                     info.page = state.pages[pageIndex];
@@ -610,8 +603,7 @@ function Areas(master) {
             }
         }
 
-        if ((info.km2XY) &&
-                (master.gm.getZoom() < state.cursorParams.maxZoomLevel)) {
+        if ((info.km2XY) && (master.gm.getZoom() < state.cursorParams.maxZoomLevel)) {
             var points = state.km2s[info.km2XY.y][info.km2XY.x].points;
             state.cursor = new google.maps.Polyline({
                 path: points,
@@ -740,11 +732,9 @@ function Areas(master) {
     this.processMenuCommand = function (command) {
         if ((command == "Hide") || (command == "Show")) {
             toggleVisibility();
-        } else if ((command == "Decrease opacity") ||
-                (command == "Increase opacity")) {
+        } else if ((command == "Decrease opacity") || (command == "Increase opacity")) {
             toggleOpacity();
-        } else if ((command == "Hide extensions") ||
-                             (command == "Show extensions")) {
+        } else if ((command == "Hide extensions") || (command == "Show extensions")) {
             toggleExtensionsVisibility();
         } else if (command == "latest") {
             that.changeVisitedData("latest");

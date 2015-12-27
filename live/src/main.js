@@ -1,13 +1,11 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-12-26 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function main() {
-    /* note: master must not be modified outside of this function */
     var master = {};
     var gmElement = document.getElementById("map_canvas");
     var gmOptions = {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControlOptions:
-            {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
+        mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR},
         zoomControlOptions: {style: google.maps.ZoomControlStyle.DEFAULT},
         panControl: true,
         zoomControl: true,

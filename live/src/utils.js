@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function Utils() {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
 
     this.downloadUrl = function (url, callback) {
         var request = createXmlHttpRequest();
@@ -127,8 +127,8 @@ function Utils() {
         return -1;
 
         function isPointInLineSegment(point, p1, p2, tolerance) {
-            var distance = Math.abs(getDistance(point, p1) + getDistance(point, p2) -
-                                                            getDistance(p1, p2));
+            var distance =
+                Math.abs(getDistance(point, p1) + getDistance(point, p2) - getDistance(p1, p2));
             return (distance < tolerance);
 
             function getDistance(from, to) {

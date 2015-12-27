@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2011-08-14 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function TripGraph(master) {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
     var state = getState();
 
     function getState() {
@@ -69,7 +69,7 @@ function TripGraph(master) {
 
         tripData.graphData = [];
         master.utils.resizeArray(originalGpsData, state.tripData.graphData,
-                                                         canvas.width - state.origo.x);
+                                 canvas.width - state.origo.x);
     }
 
     function processTripGraphEvent(event) {
@@ -102,8 +102,8 @@ function TripGraph(master) {
                 processTripGraphEvent(event);
             }
             master.map.zoomToPoint(position);
-            var heading = master.utils.getHeading(position, state.tripData.polyline,
-                                                                                        master.gm.getZoom());
+            var heading =
+                master.utils.getHeading(position, state.tripData.polyline, master.gm.getZoom());
             master.map.updateStreetView(position, heading);
         };
 
@@ -117,8 +117,7 @@ function TripGraph(master) {
         var vertexTime = state.lastRatio * tripData.gpsDurationSeconds;
         var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
         var point = tripData.polyline.getPath().getAt(vertexIndex);
-        var heading = master.utils.getHeading(point, tripData.polyline,
-                                                                                    master.gm.getZoom());
+        var heading = master.utils.getHeading(point, tripData.polyline, master.gm.getZoom());
         var marker = master.utils.createDirectionMarker(point, heading);
 
         if (state.tripCursor.length > state.maxTripCursorLength) {
@@ -161,15 +160,12 @@ function TripGraph(master) {
         var type = state.types[0];
         var tripData = state.tripData;
         var ratio = state.lastRatio;
-        var value =
-            tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
+        var value = tripData.graphData[Math.floor(ratio * tripData.graphData.length)];
         var unit = state.unit;
         var time = master.utils.getTimeString(ratio * tripData.gpsDurationSeconds);
         var yScale = 1 / state.yUnitToPixelRatio;
-        var xScale =
-            Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
-        var latLng =
-            state.tripCursor[0].getPosition().toUrlValue(4).replace(",", " / ");
+        var xScale = Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
+        var latLng = state.tripCursor[0].getPosition().toUrlValue(4).replace(",", " / ");
 
         var statusHtml = type + "=" + value + " " + unit + ", time=" + time +
             " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
@@ -208,9 +204,8 @@ function TripGraph(master) {
         }
 
         allElements.push(createTN(" / "));
-        allElements.push(getControl("Toggle type of trip graph",
-                                             "Show " + state.types[1],
-                                             function () {toggleTripGraphType()}));
+        allElements.push(getControl("Toggle type of trip graph", "Show " + state.types[1],
+                                    function () {toggleTripGraphType()}));
 
         document.getElementById("trip_graph_control").innerHTML = "";
 
@@ -263,8 +258,7 @@ function TripGraph(master) {
             var player = state.player;
             var tripData = state.tripData;
             var intervalMs = state.tickIntervalMs;
-            var ratioIncrement =
-                ((intervalMs / 1000) * player.speed) / tripData.gpsDurationSeconds;
+            var ratioIncrement = ((intervalMs / 1000) * player.speed) / tripData.gpsDurationSeconds;
 
             state.lastRatio += ratioIncrement;
 

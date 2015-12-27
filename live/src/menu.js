@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-08-02 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function Menu(master) {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
     var state = getState();
 
     function getState() {
@@ -33,7 +33,7 @@ function Menu(master) {
                 }
                 var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
                 var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
-                                        "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
+                            "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
                 showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
             }
         });
@@ -129,9 +129,8 @@ function Menu(master) {
                     var subMenuItems = [];
 
                     if (rowElement.textContent == "Open...") {
-                        subMenuItems = ["Kansalaisen karttapaikka",
-                                                        "Helsingin seudun opaskartta", "Google Maps",
-                                                        "HERE Maps", "Bing Maps", "OpenStreetMap"];
+                        subMenuItems = ["Kansalaisen karttapaikka", "Helsingin seudun opaskartta",
+                                        "Google Maps", "HERE Maps", "Bing Maps", "OpenStreetMap"];
                     } else if (rowElement.textContent == "Areas...") {
                         subMenuItems = master.areas.getMenuItems();
                     } else if (rowElement.textContent == "View...") {
@@ -166,13 +165,13 @@ function Menu(master) {
                     if (state.selectedParentMenuItem == "Open...") {
                         master.map.openOtherMap(rowElement.textContent, latLng);
                     } else if ((state.selectedParentMenuItem == "Areas...") ||
-                                         (state.selectedParentMenuItem == "View...")) {
+                               (state.selectedParentMenuItem == "View...")) {
                         master.areas.processMenuCommand(rowElement.textContent);
                     } else if ((state.selectedParentMenuItem == "Trips...") ||
-                                         (state.selectedParentMenuItem == "Show...") ||
-                                         (state.selectedParentMenuItem == "Hide...")) {
+                               (state.selectedParentMenuItem == "Show...") ||
+                               (state.selectedParentMenuItem == "Hide...")) {
                         master.trips.processMenuCommand(state.selectedParentMenuItem,
-                                                                                        rowElement.textContent);
+                                                        rowElement.textContent);
                     } else {
                         alert("Error: unknown menu item: " + state.selectedParentMenuItem);
                     }

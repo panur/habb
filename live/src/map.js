@@ -1,7 +1,7 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-01-01 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function Map(master) {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
     var state = getState();
 
     function getState() {
@@ -42,20 +42,19 @@ function Map(master) {
         var s = master.areas.getVisitedStatistics();
         var total = s.yes + s.no + s.np;
         var p = {yes:Math.round(100 * s.yes / total),
-                            no:Math.round(100 * s.no / total),
-                            np:Math.round(100 * s.np / total)};
+                  no:Math.round(100 * s.no / total),
+                  np:Math.round(100 * s.np / total)};
         var statistics = "Visited: yes="           + s.yes + " ("+ p.yes +
-                                                     "%), no="           + s.no  + " ("+ p.no +
-                                                     "%), not possible=" + s.np  + " ("+ p.np +
-                                                     "%), total=" + total;
+                               "%), no="           + s.no  + " ("+ p.no +
+                               "%), not possible=" + s.np  + " ("+ p.np +
+                               "%), total=" + total;
 
         document.getElementById("statistics").innerHTML =
             statistics + ", " + state.initialStatistics;
     }
 
     function addMouseListeners() {
-        google.maps.event.addListener(master.gm, "mousemove",
-                                                                    function (mouseEvent) {
+        google.maps.event.addListener(master.gm, "mousemove", function (mouseEvent) {
             if (master.tripGraph.isPlayerStopped()) {
                 var info = getInfo(mouseEvent.latLng);
                 updateStatusBar(info);
@@ -83,9 +82,8 @@ function Map(master) {
     }
 
     function updateStatusBar(info) {
-        var statusHtml = "Page=" + info.page + ", KKJ=" + info.kkjText +
-                                         ", visited=" + info.visited + ", ZL=" + info.zl +
-                                         ", Lat/Lng=" + info.latLng;
+        var statusHtml = "Page=" + info.page + ", KKJ=" + info.kkjText + ", visited=" +
+            info.visited + ", ZL=" + info.zl + ", Lat/Lng=" + info.latLng;
 
         that.setStatusBarHtml(statusHtml);
     }
@@ -185,8 +183,8 @@ function Map(master) {
             (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
         google.maps.event.trigger(gm.getStreetView(), "resize");
         resizeMapCanvas(gm);
-        gm.setOptions({panControl: false, zoomControlOptions:
-                                    {style: google.maps.ZoomControlStyle.SMALL}});
+        gm.setOptions({panControl: false,
+                       zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}});
         setCenter(gm.getStreetView().getPosition(), master.gm.getZoom());
     }
 
@@ -194,8 +192,8 @@ function Map(master) {
         document.getElementById("street_view").style.height = "0px";
         google.maps.event.trigger(gm.getStreetView(), "resize");
         resizeMapCanvas(gm);
-        gm.setOptions({panControl: true, zoomControlOptions:
-                                    {style: google.maps.ZoomControlStyle.DEFAULT}});
+        gm.setOptions({panControl: true,
+                       zoomControlOptions: {style: google.maps.ZoomControlStyle.DEFAULT}});
     }
 
     this.updateStreetView = function (position, heading) {
@@ -222,8 +220,7 @@ function Map(master) {
     }
 
     this.resizeDivs = function () {
-        var oldStreetViewHeight =
-            document.getElementById("street_view").clientHeight;
+        var oldStreetViewHeight = document.getElementById("street_view").clientHeight;
 
         document.getElementById("street_view").style.height = "0px";
 

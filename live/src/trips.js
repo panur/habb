@@ -1,16 +1,16 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, last updated 2015-05-03 */
+/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
 function Trips(master) {
-    var that = this; /* http://javascript.crockford.com/private.html */
+    var that = this;
     var state = getState();
 
     function getState() {
         var s = {};
 
         s.filenames = {tripsDatas:["tripsData2015.xml",
-                                                             "tripsData2014.xml", "tripsData2013.xml",
-                                                             "tripsData2012.xml", "tripsData2011.xml",
-                                                             "tripsData2010.xml", "tripsData2009.xml"]};
+                                   "tripsData2014.xml", "tripsData2013.xml",
+                                   "tripsData2012.xml", "tripsData2011.xml",
+                                   "tripsData2010.xml", "tripsData2009.xml"]};
         s.isTableShown = false;
         s.visitedDataIndex = -1;
         s.numberOfVisibleTrips = 0;
@@ -143,7 +143,7 @@ function Trips(master) {
                 setTableHideVisibility("visible");
                 if (document.getElementById("tripsTable")) {
                     tripsControl.replaceChild(getTableHeaderElement(state.data),
-                                                                        document.getElementById("tripsSummary"));
+                                              document.getElementById("tripsSummary"));
                     updateTable(state.data);
                 } else {
                     tripsControl.innerHTML = "";
@@ -152,8 +152,8 @@ function Trips(master) {
                 }
                 resizeTable();
             } else {
-                var text = "Loading " + (1 + state.fileIndex) + "/" +
-                                     state.filenames.tripsDatas.length;
+                var text =
+                    "Loading " + (1 + state.fileIndex) + "/" + state.filenames.tripsDatas.length;
                 tripsControl.innerHTML = "";
                 var e = document.createElement("div");
                 e.className = "tripsTable";
@@ -226,10 +226,10 @@ function Trips(master) {
                     arrayToStringDecode(tripsData[i].encodedGpsAltitudeData);
                 tripsData[i].gpsMaxSpeed.location =
                     new google.maps.LatLng(tripsData[i].gpsMaxSpeed.location.y,
-                                                                 tripsData[i].gpsMaxSpeed.location.x)
+                                           tripsData[i].gpsMaxSpeed.location.x)
                 tripsData[i].gpsMaxAltitude.location =
                     new google.maps.LatLng(tripsData[i].gpsMaxAltitude.location.y,
-                                                                 tripsData[i].gpsMaxAltitude.location.x)
+                                           tripsData[i].gpsMaxAltitude.location.x)
             }
 
             state.data = state.data.concat(tripsData);
@@ -275,7 +275,7 @@ function Trips(master) {
             allElements.push(createTN("Show All"));
         } else {
             allElements.push(createControl("Show all trips", "Show All",
-                                                 function () {setVisibilityOfAllTrips("visible")}));
+                                           function () {setVisibilityOfAllTrips("visible")}));
         }
 
         allElements.push(createTN(" | "));
@@ -284,7 +284,7 @@ function Trips(master) {
             allElements.push(createTN("Hide All"));
         } else {
             allElements.push(createControl("Hide all trips", "Hide All",
-                                                 function () {setVisibilityOfAllTrips("hidden")}));
+                                           function () {setVisibilityOfAllTrips("hidden")}));
         }
 
         if (state.numberOfVisibleTrips > 0) {
@@ -292,10 +292,10 @@ function Trips(master) {
 
             if (state.areMarkersVisible) {
                 allElements.push(createControl("Hide all trips markers", "Hide Markers",
-                                                     function () {toggleMaxMarkersVisibility()}));
+                                               function () {toggleMaxMarkersVisibility()}));
             } else {
                 allElements.push(createControl("Show all trips markers", "Show Markers",
-                                                     function () {toggleMaxMarkersVisibility()}));
+                                               function () {toggleMaxMarkersVisibility()}));
             }
         }
 
@@ -332,14 +332,13 @@ function Trips(master) {
 
         row = tableElement.insertRow(-1);
 
-        addCellsToRow(["Duration", "Distance", "Max speed", "Max altitude",
-                                     "Duration", "Distance", "Max speed", "Avg speed"],
-                                     row, "th");
+        addCellsToRow(["Duration", "Distance", "Max speed", "Max altitude", "Duration", "Distance",
+                       "Max speed", "Avg speed"], row, "th");
 
         row = tableElement.insertRow(-1);
 
-        addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss",
-                                     "km", "km/h", "km/h"], row, "th");
+        addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss", "km", "km/h",
+                       "km/h"], row, "th");
 
         for (var i = 0; i < tripsData.length; i++) {
             row = tableElement.insertRow(-1);
@@ -469,8 +468,7 @@ function Trips(master) {
         if (typeof(tripData.polyline) == "undefined") {
             tripData.polyline = createPolyline(tripData.encodedPolyline);
 
-            google.maps.event.addListener(tripData.polyline, "click",
-                                                                        function (mouseEvent) {
+            google.maps.event.addListener(tripData.polyline, "click", function (mouseEvent) {
                 if (master.tripGraph.isCurrentData(tripData)) {
                     addDirectionMarker(mouseEvent.latLng, tripData.polyline);
                 }
@@ -538,8 +536,8 @@ function Trips(master) {
         });
         google.maps.event.addListener(marker, "click", function (event) {
             master.map.zoomToPoint(marker.getPosition());
-            var heading = master.utils.getHeading(marker.getPosition(), polyline,
-                                                                                        master.gm.getZoom());
+            var heading =
+                master.utils.getHeading(marker.getPosition(), polyline, master.gm.getZoom());
             master.map.updateStreetView(marker.getPosition(), heading);
         });
 
