@@ -9,10 +9,10 @@ function Trips(master) {
     function getState() {
         var s = {};
 
-        s.filenames = {tripsDatas:["tripsData2015.json",
-                                   "tripsData2014.json", "tripsData2013.json",
-                                   "tripsData2012.json", "tripsData2011.json",
-                                   "tripsData2010.json", "tripsData2009.json"]};
+        s.filenames = {tripsDatas:["trips/tripsData2015.json",
+                                   "trips/tripsData2014.json", "trips/tripsData2013.json",
+                                   "trips/tripsData2012.json", "trips/tripsData2011.json",
+                                   "trips/tripsData2010.json", "trips/tripsData2009.json"]};
         s.isTableShown = false;
         s.visitedDataIndex = -1;
         s.numberOfVisibleTrips = 0;
