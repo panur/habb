@@ -16,6 +16,7 @@ import sys
 import time
 import urllib
 import xml.dom.minidom
+import xml.etree.cElementTree
 
 import polyline
 
@@ -75,16 +76,17 @@ def _create_output_files(input_dir, output_dir, trips, trip_filter):
 
 def _parse_gpx_file(gpx_filename):
     points = []
-    dom_root = xml.dom.minidom.parse(gpx_filename)
-    is_creator_version_1_1 = dom_root.documentElement.getAttribute('creator').endswith('1.1')
+    et_root = xml.etree.cElementTree.parse(gpx_filename).getroot()
+    is_creator_version_1_1 = et_root.attrib['creator'].endswith('1.1')
+    xmlns = '{http://www.topografix.com/GPX/1/0}'
 
-    for dom_trkpt in dom_root.getElementsByTagName('trkpt'):
+    for et_trkpt in et_root.iter(xmlns + 'trkpt'):
         point = {}
-        point['lat'] = dom_trkpt.getAttribute('lat')
-        point['lon'] = dom_trkpt.getAttribute('lon')
-        point['ele'] = float(dom_trkpt.getElementsByTagName('ele')[0].childNodes[0].nodeValue)
-        point['time'] = dom_trkpt.getElementsByTagName('time')[0].childNodes[0].nodeValue
-        point['speed'] = float(dom_trkpt.getElementsByTagName('speed')[0].childNodes[0].nodeValue)
+        point['lat'] = et_trkpt.attrib['lat']
+        point['lon'] = et_trkpt.attrib['lon']
+        point['ele'] = float(et_trkpt.find(xmlns + 'ele').text)
+        point['time'] = et_trkpt.find(xmlns + 'time').text
+        point['speed'] = float(et_trkpt.find(xmlns + 'speed').text)
         if is_creator_version_1_1:
             point['speed'] = point['speed'] * 3.6
         if len(points) > 0:
