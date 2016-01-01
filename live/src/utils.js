@@ -4,45 +4,24 @@ function Utils() {
     var that = this;
 
     this.downloadUrl = function (url, callback) {
-        var request = createXmlHttpRequest();
-
-        if (request == null) {
-            return false;
-        }
+        var request = new XMLHttpRequest();
 
         request.onreadystatechange = function () {
-            if (request.readyState == 4) {
-                try {
-                    var status = request.status;
-                    if ((status == 0) || (status == 200)) {
-                        callback(request.responseText, status);
-                        request.onreadystatechange = function () {};
-                    }
-                } catch (e) {
-                    alert(e);
+            if (request.readyState === 4) {
+                var status = request.status;
+                if ((status === 0) || (status === 200)) {
+                    callback(request.responseText, status);
+                    request.onreadystatechange = function () {};
                 }
             }
+        };
+
+        request.open('GET', url, true);
+        if (url.indexOf('.json') !== -1) {
+            request.overrideMimeType('application/json');
         }
-
-        request.open("GET", url, true);
-        request.send(null);
-    }
-
-    function createXmlHttpRequest() {
-        try {
-            if (typeof ActiveXObject != "undefined") {
-                return new ActiveXObject("Microsoft.XMLHTTP");
-            } else if (window["XMLHttpRequest"]) {
-                return new XMLHttpRequest();
-            }
-        } catch (e) {
-            alert(e);
-        }
-
-        alert("Cannot create XmlHttpRequest");
-
-        return null;
-    }
+        request.send();
+    };
 
     this.parseXml = function (string) {
         if (window.ActiveXObject) {

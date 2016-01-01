@@ -7,10 +7,10 @@ function Trips(master) {
     function getState() {
         var s = {};
 
-        s.filenames = {tripsDatas:["tripsData2015.xml",
-                                   "tripsData2014.xml", "tripsData2013.xml",
-                                   "tripsData2012.xml", "tripsData2011.xml",
-                                   "tripsData2010.xml", "tripsData2009.xml"]};
+        s.filenames = {tripsDatas:["tripsData2015.json",
+                                   "tripsData2014.json", "tripsData2013.json",
+                                   "tripsData2012.json", "tripsData2011.json",
+                                   "tripsData2010.json", "tripsData2009.json"]};
         s.isTableShown = false;
         s.visitedDataIndex = -1;
         s.numberOfVisibleTrips = 0;
@@ -207,15 +207,7 @@ function Trips(master) {
         var file = state.filenames.tripsDatas[state.fileIndex++];
 
         master.utils.downloadUrl(file, function (data, responseCode) {
-            var xml = master.utils.parseXml(data);
-            var rawTripsData = xml.documentElement.getElementsByTagName("data");
-            var tripsDataString = "";
-
-            for (var i = 0; i < rawTripsData[0].childNodes.length; i++) {
-                tripsDataString += rawTripsData[0].childNodes[i].nodeValue;
-            }
-
-            var tripsData = JSON.parse(tripsDataString);
+            var tripsData = JSON.parse(data);
 
             for (var i = 0; i < tripsData.length; i++) {
                 tripsData[i].vertexTimes = runLengthDecode(
@@ -225,11 +217,11 @@ function Trips(master) {
                 tripsData[i].gpsAltitudeData =
                     arrayToStringDecode(tripsData[i].encodedGpsAltitudeData);
                 tripsData[i].gpsMaxSpeed.location =
-                    new google.maps.LatLng(tripsData[i].gpsMaxSpeed.location.y,
-                                           tripsData[i].gpsMaxSpeed.location.x)
+                    new google.maps.LatLng(tripsData[i].gpsMaxSpeed.lat,
+                                           tripsData[i].gpsMaxSpeed.lon);
                 tripsData[i].gpsMaxAltitude.location =
-                    new google.maps.LatLng(tripsData[i].gpsMaxAltitude.location.y,
-                                           tripsData[i].gpsMaxAltitude.location.x)
+                    new google.maps.LatLng(tripsData[i].gpsMaxAltitude.lat,
+                                           tripsData[i].gpsMaxAltitude.lon);
             }
 
             state.data = state.data.concat(tripsData);
@@ -378,7 +370,7 @@ function Trips(master) {
             tripsData.date,
             tripsData.gpsDuration,
             tripsData.gpsDistance,
-            formatSpeed(tripsData.gpsMaxSpeed.value),
+            tripsData.gpsMaxSpeed.value,
             tripsData.gpsMaxAltitude.value,
             tripsData.ccDuration,
             tripsData.ccDistance,
@@ -389,10 +381,6 @@ function Trips(master) {
             row.className = "selectedTrip";
         } else {
             row.className = "";
-        }
-
-        function formatSpeed(v) {
-            return (v + ".0").substr(0, 4); /* returns 45.0 for 45 */
         }
     }
 
@@ -418,7 +406,7 @@ function Trips(master) {
             that.showControl();
         };
         var e = master.utils.createControlElement(title, text, handler);
-        e.style.color = ((text == "Hide") ? tripsData.encodedPolyline.color : "");
+        e.style.color = ((text == "Hide") ? tripsData.color : "");
 
         return e;
     }
@@ -449,14 +437,14 @@ function Trips(master) {
         return master.utils.createControlElement(title, text, handler);
     }
 
-    function createPolyline(encodedPolyline) {
-        var path = google.maps.geometry.encoding.decodePath(encodedPolyline.points);
+    function createPolyline(tripData) {
+        var path = google.maps.geometry.encoding.decodePath(tripData.encodedPolyline);
 
         return new google.maps.Polyline({
             path: path,
-            strokeColor: encodedPolyline.color,
-            strokeWeight: encodedPolyline.weight,
-            strokeOpacity: encodedPolyline.opacity,
+            strokeColor: tripData.color,
+            strokeWeight: 3,
+            strokeOpacity: 0.9,
             clickable: true,
             zIndex: 10
         });
@@ -466,7 +454,7 @@ function Trips(master) {
         var tripData = state.data[tripIndex];
 
         if (typeof(tripData.polyline) == "undefined") {
-            tripData.polyline = createPolyline(tripData.encodedPolyline);
+            tripData.polyline = createPolyline(tripData);
 
             google.maps.event.addListener(tripData.polyline, "click", function (mouseEvent) {
                 if (master.tripGraph.isCurrentData(tripData)) {
