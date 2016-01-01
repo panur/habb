@@ -110,7 +110,7 @@ def _fill_gap(points, point):
 def _create_output_trip(trip, gpx_points):
     output_trip = {}
 
-    encoded_polyline = _get_encoded_polyline(gpx_points, int(gpx_points[0]['time'][0:4]))
+    encoded_polyline = _get_encoded_polyline(gpx_points, trip['visited_data'] != '-')
 
     output_trip['encodedPolyline'] = encoded_polyline['points']
     output_trip['encodedVertexTimes'] = _get_encoded_vertex_times(
@@ -136,11 +136,12 @@ def _create_output_trip(trip, gpx_points):
     return output_trip
 
 
-def _get_encoded_polyline(gpx_points, year):
+def _get_encoded_polyline(gpx_points, is_hq):
+    very_small = {True: 0.000005, False: 0.00002}[is_hq]
     points = []
     for point in gpx_points:
-        points.append((float(point['lat']), float(point['lon']), year))
-    return polyline.encode(points, very_small=0.000005)
+        points.append((float(point['lat']), float(point['lon'])))
+    return polyline.encode(points, very_small=very_small)
 
 
 def _get_encoded_vertex_times(gpx_points, kept_indexes):
