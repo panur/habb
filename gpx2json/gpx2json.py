@@ -139,15 +139,8 @@ def _create_output_trip(trip, gpx_points):
 def _get_encoded_polyline(gpx_points, year):
     points = []
     for point in gpx_points:
-        points.append((float(point['lat']), _get_lon(float(point['lon']), year)))
+        points.append((float(point['lat']), float(point['lon']), year))
     return polyline.encode(points, [0, len(points) - 1])
-
-
-def _get_lon(lon, year):
-    if year > 2013:
-        return ((((lon + 180) % 360) + 360) % 360) - 180  # GLatLng funny business
-    else:
-        return lon
 
 
 def _get_encoded_vertex_times(gpx_points, kept_indexes):
