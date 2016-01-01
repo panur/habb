@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function Menu(master) {
     var that = this;
     var state = getState();
@@ -37,7 +39,7 @@ function Menu(master) {
                 showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
             }
         });
-    }
+    };
 
     function getMenuLocation(rect) {
         var menuLocation = {};

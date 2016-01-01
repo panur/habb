@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function Map(master) {
     var that = this;
     var state = getState();
@@ -28,7 +30,7 @@ function Map(master) {
             window.onresize = function () {that.resizeMap()};
             that.resizeMap();
         });
-    }
+    };
 
     function setCenter(latLng, zoom) {
         /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
@@ -90,7 +92,7 @@ function Map(master) {
 
     this.setStatusBarHtml = function (statusBarHtml) {
         document.getElementById("status_bar").innerHTML = statusBarHtml;
-    }
+    };
 
     this.openOtherMap = function (otherMapType, point) {
         var zl = master.gm.getZoom();
@@ -130,11 +132,11 @@ function Map(master) {
         }
 
         window.open(url);
-    }
+    };
 
     this.zoomToPoint = function (latLng) {
         setCenter(latLng, state.zoomToPointZoomLevel);
-    }
+    };
 
     function addHomeButton() {
         var homeButton = document.createElement("div");
@@ -207,7 +209,7 @@ function Map(master) {
                 }
             });
         }
-    }
+    };
 
     this.resizeMap = function () {
         if (master.tripGraph.isVisible()) {
@@ -217,7 +219,7 @@ function Map(master) {
         }
 
         master.trips.showControl();
-    }
+    };
 
     this.resizeDivs = function () {
         var oldStreetViewHeight = document.getElementById("street_view").clientHeight;
@@ -229,7 +231,7 @@ function Map(master) {
         if (oldStreetViewHeight != 0) {
             showStreetView(master.gm);
         }
-    }
+    };
 
     function resizeMapCanvas() {
         document.getElementById("map_canvas").style.height =
@@ -245,5 +247,5 @@ function Map(master) {
 
     this.resetLocationAndZoom = function () {
         setCenter(state.initialLatLng, state.initialZL);
-    }
+    };
 }

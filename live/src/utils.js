@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function Utils() {
     var that = this;
 
@@ -31,7 +33,7 @@ function Utils() {
         } else if (window.DOMParser) {
             return (new DOMParser).parseFromString(string, 'text/xml');
         }
-    }
+    };
 
     this.getIndexOf = function (array, value) {
         for (var i = 0; i < array.length; i++) {
@@ -41,7 +43,7 @@ function Utils() {
         }
 
         return -1;
-    }
+    };
 
     this.resizeArray = function (originalArray, newArray, newSize) {
         if (newSize < originalArray.length) {
@@ -52,7 +54,7 @@ function Utils() {
                 newArray.push(originalArray[newX]);
             }
         }
-    }
+    };
 
     function downsampleArray(originalArray, newArray, newSize) {
         var xRatio = Math.round(originalArray.length / newSize);
@@ -87,7 +89,7 @@ function Utils() {
         timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
 
         return timeString; /* 04:32:54 */
-    }
+    };
 
     this.getHeading = function (point, polyline, zoom) {
         var tolerances = [0.0001, 391817 * Math.pow(0.445208, zoom)];
@@ -126,7 +128,7 @@ function Utils() {
 
             return heading;
         }
-    }
+    };
 
     this.createDirectionMarker = function (point, heading) {
         var direction = getLineDirection(heading);
@@ -151,7 +153,7 @@ function Utils() {
 
             return direction;
         }
-    }
+    };
 
     this.createControlElement = function (title, text, handler) {
         var a = document.createElement("a");
@@ -162,7 +164,7 @@ function Utils() {
         a.href = "javascript:";
 
         return a;
-    }
+    };
 
     this.createHideElement = function (className) {
         var img = document.createElement("img");
@@ -171,5 +173,5 @@ function Utils() {
         img.src = "http://maps.google.com/mapfiles/iw_close.gif";
 
         return img;
-    }
+    };
 }

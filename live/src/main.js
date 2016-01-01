@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function main() {
     var master = {};
     var gmElement = document.getElementById("map_canvas");

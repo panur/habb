@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function TripGraph(master) {
     var that = this;
     var state = getState();
@@ -39,7 +41,7 @@ function TripGraph(master) {
             master.map.resizeDivs();
             showHideElement();
         }
-    }
+    };
 
     function setTripGraphState(tripData, canvas) {
         var originalGpsData;
@@ -408,21 +410,21 @@ function TripGraph(master) {
 
             master.map.resizeMap();
         }
-    }
+    };
 
     this.isVisible = function () {
         return (state.visibility == "visible");
-    }
+    };
 
     this.isPlayerStopped = function () {
         return (state.player.state == "stop");
-    }
+    };
 
     this.isCurrentData = function (tripData) {
         return (state.tripData == tripData);
-    }
+    };
 
     this.resize = function () {
         that.show(state.tripData);
-    }
+    };
 }

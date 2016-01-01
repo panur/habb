@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function Trips(master) {
     var that = this;
     var state = getState();
@@ -42,7 +44,7 @@ function Trips(master) {
         that.showControl();
 
         initDragAndDrop();
-    }
+    };
 
     function initDragAndDrop() {
         var dropArea = document.getElementById("map_canvas");
@@ -173,7 +175,7 @@ function Trips(master) {
             tripsControl.innerHTML = "";
             tripsControl.appendChild(e);
         }
-    }
+    };
 
     function resizeTable() {
         var tripsTable = document.getElementById("tripsTableDiv");
@@ -554,7 +556,7 @@ function Trips(master) {
         }
 
         return menuItems;
-    }
+    };
 
     this.getShowMenuItems = function () {
         var menuItems = [];
@@ -566,7 +568,7 @@ function Trips(master) {
         }
 
         return menuItems;
-    }
+    };
 
     this.getHideMenuItems = function () {
         var menuItems = [];
@@ -578,7 +580,7 @@ function Trips(master) {
         }
 
         return menuItems;
-    }
+    };
 
     function addYearMenuItems(menuItems, visibility) {
         var years = []
@@ -597,7 +599,7 @@ function Trips(master) {
         for (var i = 0; i < years.length; i++) {
             menuItems.push("year " + years[i]);
         }
-    }
+    };
 
     this.processMenuCommand = function (menuItem, command) {
         var visibility = {"Show...":"visible", "Hide...":"hidden"}[menuItem]
@@ -612,5 +614,5 @@ function Trips(master) {
         } else if ((command == "Hide markers") || (command == "Show markers")) {
             toggleMaxMarkersVisibility();
         }
-    }
+    };
 }

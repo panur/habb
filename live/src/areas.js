@@ -1,5 +1,7 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
 
+'use strict';
+
 function Areas(master) {
     var that = this;
     var state = getState(true);
@@ -104,7 +106,7 @@ function Areas(master) {
         });
 
         setPointsToState();
-    }
+    };
 
     function setPointsToState() {
         var points = [];
@@ -547,7 +549,7 @@ function Areas(master) {
         }
 
         return kkj;
-    }
+    };
 
     this.getInfo = function (point) {
         var info = {page:"-", km2XY:null, kkjText:"-/-", visited:"-"};
@@ -577,7 +579,7 @@ function Areas(master) {
         }
 
         return info;
-    }
+    };
 
     this.getVisitedStatistics = function () {
         var s = {yes:0, no:0, np:0};
@@ -591,7 +593,7 @@ function Areas(master) {
         }
 
         return s;
-    }
+    };
 
     this.updateCursor = function (info) {
         if (state.cursor)  {
@@ -616,13 +618,13 @@ function Areas(master) {
             state.cursor.setMap(master.gm);
             state.cursorParams.kkj = info.kkjText;
         }
-    }
+    };
 
     this.hideCursor = function () {
         if (state.cursor) {
             state.cursor.setMap(null);
         }
-    }
+    };
 
     function toggleVisibility() {
         if (state.isShown) {
@@ -652,7 +654,7 @@ function Areas(master) {
                 toggleOpacity();
             }
         }
-    }
+    };
 
     this.setVisitedAreaOpacityToHigh = function () {
         if (state.isShown) {
@@ -660,7 +662,7 @@ function Areas(master) {
                 toggleOpacity();
             }
         }
-    }
+    };
 
     function toggleExtensionsVisibility() {
         var opacity = state.area.opacity;
@@ -677,7 +679,7 @@ function Areas(master) {
 
     this.changeVisitedData = function (key) {
         that.setVisitedData(state.filenames.visitedDatas[key]);
-    }
+    };
 
     this.setVisitedData = function (filename) {
         removeOverlaysFromMap();
@@ -685,7 +687,7 @@ function Areas(master) {
         state.filenames.visitedData = filename;
 
         setKm2sToState();
-    }
+    };
 
     this.getMenuItems = function () {
         var menuItems = [];
@@ -711,7 +713,7 @@ function Areas(master) {
         }
 
         return menuItems;
-    }
+    };
 
     this.getViewMenuItems = function () {
         var menuItems = [];
@@ -727,7 +729,7 @@ function Areas(master) {
         }
 
         return menuItems;
-    }
+    };
 
     this.processMenuCommand = function (command) {
         if ((command == "Hide") || (command == "Show")) {
@@ -741,5 +743,5 @@ function Areas(master) {
         } else if (/end of \d\d\d\d/.test(command)) {
             that.changeVisitedData(command.substr(7, 4));
         }
-    }
+    };
 }
