@@ -120,7 +120,7 @@ function Utils() {
         function computeHeading(from, to) {
             var heading = google.maps.geometry.spherical.computeHeading(from, to);
 
-            if (heading < 0)  {
+            if (heading < 0) {
                 heading += 360;
             }
 

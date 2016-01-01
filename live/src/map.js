@@ -43,9 +43,9 @@ function Map(master) {
     function setStatistics() {
         var s = master.areas.getVisitedStatistics();
         var total = s.yes + s.no + s.np;
-        var p = {yes:Math.round(100 * s.yes / total),
-                  no:Math.round(100 * s.no / total),
-                  np:Math.round(100 * s.np / total)};
+        var p = {yes: Math.round(100 * s.yes / total),
+                  no: Math.round(100 * s.no / total),
+                  np: Math.round(100 * s.np / total)};
         var statistics = "Visited: yes="           + s.yes + " ("+ p.yes +
                                "%), no="           + s.no  + " ("+ p.no +
                                "%), not possible=" + s.np  + " ("+ p.np +
@@ -119,10 +119,10 @@ function Map(master) {
             }
         } else if (otherMapType === "Google Maps") {
             url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
-                point.lat() +"," + point.lng() + "&z=" + zl;
+                point.lat() + "," + point.lng() + "&z=" + zl;
         } else if (otherMapType === "HERE Maps") {
             url = "http://here.com/" +
-                point.lat() +"," + point.lng() + "," + zl + ",0,0,normal.day";
+                point.lat() + "," + point.lng() + "," + zl + ",0,0,normal.day";
         } else if (otherMapType === "Bing Maps") {
             url = "http://www.bing.com/maps/default.aspx?cp=" +
                 point.lat() + "~" + point.lng() + "&lvl=" + zl;

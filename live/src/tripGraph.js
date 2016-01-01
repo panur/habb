@@ -11,13 +11,13 @@ function TripGraph(master) {
 
         s.visibility = "hidden";
         s.height = 100;
-        s.origo = {x:5, y:95};
+        s.origo = {x: 5, y: 95};
         s.types = ["Speed", "Altitude"];
         s.lastRatio = 0;
         s.tripCursor = [];
         s.maxTripCursorLength = 10;
         s.tickIntervalMs = 200;
-        s.player = {state:"stop", speed:50};
+        s.player = {state: "stop", speed: 50};
         s.unit = "";
         s.yUnitsPerScaleLine = 0;
         s.yUnitToPixelRatio = 0;
@@ -49,7 +49,7 @@ function TripGraph(master) {
         state.tripData = tripData;
         state.visibility = "visible";
 
-        if (typeof(state.tickInterval) === "undefined") {
+        if (state.tickInterval === "undefined") {
             var intervalMs = state.tickIntervalMs;
             state.tickInterval =
                 window.setInterval(function () {processTripGraphTick();}, intervalMs);

@@ -34,8 +34,8 @@ function Menu(master) {
                     return; // probably drag or drop but not click
                 }
                 var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
-                var rect = {"top":mouseEvent.pixel.y, "bottom":mouseEvent.pixel.y,
-                            "left":mouseEvent.pixel.x, "right":mouseEvent.pixel.x}
+                var rect = {"top": mouseEvent.pixel.y, "bottom": mouseEvent.pixel.y,
+                            "left": mouseEvent.pixel.x, "right": mouseEvent.pixel.x};
                 showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
             }
         });

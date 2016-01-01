@@ -12,45 +12,45 @@ function Areas(master) {
         s.isExtensionsShown = isExtensionsShown;
         s.isShown = true;
 
-        s.filenames = {points:"generated_points.xml",
-            visitedDatas:{
-                "2008":"visited_datas/2008.xml",
-                "2009":"visited_datas/2009.xml",
-                "2010":"visited_datas/2010.xml",
-                "2011":"visited_datas/2011.xml",
-                "2012":"visited_datas/2012.xml",
-                "2013":"visited_datas/2013.xml",
-                "2014":"visited_datas/2014.xml",
-                "latest":"visited_datas/latest.xml"}};
+        s.filenames = {points: "generated_points.xml",
+            visitedDatas: {
+                "2008": "visited_datas/2008.xml",
+                "2009": "visited_datas/2009.xml",
+                "2010": "visited_datas/2010.xml",
+                "2011": "visited_datas/2011.xml",
+                "2012": "visited_datas/2012.xml",
+                "2013": "visited_datas/2013.xml",
+                "2014": "visited_datas/2014.xml",
+                "latest": "visited_datas/latest.xml"}};
         s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
-        s.area = {opacity:0.5, opacityLow:0.2, opacityHigh:0.5,
-                  colors:{yes:"#00FF00", no:"#FF0000", np:"#808080"}}
-        s.grid = {weight:1, opacity:0.5, colors:{page:"#000000", km2:"#FFFFFF"}};
+        s.area = {opacity: 0.5, opacityLow: 0.2, opacityHigh: 0.5,
+                  colors: {yes: "#00FF00", no: "#FF0000", np: "#808080"}};
+        s.grid = {weight: 1, opacity: 0.5, colors: {page: "#000000", km2: "#FFFFFF"}};
         s.cursorParams =
-            {strokeColor:"#000000", strokeWeight:2, strokeOpacity:1, maxZoomLevel:15, kkj:"-"};
+            {strokeColor: "#000000", strokeWeight: 2, strokeOpacity: 1, maxZoomLevel: 15, kkj: "-"};
 
         s.latKmPerP = 5;
         s.latPages = 7;
         s.lngKmPerP = 4;
         s.lngPages = 9;
-        s.kkjStart = {lat:65, lng:30};
-        s.kkjOffset = {lat:-1, lng:-1}; /* will be read from file */
+        s.kkjStart = {lat: 65, lng: 30};
+        s.kkjOffset = {lat: -1, lng: -1}; /* will be read from file */
 
-        s.lats = [{n:5,  lngOffsetKm:4,  latOffsetKm:0,  lengthP:2},
-                  {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:8},
-                  {n:11, lngOffsetKm:0,  latOffsetKm:10, lengthP:9},
-                  {n:10, lngOffsetKm:4,  latOffsetKm:21, lengthP:8},
-                  {n:5,  lngOffsetKm:12, latOffsetKm:31, lengthP:2},
-                  {n:5,  lngOffsetKm:24, latOffsetKm:31, lengthP:2}];
+        s.lats = [{n: 5,  lngOffsetKm: 4,  latOffsetKm: 0,  lengthP: 2},
+                  {n: 5,  lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 8},
+                  {n: 11, lngOffsetKm: 0,  latOffsetKm: 10, lengthP: 9},
+                  {n: 10, lngOffsetKm: 4,  latOffsetKm: 21, lengthP: 8},
+                  {n: 5,  lngOffsetKm: 12, latOffsetKm: 31, lengthP: 2},
+                  {n: 5,  lngOffsetKm: 24, latOffsetKm: 31, lengthP: 2}];
 
-        s.lngs = [{n:4, lngOffsetKm:0,  latOffsetKm:5,  lengthP:3},
-                  {n:8, lngOffsetKm:4,  latOffsetKm:0,  lengthP:6},
-                  {n:1, lngOffsetKm:12, latOffsetKm:0,  lengthP:7},
-                  {n:8, lngOffsetKm:13, latOffsetKm:5,  lengthP:6},
-                  {n:3, lngOffsetKm:21, latOffsetKm:5,  lengthP:5},
-                  {n:9, lngOffsetKm:24, latOffsetKm:5,  lengthP:6},
-                  {n:4, lngOffsetKm:33, latOffsetKm:10, lengthP:4}];
+        s.lngs = [{n: 4, lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 3},
+                  {n: 8, lngOffsetKm: 4,  latOffsetKm: 0,  lengthP: 6},
+                  {n: 1, lngOffsetKm: 12, latOffsetKm: 0,  lengthP: 7},
+                  {n: 8, lngOffsetKm: 13, latOffsetKm: 5,  lengthP: 6},
+                  {n: 3, lngOffsetKm: 21, latOffsetKm: 5,  lengthP: 5},
+                  {n: 9, lngOffsetKm: 24, latOffsetKm: 5,  lengthP: 6},
+                  {n: 4, lngOffsetKm: 33, latOffsetKm: 10, lengthP: 4}];
 
         s.pages = ['0',  '1',  '2',  '0',  '0',  '0',  '0',  '0',  '0',
                    '3',  '4',  '5',  '6',  '7',  '8',  '9', '10',  '0',
@@ -64,19 +64,19 @@ function Areas(master) {
             s.filenames.points = "generated_points_ext.xml";
             s.latPages = 10;
             s.lngPages = 15;
-            s.kkjStart = {lat:60, lng:14};
+            s.kkjStart = {lat: 60, lng: 14};
 
-            s.lats = [{n:5,  lngOffsetKm:0,  latOffsetKm:0,  lengthP:6},
-                      {n:5,  lngOffsetKm:0,  latOffsetKm:5,  lengthP:7},
-                      {n:5,  lngOffsetKm:0,  latOffsetKm:10, lengthP:12},
-                      {n:5,  lngOffsetKm:0,  latOffsetKm:15, lengthP:14},
-                      {n:31, lngOffsetKm:0,  latOffsetKm:20, lengthP:15}];
+            s.lats = [{n: 5,  lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 6},
+                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 7},
+                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 10, lengthP: 12},
+                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 15, lengthP: 14},
+                      {n: 31, lngOffsetKm: 0,  latOffsetKm: 20, lengthP: 15}];
 
-            s.lngs = [{n:25, lngOffsetKm:0,  latOffsetKm:0,  lengthP:10},
-                      {n:4,  lngOffsetKm:25, latOffsetKm:5,  lengthP:9},
-                      {n:20, lngOffsetKm:29, latOffsetKm:10, lengthP:8},
-                      {n:8,  lngOffsetKm:49, latOffsetKm:15, lengthP:7},
-                      {n:4,  lngOffsetKm:57, latOffsetKm:20, lengthP:6}];
+            s.lngs = [{n: 25, lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 10},
+                      {n: 4,  lngOffsetKm: 25, latOffsetKm: 5,  lengthP: 9},
+                      {n: 20, lngOffsetKm: 29, latOffsetKm: 10, lengthP: 8},
+                      {n: 8,  lngOffsetKm: 49, latOffsetKm: 15, lengthP: 7},
+                      {n: 4,  lngOffsetKm: 57, latOffsetKm: 20, lengthP: 6}];
 
             s.pages = ['81', '57', '58', '59', '60', '61',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',
                        '82', '49',  'a',  'A',  'B',  '1',  '2',  '0',  '0',  '0',  '0',  '0',  '0',  '0',  '0',
@@ -282,7 +282,7 @@ function Areas(master) {
     function getPolygonGroup(visitedStatus) {
         var polygons = [];
         var params =
-            {visitedStatus:visitedStatus, km2NeedsToBeTested:getKm2sInMap()};
+            {visitedStatus: visitedStatus, km2NeedsToBeTested: getKm2sInMap()};
 
         for (var y = 0; y < state.km2s.length; y++) {
             for (var x = 0; x < state.km2s[y].length; x++) {
@@ -486,7 +486,7 @@ function Areas(master) {
 
     // tbd: this is not accurate
     function getKm2XYFromPoint(point) {
-        var guessXY = {y : -1, x : -1};
+        var guessXY = {y: -1, x: -1};
 
         for (var i = 0; i < state.grid.latPolylines.length; i++) {
             var line = state.grid.latPolylines[i];
@@ -552,7 +552,7 @@ function Areas(master) {
     };
 
     this.getInfo = function (point) {
-        var info = {page:"-", km2XY:null, kkjText:"-/-", visited:"-"};
+        var info = {page: "-", km2XY: null, kkjText: "-/-", visited: "-"};
         var km2XY = getKm2XYFromPoint(point);
 
         if (km2XY) {
@@ -582,7 +582,7 @@ function Areas(master) {
     };
 
     this.getVisitedStatistics = function () {
-        var s = {yes:0, no:0, np:0};
+        var s = {yes: 0, no: 0, np: 0};
 
         for (var y = 0; y < state.km2s.length; y++) {
             for (var x = 0; x < state.km2s[y].length; x++) {
@@ -596,7 +596,7 @@ function Areas(master) {
     };
 
     this.updateCursor = function (info) {
-        if (state.cursor)  {
+        if (state.cursor) {
             if (state.cursorParams.kkj === info.kkjText) {
                 return;
             } else {

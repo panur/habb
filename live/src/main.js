@@ -16,7 +16,7 @@ function main() {
         styles: [{
             featureType: "road.arterial",
             elementType: "geometry.fill",
-            stylers: [{color: "#FBF8A5" }]
+            stylers: [{color: "#FBF8A5"}]
         }]
     };
 
