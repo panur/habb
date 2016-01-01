@@ -140,7 +140,7 @@ def _get_encoded_polyline(gpx_points, year):
     points = []
     for point in gpx_points:
         points.append((float(point['lat']), float(point['lon']), year))
-    return polyline.encode(points, [0, len(points) - 1])
+    return polyline.encode(points, very_small=0.000005)
 
 
 def _get_encoded_vertex_times(gpx_points, kept_indexes):
