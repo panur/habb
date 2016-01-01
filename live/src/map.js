@@ -34,7 +34,7 @@ function Map(master) {
 
     function setCenter(latLng, zoom) {
         /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
-        if (zoom != master.gm.getZoom()) {
+        if (zoom !== master.gm.getZoom()) {
             master.gm.setZoom(zoom);
         }
         master.gm.panTo(latLng);
@@ -98,35 +98,35 @@ function Map(master) {
         var zl = master.gm.getZoom();
         var url = "";
 
-        if (otherMapType == "Kansalaisen karttapaikka") {
+        if (otherMapType === "Kansalaisen karttapaikka") {
             var kkjOffset = master.areas.getKkjOffset(point);
             url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
 
-            if (kkjOffset != null) {
+            if (kkjOffset !== null) {
                 url += "/osoitehaku.html?cy=" +
                     kkjOffset.y + "500&cx=" + kkjOffset.x + "500&scale=8000";
             } else {
                 url += "/koordinaattihaku.html?y=" + point.lat() + "&x=" + point.lng() +
                     "&srsName=EPSG%3A4258&scale=8000";
             }
-        } else if (otherMapType == "Helsingin seudun opaskartta") {
+        } else if (otherMapType === "Helsingin seudun opaskartta") {
             var areasInfo = master.areas.getInfo(point);
-            if (areasInfo.page == "-") {
+            if (areasInfo.page === "-") {
                 url = "http://kartta.helsinginseutu.fi/";
             } else {
                 url = "http://kartta.helsinginseutu.fi/transform?layers=B0T&srs=1&" +
                     "lat=" + point.lat() + "&lon=" + point.lng() + "&zoom=3";
             }
-        } else if (otherMapType == "Google Maps") {
+        } else if (otherMapType === "Google Maps") {
             url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
                 point.lat() +"," + point.lng() + "&z=" + zl;
-        } else if (otherMapType == "HERE Maps") {
+        } else if (otherMapType === "HERE Maps") {
             url = "http://here.com/" +
                 point.lat() +"," + point.lng() + "," + zl + ",0,0,normal.day";
-        } else if (otherMapType == "Bing Maps") {
+        } else if (otherMapType === "Bing Maps") {
             url = "http://www.bing.com/maps/default.aspx?cp=" +
                 point.lat() + "~" + point.lng() + "&lvl=" + zl;
-        } else if (otherMapType == "OpenStreetMap") {
+        } else if (otherMapType === "OpenStreetMap") {
             url = "http://www.openstreetmap.org/#map=" +
                 zl + "/" + point.lat() + "/" + point.lng();
         }
@@ -163,7 +163,7 @@ function Map(master) {
 
         google.maps.event.addListener(panorama, "visible_changed", function () {
             if (panorama.getVisible()) {
-                if (div.clientHeight == 0) {
+                if (div.clientHeight === 0) {
                     showStreetView(master.gm);
                 }
             }
@@ -199,10 +199,10 @@ function Map(master) {
     }
 
     this.updateStreetView = function (position, heading) {
-        if (document.getElementById("street_view").clientHeight != 0) {
+        if (document.getElementById("street_view").clientHeight !== 0) {
             var svs = new google.maps.StreetViewService();
             svs.getPanoramaByLocation(position, 50, function (data, status) {
-                if (status == google.maps.StreetViewStatus.OK) {
+                if (status === google.maps.StreetViewStatus.OK) {
                     var pov = {heading: heading, zoom: 1, pitch: 0};
                     master.gm.getStreetView().setPov(pov);
                     master.gm.getStreetView().setPosition(position);
@@ -228,7 +228,7 @@ function Map(master) {
 
         resizeMapCanvas();
 
-        if (oldStreetViewHeight != 0) {
+        if (oldStreetViewHeight !== 0) {
             showStreetView(master.gm);
         }
     };

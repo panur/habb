@@ -49,13 +49,13 @@ function TripGraph(master) {
         state.tripData = tripData;
         state.visibility = "visible";
 
-        if (typeof(state.tickInterval) == "undefined") {
+        if (typeof(state.tickInterval) === "undefined") {
             var intervalMs = state.tickIntervalMs;
             state.tickInterval =
                 window.setInterval(function () {processTripGraphTick();}, intervalMs);
         }
 
-        if (state.types[0] == "Speed") {
+        if (state.types[0] === "Speed") {
             state.unit = "km/h";
             originalGpsData = tripData.gpsSpeedData;
             state.yUnitsPerScaleLine = 10;
@@ -87,20 +87,20 @@ function TripGraph(master) {
 
     function addMouseListeners(tripGraph) {
         tripGraph.onmousemove = function (event) {
-            if (state.player.state == "stop") {
+            if (state.player.state === "stop") {
                 processTripGraphEvent(event);
             }
         };
 
         tripGraph.onmouseout = function () {
-            if (state.player.state == "stop") {
+            if (state.player.state === "stop") {
                 stopTrip();
             }
         };
 
         tripGraph.onclick = function (event) {
             var position = state.tripCursor[0].getPosition();
-            if (state.player.state != "stop") {
+            if (state.player.state !== "stop") {
                 processTripGraphEvent(event);
             }
             master.map.zoomToPoint(position);
@@ -130,10 +130,10 @@ function TripGraph(master) {
 
         marker.setMap(master.gm);
 
-        if (state.player.state == "play") {
+        if (state.player.state === "play") {
             master.map.updateStreetView(marker.getPosition(), heading);
 
-            if (master.gm.getBounds().contains(marker.getPosition()) == false) {
+            if (master.gm.getBounds().contains(marker.getPosition()) === false) {
                 master.gm.panTo(marker.getPosition());
             }
         }
@@ -195,12 +195,12 @@ function TripGraph(master) {
             [slower10x, slower1x, createTN(speed), faster1x, faster10x];
         var allElements;
 
-        if (state.player.state == "stop") {
+        if (state.player.state === "stop") {
             allElements = [play, createTN(" | Stop  | <<" + speed + ">>")];
-        } else if (state.player.state == "play") {
+        } else if (state.player.state === "play") {
             allElements = [pause, createTN(" | "), stop, createTN(" | ")];
             allElements = allElements.concat(speedElements);
-        } else if (state.player.state == "pause") {
+        } else if (state.player.state === "pause") {
             allElements = [play, createTN(" | "), stop, createTN(" | ")];
             allElements = allElements.concat(speedElements);
         }
@@ -229,34 +229,34 @@ function TripGraph(master) {
     }
 
     function controlTripPlayer(controlType) {
-        if (controlType == "play") {
-            if (state.player.state == "stop") {
+        if (controlType === "play") {
+            if (state.player.state === "stop") {
                 state.lastRatio = 0;
             }
             state.player.state = "play";
             setTripGraphControl();
-        } else if (controlType == "pause") {
+        } else if (controlType === "pause") {
             state.player.state = "pause";
             setTripGraphControl();
-        } else if (controlType == "stop") {
+        } else if (controlType === "stop") {
             stopTrip();
-        } else if (controlType == "slower10x") {
+        } else if (controlType === "slower10x") {
             state.player.speed -= 10;
             setTripGraphControl();
-        } else if (controlType == "slower1x") {
+        } else if (controlType === "slower1x") {
             state.player.speed -= 1;
             setTripGraphControl();
-        } else if (controlType == "faster1x") {
+        } else if (controlType === "faster1x") {
             state.player.speed += 1;
             setTripGraphControl();
-        } else if (controlType == "faster10x") {
+        } else if (controlType === "faster10x") {
             state.player.speed += 10;
             setTripGraphControl();
         }
     }
 
     function processTripGraphTick() {
-        if (state.player.state == "play") {
+        if (state.player.state === "play") {
             var player = state.player;
             var tripData = state.tripData;
             var intervalMs = state.tickIntervalMs;
@@ -386,7 +386,7 @@ function TripGraph(master) {
     function showHideElement() {
         var tripGraphHide = document.getElementById("tripGraphHide");
 
-        if (tripGraphHide == null) {
+        if (tripGraphHide === null) {
             tripGraphHide = document.createElement("div");
             tripGraphHide.id = "tripGraphHide";
             tripGraphHide.className = "tripGraphHide";
@@ -400,7 +400,7 @@ function TripGraph(master) {
     }
 
     this.hide = function () {
-        if (state.visibility == "visible") {
+        if (state.visibility === "visible") {
             state.visibility = "hidden";
             stopTrip();
 
@@ -413,15 +413,15 @@ function TripGraph(master) {
     };
 
     this.isVisible = function () {
-        return (state.visibility == "visible");
+        return (state.visibility === "visible");
     };
 
     this.isPlayerStopped = function () {
-        return (state.player.state == "stop");
+        return (state.player.state === "stop");
     };
 
     this.isCurrentData = function (tripData) {
-        return (state.tripData == tripData);
+        return (state.tripData === tripData);
     };
 
     this.resize = function () {

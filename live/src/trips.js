@@ -66,7 +66,7 @@ function Trips(master) {
             e.stopPropagation();
             e.preventDefault();
 
-            if (e.dataTransfer.files.length == 1) {
+            if (e.dataTransfer.files.length === 1) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     addDroppedTrip(e.target.result);
@@ -108,13 +108,13 @@ function Trips(master) {
     }
 
     function setVisibilityOfTripsByYear(visibility, year) {
-        if (typeof(state.data) == "undefined") {
+        if (typeof(state.data) === "undefined") {
             return;
         }
 
         for (var i = state.data.length - 1; i >= 0; i--) {
-            if (state.data[i].visibility != visibility) {
-                if ((year == "all") || (year == state.data[i].date.substr(0, 4))) {
+            if (state.data[i].visibility !== visibility) {
+                if ((year === "all") || (year === state.data[i].date.substr(0, 4))) {
                     toggleTripVisibility(i);
                 }
             }
@@ -141,7 +141,7 @@ function Trips(master) {
         var tripsControl = document.getElementById("tripsControl");
 
         if (state.isTableShown) {
-            if (state.filenames.tripsDatas.length == state.fileIndex) {
+            if (state.filenames.tripsDatas.length === state.fileIndex) {
                 setTableHideVisibility("visible");
                 if (document.getElementById("tripsTable")) {
                     tripsControl.replaceChild(getTableHeaderElement(state.data),
@@ -197,7 +197,7 @@ function Trips(master) {
     function setTableHideVisibility(visibility) {
         var tripsTableHide = document.getElementById("tripsTableHide");
 
-        if (visibility == "visible") {
+        if (visibility === "visible") {
             var hideElement = master.utils.createHideElement("hideTripsTable");
             tripsTableHide.appendChild(hideElement);
         } else {
@@ -265,7 +265,7 @@ function Trips(master) {
 
         allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
 
-        if (state.numberOfVisibleTrips == tripsData.length) {
+        if (state.numberOfVisibleTrips === tripsData.length) {
             allElements.push(createTN("Show All"));
         } else {
             allElements.push(createControl("Show all trips", "Show All",
@@ -274,7 +274,7 @@ function Trips(master) {
 
         allElements.push(createTN(" | "));
 
-        if (state.numberOfVisibleTrips == 0) {
+        if (state.numberOfVisibleTrips === 0) {
             allElements.push(createTN("Hide All"));
         } else {
             allElements.push(createControl("Hide all trips", "Hide All",
@@ -355,7 +355,7 @@ function Trips(master) {
     function addCellsToRow(cells, r, thOrTd) {
         for (var i = 0; i < cells.length; i++) {
             var c = document.createElement(thOrTd);
-            if (typeof cells[i] == "object") {
+            if (typeof cells[i] === "object") {
                 c.appendChild(cells[i]);
             } else {
                 c.appendChild(document.createTextNode(cells[i]));
@@ -379,7 +379,7 @@ function Trips(master) {
             tripsData.ccMaxSpeed,
             tripsData.ccAvgSpeed], row, "td");
 
-        if ((master.tripGraph.isVisible()) && (i == state.selectedTripIndex)) {
+        if ((master.tripGraph.isVisible()) && (i === state.selectedTripIndex)) {
             row.className = "selectedTrip";
         } else {
             row.className = "";
@@ -391,7 +391,7 @@ function Trips(master) {
         var rows = tripsTable.rows;
 
         for (var i = 0, tripI = 0; i < rows.length; i++) {
-            if (rows[i].firstChild.nodeName == "TD") {
+            if (rows[i].firstChild.nodeName === "TD") {
                 tripsTable.deleteRow(i);
                 var newRow = tripsTable.insertRow(i);
                 createTripRow(tripsData[tripI], tripI, newRow);
@@ -402,13 +402,13 @@ function Trips(master) {
 
     function getVisibilityCommandElement(tripsData, tripIndex) {
         var title = "Toggle trip visibility";
-        var text = (tripsData.visibility == "hidden") ? "Show" : "Hide";
+        var text = (tripsData.visibility === "hidden") ? "Show" : "Hide";
         var handler = function () {
             toggleTripVisibility(tripIndex);
             that.showControl();
         };
         var e = master.utils.createControlElement(title, text, handler);
-        e.style.color = ((text == "Hide") ? tripsData.color : "");
+        e.style.color = ((text === "Hide") ? tripsData.color : "");
 
         return e;
     }
@@ -416,11 +416,11 @@ function Trips(master) {
     function getVisitedDataCommandElement(tripIndex) {
         var filename = state.data[tripIndex].visitedDataFilename;
 
-        if (filename.charAt(filename.length - 1) == "-") {
+        if (filename.charAt(filename.length - 1) === "-") {
             return document.createTextNode("");
         }
 
-        if (state.visitedDataIndex == tripIndex) {
+        if (state.visitedDataIndex === tripIndex) {
             var text = "Unset";
             var title = "Set visited data to latest";
             var handler = function () {
@@ -455,7 +455,7 @@ function Trips(master) {
     function toggleTripVisibility(tripIndex) {
         var tripData = state.data[tripIndex];
 
-        if (typeof(tripData.polyline) == "undefined") {
+        if (typeof(tripData.polyline) === "undefined") {
             tripData.polyline = createPolyline(tripData);
 
             google.maps.event.addListener(tripData.polyline, "click", function (mouseEvent) {
@@ -475,7 +475,7 @@ function Trips(master) {
                 "A", "Max altitude: " + tripData.gpsMaxAltitude.value + " m");
         }
 
-        if (tripData.visibility == "hidden") {
+        if (tripData.visibility === "hidden") {
             tripData.visibility = "visible";
             state.numberOfVisibleTrips += 1;
             master.areas.setVisitedAreaOpacityToLow();
@@ -487,7 +487,7 @@ function Trips(master) {
         } else {
             tripData.visibility = "hidden";
             state.numberOfVisibleTrips -= 1;
-            if (state.numberOfVisibleTrips == 0) {
+            if (state.numberOfVisibleTrips === 0) {
                 master.areas.setVisitedAreaOpacityToHigh();
             }
             tripData.polyline.setMap(null);
@@ -503,7 +503,7 @@ function Trips(master) {
         /* modified from: http://econym.org.uk/gmap/arrows.htm */
         var heading = master.utils.getHeading(point, polyline, master.gm.getZoom());
 
-        if (heading != -1) {
+        if (heading !== -1) {
             var marker = master.utils.createDirectionMarker(point, heading);
             google.maps.event.addListener(marker, "click", function (event) {
                 marker.setMap(null);
@@ -537,12 +537,12 @@ function Trips(master) {
     this.getMenuItems = function () {
         var menuItems = [];
 
-        if (state.isTableShown == false) {
+        if (state.isTableShown === false) {
             menuItems.push("Open table");
         }
 
         if (state.data.length > 0) {
-            if (state.numberOfVisibleTrips != state.data.length) {
+            if (state.numberOfVisibleTrips !== state.data.length) {
                 menuItems.push("Show...");
             }
             if (state.numberOfVisibleTrips > 0) {
@@ -563,7 +563,7 @@ function Trips(master) {
 
         addYearMenuItems(menuItems, "visible")
 
-        if (state.numberOfVisibleTrips != state.data.length) {
+        if (state.numberOfVisibleTrips !== state.data.length) {
             menuItems.push("all");
         }
 
@@ -586,9 +586,9 @@ function Trips(master) {
         var years = []
 
         for (var i = 0; i < state.data.length; i++) {
-            if (state.data[i].visibility != visibility) {
+            if (state.data[i].visibility !== visibility) {
                 var year = state.data[i].date.substr(0, 4)
-                if (years.indexOf(year) == -1) {
+                if (years.indexOf(year) === -1) {
                     years.push(year)
                 }
             }
@@ -604,14 +604,14 @@ function Trips(master) {
     this.processMenuCommand = function (menuItem, command) {
         var visibility = {"Show...":"visible", "Hide...":"hidden"}[menuItem]
 
-        if (command == "Open table") {
+        if (command === "Open table") {
             state.isTableShown = true;
             that.showControl();
         } else if (/year \d\d\d\d/.test(command)) {
             setVisibilityOfTripsByYear(visibility, command.substr(5, 4))
-        } else if (command == "all") {
+        } else if (command === "all") {
             setVisibilityOfAllTrips(visibility);
-        } else if ((command == "Hide markers") || (command == "Show markers")) {
+        } else if ((command === "Hide markers") || (command === "Show markers")) {
             toggleMaxMarkersVisibility();
         }
     };

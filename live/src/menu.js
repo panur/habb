@@ -130,18 +130,18 @@ function Menu(master) {
                 function getSubMenuItems() {
                     var subMenuItems = [];
 
-                    if (rowElement.textContent == "Open...") {
+                    if (rowElement.textContent === "Open...") {
                         subMenuItems = ["Kansalaisen karttapaikka", "Helsingin seudun opaskartta",
                                         "Google Maps", "HERE Maps", "Bing Maps", "OpenStreetMap"];
-                    } else if (rowElement.textContent == "Areas...") {
+                    } else if (rowElement.textContent === "Areas...") {
                         subMenuItems = master.areas.getMenuItems();
-                    } else if (rowElement.textContent == "View...") {
+                    } else if (rowElement.textContent === "View...") {
                         subMenuItems = master.areas.getViewMenuItems();
-                    } else if (rowElement.textContent == "Trips...") {
+                    } else if (rowElement.textContent === "Trips...") {
                         subMenuItems = master.trips.getMenuItems();
-                    } else if (rowElement.textContent == "Show...") {
+                    } else if (rowElement.textContent === "Show...") {
                         subMenuItems = master.trips.getShowMenuItems();
-                    } else if (rowElement.textContent == "Hide...") {
+                    } else if (rowElement.textContent === "Hide...") {
                         subMenuItems = master.trips.getHideMenuItems();
                     }
 
@@ -158,20 +158,20 @@ function Menu(master) {
             }
 
             function processMenuClick(rowElement) {
-                if (state.selectedMenuItem == "Zoom") {
+                if (state.selectedMenuItem === "Zoom") {
                     hideMenu();
                     master.map.zoomToPoint(latLng);
-                } else if (state.selectedMenuItem != "") {
+                } else if (state.selectedMenuItem !== "") {
                     hideMenu();
 
-                    if (state.selectedParentMenuItem == "Open...") {
+                    if (state.selectedParentMenuItem === "Open...") {
                         master.map.openOtherMap(rowElement.textContent, latLng);
-                    } else if ((state.selectedParentMenuItem == "Areas...") ||
-                               (state.selectedParentMenuItem == "View...")) {
+                    } else if ((state.selectedParentMenuItem === "Areas...") ||
+                               (state.selectedParentMenuItem === "View...")) {
                         master.areas.processMenuCommand(rowElement.textContent);
-                    } else if ((state.selectedParentMenuItem == "Trips...") ||
-                               (state.selectedParentMenuItem == "Show...") ||
-                               (state.selectedParentMenuItem == "Hide...")) {
+                    } else if ((state.selectedParentMenuItem === "Trips...") ||
+                               (state.selectedParentMenuItem === "Show...") ||
+                               (state.selectedParentMenuItem === "Hide...")) {
                         master.trips.processMenuCommand(state.selectedParentMenuItem,
                                                         rowElement.textContent);
                     } else {

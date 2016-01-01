@@ -37,7 +37,7 @@ function Utils() {
 
     this.getIndexOf = function (array, value) {
         for (var i = 0; i < array.length; i++) {
-            if (array[i] == value) {
+            if (array[i] === value) {
                 return i;
             }
         }
@@ -99,7 +99,7 @@ function Utils() {
                 var p1 = polyline.getPath().getAt(i);
                 var p2 = polyline.getPath().getAt(i + 1);
 
-                if (isPointInLineSegment(point, p1, p2, tolerances[t]) == true) {
+                if (isPointInLineSegment(point, p1, p2, tolerances[t]) === true) {
                     return computeHeading(p1, p2);
                 }
             }
