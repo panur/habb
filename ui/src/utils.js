@@ -35,16 +35,6 @@ function Utils() {
         }
     };
 
-    this.getIndexOf = function (array, value) {
-        for (var i = 0; i < array.length; i++) {
-            if (array[i] === value) {
-                return i;
-            }
-        }
-
-        return -1;
-    };
-
     // For '#$%1~!$2!~!!$3' return [0, 1, 2, 14, 91, 92, 15, 182, 183, 16].
     this.stringToIntegerList = function (string) {
         var integerList = [];
@@ -106,10 +96,8 @@ function Utils() {
 
     this.getTimeString = function (seconds) {
         var date = new Date(Math.round(seconds) * 1000);
-        var timeString = date.toUTCString();
-        timeString = timeString.substr(17, 8); /* Thu, 01 Jan 1970 04:32:54 GMT */
-
-        return timeString; /* 04:32:54 */
+        var timeString = date.toISOString(); // YYYY-MM-DDTHH:mm:ss.sssZ
+        return timeString.substr(11, 8); // HH:mm:ss
     };
 
     this.getHeading = function (point, polyline, zoom) {
@@ -153,12 +141,12 @@ function Utils() {
 
     this.createDirectionMarker = function (point, heading) {
         var direction = getLineDirection(heading);
-        var image = new google.maps.MarkerImage(
-            "http://www.google.com/mapfiles/dir_" + direction + ".png",
-            new google.maps.Size(24, 24), /* size */
-            new google.maps.Point(0, 0), /* origin */
-            new google.maps.Point(12, 12) /* anchor */
-        );
+        var image = {
+            url: "http://www.google.com/mapfiles/dir_" + direction + ".png",
+            size: new google.maps.Size(24, 24),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(12, 12)
+        };
 
         return new google.maps.Marker({
             position: point,

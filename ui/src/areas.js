@@ -172,7 +172,7 @@ function Areas(master) {
             }
 
             for (var i = 0; i < allInPage.length; i++) {
-                var page = master.utils.getIndexOf(state.pages, allInPage[i]);
+                var page = state.pages.indexOf(allInPage[i]);
                 var initY = Math.floor(page / state.lngPages) * state.latKmPerP;
                 var initX = (page % state.lngPages) * state.lngKmPerP;
 
@@ -318,7 +318,7 @@ function Areas(master) {
         points.push(points[0]);
 
         for (var loopEnd = 1; loopEnd < points.length; loopEnd++) {
-            var loopStart = master.utils.getIndexOf(points, points[loopEnd]);
+            var loopStart = points.indexOf(points[loopEnd]);
             if ((loopStart > 0) && (loopStart !== loopEnd)) {
                 splittedLoops[0] = points.slice(0);
                 splittedLoops[1] = splittedLoops[0].splice(loopStart, (loopEnd - loopStart));
