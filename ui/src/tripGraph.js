@@ -49,7 +49,7 @@ function TripGraph(master) {
         state.tripData = tripData;
         state.visibility = "visible";
 
-        if (state.tickInterval === "undefined") {
+        if (state.tickInterval === undefined) {
             var intervalMs = state.tickIntervalMs;
             state.tickInterval =
                 window.setInterval(function () {processTripGraphTick();}, intervalMs);
