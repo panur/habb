@@ -12,9 +12,9 @@
 
 <h1>Helsinki Area By Bike - About</h1>
 
-<p>Last updated 2016-01-01.</p>
+<p>Last updated 2016-01-02.</p>
 
-<h2>Areas</h2>
+<h2 id="areas">Areas</h2>
 
 <p>
 The visited areas are based on a map called "Kartat ja Kadunnimet
@@ -37,7 +37,7 @@ P‰‰kaupunkiseutu" (ISBN: 951-98617-1-8, printed in 2001):
     </ul></li>
 </ul>
 
-<h3>Extensions</h3>
+<h3 id="extensions">Extensions</h3>
 
 <p>
 The map was extended by:
@@ -58,7 +58,7 @@ The extensions can be shown/hidden using the left-click
 <a href="context_menu.png">context menu</a>.
 </p>
 
-<h2>Trips</h2>
+<h2 id="trips">Trips</h2>
 
 <p>
 The trips are recorded with a GPS logger
@@ -69,7 +69,7 @@ GT-600</a>) and a cycle computer (Atech K29 until end of 2014, Union 10 since
 then). No map is used during the trips.
 </p>
 
-<h2>Other Maps</h2>
+<h2 id="maps">Other Maps</h2>
 
 <ul>
   <li><a href="http://kansalaisen.karttapaikka.fi/">Kansalaisen Karttapaikka - Maanmittauslaitos</a>
@@ -97,21 +97,46 @@ then). No map is used during the trips.
   <li><a href="http://www.openstreetmap.org/">OpenStreetMap</a></li>
 </ul>
 
-<h2>Implementation Details</h2>
+<h2 id="details">Implementation Details</h2>
+
+<p>
+<a href="map.html">Helsinki Area By Bike</a> consists of two parts: <a href="#gpx2json">gpx2json</a>
+and browser based graphical <a href="#ui">user interface</a>. The former formats the trip data into
+compressed format more suitable for the latter to use. The source code of both parts is available at
+<a href="https://github.com/panur/habb">GitHub</a>.
+</p>
+
+<h3 id="gpx2json">gpx2json</h3>
+
+<p>
+gpx2json compresses <a href="http://www.topografix.com/gpx.asp">GPX</a> files into
+<a href="http://www.json.org/">JSON</a> files. The size of the GPX files is about 130 megabytes
+(years from 2009 to 2015) and the size of the JSON files is about 3 megabytes. The high compression
+ratio is achieved by skipping irrelevant parts in GPX files and encoding the relevant parts in less
+verbose form. gpx2json is implemented in <a href="https://www.python.org/">Python</a> programming
+language (version 2.7).
+</p>
+
+<h3 id="ui">User Interface</h3>
+
+<p>
+The browser based user interface displays <a href="#areas">areas</a> and <a href="#trips">trips</a>
+on a map using <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps
+JavaScript API</a>. The JSON files created by gpx2json are downloaded as compressed files if the
+browser supports <a href="https://en.wikipedia.org/wiki/HTTP_compression">HTTP compression</a>. In
+that case the size of the downloaded files is about 2 megabytes. The user interface is implemented
+in <a href="http://javascript.crockford.com/">JavaScript</a> programming language and it utilizes
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> and
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> technologies.
+</p>
+
+<h2 id="browsers">Browser Compatibility</h2>
 
 <ul>
-  <li>Uses JavaScript version of <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps API</a> (version 3.22)</li>
-  <li>Uses <a href="http://www.json.org/js.html">JSON in JavaScript</a> to store trips data</li>
-  <li>KKJ coordinates were converted to EUREF89 (WGS84) using <a href="http://www.maanmittauslaitos.fi/kartat/koordinaatit/muunnosohjelma-euref89">EurefMuunnos</a></li>
-</ul>
-
-<h2>Browser Compatibility</h2>
-
-<ul>
-  <li>Mozilla Firefox version 39.0: <a href="firefox.png">OK</a></li>
-  <li>Opera version 32.0.1948.69: OK</li>
-  <li>Microsoft Internet Explorer version 11.0.9600.18015: OK</li>
-  <li>Google Chrome version 45.0.2454.101: OK</li>
+  <li>Mozilla Firefox version 43.0.2: <a href="firefox.png">OK</a></li>
+  <li>Opera version 34.0.2036.25: OK</li>
+  <li>Microsoft Internet Explorer version 11.0.9600.18124: OK</li>
+  <li>Google Chrome version 47.0.2526.106: OK</li>
 </ul>
 
 <p>back to the <a href="map.html">map</a></p>
