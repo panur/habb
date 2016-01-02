@@ -45,6 +45,27 @@ function Utils() {
         return -1;
     };
 
+    // For '#$%1~!$2!~!!$3' return [0, 1, 2, 14, 91, 92, 15, 182, 183, 16].
+    this.stringToIntegerList = function (string) {
+        var integerList = [];
+        var integerValue = 0;
+        var multChr = 33; // 33='!'
+        var minChr = 35;  // 35='#', not 34='"' because it takes three characters in JSON
+        var maxChr = 126; // 126='~'
+        var maxValue = maxChr - minChr;
+        for (var i = 0; i < string.length; i++) {
+            var charCode = string.charCodeAt(i);
+            if (charCode === multChr) {
+                integerValue += maxValue;
+            } else {
+                integerValue += charCode - minChr;
+                integerList.push(integerValue);
+                integerValue = 0;
+            }
+        }
+        return integerList;
+    };
+
     this.resizeArray = function (originalArray, newArray, newSize) {
         if (newSize < originalArray.length) {
             downsampleArray(originalArray, newArray, newSize);

@@ -2,6 +2,9 @@
 
 """Convert GPX files into JSON files.
 
+GPX: http://www.topografix.com/gpx.asp
+JSON: http://www.json.org/
+
 Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html
 """
 
@@ -14,7 +17,6 @@ import math
 import resource
 import sys
 import time
-import urllib
 import xml.dom.minidom
 import xml.etree.cElementTree
 
@@ -133,6 +135,8 @@ def _create_output_trip(trip, gpx_points):
     output_trip['ccMaxSpeed'] = trip['max_speed']
     output_trip['ccAvgSpeed'] = trip['avg_speed']
 
+    _log_stats(trip, output_trip, gpx_points, encoded_polyline)
+
     return output_trip
 
 
@@ -150,9 +154,7 @@ def _get_encoded_vertex_times(gpx_points, kept_indexes):
     for i in range(len(kept_indexes)):
         vertex_times.append(_get_duration_seconds(gpx_points[0], gpx_points[kept_indexes[i]]))
 
-    delta_vertex_times = _get_delta_list(vertex_times)
-    encoded_vertex_times = _run_length_encode(delta_vertex_times)
-    return _array_to_string_encode(encoded_vertex_times, 1)
+    return _integer_list_to_string(_get_delta_list(vertex_times))
 
 
 def _get_delta_list(integer_list):
@@ -164,34 +166,20 @@ def _get_delta_list(integer_list):
     return [(integer_list[i] - integer_list[i - 1]) for i in range(1, len(integer_list))]
 
 
-def _run_length_encode(source_array):
-    encoded_array = []
-    run_length = 0
-    element_value = source_array[0]
-
-    for i in range(len(source_array)):
-        if source_array[i] == element_value:
-            run_length += 1
-        else:
-            encoded_array.append(run_length)
-            encoded_array.append(element_value)
-            run_length = 1
-            element_value = source_array[i]
-
-    encoded_array.append(run_length)
-    encoded_array.append(element_value)
-
-    return encoded_array
-
-
-def _array_to_string_encode(source_array, scale):
-    encoded_string = '0' + str(scale)
-    offset_value = ord(encoded_string[0])
-
-    for i in range(len(source_array)):
-        encoded_string += unichr(offset_value + source_array[i])
-
-    return urllib.quote(unicode(encoded_string).encode('utf-8'), safe='~@#$&()*!+=:;,.?/\'')
+def _integer_list_to_string(integer_list):
+    """For [0, 1, 2, 14, 91, 92, 15, 182, 183, 16] return '#$%1~!$2!~!!$3'."""
+    if (len(integer_list) > 0) and (min(integer_list) < 0):
+        raise SystemExit('negative value in integer_list: {}'.format(integer_list))
+    mult_chr = 33  # 33='!'
+    min_chr = 35  # 35='#', not 34='"' because it takes three characters in JSON
+    max_chr = 126  # 126='~'
+    max_value = max_chr - min_chr
+    output_string = ''
+    for integer in integer_list:
+        num_mult_chr = max(0, integer - 1) / max_value
+        last_output_chr = chr(min_chr + (integer - (num_mult_chr * max_value)))
+        output_string += (chr(mult_chr) * num_mult_chr) + last_output_chr
+    return output_string
 
 
 def _get_gps_duration_seconds(gpx_points):
@@ -280,7 +268,7 @@ def _get_encoded_gps_data(gpx_points, element, scale):
     else:
         _downsample_array(tmp_array, gps_data, max_length)
 
-    return _array_to_string_encode(gps_data, scale)
+    return _integer_list_to_string(gps_data)
 
 
 def _downsample_array(original_array, new_array, new_size):
@@ -309,6 +297,21 @@ def _downsample_array(original_array, new_array, new_size):
 
 def _round(number):
     return int(round(number))
+
+
+def _log_stats(trip, output_trip, gpx_points, encoded_polyline):
+    format_str = (u'{} ({}) - points: [total={}, kept={}, dropped={} ({} %)]; '
+                  'bytes: [polyline={} ({}/point), speed={}, ele={}, times={}]')
+
+    drop_ratio = int((encoded_polyline['num_dropped_points'] / float(len(gpx_points))) * 100)
+    kept_points = len(gpx_points) - encoded_polyline['num_dropped_points']
+    polyline_ratio = round(len(encoded_polyline['points']) / float(kept_points), 2)
+
+    logging.debug(format_str.format(
+        trip['name'], trip['gps_data'], len(gpx_points), kept_points,
+        encoded_polyline['num_dropped_points'], drop_ratio, len(encoded_polyline['points']),
+        polyline_ratio, len(output_trip['encodedGpsSpeedData']),
+        len(output_trip['encodedGpsAltitudeData']), len(output_trip['encodedVertexTimes'])))
 
 
 if __name__ == '__main__':

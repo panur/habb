@@ -212,12 +212,12 @@ function Trips(master) {
             var tripsData = JSON.parse(data);
 
             for (var i = 0; i < tripsData.length; i++) {
-                tripsData[i].vertexTimes = runLengthDecode(
-                    arrayToStringDecode(tripsData[i].encodedVertexTimes));
+                tripsData[i].vertexTimes =
+                    master.utils.stringToIntegerList(tripsData[i].encodedVertexTimes);
                 tripsData[i].gpsSpeedData =
-                    arrayToStringDecode(tripsData[i].encodedGpsSpeedData);
+                    master.utils.stringToIntegerList(tripsData[i].encodedGpsSpeedData);
                 tripsData[i].gpsAltitudeData =
-                    arrayToStringDecode(tripsData[i].encodedGpsAltitudeData);
+                    decodeGpsAltitudeData(tripsData[i].encodedGpsAltitudeData);
                 tripsData[i].gpsMaxSpeed.location =
                     new google.maps.LatLng(tripsData[i].gpsMaxSpeed.lat,
                                            tripsData[i].gpsMaxSpeed.lon);
@@ -232,28 +232,11 @@ function Trips(master) {
         });
     }
 
-    function runLengthDecode(encodedArray) {
-        var decodedArray = [];
-
-        for (var i = 0; i < encodedArray.length; i += 2) {
-            for (var j = 0; j < encodedArray[i]; j++) {
-                decodedArray.push(encodedArray[i + 1]);
-            }
+    function decodeGpsAltitudeData(encodedString) {
+        var decodedArray = master.utils.stringToIntegerList(encodedString);
+        for (var i = 0; i < decodedArray.length; i++) {
+            decodedArray[i] *= 2;
         }
-
-        return decodedArray;
-    }
-
-    function arrayToStringDecode(encodedString) {
-        var string = decodeURI(encodedString);
-        var decodedArray = [];
-        var offsetValue = string.charCodeAt(0);
-        var scale = string.charCodeAt(1) - offsetValue;
-
-        for (var i = 2; i < string.length; i++) {
-            decodedArray.push((string.charCodeAt(i) - offsetValue) * scale);
-        }
-
         return decodedArray;
     }
 
