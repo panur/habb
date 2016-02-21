@@ -8,17 +8,6 @@ div.map_canvas {
   height: 90%;
 }
 
-div.homeButton {
-  height: 14px;
-  width: 14px;
-  position: absolute;
-  top: 36px;
-  left: 36px;
-  opacity: 0.0;
-  background-color: #FFFFFF;
-  cursor: pointer;
-}
-
 div.menu {
   position: absolute;
   color: #000000;
@@ -52,7 +41,7 @@ tr.menuItem {
 div.tripsControl {
   position: absolute;
   top: 5px;
-  right: 105px;
+  right: 5px;
   overflow: hidden;
   color: #000000;
   box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);
@@ -90,7 +79,7 @@ img.hideTripsTable {
   border: 0px;
   position: absolute;
   top: 5px;
-  right: 105px;
+  right: 5px;
   cursor: pointer;
   z-index: 10;
 }

@@ -183,7 +183,7 @@ function Trips(master) {
         var streetViewDiv = document.getElementById("street_view");
         var availableHeight = mapDiv.clientHeight + streetViewDiv.clientHeight;
         tripsTable.style.height = Math.round(availableHeight * 0.64) + "px";
-        tripsTable.style.width = getWidth(Math.round(mapDiv.clientWidth * 0.68));
+        tripsTable.style.width = getWidth(Math.round(mapDiv.clientWidth * 0.78));
 
         function getWidth(width) {
             if (tripsTable.scrollWidth > width) {

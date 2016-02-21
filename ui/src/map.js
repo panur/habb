@@ -21,7 +21,6 @@ function Map(master) {
     this.init = function () {
         master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL});
         addMouseListeners();
-        addHomeButton();
         initStreetView();
 
         google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
@@ -137,19 +136,6 @@ function Map(master) {
     this.zoomToPoint = function (latLng) {
         setCenter(latLng, state.zoomToPointZoomLevel);
     };
-
-    function addHomeButton() {
-        var homeButton = document.createElement("div");
-        homeButton.id = "homeButton";
-        homeButton.className = "homeButton";
-        document.getElementById("dynamic_divs").appendChild(homeButton);
-
-        homeButton.title = "Return to initial location";
-
-        homeButton.onclick = function () {
-            that.resetLocationAndZoom();
-        };
-    }
 
     function initStreetView() {
         var div = document.getElementById("street_view");

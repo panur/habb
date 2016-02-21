@@ -33,7 +33,7 @@ function Menu(master) {
                 if (downDurationMs > 150) {
                     return; // probably drag or drop but not click
                 }
-                var menuItems = ["Open...", "Areas...", "Trips...", "Zoom"];
+                var menuItems = ["Open...", "Areas...", "Trips...", "Zoom", "Home"];
                 var rect = {"top": mouseEvent.pixel.y, "bottom": mouseEvent.pixel.y,
                             "left": mouseEvent.pixel.x, "right": mouseEvent.pixel.x};
                 showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
@@ -161,6 +161,9 @@ function Menu(master) {
                 if (state.selectedMenuItem === "Zoom") {
                     hideMenu();
                     master.map.zoomToPoint(latLng);
+                } else if (state.selectedMenuItem === "Home") {
+                    hideMenu();
+                    master.map.resetLocationAndZoom();
                 } else if (state.selectedMenuItem !== "") {
                     hideMenu();
 
