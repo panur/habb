@@ -115,7 +115,7 @@ function Trips(master) {
         for (var i = state.data.length - 1; i >= 0; i--) {
             if (state.data[i].visibility !== visibility) {
                 if ((year === "all") || (year === state.data[i].date.substr(0, 4))) {
-                    toggleTripVisibility(i);
+                    toggleTripVisibility(i, false);
                 }
             }
         }
@@ -387,7 +387,7 @@ function Trips(master) {
         var title = "Toggle trip visibility";
         var text = (tripsData.visibility === "hidden") ? "Show" : "Hide";
         var handler = function () {
-            toggleTripVisibility(tripIndex);
+            toggleTripVisibility(tripIndex, true);
             that.showControl();
         };
         var e = master.utils.createControlElement(title, text, handler);
@@ -435,7 +435,7 @@ function Trips(master) {
         });
     }
 
-    function toggleTripVisibility(tripIndex) {
+    function toggleTripVisibility(tripIndex, zoomToBounds) {
         var tripData = state.data[tripIndex];
 
         if (typeof(tripData.polyline) === "undefined") {
@@ -463,6 +463,9 @@ function Trips(master) {
             state.numberOfVisibleTrips += 1;
             master.areas.setVisitedAreaOpacityToLow();
             tripData.polyline.setMap(master.gm);
+            if (zoomToBounds) {
+                master.gm.fitBounds(getBounds(tripData.polyline.getPath()));
+            }
             tripData.gpsMaxSpeed.marker.setMap(master.gm);
             tripData.gpsMaxAltitude.marker.setMap(master.gm);
             master.tripGraph.show(tripData);
@@ -515,6 +518,21 @@ function Trips(master) {
         });
 
         return marker;
+    }
+
+    function getBounds(polylinePath) {
+        var minLat = 180;
+        var minLng = 180;
+        var maxLat = 0;
+        var maxLng = 0;
+        for (var i = 0; i < polylinePath.getLength(); i++) {
+            minLat = Math.min(minLat, polylinePath.getAt(i).lat());
+            minLng = Math.min(minLng, polylinePath.getAt(i).lng());
+            maxLat = Math.max(maxLat, polylinePath.getAt(i).lat());
+            maxLng = Math.max(maxLng, polylinePath.getAt(i).lng());
+        }
+        return new google.maps.LatLngBounds({'lat': minLat, 'lng': minLng},
+                                            {'lat': maxLat, 'lng': maxLng});
     }
 
     this.getMenuItems = function () {
