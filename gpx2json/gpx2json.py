@@ -17,7 +17,6 @@ import math
 import resource
 import sys
 import time
-import xml.dom.minidom
 import xml.etree.cElementTree
 
 import polyline
@@ -35,7 +34,7 @@ def _main():
     start_time = time.time()
     logging.debug('started {}'.format(sys.argv))
 
-    trips = _parse_index(os.path.join(args.input_dir, 'index.xml'))
+    trips = _parse_index(os.path.join(args.input_dir, 'index.json'))
     _create_output_files(args.input_dir, args.output_dir, trips, args.trip_filter)
 
     logging.debug('took {} seconds, max mem: {} megabytes'.format(
@@ -47,15 +46,9 @@ def _init_logging():
     logging.basicConfig(filename='gpx2json.log', format=log_format, level=logging.DEBUG)
 
 
-def _parse_index(index_xml):
-    trips = []
-    dom_root = xml.dom.minidom.parse(index_xml)
-    for dom_trip in dom_root.getElementsByTagName('trip'):
-        trip = {}
-        for attribute in dom_trip.attributes.keys():
-            trip[attribute] = dom_trip.getAttribute(attribute)
-        trips.append(trip)
-    return trips
+def _parse_index(index_json):
+    with open(index_json) as json_file:
+        return json.load(json_file)
 
 
 def _create_output_files(input_dir, output_dir, trips, trip_filter):
