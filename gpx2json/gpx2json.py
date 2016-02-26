@@ -15,6 +15,7 @@ import logging
 import os
 import math
 import resource
+import shutil
 import sys
 import time
 import xml.etree.cElementTree
@@ -34,8 +35,10 @@ def _main():
     start_time = time.time()
     logging.debug('started {}'.format(sys.argv))
 
-    trips = _parse_index(os.path.join(args.input_dir, 'index.json'))
+    index_file = os.path.join(args.input_dir, 'index.json')
+    trips = _parse_index(index_file)
     _create_output_files(args.input_dir, args.output_dir, trips, args.trip_filter)
+    shutil.copy(index_file, os.path.join(args.output_dir, 'years'))
 
     logging.debug('took {} seconds, max mem: {} megabytes'.format(
         int(time.time() - start_time), resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
@@ -62,11 +65,21 @@ def _create_output_files(input_dir, output_dir, trips, trip_filter):
             if year not in output_trips:
                 output_trips[year] = []
             output_trips[year].append(output_trip)
+            output_filename = os.path.join(output_dir, 'years',
+                                           trip['gps_data'].replace('gpx', 'json'))
+            _write_to_json_file(output_filename, output_trip)
 
     for year in output_trips:
         output_filename = os.path.join(output_dir, 'tripsData{}.json'.format(year))
-        with open(output_filename, 'w') as output_file:
-            output_file.write(json.dumps(output_trips[year], separators=(',', ':')))
+        _write_to_json_file(output_filename, output_trips[year])
+
+
+def _write_to_json_file(output_filename, data):
+    parent_dir = os.path.dirname(output_filename)
+    if not os.path.isdir(parent_dir):
+        os.makedirs(parent_dir)
+    with open(output_filename, 'w') as output_file:
+        output_file.write(json.dumps(data, separators=(',', ':')))
 
 
 def _parse_gpx_file(gpx_filename):

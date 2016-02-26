@@ -168,11 +168,16 @@ function Utils() {
         var a = document.createElement("a");
 
         a.title = title;
-        a.onclick = handler;
+        a.onclick = onClick;
         a.textContent = text;
         a.href = "javascript:";
 
         return a;
+
+        function onClick() {
+            a.className = "progress";
+            handler();
+        }
     };
 
     this.createHideElement = function (className) {

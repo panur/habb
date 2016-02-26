@@ -8,24 +8,19 @@ function Trips(master) {
 
     function getState() {
         var s = {};
-
-        s.filenames = {tripsDatas:["trips/tripsData2015.json",
-                                   "trips/tripsData2014.json", "trips/tripsData2013.json",
-                                   "trips/tripsData2012.json", "trips/tripsData2011.json",
-                                   "trips/tripsData2010.json", "trips/tripsData2009.json"]};
         s.isTableShown = false;
         s.visitedDataIndex = -1;
         s.numberOfVisibleTrips = 0;
         s.directionMarkers = [];
         s.areMarkersVisible = false;
-        s.fileIndex = 0;
-        s.data = [];
+        s.dataStore = null;
         s.selectedTripIndex = -1;
-
         return s;
     }
 
     this.init = function () {
+        state.dataStore = new TripDataStore(master);
+
         var tripsControl = document.createElement("div");
         tripsControl.id = "tripsControl";
         tripsControl.className = "tripsControl";
@@ -104,33 +99,41 @@ function Trips(master) {
     }
 
     function setVisibilityOfAllTrips(visibility) {
-        setVisibilityOfTripsByYear(visibility, "all");
+        var readyEventName = "allTripsLoaded";
+        google.maps.event.addListener(master.gm, readyEventName, function () {
+            google.maps.event.clearListeners(master.gm, readyEventName);
+            setVisibilityOfTripsByYear(visibility, "all");
+        });
+        state.dataStore.loadAllTripFiles(readyEventName);
     }
 
     function setVisibilityOfTripsByYear(visibility, year) {
-        if (typeof(state.data) === "undefined") {
-            return;
-        }
-
-        for (var i = state.data.length - 1; i >= 0; i--) {
-            if (state.data[i].visibility !== visibility) {
-                if ((year === "all") || (year === state.data[i].date.substr(0, 4))) {
-                    toggleTripVisibility(i, false);
+        var readyEventName = "yearTripsLoaded";
+        google.maps.event.addListener(master.gm, readyEventName, function () {
+            google.maps.event.clearListeners(master.gm, readyEventName);
+            for (var i = state.dataStore.getNumberOfTrips() - 1; i >= 0; i--) {
+                var tripData = state.dataStore.getTrip(i);
+                if (tripData.visibility !== visibility) {
+                    if ((year === "all") || (year === tripData.date.substr(0, 4))) {
+                        toggleTripVisibility(i, false);
+                    }
                 }
             }
-        }
 
-        that.showControl();
+            that.showControl();
+        });
+        state.dataStore.loadYearTripFiles(year, readyEventName);
     }
 
     function toggleMaxMarkersVisibility() {
         state.areMarkersVisible = !(state.areMarkersVisible);
         var isVisible = state.areMarkersVisible;
 
-        for (var i = 0; i < state.data.length; i++) {
-            if (state.data[i].gpsMaxSpeed.marker) {
-                state.data[i].gpsMaxSpeed.marker.setVisible(isVisible);
-                state.data[i].gpsMaxAltitude.marker.setVisible(isVisible);
+        for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
+            var tripData = state.dataStore.getTrip(i);
+            if (tripData.gpsMaxSpeed.marker) {
+                tripData.gpsMaxSpeed.marker.setVisible(isVisible);
+                tripData.gpsMaxAltitude.marker.setVisible(isVisible);
             }
         }
 
@@ -141,27 +144,26 @@ function Trips(master) {
         var tripsControl = document.getElementById("tripsControl");
 
         if (state.isTableShown) {
-            if (state.filenames.tripsDatas.length === state.fileIndex) {
+            if (state.dataStore.isIndexLoaded()) {
                 setTableHideVisibility("visible");
                 if (document.getElementById("tripsTable")) {
-                    tripsControl.replaceChild(getTableHeaderElement(state.data),
+                    tripsControl.replaceChild(getTableHeaderElement(),
                                               document.getElementById("tripsSummary"));
-                    updateTable(state.data);
+                    updateTable();
                 } else {
                     tripsControl.innerHTML = "";
-                    tripsControl.appendChild(getTableHeaderElement(state.data));
-                    tripsControl.appendChild(getTableElement(state.data));
+                    tripsControl.appendChild(getTableHeaderElement());
+                    tripsControl.appendChild(getTableElement());
                 }
                 resizeTable();
             } else {
-                var text =
-                    "Loading " + (1 + state.fileIndex) + "/" + state.filenames.tripsDatas.length;
+                var text = "Loading...";
                 tripsControl.innerHTML = "";
                 var e = document.createElement("div");
                 e.className = "tripsTable";
                 e.appendChild(document.createTextNode(text));
                 tripsControl.appendChild(e);
-                setDataToState();
+                state.dataStore.loadIndex();
             }
         } else {
             var e = document.createElement("div");
@@ -205,50 +207,15 @@ function Trips(master) {
         }
     }
 
-    function setDataToState() {
-        var file = state.filenames.tripsDatas[state.fileIndex++];
-
-        master.utils.downloadUrl(file, function (data, responseCode) {
-            var tripsData = JSON.parse(data);
-
-            for (var i = 0; i < tripsData.length; i++) {
-                tripsData[i].vertexTimes =
-                    master.utils.stringToIntegerList(tripsData[i].encodedVertexTimes);
-                tripsData[i].gpsSpeedData =
-                    master.utils.stringToIntegerList(tripsData[i].encodedGpsSpeedData);
-                tripsData[i].gpsAltitudeData =
-                    decodeGpsAltitudeData(tripsData[i].encodedGpsAltitudeData);
-                tripsData[i].gpsMaxSpeed.location =
-                    new google.maps.LatLng(tripsData[i].gpsMaxSpeed.lat,
-                                           tripsData[i].gpsMaxSpeed.lon);
-                tripsData[i].gpsMaxAltitude.location =
-                    new google.maps.LatLng(tripsData[i].gpsMaxAltitude.lat,
-                                           tripsData[i].gpsMaxAltitude.lon);
-            }
-
-            state.data = state.data.concat(tripsData);
-
-            that.showControl();
-        });
-    }
-
-    function decodeGpsAltitudeData(encodedString) {
-        var decodedArray = master.utils.stringToIntegerList(encodedString);
-        for (var i = 0; i < decodedArray.length; i++) {
-            decodedArray[i] *= 2;
-        }
-        return decodedArray;
-    }
-
-    function getTableHeaderElement(tripsData) {
+    function getTableHeaderElement() {
         var allElements = [];
         var headerElement = document.createElement("div");
         headerElement.id = "tripsSummary";
         headerElement.className = "tripsSummary";
 
-        allElements.push(createTN("Loaded " + tripsData.length + " trips. "));
+        allElements.push(createTN("Loaded " + state.dataStore.getNumberOfTrips() + " trips. "));
 
-        if (state.numberOfVisibleTrips === tripsData.length) {
+        if (state.numberOfVisibleTrips === state.dataStore.getNumberOfTrips()) {
             allElements.push(createTN("Show All"));
         } else {
             allElements.push(createControl("Show all trips", "Show All",
@@ -291,7 +258,7 @@ function Trips(master) {
         }
     }
 
-    function getTableElement(tripsData) {
+    function getTableElement() {
         var tableDiv = document.createElement("div");
         tableDiv.id = "tripsTableDiv";
         tableDiv.className = "tripsTable";
@@ -317,9 +284,9 @@ function Trips(master) {
         addCellsToRow(["yyyy-mm-dd", "hh:mm:ss", "km", "km/h", "m", "hh:mm:ss", "km", "km/h",
                        "km/h"], row, "th");
 
-        for (var i = 0; i < tripsData.length; i++) {
+        for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
             row = tableElement.insertRow(-1);
-            createTripRow(tripsData[i], i, row);
+            createTripRow(state.dataStore.getTrip(i), i, row);
         }
 
         tableDiv.appendChild(tableElement);
@@ -347,20 +314,20 @@ function Trips(master) {
         }
     }
 
-    function createTripRow(tripsData, i, row) {
+    function createTripRow(tripData, i, row) {
         addCellsToRow([
-            getVisibilityCommandElement(tripsData, i),
+            getVisibilityCommandElement(tripData, i),
             getVisitedDataCommandElement(i),
-            tripsData.name,
-            tripsData.date,
-            tripsData.gpsDuration,
-            tripsData.gpsDistance,
-            tripsData.gpsMaxSpeed.value,
-            tripsData.gpsMaxAltitude.value,
-            tripsData.ccDuration,
-            tripsData.ccDistance,
-            tripsData.ccMaxSpeed,
-            tripsData.ccAvgSpeed], row, "td");
+            tripData.name,
+            tripData.date,
+            tripData.gpsDuration,
+            tripData.gpsDistance,
+            tripData.gpsMaxSpeed.value,
+            tripData.gpsMaxAltitude.value,
+            tripData.ccDuration,
+            tripData.ccDistance,
+            tripData.ccMaxSpeed,
+            tripData.ccAvgSpeed], row, "td");
 
         if ((master.tripGraph.isVisible()) && (i === state.selectedTripIndex)) {
             row.className = "selectedTrip";
@@ -369,7 +336,7 @@ function Trips(master) {
         }
     }
 
-    function updateTable(tripsData) {
+    function updateTable() {
         var tripsTable = document.getElementById("tripsTable");
         var rows = tripsTable.rows;
 
@@ -377,27 +344,33 @@ function Trips(master) {
             if (rows[i].firstChild.nodeName === "TD") {
                 tripsTable.deleteRow(i);
                 var newRow = tripsTable.insertRow(i);
-                createTripRow(tripsData[tripI], tripI, newRow);
+                createTripRow(state.dataStore.getTrip(tripI), tripI, newRow);
                 tripI += 1;
             }
         }
     }
 
-    function getVisibilityCommandElement(tripsData, tripIndex) {
+    function getVisibilityCommandElement(tripData, tripIndex) {
         var title = "Toggle trip visibility";
-        var text = (tripsData.visibility === "hidden") ? "Show" : "Hide";
+        var text = (tripData.visibility === "hidden") ? "Show" : "Hide";
         var handler = function () {
-            toggleTripVisibility(tripIndex, true);
-            that.showControl();
+            var readyEventName = "singleTripLoaded";
+            google.maps.event.addListener(master.gm, readyEventName, function () {
+                google.maps.event.clearListeners(master.gm, readyEventName);
+                toggleTripVisibility(tripIndex, true);
+                that.showControl();
+            });
+            state.dataStore.loadSingleTrip(tripIndex, readyEventName);
         };
         var e = master.utils.createControlElement(title, text, handler);
-        e.style.color = ((text === "Hide") ? tripsData.color : "");
+        e.style.color = ((text === "Hide") ? tripData.color : "");
 
         return e;
     }
 
     function getVisitedDataCommandElement(tripIndex) {
-        var filename = state.data[tripIndex].visitedDataFilename;
+        var tripData = state.dataStore.getTrip(tripIndex);
+        var filename = tripData.visitedDataFilename;
 
         if (filename.charAt(filename.length - 1) === "-") {
             return document.createTextNode("");
@@ -415,7 +388,7 @@ function Trips(master) {
             var title = "Set visited data as before this trip";
             var handler = function () {
                 state.visitedDataIndex = tripIndex;
-                master.areas.setVisitedData(state.data[tripIndex].visitedDataFilename);
+                master.areas.setVisitedData(filename);
             };
         }
 
@@ -436,7 +409,7 @@ function Trips(master) {
     }
 
     function toggleTripVisibility(tripIndex, zoomToBounds) {
-        var tripData = state.data[tripIndex];
+        var tripData = state.dataStore.getTrip(tripIndex);
 
         if (typeof(tripData.polyline) === "undefined") {
             tripData.polyline = createPolyline(tripData);
@@ -531,8 +504,8 @@ function Trips(master) {
             maxLat = Math.max(maxLat, polylinePath.getAt(i).lat());
             maxLng = Math.max(maxLng, polylinePath.getAt(i).lng());
         }
-        return new google.maps.LatLngBounds({'lat': minLat, 'lng': minLng},
-                                            {'lat': maxLat, 'lng': maxLng});
+        return new google.maps.LatLngBounds({"lat": minLat, "lng": minLng},
+                                            {"lat": maxLat, "lng": maxLng});
     }
 
     this.getMenuItems = function () {
@@ -542,8 +515,8 @@ function Trips(master) {
             menuItems.push("Open table");
         }
 
-        if (state.data.length > 0) {
-            if (state.numberOfVisibleTrips !== state.data.length) {
+        if (state.dataStore.getNumberOfTrips() > 0) {
+            if (state.numberOfVisibleTrips !== state.dataStore.getNumberOfTrips()) {
                 menuItems.push("Show...");
             }
             if (state.numberOfVisibleTrips > 0) {
@@ -564,7 +537,7 @@ function Trips(master) {
 
         addYearMenuItems(menuItems, "visible")
 
-        if (state.numberOfVisibleTrips !== state.data.length) {
+        if (state.numberOfVisibleTrips !== state.dataStore.getNumberOfTrips()) {
             menuItems.push("all");
         }
 
@@ -586,9 +559,10 @@ function Trips(master) {
     function addYearMenuItems(menuItems, visibility) {
         var years = []
 
-        for (var i = 0; i < state.data.length; i++) {
-            if (state.data[i].visibility !== visibility) {
-                var year = state.data[i].date.substr(0, 4)
+        for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
+            var tripData = state.dataStore.getTrip(i);
+            if (tripData.visibility !== visibility) {
+                var year = tripData.date.substr(0, 4)
                 if (years.indexOf(year) === -1) {
                     years.push(year)
                 }
@@ -603,7 +577,7 @@ function Trips(master) {
     };
 
     this.processMenuCommand = function (menuItem, command) {
-        var visibility = {"Show...":"visible", "Hide...":"hidden"}[menuItem]
+        var visibility = {"Show...": "visible", "Hide...": "hidden"}[menuItem]
 
         if (command === "Open table") {
             state.isTableShown = true;
@@ -615,5 +589,172 @@ function Trips(master) {
         } else if ((command === "Hide markers") || (command === "Show markers")) {
             toggleMaxMarkersVisibility();
         }
+    };
+}
+
+function TripDataStore(master) {
+    var that = this;
+    var state = getState();
+
+    function getState() {
+        var s = {};
+        s["filenames"] = {
+            "index": "trips/years/index.json",
+            "tripsDatas": [
+                "trips/tripsData2015.json",
+                "trips/tripsData2014.json", "trips/tripsData2013.json", "trips/tripsData2012.json",
+                "trips/tripsData2011.json", "trips/tripsData2010.json", "trips/tripsData2009.json"
+            ]
+        };
+        s["fileIndex"] = 0;
+        s["data"] = [];
+        return s;
+    }
+
+    this.isIndexLoaded = function () {
+        return state["data"].length !== 0;
+    };
+
+    this.loadIndex = function () {
+        var file = state["filenames"]["index"];
+        master.utils.downloadUrl(file, function (data, responseCode) {
+            state["data"] = JSON.parse(data);
+            for (var i = 0; i < state["data"].length; i++) {
+                state["data"][i]["visibility"] = "hidden";
+                state["data"][i]["visitedDataFilename"] =
+                    "visited_datas/" + state["data"][i]["visited_data"];
+                state["data"][i]["date"] = getTripIndexDate(state["data"][i]["gps_data"]);
+                state["data"][i]["ccDuration"] = state["data"][i]["duration"];
+                state["data"][i]["ccDistance"] = state["data"][i]["distance"];
+                state["data"][i]["ccMaxSpeed"] = state["data"][i]["max_speed"];
+                state["data"][i]["ccAvgSpeed"] = state["data"][i]["avg_speed"];
+                state["data"][i]["gpsDuration"] = "?";
+                state["data"][i]["gpsDistance"] = "?";
+                state["data"][i]["gpsMaxSpeed"] = {"value": "?"};
+                state["data"][i]["gpsMaxAltitude"] = {"value": "?"};
+            }
+            master.trips.showControl();
+        });
+    };
+
+    function getTripIndexDate(gps_data) {
+        var dateStr = gps_data.split("/")[1].substr(0, 8);
+        return [dateStr.substr(0, 4), dateStr.substr(4, 2), dateStr.substr(6, 2)].join("-");
+    }
+
+    this.loadAllTripFiles = function (allReadyEventName) {
+        if (state["filenames"]["tripsDatas"].length === state["fileIndex"]) {
+            google.maps.event.trigger(master.gm, allReadyEventName);
+        } else {
+            var oneReadyEventName = "tripFileLoaded";
+            google.maps.event.addListener(master.gm, oneReadyEventName, function () {
+                google.maps.event.clearListeners(master.gm, oneReadyEventName);
+                that.loadAllTripFiles(allReadyEventName);
+            });
+            loadTripsFile(state["filenames"]["tripsDatas"][state["fileIndex"]++],
+                          oneReadyEventName);
+        }
+    };
+
+    function loadTripsFile(file, readyEventName) {
+        master.utils.downloadUrl(file, function (data, responseCode) {
+            var tripsData = JSON.parse(data);
+
+            for (var i = 0; i < tripsData.length; i++) {
+                decodeGpsTripData(tripsData[i]);
+                var tripIndex = getTripIndex(tripsData[i]);
+                if (state["data"][tripIndex]["gpsSpeedData"] === undefined) {
+                    state["data"][tripIndex] = tripsData[i];
+                }
+            }
+
+            google.maps.event.trigger(master.gm, readyEventName);
+        });
+    }
+
+    function getTripIndex(tripData) {
+        for (var i = 0; i < state["data"].length; i++) {
+            if ((state["data"][i]["color"] === tripData["color"]) &&
+                (state["data"][i]["name"] === tripData["name"])) {
+                return i;
+            }
+        }
+    }
+
+    this.loadYearTripFiles = function (year, readyEventName) {
+        if ((year === "all") || isAllLoaded(year)) {
+            google.maps.event.trigger(master.gm, readyEventName);
+        } else {
+            var file = getYearFilename(year);
+            loadTripsFile(file, readyEventName);
+        }
+    };
+
+    function isAllLoaded(year) {
+        for (var i = 0; i < state["data"].length; i++) {
+            if ((year === state["data"][i]["date"].substr(0, 4)) &&
+                (isTripLoaded(i) === false)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function getYearFilename(year) {
+        for (var i = 0; i < state["filenames"]["tripsDatas"].length; i++) {
+            if (state["filenames"]["tripsDatas"][i].indexOf(year) !== -1) {
+                return state["filenames"]["tripsDatas"][i];
+            }
+        }
+    }
+
+    function decodeGpsTripData(tripData) {
+        tripData["vertexTimes"] =
+            master.utils.stringToIntegerList(tripData["encodedVertexTimes"]);
+        tripData["gpsSpeedData"] =
+            master.utils.stringToIntegerList(tripData["encodedGpsSpeedData"]);
+        tripData["gpsAltitudeData"] =
+            decodeGpsAltitudeData(tripData["encodedGpsAltitudeData"]);
+        tripData["gpsMaxSpeed"]["location"] =
+            new google.maps.LatLng(tripData["gpsMaxSpeed"]["lat"],
+                                   tripData["gpsMaxSpeed"]["lon"]);
+        tripData["gpsMaxAltitude"]["location"] =
+            new google.maps.LatLng(tripData["gpsMaxAltitude"]["lat"],
+                                   tripData["gpsMaxAltitude"]["lon"]);
+    }
+
+    function decodeGpsAltitudeData(encodedString) {
+        var decodedArray = master.utils.stringToIntegerList(encodedString);
+        for (var i = 0; i < decodedArray.length; i++) {
+            decodedArray[i] *= 2;
+        }
+        return decodedArray;
+    }
+
+    function isTripLoaded(tripIndex) {
+        return state["data"][tripIndex]["gpsDuration"] !== "?";
+    };
+
+    this.loadSingleTrip = function (tripIndex, readyEventName) {
+        if (isTripLoaded(tripIndex)) {
+            google.maps.event.trigger(master.gm, readyEventName);
+        } else {
+            var file = "trips/years/" + state["data"][tripIndex]["gps_data"].replace("gpx", "json");
+            master.utils.downloadUrl(file, function (data, responseCode) {
+                var tripData = JSON.parse(data);
+                decodeGpsTripData(tripData);
+                state["data"][tripIndex] = tripData;
+
+                google.maps.event.trigger(master.gm, readyEventName);
+            });
+        }
+    };
+
+    this.getNumberOfTrips = function () {
+        return state["data"].length;
+    };
+
+    this.getTrip = function (tripIndex) {
+        return state["data"][tripIndex];
     };
 }

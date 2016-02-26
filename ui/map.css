@@ -120,6 +120,25 @@ div.trip_graph {
   background-color: #FFFFFF;
 }
 
+a.progress {
+    color: #000000;
+    text-decoration: none;
+    animation-duration: 1s;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1.0;
+    }
+
+    to {
+        opacity: 0.2;
+    }
+}
+
 a.real_link:link {
   color: #0000FF;
   background-color: #FFFFFF;
