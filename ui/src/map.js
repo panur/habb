@@ -28,6 +28,7 @@ function Map(master) {
             setStatistics();
             window.onresize = function () {that.resizeMap()};
             that.resizeMap();
+            google.maps.event.trigger(master.gm, "mapInitIsReady");
         });
     };
 

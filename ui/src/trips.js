@@ -15,6 +15,7 @@ function Trips(master) {
         s.areMarkersVisible = false;
         s.dataStore = null;
         s.selectedTripIndex = -1;
+        s.isMapInitReady = false;
         return s;
     }
 
@@ -39,6 +40,11 @@ function Trips(master) {
         that.showControl();
 
         initDragAndDrop();
+
+        google.maps.event.addListener(master.gm, "mapInitIsReady", function () {
+            state.isMapInitReady = true;
+            showUrlParamsTrips();
+        });
     };
 
     function initDragAndDrop() {
@@ -95,6 +101,35 @@ function Trips(master) {
 
             master.areas.setVisitedAreaOpacityToLow();
             tripPolyline.setMap(master.gm);
+        }
+    }
+
+    function showUrlParamsTrips() {
+        if (state.isMapInitReady && state.dataStore.isIndexLoaded()) {
+            var tripsToShowPattern = master.utils.getUrlParams()["t"];
+            if (tripsToShowPattern !== undefined) {
+                var tripsToShow = [];
+                for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
+                    var tripData = state.dataStore.getTrip(i);
+                    if (tripData.gps_data.indexOf(tripsToShowPattern) !== -1) {
+                        tripsToShow.push(i);
+                    }
+                }
+                showOneUrlParamsTrip(tripsToShow);
+            }
+        }
+    }
+
+    function showOneUrlParamsTrip(tripsToShow) {
+        if (tripsToShow.length > 0) {
+            var readyEventName = "singleTripLoaded";
+            google.maps.event.addListener(master.gm, readyEventName, function () {
+                google.maps.event.clearListeners(master.gm, readyEventName);
+                toggleTripVisibility(tripsToShow[tripsToShow.length - 1], tripsToShow.length === 1);
+                tripsToShow.pop();
+                showOneUrlParamsTrip(tripsToShow);
+            });
+            state.dataStore.loadSingleTrip(tripsToShow[tripsToShow.length - 1], readyEventName);
         }
     }
 
@@ -169,7 +204,13 @@ function Trips(master) {
                 tripsControl.appendChild(e);
             }
         } else {
-            state.dataStore.loadIndex();
+            var readyEventName = "indexLoaded";
+            google.maps.event.addListener(master.gm, readyEventName, function () {
+                google.maps.event.clearListeners(master.gm, readyEventName);
+                that.showControl();
+                showUrlParamsTrips();
+            });
+            state.dataStore.loadIndex(readyEventName);
         }
     };
 
@@ -611,7 +652,7 @@ function TripDataStore(master) {
         return state["data"].length !== 0;
     };
 
-    this.loadIndex = function () {
+    this.loadIndex = function (readyEventName) {
         var file = state["filenames"]["index"];
         master.utils.downloadUrl(file, function (data, responseCode) {
             state["data"] = JSON.parse(data);
@@ -629,7 +670,7 @@ function TripDataStore(master) {
                 state["data"][i]["gpsMaxSpeed"] = {"value": "?"};
                 state["data"][i]["gpsMaxAltitude"] = {"value": "?"};
             }
-            master.trips.showControl();
+            google.maps.event.trigger(master.gm, readyEventName);
         });
     };
 

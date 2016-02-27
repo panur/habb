@@ -19,9 +19,9 @@ function Utils() {
             }
         };
 
-        request.open('GET', url, true);
-        if (url.indexOf('.json') !== -1) {
-            request.overrideMimeType('application/json');
+        request.open("GET", url, true);
+        if (url.indexOf(".json") !== -1) {
+            request.overrideMimeType("application/json");
         }
         request.send();
     };
@@ -188,5 +188,26 @@ function Utils() {
         img.src = "http://maps.google.com/mapfiles/iw_close.gif";
 
         return img;
+    };
+
+    this.getUrlParams = function () {
+        var params = {};
+        if (document.URL.indexOf("?") !== -1) {
+            var addressParams = document.URL.split("?");
+            if (addressParams.length === 2) {
+                var nameValues = addressParams[1].split("&");
+                for (var i = 0; i < nameValues.length; i++) {
+                    var nameValue = nameValues[i].split("=");
+                    if (nameValue.length === 2) {
+                        params[nameValue[0]] = nameValue[1];
+                    } else {
+                        console.error("unexpected URL parameter: %o", nameValues[i]);
+                    }
+                }
+            } else {
+                console.error("unexpected URL parameters: %o", document.URL);
+            }
+        }
+        return params;
     };
 }
