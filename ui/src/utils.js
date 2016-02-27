@@ -12,6 +12,7 @@ function Utils() {
             if (request.readyState === 4) {
                 var status = request.status;
                 if ((status === 0) || (status === 200)) {
+                    console.log("downloaded: %o", url);
                     callback(request.responseText, status);
                     request.onreadystatechange = function () {};
                 }

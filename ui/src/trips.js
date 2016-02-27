@@ -143,8 +143,8 @@ function Trips(master) {
     this.showControl = function () {
         var tripsControl = document.getElementById("tripsControl");
 
-        if (state.isTableShown) {
-            if (state.dataStore.isIndexLoaded()) {
+        if (state.dataStore.isIndexLoaded()) {
+            if (state.isTableShown) {
                 setTableHideVisibility("visible");
                 if (document.getElementById("tripsTable")) {
                     tripsControl.replaceChild(getTableHeaderElement(),
@@ -157,25 +157,19 @@ function Trips(master) {
                 }
                 resizeTable();
             } else {
-                var text = "Loading...";
-                tripsControl.innerHTML = "";
                 var e = document.createElement("div");
-                e.className = "tripsTable";
-                e.appendChild(document.createTextNode(text));
+                e.className = "showTripsTable";
+                e.title = "Show trips";
+                e.onclick = function () {
+                    state.isTableShown = true;
+                    that.showControl();
+                };
+                e.textContent = "Trips";
+                tripsControl.innerHTML = "";
                 tripsControl.appendChild(e);
-                state.dataStore.loadIndex();
             }
         } else {
-            var e = document.createElement("div");
-            e.className = "showTripsTable";
-            e.title = "Show trips";
-            e.onclick = function () {
-                state.isTableShown = true;
-                that.showControl();
-            };
-            e.textContent = "Trips";
-            tripsControl.innerHTML = "";
-            tripsControl.appendChild(e);
+            state.dataStore.loadIndex();
         }
     };
 
@@ -512,7 +506,9 @@ function Trips(master) {
         var menuItems = [];
 
         if (state.isTableShown === false) {
-            menuItems.push("Open table");
+            if (state.dataStore.isIndexLoaded()) {
+                menuItems.push("Open table");
+            }
         }
 
         if (state.dataStore.getNumberOfTrips() > 0) {
