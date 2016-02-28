@@ -8,6 +8,10 @@ div.map_canvas {
   height: 90%;
 }
 
+img.rss {
+    height: 1em;
+}
+
 div.menu {
   position: absolute;
   color: #000000;

@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<title>Helsinki Area By Bike - Trips</title>
+<description>Trips around Helsinki area by bike.</description>
+<link>http://14142.net/habb/map.html</link>
+<atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
+<lastBuildDate>Sun, 28 Feb 2016 10:46:55 -0000</lastBuildDate>
+<item>
+  <title>Lappeenranta-Lahti</title>
+  <description>2015-09-14, 181 km</description>
+  <link>http://14142.net/habb/map.html?t=20150914</link>
+  <guid>http://14142.net/habb/map.html?t=20150914</guid>
+</item>
+<item>
+  <title>Pyhtää-Lappeenranta</title>
+  <description>2015-09-13, 160 km</description>
+  <link>http://14142.net/habb/map.html?t=20150913</link>
+  <guid>http://14142.net/habb/map.html?t=20150913</guid>
+</item>
+<item>
+  <title>Mäntsälä-Pyhtää</title>
+  <description>2015-09-12, 151 km</description>
+  <link>http://14142.net/habb/map.html?t=20150912</link>
+  <guid>http://14142.net/habb/map.html?t=20150912</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2015-09-06, 94 km</description>
+  <link>http://14142.net/habb/map.html?t=20150906</link>
+  <guid>http://14142.net/habb/map.html?t=20150906</guid>
+</item>
+<item>
+  <title>Metsäkylä</title>
+  <description>2015-09-01, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20150901</link>
+  <guid>http://14142.net/habb/map.html?t=20150901</guid>
+</item>
+<item>
+  <title>Rovaniemi-Kemi</title>
+  <description>2015-08-27, 129 km</description>
+  <link>http://14142.net/habb/map.html?t=20150827</link>
+  <guid>http://14142.net/habb/map.html?t=20150827</guid>
+</item>
+<item>
+  <title>Luosto-Rovaniemi</title>
+  <description>2015-08-26, 125 km</description>
+  <link>http://14142.net/habb/map.html?t=20150826</link>
+  <guid>http://14142.net/habb/map.html?t=20150826</guid>
+</item>
+<item>
+  <title>Levi-Luosto</title>
+  <description>2015-08-25, 146 km</description>
+  <link>http://14142.net/habb/map.html?t=20150825</link>
+  <guid>http://14142.net/habb/map.html?t=20150825</guid>
+</item>
+<item>
+  <title>Hetta-Levi</title>
+  <description>2015-08-24, 147 km</description>
+  <link>http://14142.net/habb/map.html?t=20150824</link>
+  <guid>http://14142.net/habb/map.html?t=20150824</guid>
+</item>
+<item>
+  <title>Ylläs-Hetta</title>
+  <description>2015-08-23, 145 km</description>
+  <link>http://14142.net/habb/map.html?t=20150823</link>
+  <guid>http://14142.net/habb/map.html?t=20150823</guid>
+</item>
+<item>
+  <title>Pello-Ylläs</title>
+  <description>2015-08-22, 136 km</description>
+  <link>http://14142.net/habb/map.html?t=20150822</link>
+  <guid>http://14142.net/habb/map.html?t=20150822</guid>
+</item>
+<item>
+  <title>Kemi-Pello</title>
+  <description>2015-08-21, 158 km</description>
+  <link>http://14142.net/habb/map.html?t=20150821</link>
+  <guid>http://14142.net/habb/map.html?t=20150821</guid>
+</item>
+<item>
+  <title>Lahti-Hämeenlinna</title>
+  <description>2015-08-15, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20150815</link>
+  <guid>http://14142.net/habb/map.html?t=20150815</guid>
+</item>
+<item>
+  <title>Hanka-Turku</title>
+  <description>2015-08-12, 73 km</description>
+  <link>http://14142.net/habb/map.html?t=20150812_2</link>
+  <guid>http://14142.net/habb/map.html?t=20150812_2</guid>
+</item>
+<item>
+  <title>Turku-Nauvo</title>
+  <description>2015-08-12, 58 km</description>
+  <link>http://14142.net/habb/map.html?t=20150812_1</link>
+  <guid>http://14142.net/habb/map.html?t=20150812_1</guid>
+</item>
+<item>
+  <title>Mikkeli-Imatra</title>
+  <description>2015-08-11, 136 km</description>
+  <link>http://14142.net/habb/map.html?t=20150811</link>
+  <guid>http://14142.net/habb/map.html?t=20150811</guid>
+</item>
+<item>
+  <title>Suonenjoki-Mikkeli</title>
+  <description>2015-08-10, 132 km</description>
+  <link>http://14142.net/habb/map.html?t=20150810</link>
+  <guid>http://14142.net/habb/map.html?t=20150810</guid>
+</item>
+<item>
+  <title>Pyhäsalmi-Suonenjoki</title>
+  <description>2015-08-09, 151 km</description>
+  <link>http://14142.net/habb/map.html?t=20150809</link>
+  <guid>http://14142.net/habb/map.html?t=20150809</guid>
+</item>
+<item>
+  <title>Tahko-Pyhäsalmi</title>
+  <description>2015-08-08, 152 km</description>
+  <link>http://14142.net/habb/map.html?t=20150808</link>
+  <guid>http://14142.net/habb/map.html?t=20150808</guid>
+</item>
+<item>
+  <title>Joensuu-Tahko</title>
+  <description>2015-08-07, 146 km</description>
+  <link>http://14142.net/habb/map.html?t=20150807</link>
+  <guid>http://14142.net/habb/map.html?t=20150807</guid>
+</item>
+<item>
+  <title>Nurmes-Joensuu</title>
+  <description>2015-08-06, 152 km</description>
+  <link>http://14142.net/habb/map.html?t=20150806</link>
+  <guid>http://14142.net/habb/map.html?t=20150806</guid>
+</item>
+<item>
+  <title>Sotkamo-Nurmes</title>
+  <description>2015-08-05, 148 km</description>
+  <link>http://14142.net/habb/map.html?t=20150805</link>
+  <guid>http://14142.net/habb/map.html?t=20150805</guid>
+</item>
+<item>
+  <title>Rokua-Sotkamo</title>
+  <description>2015-08-04, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20150804</link>
+  <guid>http://14142.net/habb/map.html?t=20150804</guid>
+</item>
+<item>
+  <title>Oulu-Rokua</title>
+  <description>2015-08-03, 83 km</description>
+  <link>http://14142.net/habb/map.html?t=20150803</link>
+  <guid>http://14142.net/habb/map.html?t=20150803</guid>
+</item>
+<item>
+  <title>Raippaluoto</title>
+  <description>2015-07-30, 156 km</description>
+  <link>http://14142.net/habb/map.html?t=20150730</link>
+  <guid>http://14142.net/habb/map.html?t=20150730</guid>
+</item>
+<item>
+  <title>Kuortane-Vaasa</title>
+  <description>2015-07-29, 134 km</description>
+  <link>http://14142.net/habb/map.html?t=20150729</link>
+  <guid>http://14142.net/habb/map.html?t=20150729</guid>
+</item>
+<item>
+  <title>Parkano-Kuortane</title>
+  <description>2015-07-28, 145 km</description>
+  <link>http://14142.net/habb/map.html?t=20150728</link>
+  <guid>http://14142.net/habb/map.html?t=20150728</guid>
+</item>
+<item>
+  <title>Lempäälä-Parkano</title>
+  <description>2015-07-27, 120 km</description>
+  <link>http://14142.net/habb/map.html?t=20150727</link>
+  <guid>http://14142.net/habb/map.html?t=20150727</guid>
+</item>
+<item>
+  <title>Viitasaari-Jyväskylä</title>
+  <description>2015-07-24, 107 km</description>
+  <link>http://14142.net/habb/map.html?t=20150724</link>
+  <guid>http://14142.net/habb/map.html?t=20150724</guid>
+</item>
+<item>
+  <title>Kärsämäki-Viitasaari</title>
+  <description>2015-07-23, 138 km</description>
+  <link>http://14142.net/habb/map.html?t=20150723</link>
+  <guid>http://14142.net/habb/map.html?t=20150723</guid>
+</item>
+<item>
+  <title>Oulu-Kärsämäki</title>
+  <description>2015-07-22, 143 km</description>
+  <link>http://14142.net/habb/map.html?t=20150722</link>
+  <guid>http://14142.net/habb/map.html?t=20150722</guid>
+</item>
+<item>
+  <title>Ylivieska-Oulu</title>
+  <description>2015-07-21, 151 km</description>
+  <link>http://14142.net/habb/map.html?t=20150721</link>
+  <guid>http://14142.net/habb/map.html?t=20150721</guid>
+</item>
+<item>
+  <title>Pietarsaari-Ylivieska</title>
+  <description>2015-07-20, 142 km</description>
+  <link>http://14142.net/habb/map.html?t=20150720</link>
+  <guid>http://14142.net/habb/map.html?t=20150720</guid>
+</item>
+<item>
+  <title>Kurikka-Pietarsaari</title>
+  <description>2015-07-19, 153 km</description>
+  <link>http://14142.net/habb/map.html?t=20150719</link>
+  <guid>http://14142.net/habb/map.html?t=20150719</guid>
+</item>
+<item>
+  <title>Haapamäki-Kurikka</title>
+  <description>2015-07-18, 134 km</description>
+  <link>http://14142.net/habb/map.html?t=20150718</link>
+  <guid>http://14142.net/habb/map.html?t=20150718</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2015-07-07, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20150707</link>
+  <guid>http://14142.net/habb/map.html?t=20150707</guid>
+</item>
+<item>
+  <title>Tampere-Hämeenlinna</title>
+  <description>2015-07-06, 162 km</description>
+  <link>http://14142.net/habb/map.html?t=20150706</link>
+  <guid>http://14142.net/habb/map.html?t=20150706</guid>
+</item>
+<item>
+  <title>Lahti-Tampere</title>
+  <description>2015-07-05, 166 km</description>
+  <link>http://14142.net/habb/map.html?t=20150705</link>
+  <guid>http://14142.net/habb/map.html?t=20150705</guid>
+</item>
+<item>
+  <title>Joensuu-Kitee</title>
+  <description>2015-06-28, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20150628</link>
+  <guid>http://14142.net/habb/map.html?t=20150628</guid>
+</item>
+<item>
+  <title>Värtsilä-Joensuu</title>
+  <description>2015-06-27, 145 km</description>
+  <link>http://14142.net/habb/map.html?t=20150627</link>
+  <guid>http://14142.net/habb/map.html?t=20150627</guid>
+</item>
+<item>
+  <title>Savonlinna-Värtsilä</title>
+  <description>2015-06-26, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20150626</link>
+  <guid>http://14142.net/habb/map.html?t=20150626</guid>
+</item>
+<item>
+  <title>Imatra-Savonlinna</title>
+  <description>2015-06-25, 121 km</description>
+  <link>http://14142.net/habb/map.html?t=20150625</link>
+  <guid>http://14142.net/habb/map.html?t=20150625</guid>
+</item>
+<item>
+  <title>Vanjärvi-Ahmoo</title>
+  <description>2015-06-21, 159 km</description>
+  <link>http://14142.net/habb/map.html?t=20150621</link>
+  <guid>http://14142.net/habb/map.html?t=20150621</guid>
+</item>
+<item>
+  <title>Nummela-Muijala</title>
+  <description>2015-06-19, 133 km</description>
+  <link>http://14142.net/habb/map.html?t=20150619</link>
+  <guid>http://14142.net/habb/map.html?t=20150619</guid>
+</item>
+<item>
+  <title>Pääkslahti</title>
+  <description>2015-06-15, 142 km</description>
+  <link>http://14142.net/habb/map.html?t=20150615</link>
+  <guid>http://14142.net/habb/map.html?t=20150615</guid>
+</item>
+<item>
+  <title>Rauma-Toijala</title>
+  <description>2015-06-07, 147 km</description>
+  <link>http://14142.net/habb/map.html?t=20150607</link>
+  <guid>http://14142.net/habb/map.html?t=20150607</guid>
+</item>
+<item>
+  <title>Naantali-Rauma</title>
+  <description>2015-06-06, 121 km</description>
+  <link>http://14142.net/habb/map.html?t=20150606</link>
+  <guid>http://14142.net/habb/map.html?t=20150606</guid>
+</item>
+<item>
+  <title>Salo-Naantali</title>
+  <description>2015-06-05, 126 km</description>
+  <link>http://14142.net/habb/map.html?t=20150605</link>
+  <guid>http://14142.net/habb/map.html?t=20150605</guid>
+</item>
+<item>
+  <title>Höytiönnummi-Annila</title>
+  <description>2015-05-30, 113 km</description>
+  <link>http://14142.net/habb/map.html?t=20150530</link>
+  <guid>http://14142.net/habb/map.html?t=20150530</guid>
+</item>
+<item>
+  <title>Siuntio-Degerby</title>
+  <description>2015-05-24, 111 km</description>
+  <link>http://14142.net/habb/map.html?t=20150524</link>
+  <guid>http://14142.net/habb/map.html?t=20150524</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2015-05-17, 107 km</description>
+  <link>http://14142.net/habb/map.html?t=20150517</link>
+  <guid>http://14142.net/habb/map.html?t=20150517</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2015-05-16, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20150516</link>
+  <guid>http://14142.net/habb/map.html?t=20150516</guid>
+</item>
+<item>
+  <title>Kela-Evitskog</title>
+  <description>2015-05-09, 92 km</description>
+  <link>http://14142.net/habb/map.html?t=20150509</link>
+  <guid>http://14142.net/habb/map.html?t=20150509</guid>
+</item>
+<item>
+  <title>Pikkala-Störsvik</title>
+  <description>2015-05-03, 93 km</description>
+  <link>http://14142.net/habb/map.html?t=20150503</link>
+  <guid>http://14142.net/habb/map.html?t=20150503</guid>
+</item>
+<item>
+  <title>Kouvola-Joutseno</title>
+  <description>2014-09-28, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20140928</link>
+  <guid>http://14142.net/habb/map.html?t=20140928</guid>
+</item>
+<item>
+  <title>Mäntsälä-Kouvola</title>
+  <description>2014-09-27, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20140927</link>
+  <guid>http://14142.net/habb/map.html?t=20140927</guid>
+</item>
+<item>
+  <title>Vammala-Salo</title>
+  <description>2014-09-21, 136 km</description>
+  <link>http://14142.net/habb/map.html?t=20140921</link>
+  <guid>http://14142.net/habb/map.html?t=20140921</guid>
+</item>
+<item>
+  <title>Turku-Vammala</title>
+  <description>2014-09-20, 142 km</description>
+  <link>http://14142.net/habb/map.html?t=20140920</link>
+  <guid>http://14142.net/habb/map.html?t=20140920</guid>
+</item>
+<item>
+  <title>Salo-Turku</title>
+  <description>2014-09-19, 126 km</description>
+  <link>http://14142.net/habb/map.html?t=20140919</link>
+  <guid>http://14142.net/habb/map.html?t=20140919</guid>
+</item>
+<item>
+  <title>Mänttä-Tampere</title>
+  <description>2014-09-14, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20140914</link>
+  <guid>http://14142.net/habb/map.html?t=20140914</guid>
+</item>
+<item>
+  <title>Toijala-Mänttä</title>
+  <description>2014-09-13, 135 km</description>
+  <link>http://14142.net/habb/map.html?t=20140913</link>
+  <guid>http://14142.net/habb/map.html?t=20140913</guid>
+</item>
+<item>
+  <title>Pornainen</title>
+  <description>2014-09-11, 146 km</description>
+  <link>http://14142.net/habb/map.html?t=20140911</link>
+  <guid>http://14142.net/habb/map.html?t=20140911</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Lahti</title>
+  <description>2014-09-07, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20140907</link>
+  <guid>http://14142.net/habb/map.html?t=20140907</guid>
+</item>
+<item>
+  <title>Viiala-Tampere</title>
+  <description>2014-09-06, 122 km</description>
+  <link>http://14142.net/habb/map.html?t=20140906</link>
+  <guid>http://14142.net/habb/map.html?t=20140906</guid>
+</item>
+<item>
+  <title>Hyvinkää-Espoo</title>
+  <description>2014-09-04, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20140904</link>
+  <guid>http://14142.net/habb/map.html?t=20140904</guid>
+</item>
+<item>
+  <title>Riihimäki-Loimaa</title>
+  <description>2014-08-31, 123 km</description>
+  <link>http://14142.net/habb/map.html?t=20140831</link>
+  <guid>http://14142.net/habb/map.html?t=20140831</guid>
+</item>
+<item>
+  <title>Uusikylä-Järvenpää</title>
+  <description>2014-08-30, 127 km</description>
+  <link>http://14142.net/habb/map.html?t=20140830</link>
+  <guid>http://14142.net/habb/map.html?t=20140830</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2014-08-24, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20140824</link>
+  <guid>http://14142.net/habb/map.html?t=20140824</guid>
+</item>
+<item>
+  <title>Haimoo-Nummenpää</title>
+  <description>2014-08-22, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20140822</link>
+  <guid>http://14142.net/habb/map.html?t=20140822</guid>
+</item>
+<item>
+  <title>Tuusula-Järvenpää</title>
+  <description>2014-08-21, 107 km</description>
+  <link>http://14142.net/habb/map.html?t=20140821</link>
+  <guid>http://14142.net/habb/map.html?t=20140821</guid>
+</item>
+<item>
+  <title>Nurmijärvi-Röykkä</title>
+  <description>2014-08-20, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20140820</link>
+  <guid>http://14142.net/habb/map.html?t=20140820</guid>
+</item>
+<item>
+  <title>Varkaus-Jyväskylä</title>
+  <description>2014-08-16, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20140816</link>
+  <guid>http://14142.net/habb/map.html?t=20140816</guid>
+</item>
+<item>
+  <title>Kuopio-Varkaus</title>
+  <description>2014-08-15, 127 km</description>
+  <link>http://14142.net/habb/map.html?t=20140815</link>
+  <guid>http://14142.net/habb/map.html?t=20140815</guid>
+</item>
+<item>
+  <title>Viitasaari-Kuopio</title>
+  <description>2014-08-14, 139 km</description>
+  <link>http://14142.net/habb/map.html?t=20140814</link>
+  <guid>http://14142.net/habb/map.html?t=20140814</guid>
+</item>
+<item>
+  <title>Alajärvi-Viitasaari</title>
+  <description>2014-08-13, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20140813</link>
+  <guid>http://14142.net/habb/map.html?t=20140813</guid>
+</item>
+<item>
+  <title>Keuruu-Alajärvi</title>
+  <description>2014-08-12, 127 km</description>
+  <link>http://14142.net/habb/map.html?t=20140812</link>
+  <guid>http://14142.net/habb/map.html?t=20140812</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2014-08-09, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20140809</link>
+  <guid>http://14142.net/habb/map.html?t=20140809</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2014-08-08, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20140808</link>
+  <guid>http://14142.net/habb/map.html?t=20140808</guid>
+</item>
+<item>
+  <title>Karhunkorpi</title>
+  <description>2014-08-05, 96 km</description>
+  <link>http://14142.net/habb/map.html?t=20140805</link>
+  <guid>http://14142.net/habb/map.html?t=20140805</guid>
+</item>
+<item>
+  <title>Sääksjärvi-Espoo</title>
+  <description>2014-08-03, 45 km</description>
+  <link>http://14142.net/habb/map.html?t=20140803</link>
+  <guid>http://14142.net/habb/map.html?t=20140803</guid>
+</item>
+<item>
+  <title>Lahti-Kerava</title>
+  <description>2013-09-14, 123 km</description>
+  <link>http://14142.net/habb/map.html?t=20130914</link>
+  <guid>http://14142.net/habb/map.html?t=20130914</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2013-08-31, 106 km</description>
+  <link>http://14142.net/habb/map.html?t=20130831</link>
+  <guid>http://14142.net/habb/map.html?t=20130831</guid>
+</item>
+<item>
+  <title>Mäntsälä-Espoo</title>
+  <description>2013-08-25, 126 km</description>
+  <link>http://14142.net/habb/map.html?t=20130825</link>
+  <guid>http://14142.net/habb/map.html?t=20130825</guid>
+</item>
+<item>
+  <title>Siuntio-Kerava</title>
+  <description>2013-08-24, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20130824</link>
+  <guid>http://14142.net/habb/map.html?t=20130824</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Lahti</title>
+  <description>2013-08-18, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20130818</link>
+  <guid>http://14142.net/habb/map.html?t=20130818</guid>
+</item>
+<item>
+  <title>Turku-Toijala</title>
+  <description>2013-08-16, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20130816</link>
+  <guid>http://14142.net/habb/map.html?t=20130816</guid>
+</item>
+<item>
+  <title>Nikkilä-Karhusaari</title>
+  <description>2013-08-11, 118 km</description>
+  <link>http://14142.net/habb/map.html?t=20130811</link>
+  <guid>http://14142.net/habb/map.html?t=20130811</guid>
+</item>
+<item>
+  <title>Iisalmi-Kuopio</title>
+  <description>2013-07-26, 101 km</description>
+  <link>http://14142.net/habb/map.html?t=20130726</link>
+  <guid>http://14142.net/habb/map.html?t=20130726</guid>
+</item>
+<item>
+  <title>Nurmes-Iisalmi</title>
+  <description>2013-07-25, 121 km</description>
+  <link>http://14142.net/habb/map.html?t=20130725</link>
+  <guid>http://14142.net/habb/map.html?t=20130725</guid>
+</item>
+<item>
+  <title>Kajaani-Nurmes</title>
+  <description>2013-07-24, 124 km</description>
+  <link>http://14142.net/habb/map.html?t=20130724</link>
+  <guid>http://14142.net/habb/map.html?t=20130724</guid>
+</item>
+<item>
+  <title>Kärsämäki-Kajaani</title>
+  <description>2013-07-23, 110 km</description>
+  <link>http://14142.net/habb/map.html?t=20130723</link>
+  <guid>http://14142.net/habb/map.html?t=20130723</guid>
+</item>
+<item>
+  <title>Kokkola-Kärsämäki</title>
+  <description>2013-07-22, 139 km</description>
+  <link>http://14142.net/habb/map.html?t=20130722</link>
+  <guid>http://14142.net/habb/map.html?t=20130722</guid>
+</item>
+<item>
+  <title>Joensuu-Parikkala</title>
+  <description>2013-07-19, 136 km</description>
+  <link>http://14142.net/habb/map.html?t=20130719</link>
+  <guid>http://14142.net/habb/map.html?t=20130719</guid>
+</item>
+<item>
+  <title>Kuopio-Joensuu</title>
+  <description>2013-07-18, 138 km</description>
+  <link>http://14142.net/habb/map.html?t=20130718</link>
+  <guid>http://14142.net/habb/map.html?t=20130718</guid>
+</item>
+<item>
+  <title>Suolahti-Kuopio</title>
+  <description>2013-07-17, 140 km</description>
+  <link>http://14142.net/habb/map.html?t=20130717</link>
+  <guid>http://14142.net/habb/map.html?t=20130717</guid>
+</item>
+<item>
+  <title>Mänttä-Suolahti</title>
+  <description>2013-07-16, 124 km</description>
+  <link>http://14142.net/habb/map.html?t=20130716</link>
+  <guid>http://14142.net/habb/map.html?t=20130716</guid>
+</item>
+<item>
+  <title>Tampere-Mänttä</title>
+  <description>2013-07-15, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20130715</link>
+  <guid>http://14142.net/habb/map.html?t=20130715</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Haarajoki</title>
+  <description>2013-07-13, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20130713</link>
+  <guid>http://14142.net/habb/map.html?t=20130713</guid>
+</item>
+<item>
+  <title>Salo-Hämeenlinna</title>
+  <description>2013-07-12, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20130712</link>
+  <guid>http://14142.net/habb/map.html?t=20130712</guid>
+</item>
+<item>
+  <title>Kokkola-Seinäjoki</title>
+  <description>2013-07-10, 143 km</description>
+  <link>http://14142.net/habb/map.html?t=20130710</link>
+  <guid>http://14142.net/habb/map.html?t=20130710</guid>
+</item>
+<item>
+  <title>Kankaanpää-Seinäjoki</title>
+  <description>2013-07-09, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20130709</link>
+  <guid>http://14142.net/habb/map.html?t=20130709</guid>
+</item>
+<item>
+  <title>Säkylä-Kankaanpää</title>
+  <description>2013-07-08, 120 km</description>
+  <link>http://14142.net/habb/map.html?t=20130708</link>
+  <guid>http://14142.net/habb/map.html?t=20130708</guid>
+</item>
+<item>
+  <title>Salo-Säkylä</title>
+  <description>2013-07-07, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20130707</link>
+  <guid>http://14142.net/habb/map.html?t=20130707</guid>
+</item>
+<item>
+  <title>Karjaa-Salo</title>
+  <description>2013-07-06, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20130706</link>
+  <guid>http://14142.net/habb/map.html?t=20130706</guid>
+</item>
+<item>
+  <title>Pornainen</title>
+  <description>2013-06-30, 154 km</description>
+  <link>http://14142.net/habb/map.html?t=20130630</link>
+  <guid>http://14142.net/habb/map.html?t=20130630</guid>
+</item>
+<item>
+  <title>Mikkeli-Kouvola</title>
+  <description>2013-06-20, 125 km</description>
+  <link>http://14142.net/habb/map.html?t=20130620</link>
+  <guid>http://14142.net/habb/map.html?t=20130620</guid>
+</item>
+<item>
+  <title>Jyväskylä-Mikkeli</title>
+  <description>2013-06-19, 119 km</description>
+  <link>http://14142.net/habb/map.html?t=20130619</link>
+  <guid>http://14142.net/habb/map.html?t=20130619</guid>
+</item>
+<item>
+  <title>Orivesi-Jyväskylä</title>
+  <description>2013-06-18, 109 km</description>
+  <link>http://14142.net/habb/map.html?t=20130618</link>
+  <guid>http://14142.net/habb/map.html?t=20130618</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Orivesi</title>
+  <description>2013-06-17, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20130617</link>
+  <guid>http://14142.net/habb/map.html?t=20130617</guid>
+</item>
+<item>
+  <title>Inkoo-Kerava</title>
+  <description>2013-06-15, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20130615</link>
+  <guid>http://14142.net/habb/map.html?t=20130615</guid>
+</item>
+<item>
+  <title>Upinniemi</title>
+  <description>2013-06-09, 109 km</description>
+  <link>http://14142.net/habb/map.html?t=20130609</link>
+  <guid>http://14142.net/habb/map.html?t=20130609</guid>
+</item>
+<item>
+  <title>Rovaniemi-Kemi</title>
+  <description>2013-06-05, 124 km</description>
+  <link>http://14142.net/habb/map.html?t=20130605</link>
+  <guid>http://14142.net/habb/map.html?t=20130605</guid>
+</item>
+<item>
+  <title>Kemijärvi-Rovaniemi</title>
+  <description>2013-06-04, 88 km</description>
+  <link>http://14142.net/habb/map.html?t=20130604</link>
+  <guid>http://14142.net/habb/map.html?t=20130604</guid>
+</item>
+<item>
+  <title>Kuusamo-Kemijärvi</title>
+  <description>2013-06-03, 135 km</description>
+  <link>http://14142.net/habb/map.html?t=20130603</link>
+  <guid>http://14142.net/habb/map.html?t=20130603</guid>
+</item>
+<item>
+  <title>Pudasjärvi-Kuusamo</title>
+  <description>2013-06-02, 134 km</description>
+  <link>http://14142.net/habb/map.html?t=20130602</link>
+  <guid>http://14142.net/habb/map.html?t=20130602</guid>
+</item>
+<item>
+  <title>Oulu-Pudasjärvi</title>
+  <description>2013-06-01, 87 km</description>
+  <link>http://14142.net/habb/map.html?t=20130601</link>
+  <guid>http://14142.net/habb/map.html?t=20130601</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2013-05-29, 99 km</description>
+  <link>http://14142.net/habb/map.html?t=20130529</link>
+  <guid>http://14142.net/habb/map.html?t=20130529</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2013-05-28, 99 km</description>
+  <link>http://14142.net/habb/map.html?t=20130528</link>
+  <guid>http://14142.net/habb/map.html?t=20130528</guid>
+</item>
+<item>
+  <title>Nikkilä</title>
+  <description>2013-05-24, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20130524</link>
+  <guid>http://14142.net/habb/map.html?t=20130524</guid>
+</item>
+<item>
+  <title>Eestinkylä-Långvik</title>
+  <description>2013-05-19, 102 km</description>
+  <link>http://14142.net/habb/map.html?t=20130519</link>
+  <guid>http://14142.net/habb/map.html?t=20130519</guid>
+</item>
+<item>
+  <title>Söderkulla-Hindsby</title>
+  <description>2013-05-14, 110 km</description>
+  <link>http://14142.net/habb/map.html?t=20130514</link>
+  <guid>http://14142.net/habb/map.html?t=20130514</guid>
+</item>
+<item>
+  <title>Hirsala-Medvastö</title>
+  <description>2013-05-11, 95 km</description>
+  <link>http://14142.net/habb/map.html?t=20130511</link>
+  <guid>http://14142.net/habb/map.html?t=20130511</guid>
+</item>
+<item>
+  <title>Gumbostrand</title>
+  <description>2013-05-08, 93 km</description>
+  <link>http://14142.net/habb/map.html?t=20130508</link>
+  <guid>http://14142.net/habb/map.html?t=20130508</guid>
+</item>
+<item>
+  <title>Båtvik</title>
+  <description>2013-05-04, 86 km</description>
+  <link>http://14142.net/habb/map.html?t=20130504</link>
+  <guid>http://14142.net/habb/map.html?t=20130504</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2012-09-09, 143 km</description>
+  <link>http://14142.net/habb/map.html?t=20120909</link>
+  <guid>http://14142.net/habb/map.html?t=20120909</guid>
+</item>
+<item>
+  <title>Salo-Hämeenlinna</title>
+  <description>2012-09-07, 119 km</description>
+  <link>http://14142.net/habb/map.html?t=20120907</link>
+  <guid>http://14142.net/habb/map.html?t=20120907</guid>
+</item>
+<item>
+  <title>Kommelpott</title>
+  <description>2012-08-30, ??? km</description>
+  <link>http://14142.net/habb/map.html?t=20120830</link>
+  <guid>http://14142.net/habb/map.html?t=20120830</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2012-08-26, 104 km</description>
+  <link>http://14142.net/habb/map.html?t=20120826</link>
+  <guid>http://14142.net/habb/map.html?t=20120826</guid>
+</item>
+<item>
+  <title>Hyvinkää-Espoo</title>
+  <description>2012-08-25, 122 km</description>
+  <link>http://14142.net/habb/map.html?t=20120825</link>
+  <guid>http://14142.net/habb/map.html?t=20120825</guid>
+</item>
+<item>
+  <title>Espoo-Hyvinkää</title>
+  <description>2012-08-24, 121 km</description>
+  <link>http://14142.net/habb/map.html?t=20120824</link>
+  <guid>http://14142.net/habb/map.html?t=20120824</guid>
+</item>
+<item>
+  <title>Mikkeli-Lahti</title>
+  <description>2012-08-18, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20120818</link>
+  <guid>http://14142.net/habb/map.html?t=20120818</guid>
+</item>
+<item>
+  <title>Savonlinna-Mikkeli</title>
+  <description>2012-08-17, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20120817</link>
+  <guid>http://14142.net/habb/map.html?t=20120817</guid>
+</item>
+<item>
+  <title>Imatra-Savonlinna</title>
+  <description>2012-08-16, 119 km</description>
+  <link>http://14142.net/habb/map.html?t=20120816</link>
+  <guid>http://14142.net/habb/map.html?t=20120816</guid>
+</item>
+<item>
+  <title>Hamina-Imatra</title>
+  <description>2012-08-15, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20120815</link>
+  <guid>http://14142.net/habb/map.html?t=20120815</guid>
+</item>
+<item>
+  <title>Lahti-Hamina</title>
+  <description>2012-08-14, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20120814</link>
+  <guid>http://14142.net/habb/map.html?t=20120814</guid>
+</item>
+<item>
+  <title>Loimaa-Inkoo</title>
+  <description>2012-08-11, 134 km</description>
+  <link>http://14142.net/habb/map.html?t=20120811</link>
+  <guid>http://14142.net/habb/map.html?t=20120811</guid>
+</item>
+<item>
+  <title>Pori-Loimaa</title>
+  <description>2012-08-10, 139 km</description>
+  <link>http://14142.net/habb/map.html?t=20120810</link>
+  <guid>http://14142.net/habb/map.html?t=20120810</guid>
+</item>
+<item>
+  <title>Kristiinankaupunki-Pori</title>
+  <description>2012-08-09, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20120809</link>
+  <guid>http://14142.net/habb/map.html?t=20120809</guid>
+</item>
+<item>
+  <title>Vaasa-Kristiinankaupunki</title>
+  <description>2012-08-08, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20120808</link>
+  <guid>http://14142.net/habb/map.html?t=20120808</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2012-08-05, 121 km</description>
+  <link>http://14142.net/habb/map.html?t=20120805</link>
+  <guid>http://14142.net/habb/map.html?t=20120805</guid>
+</item>
+<item>
+  <title>Turku-Hämeenlinna</title>
+  <description>2012-08-04, 137 km</description>
+  <link>http://14142.net/habb/map.html?t=20120804</link>
+  <guid>http://14142.net/habb/map.html?t=20120804</guid>
+</item>
+<item>
+  <title>Hartola-Lahti</title>
+  <description>2012-08-03, 103 km</description>
+  <link>http://14142.net/habb/map.html?t=20120803</link>
+  <guid>http://14142.net/habb/map.html?t=20120803</guid>
+</item>
+<item>
+  <title>Jyväskylä-Hartola</title>
+  <description>2012-08-02, 112 km</description>
+  <link>http://14142.net/habb/map.html?t=20120802</link>
+  <guid>http://14142.net/habb/map.html?t=20120802</guid>
+</item>
+<item>
+  <title>Jämsä-Jyväskylä</title>
+  <description>2012-08-01, 125 km</description>
+  <link>http://14142.net/habb/map.html?t=20120801</link>
+  <guid>http://14142.net/habb/map.html?t=20120801</guid>
+</item>
+<item>
+  <title>Lahti-Jämsä</title>
+  <description>2012-07-31, 126 km</description>
+  <link>http://14142.net/habb/map.html?t=20120731</link>
+  <guid>http://14142.net/habb/map.html?t=20120731</guid>
+</item>
+<item>
+  <title>Riihimäki-Espoo</title>
+  <description>2012-07-28, 125 km</description>
+  <link>http://14142.net/habb/map.html?t=20120728</link>
+  <guid>http://14142.net/habb/map.html?t=20120728</guid>
+</item>
+<item>
+  <title>Espoo-Riihimäki</title>
+  <description>2012-07-27, 109 km</description>
+  <link>http://14142.net/habb/map.html?t=20120727</link>
+  <guid>http://14142.net/habb/map.html?t=20120727</guid>
+</item>
+<item>
+  <title>Tampere-Riihimäki</title>
+  <description>2012-07-20, 135 km</description>
+  <link>http://14142.net/habb/map.html?t=20120720</link>
+  <guid>http://14142.net/habb/map.html?t=20120720</guid>
+</item>
+<item>
+  <title>Forssa-Tampere</title>
+  <description>2012-07-19, 99 km</description>
+  <link>http://14142.net/habb/map.html?t=20120719</link>
+  <guid>http://14142.net/habb/map.html?t=20120719</guid>
+</item>
+<item>
+  <title>Karjaa-Forssa</title>
+  <description>2012-07-18, 120 km</description>
+  <link>http://14142.net/habb/map.html?t=20120718</link>
+  <guid>http://14142.net/habb/map.html?t=20120718</guid>
+</item>
+<item>
+  <title>Kokkola-Vaasa</title>
+  <description>2012-07-12, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20120712</link>
+  <guid>http://14142.net/habb/map.html?t=20120712</guid>
+</item>
+<item>
+  <title>Raahe-Kokkola</title>
+  <description>2012-07-11, 132 km</description>
+  <link>http://14142.net/habb/map.html?t=20120711</link>
+  <guid>http://14142.net/habb/map.html?t=20120711</guid>
+</item>
+<item>
+  <title>Oulu-Raahe</title>
+  <description>2012-07-10, 101 km</description>
+  <link>http://14142.net/habb/map.html?t=20120710</link>
+  <guid>http://14142.net/habb/map.html?t=20120710</guid>
+</item>
+<item>
+  <title>Kemi-Oulu</title>
+  <description>2012-07-09, 131 km</description>
+  <link>http://14142.net/habb/map.html?t=20120709</link>
+  <guid>http://14142.net/habb/map.html?t=20120709</guid>
+</item>
+<item>
+  <title>Kilpilahti</title>
+  <description>2012-07-05, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20120705</link>
+  <guid>http://14142.net/habb/map.html?t=20120705</guid>
+</item>
+<item>
+  <title>Vääksy-Espoo</title>
+  <description>2012-07-01, 132 km</description>
+  <link>http://14142.net/habb/map.html?t=20120701</link>
+  <guid>http://14142.net/habb/map.html?t=20120701</guid>
+</item>
+<item>
+  <title>Tampere-Vääksy</title>
+  <description>2012-06-30, 127 km</description>
+  <link>http://14142.net/habb/map.html?t=20120630</link>
+  <guid>http://14142.net/habb/map.html?t=20120630</guid>
+</item>
+<item>
+  <title>Pori-Tampere</title>
+  <description>2012-06-29, 115 km</description>
+  <link>http://14142.net/habb/map.html?t=20120629</link>
+  <guid>http://14142.net/habb/map.html?t=20120629</guid>
+</item>
+<item>
+  <title>Turku-Pori</title>
+  <description>2012-06-28, 157 km</description>
+  <link>http://14142.net/habb/map.html?t=20120628</link>
+  <guid>http://14142.net/habb/map.html?t=20120628</guid>
+</item>
+<item>
+  <title>Hanko-Turku</title>
+  <description>2012-06-27, 134 km</description>
+  <link>http://14142.net/habb/map.html?t=20120627</link>
+  <guid>http://14142.net/habb/map.html?t=20120627</guid>
+</item>
+<item>
+  <title>Espoo-Hanko</title>
+  <description>2012-06-26, 130 km</description>
+  <link>http://14142.net/habb/map.html?t=20120626</link>
+  <guid>http://14142.net/habb/map.html?t=20120626</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2012-06-22, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20120622</link>
+  <guid>http://14142.net/habb/map.html?t=20120622</guid>
+</item>
+<item>
+  <title>Hämeenlinna</title>
+  <description>2012-06-21, 103 km</description>
+  <link>http://14142.net/habb/map.html?t=20120621</link>
+  <guid>http://14142.net/habb/map.html?t=20120621</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2012-06-20, 100 km</description>
+  <link>http://14142.net/habb/map.html?t=20120620</link>
+  <guid>http://14142.net/habb/map.html?t=20120620</guid>
+</item>
+<item>
+  <title>Vihti</title>
+  <description>2012-06-18, 119 km</description>
+  <link>http://14142.net/habb/map.html?t=20120618</link>
+  <guid>http://14142.net/habb/map.html?t=20120618</guid>
+</item>
+<item>
+  <title>Yövilä-Tervalampi</title>
+  <description>2012-06-10, 92 km</description>
+  <link>http://14142.net/habb/map.html?t=20120610</link>
+  <guid>http://14142.net/habb/map.html?t=20120610</guid>
+</item>
+<item>
+  <title>Palojärvi-Evitskog</title>
+  <description>2012-06-05, 112 km</description>
+  <link>http://14142.net/habb/map.html?t=20120605</link>
+  <guid>http://14142.net/habb/map.html?t=20120605</guid>
+</item>
+<item>
+  <title>Vols-Kylmälä</title>
+  <description>2012-05-26, 87 km</description>
+  <link>http://14142.net/habb/map.html?t=20120526</link>
+  <guid>http://14142.net/habb/map.html?t=20120526</guid>
+</item>
+<item>
+  <title>Meiko-järvi</title>
+  <description>2012-05-19, 100 km</description>
+  <link>http://14142.net/habb/map.html?t=20120519</link>
+  <guid>http://14142.net/habb/map.html?t=20120519</guid>
+</item>
+<item>
+  <title>Martinkylä</title>
+  <description>2011-10-08, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20111008</link>
+  <guid>http://14142.net/habb/map.html?t=20111008</guid>
+</item>
+<item>
+  <title>Järvenpää</title>
+  <description>2011-10-02, 109 km</description>
+  <link>http://14142.net/habb/map.html?t=20111002</link>
+  <guid>http://14142.net/habb/map.html?t=20111002</guid>
+</item>
+<item>
+  <title>Selki-Perttula</title>
+  <description>2011-09-30, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20110930</link>
+  <guid>http://14142.net/habb/map.html?t=20110930</guid>
+</item>
+<item>
+  <title>Talma</title>
+  <description>2011-09-25, 104 km</description>
+  <link>http://14142.net/habb/map.html?t=20110925</link>
+  <guid>http://14142.net/habb/map.html?t=20110925</guid>
+</item>
+<item>
+  <title>Klaukkala-Nurmijärvi</title>
+  <description>2011-09-17, 106 km</description>
+  <link>http://14142.net/habb/map.html?t=20110917</link>
+  <guid>http://14142.net/habb/map.html?t=20110917</guid>
+</item>
+<item>
+  <title>Kerava-Hyrylä</title>
+  <description>2011-09-11, 100 km</description>
+  <link>http://14142.net/habb/map.html?t=20110911</link>
+  <guid>http://14142.net/habb/map.html?t=20110911</guid>
+</item>
+<item>
+  <title>Rusutjärvi-Klaukkala</title>
+  <description>2011-09-07, 111 km</description>
+  <link>http://14142.net/habb/map.html?t=20110907</link>
+  <guid>http://14142.net/habb/map.html?t=20110907</guid>
+</item>
+<item>
+  <title>Nummela-Haimoo</title>
+  <description>2011-09-04, 124 km</description>
+  <link>http://14142.net/habb/map.html?t=20110904</link>
+  <guid>http://14142.net/habb/map.html?t=20110904</guid>
+</item>
+<item>
+  <title>Airport</title>
+  <description>2011-09-02, 45 km</description>
+  <link>http://14142.net/habb/map.html?t=20110902</link>
+  <guid>http://14142.net/habb/map.html?t=20110902</guid>
+</item>
+<item>
+  <title>Paippinen</title>
+  <description>2011-08-21, 120 km</description>
+  <link>http://14142.net/habb/map.html?t=20110821</link>
+  <guid>http://14142.net/habb/map.html?t=20110821</guid>
+</item>
+<item>
+  <title>Karjalohja-Espoo</title>
+  <description>2011-08-13, 120 km</description>
+  <link>http://14142.net/habb/map.html?t=20110813</link>
+  <guid>http://14142.net/habb/map.html?t=20110813</guid>
+</item>
+<item>
+  <title>Espoo-Karjalohja</title>
+  <description>2011-08-12, 123 km</description>
+  <link>http://14142.net/habb/map.html?t=20110812</link>
+  <guid>http://14142.net/habb/map.html?t=20110812</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2011-08-10, 107 km</description>
+  <link>http://14142.net/habb/map.html?t=20110810</link>
+  <guid>http://14142.net/habb/map.html?t=20110810</guid>
+</item>
+<item>
+  <title>Hyvinkää-Espoo</title>
+  <description>2011-08-06, 115 km</description>
+  <link>http://14142.net/habb/map.html?t=20110806</link>
+  <guid>http://14142.net/habb/map.html?t=20110806</guid>
+</item>
+<item>
+  <title>Espoo-Hyvinkää</title>
+  <description>2011-08-05, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20110805</link>
+  <guid>http://14142.net/habb/map.html?t=20110805</guid>
+</item>
+<item>
+  <title>Loviisa-Espoo</title>
+  <description>2011-08-01, 143 km</description>
+  <link>http://14142.net/habb/map.html?t=20110801</link>
+  <guid>http://14142.net/habb/map.html?t=20110801</guid>
+</item>
+<item>
+  <title>Espoo-Loviisa</title>
+  <description>2011-07-31, 101 km</description>
+  <link>http://14142.net/habb/map.html?t=20110731</link>
+  <guid>http://14142.net/habb/map.html?t=20110731</guid>
+</item>
+<item>
+  <title>Lahti-Espoo</title>
+  <description>2011-07-28, 138 km</description>
+  <link>http://14142.net/habb/map.html?t=20110728</link>
+  <guid>http://14142.net/habb/map.html?t=20110728</guid>
+</item>
+<item>
+  <title>Espoo-Lahti</title>
+  <description>2011-07-27, 111 km</description>
+  <link>http://14142.net/habb/map.html?t=20110727</link>
+  <guid>http://14142.net/habb/map.html?t=20110727</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2011-07-24, 99 km</description>
+  <link>http://14142.net/habb/map.html?t=20110724</link>
+  <guid>http://14142.net/habb/map.html?t=20110724</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2011-07-23, 100 km</description>
+  <link>http://14142.net/habb/map.html?t=20110723</link>
+  <guid>http://14142.net/habb/map.html?t=20110723</guid>
+</item>
+<item>
+  <title>Riihimäki-Espoo</title>
+  <description>2011-07-18, 114 km</description>
+  <link>http://14142.net/habb/map.html?t=20110718</link>
+  <guid>http://14142.net/habb/map.html?t=20110718</guid>
+</item>
+<item>
+  <title>Espoo-Riihimäki</title>
+  <description>2011-07-17, 112 km</description>
+  <link>http://14142.net/habb/map.html?t=20110717</link>
+  <guid>http://14142.net/habb/map.html?t=20110717</guid>
+</item>
+<item>
+  <title>Forssa-Espoo</title>
+  <description>2011-07-14, 129 km</description>
+  <link>http://14142.net/habb/map.html?t=20110714</link>
+  <guid>http://14142.net/habb/map.html?t=20110714</guid>
+</item>
+<item>
+  <title>Espoo-Forssa</title>
+  <description>2011-07-13, 104 km</description>
+  <link>http://14142.net/habb/map.html?t=20110713</link>
+  <guid>http://14142.net/habb/map.html?t=20110713</guid>
+</item>
+<item>
+  <title>Salo-Espoo</title>
+  <description>2011-07-06, 122 km</description>
+  <link>http://14142.net/habb/map.html?t=20110706</link>
+  <guid>http://14142.net/habb/map.html?t=20110706</guid>
+</item>
+<item>
+  <title>Espoo-Salo</title>
+  <description>2011-07-05, 104 km</description>
+  <link>http://14142.net/habb/map.html?t=20110705</link>
+  <guid>http://14142.net/habb/map.html?t=20110705</guid>
+</item>
+<item>
+  <title>Kerava-Nurmijärvi</title>
+  <description>2011-06-26, 96 km</description>
+  <link>http://14142.net/habb/map.html?t=20110626</link>
+  <guid>http://14142.net/habb/map.html?t=20110626</guid>
+</item>
+<item>
+  <title>Porkkala</title>
+  <description>2011-06-22, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20110622</link>
+  <guid>http://14142.net/habb/map.html?t=20110622</guid>
+</item>
+<item>
+  <title>Nummenpää</title>
+  <description>2011-06-05, 79 km</description>
+  <link>http://14142.net/habb/map.html?t=20110605</link>
+  <guid>http://14142.net/habb/map.html?t=20110605</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2010-08-20, 112 km</description>
+  <link>http://14142.net/habb/map.html?t=20100820</link>
+  <guid>http://14142.net/habb/map.html?t=20100820</guid>
+</item>
+<item>
+  <title>Hyvinkää-Espoo</title>
+  <description>2010-08-17, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20100817</link>
+  <guid>http://14142.net/habb/map.html?t=20100817</guid>
+</item>
+<item>
+  <title>Espoo-Hyvinkää</title>
+  <description>2010-08-16, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20100816</link>
+  <guid>http://14142.net/habb/map.html?t=20100816</guid>
+</item>
+<item>
+  <title>Tammisaari-Espoo</title>
+  <description>2010-08-11, 114 km</description>
+  <link>http://14142.net/habb/map.html?t=20100811</link>
+  <guid>http://14142.net/habb/map.html?t=20100811</guid>
+</item>
+<item>
+  <title>Espoo-Tammisaari</title>
+  <description>2010-08-10, 108 km</description>
+  <link>http://14142.net/habb/map.html?t=20100810</link>
+  <guid>http://14142.net/habb/map.html?t=20100810</guid>
+</item>
+<item>
+  <title>Porvoo-Espoo</title>
+  <description>2010-08-06, 113 km</description>
+  <link>http://14142.net/habb/map.html?t=20100806</link>
+  <guid>http://14142.net/habb/map.html?t=20100806</guid>
+</item>
+<item>
+  <title>Pellinki</title>
+  <description>2010-08-05, 69 km</description>
+  <link>http://14142.net/habb/map.html?t=20100805_2</link>
+  <guid>http://14142.net/habb/map.html?t=20100805_2</guid>
+</item>
+<item>
+  <title>Espoo-Porvoo</title>
+  <description>2010-08-05, 72 km</description>
+  <link>http://14142.net/habb/map.html?t=20100805_1</link>
+  <guid>http://14142.net/habb/map.html?t=20100805_1</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2010-08-01, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20100801</link>
+  <guid>http://14142.net/habb/map.html?t=20100801</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2010-07-31, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20100731</link>
+  <guid>http://14142.net/habb/map.html?t=20100731</guid>
+</item>
+<item>
+  <title>Järvenpää</title>
+  <description>2010-07-30, 103 km</description>
+  <link>http://14142.net/habb/map.html?t=20100730</link>
+  <guid>http://14142.net/habb/map.html?t=20100730</guid>
+</item>
+<item>
+  <title>Otalampi-Ojakkala</title>
+  <description>2010-06-26, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20100626</link>
+  <guid>http://14142.net/habb/map.html?t=20100626</guid>
+</item>
+<item>
+  <title>Ojakkala-Kattila</title>
+  <description>2010-06-20, 95 km</description>
+  <link>http://14142.net/habb/map.html?t=20100620</link>
+  <guid>http://14142.net/habb/map.html?t=20100620</guid>
+</item>
+<item>
+  <title>Kehä I</title>
+  <description>2010-06-05, 57 km</description>
+  <link>http://14142.net/habb/map.html?t=20100605</link>
+  <guid>http://14142.net/habb/map.html?t=20100605</guid>
+</item>
+<item>
+  <title>Österby</title>
+  <description>2010-06-02, 81 km</description>
+  <link>http://14142.net/habb/map.html?t=20100602</link>
+  <guid>http://14142.net/habb/map.html?t=20100602</guid>
+</item>
+<item>
+  <title>Veikkola</title>
+  <description>2010-05-16, 89 km</description>
+  <link>http://14142.net/habb/map.html?t=20100516</link>
+  <guid>http://14142.net/habb/map.html?t=20100516</guid>
+</item>
+<item>
+  <title>Kirkkonummi</title>
+  <description>2010-05-13, 79 km</description>
+  <link>http://14142.net/habb/map.html?t=20100513</link>
+  <guid>http://14142.net/habb/map.html?t=20100513</guid>
+</item>
+<item>
+  <title>Saarijärvi</title>
+  <description>2010-05-09, 54 km</description>
+  <link>http://14142.net/habb/map.html?t=20100509</link>
+  <guid>http://14142.net/habb/map.html?t=20100509</guid>
+</item>
+<item>
+  <title>Port-Airport</title>
+  <description>2009-09-09, 122 km</description>
+  <link>http://14142.net/habb/map.html?t=20090909</link>
+  <guid>http://14142.net/habb/map.html?t=20090909</guid>
+</item>
+<item>
+  <title>Velskola-Solvalla</title>
+  <description>2009-09-05, 59 km</description>
+  <link>http://14142.net/habb/map.html?t=20090905</link>
+  <guid>http://14142.net/habb/map.html?t=20090905</guid>
+</item>
+<item>
+  <title>Sarfvik-Ämmässuo</title>
+  <description>2009-09-02, 81 km</description>
+  <link>http://14142.net/habb/map.html?t=20090902</link>
+  <guid>http://14142.net/habb/map.html?t=20090902</guid>
+</item>
+<item>
+  <title>Kehä III</title>
+  <description>2009-08-22, 112 km</description>
+  <link>http://14142.net/habb/map.html?t=20090822</link>
+  <guid>http://14142.net/habb/map.html?t=20090822</guid>
+</item>
+<item>
+  <title>Nurmijärvi-Vihti</title>
+  <description>2009-08-14, 101 km</description>
+  <link>http://14142.net/habb/map.html?t=20090814</link>
+  <guid>http://14142.net/habb/map.html?t=20090814</guid>
+</item>
+<item>
+  <title>Kirkkonummi-Vihti</title>
+  <description>2009-08-11, 100 km</description>
+  <link>http://14142.net/habb/map.html?t=20090811</link>
+  <guid>http://14142.net/habb/map.html?t=20090811</guid>
+</item>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2009-08-08, 106 km</description>
+  <link>http://14142.net/habb/map.html?t=20090808</link>
+  <guid>http://14142.net/habb/map.html?t=20090808</guid>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2009-08-07, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20090807</link>
+  <guid>http://14142.net/habb/map.html?t=20090807</guid>
+</item>
+<item>
+  <title>Sipoo-Vantaa</title>
+  <description>2009-08-05, 117 km</description>
+  <link>http://14142.net/habb/map.html?t=20090805</link>
+  <guid>http://14142.net/habb/map.html?t=20090805</guid>
+</item>
+<item>
+  <title>Vihti-Nurmijärvi</title>
+  <description>2009-08-03, 126 km</description>
+  <link>http://14142.net/habb/map.html?t=20090803</link>
+  <guid>http://14142.net/habb/map.html?t=20090803</guid>
+</item>
+<item>
+  <title>Kerava-Sipoo</title>
+  <description>2009-08-01, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20090801</link>
+  <guid>http://14142.net/habb/map.html?t=20090801</guid>
+</item>
+<item>
+  <title>Nuuksio</title>
+  <description>2009-07-30, 98 km</description>
+  <link>http://14142.net/habb/map.html?t=20090730</link>
+  <guid>http://14142.net/habb/map.html?t=20090730</guid>
+</item>
+<item>
+  <title>Helsinki-Sipoo</title>
+  <description>2009-07-28, 105 km</description>
+  <link>http://14142.net/habb/map.html?t=20090728</link>
+  <guid>http://14142.net/habb/map.html?t=20090728</guid>
+</item>
+<item>
+  <title>Klaukkala</title>
+  <description>2009-07-19, 104 km</description>
+  <link>http://14142.net/habb/map.html?t=20090719</link>
+  <guid>http://14142.net/habb/map.html?t=20090719</guid>
+</item>
+</channel>
+</rss>

@@ -9,7 +9,9 @@ Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html
 """
 
 import argparse
+import codecs
 import datetime
+import email.utils
 import json
 import logging
 import os
@@ -39,6 +41,7 @@ def _main():
     trips = _parse_index(index_file)
     _create_output_files(args.input_dir, args.output_dir, trips, args.trip_filter)
     shutil.copy(index_file, os.path.join(args.output_dir, 'years'))
+    _create_rss(trips, os.path.join(args.output_dir, 'trips.rss'))
 
     logging.debug('took {} seconds, max mem: {} megabytes'.format(
         int(time.time() - start_time), resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024))
@@ -318,6 +321,37 @@ def _log_stats(trip, output_trip, gpx_points, encoded_polyline):
         encoded_polyline['num_dropped_points'], drop_ratio, len(encoded_polyline['points']),
         polyline_ratio, len(output_trip['encodedGpsSpeedData']),
         len(output_trip['encodedGpsAltitudeData']), len(output_trip['encodedVertexTimes'])))
+
+
+def _create_rss(trips, output_filename):
+    base_url = 'http://14142.net/habb/'
+    rss_url = base_url + 'trips/trips.rss'
+    output_str = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    output_str += '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+    output_str += '<channel>\n'
+    output_str += '<title>Helsinki Area By Bike - Trips</title>\n'
+    output_str += '<description>Trips around Helsinki area by bike.</description>\n'
+    output_str += '<link>' + base_url + 'map.html</link>\n'
+    output_str += '<atom:link href="' + rss_url + '" rel="self" type="application/rss+xml"/>\n'
+    output_str += '<lastBuildDate>' + email.utils.formatdate() + '</lastBuildDate>\n'
+    for trip in trips:
+        trip_file = trip['gps_data'].split('/')[-1].split('.')[0]
+        trip_date = trip_file[0:8]
+        trip_description = '{}-{}-{}, {} km'.format(trip_date[0:4], trip_date[4:6], trip_date[6:8],
+                                                    trip['distance'])
+        trip_url = base_url + 'map.html?t=' + trip_file
+        output_str += '<item>\n'
+        output_str += '  <title>' + trip['name'] + '</title>\n'
+        output_str += '  <description>' + trip_description + '</description>\n'
+        output_str += '  <link>' + trip_url + '</link>\n'
+        output_str += '  <guid>' + trip_url + '</guid>\n'
+        output_str += '</item>\n'
+
+    output_str += '</channel>\n'
+    output_str += '</rss>\n'
+
+    with codecs.open(output_filename, 'w', encoding='utf_8') as output_file:
+        output_file.write(output_str)
 
 
 if __name__ == '__main__':
