@@ -182,12 +182,10 @@ function Utils() {
     };
 
     this.createHideElement = function (className) {
-        var img = document.createElement("img");
-
-        img.className = className;
-        img.src = "http://maps.google.com/mapfiles/iw_close.gif";
-
-        return img;
+        var hideElement = document.createElement("span");
+        hideElement.className = className;
+        hideElement.textContent = "\u274C";
+        return hideElement;
     };
 
     this.getUrlParams = function () {
