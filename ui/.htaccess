@@ -1,3 +1,5 @@
+AddType application/xml rss
+AddType image/svg+xml svg
 <IfModule mod_deflate.c>
     <FilesMatch "\.json$">
         SetOutputFilter DEFLATE
