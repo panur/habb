@@ -139,7 +139,11 @@ function Trips(master) {
             google.maps.event.clearListeners(master.gm, readyEventName);
             setVisibilityOfTripsByYear(visibility, "all");
         });
-        state.dataStore.loadAllTripFiles(readyEventName);
+        if (visibility === "visible") {
+            state.dataStore.loadAllTripFiles(readyEventName);
+        } else {
+            google.maps.event.trigger(master.gm, readyEventName);
+        }
     }
 
     function setVisibilityOfTripsByYear(visibility, year) {
@@ -157,7 +161,11 @@ function Trips(master) {
 
             that.showControl();
         });
-        state.dataStore.loadYearTripFiles(year, readyEventName);
+        if (visibility === "visible") {
+            state.dataStore.loadYearTripFiles(year, readyEventName);
+        } else {
+            google.maps.event.trigger(master.gm, readyEventName);
+        }
     }
 
     function toggleMaxMarkersVisibility() {
