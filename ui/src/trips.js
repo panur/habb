@@ -111,7 +111,7 @@ function Trips(master) {
                 var tripsToShow = [];
                 for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
                     var tripData = state.dataStore.getTrip(i);
-                    if (tripData.gps_data.indexOf(tripsToShowPattern) !== -1) {
+                    if (tripData.filename.indexOf(tripsToShowPattern) !== -1) {
                         tripsToShow.push(i);
                     }
                 }
@@ -644,7 +644,7 @@ function TripDataStore(master) {
     function getState() {
         var s = {};
         s["filenames"] = {
-            "index": "trips/years/index.json",
+            "index": "trips/index.json",
             "tripsDatas": [
                 "trips/tripsData2015.json",
                 "trips/tripsData2014.json", "trips/tripsData2013.json", "trips/tripsData2012.json",
@@ -664,28 +664,9 @@ function TripDataStore(master) {
         var file = state["filenames"]["index"];
         master.utils.downloadUrl(file, function (data, responseCode) {
             state["data"] = JSON.parse(data);
-            for (var i = 0; i < state["data"].length; i++) {
-                state["data"][i]["visibility"] = "hidden";
-                state["data"][i]["visitedDataFilename"] =
-                    "visited_datas/" + state["data"][i]["visited_data"];
-                state["data"][i]["date"] = getTripIndexDate(state["data"][i]["gps_data"]);
-                state["data"][i]["ccDuration"] = state["data"][i]["duration"];
-                state["data"][i]["ccDistance"] = state["data"][i]["distance"];
-                state["data"][i]["ccMaxSpeed"] = state["data"][i]["max_speed"];
-                state["data"][i]["ccAvgSpeed"] = state["data"][i]["avg_speed"];
-                state["data"][i]["gpsDuration"] = "?";
-                state["data"][i]["gpsDistance"] = "?";
-                state["data"][i]["gpsMaxSpeed"] = {"value": "?"};
-                state["data"][i]["gpsMaxAltitude"] = {"value": "?"};
-            }
             google.maps.event.trigger(master.gm, readyEventName);
         });
     };
-
-    function getTripIndexDate(gps_data) {
-        var dateStr = gps_data.split("/")[1].substr(0, 8);
-        return [dateStr.substr(0, 4), dateStr.substr(4, 2), dateStr.substr(6, 2)].join("-");
-    }
 
     this.loadAllTripFiles = function (allReadyEventName) {
         if (state["filenames"]["tripsDatas"].length === state["fileIndex"]) {
@@ -708,7 +689,7 @@ function TripDataStore(master) {
             for (var i = 0; i < tripsData.length; i++) {
                 decodeGpsTripData(tripsData[i]);
                 var tripIndex = getTripIndex(tripsData[i]);
-                if (state["data"][tripIndex]["gpsSpeedData"] === undefined) {
+                if (isTripLoaded(tripIndex) === false) {
                     state["data"][tripIndex] = tripsData[i];
                 }
             }
@@ -777,14 +758,14 @@ function TripDataStore(master) {
     }
 
     function isTripLoaded(tripIndex) {
-        return state["data"][tripIndex]["gpsDuration"] !== "?";
+        return state["data"][tripIndex]["encodedGpsSpeedData"] !== undefined;
     };
 
     this.loadSingleTrip = function (tripIndex, readyEventName) {
         if (isTripLoaded(tripIndex)) {
             google.maps.event.trigger(master.gm, readyEventName);
         } else {
-            var file = "trips/years/" + state["data"][tripIndex]["gps_data"].replace("gpx", "json");
+            var file = "trips/years/" + state["data"][tripIndex]["filename"] + ".json";
             master.utils.downloadUrl(file, function (data, responseCode) {
                 var tripData = JSON.parse(data);
                 decodeGpsTripData(tripData);

@@ -17,7 +17,6 @@ import logging
 import os
 import math
 import resource
-import shutil
 import sys
 import time
 import xml.etree.cElementTree
@@ -40,7 +39,7 @@ def _main():
     index_file = os.path.join(args.input_dir, 'index.json')
     trips = _parse_index(index_file)
     _create_output_files(args.input_dir, args.output_dir, trips, args.trip_filter)
-    shutil.copy(index_file, os.path.join(args.output_dir, 'years'))
+    _create_index(trips, args.output_dir)
     _create_rss(trips, os.path.join(args.output_dir, 'trips.rss'))
 
     logging.debug('took {} seconds, max mem: {} megabytes'.format(
@@ -321,6 +320,52 @@ def _log_stats(trip, output_trip, gpx_points, encoded_polyline):
         encoded_polyline['num_dropped_points'], drop_ratio, len(encoded_polyline['points']),
         polyline_ratio, len(output_trip['encodedGpsSpeedData']),
         len(output_trip['encodedGpsAltitudeData']), len(output_trip['encodedVertexTimes'])))
+
+
+def _create_index(input_index_trips, output_dir):
+    output_index_trips = []
+
+    for index_trip in _get_index_trips(output_dir):
+        output_index_trip = index_trip
+        output_index_trip['visibility'] = 'hidden'
+        output_index_trip['filename'] = _get_index_trip_filename(input_index_trips, index_trip)
+        output_index_trips.append(output_index_trip)
+
+    _write_to_json_file(os.path.join(output_dir, 'index.json'), output_index_trips)
+
+
+def _get_index_trips(output_dir):
+    index_trips = []
+    for filename in sorted(os.listdir(output_dir), reverse=True):
+        if filename.startswith('tripsData') and filename.endswith('.json'):
+            with open(os.path.join(output_dir, filename)) as json_file:
+                output_trips = json.load(json_file)
+                for output_trip in output_trips:
+                    index_trips.append(_get_index_trip(output_trip))
+    return index_trips
+
+
+def _get_index_trip(output_trip):
+    index_trip = {}
+    for field in _get_index_fields():
+        index_trip[field] = output_trip[field]
+    return index_trip
+
+
+def _get_index_fields():
+    cc_fields = ['ccDuration', 'ccDistance', 'ccMaxSpeed', 'ccAvgSpeed']
+    gps_fields = ['gpsDuration', 'gpsDistance', 'gpsMaxSpeed', 'gpsMaxAltitude']
+    return ['visitedDataFilename', 'date', 'color', 'name'] + cc_fields + gps_fields
+
+
+def _get_index_trip_filename(input_index_trips, index_trip):
+    filename = ''
+    for input_index_trip in input_index_trips:
+        if ((input_index_trip['color'] == index_trip['color']) and
+                (input_index_trip['name'] == index_trip['name'])):
+            filename = input_index_trip['gps_data'].replace('.gpx', '')
+            break
+    return filename
 
 
 def _create_rss(trips, output_filename):
