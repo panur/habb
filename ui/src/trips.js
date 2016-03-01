@@ -522,9 +522,8 @@ function Trips(master) {
     }
 
     function getMaxMarker(polyline, point, isVisible, letter, title) {
-        var image = "http://www.google.com/mapfiles/marker" + letter + ".png";
         var marker = new google.maps.Marker({
-            visible: isVisible, position: point, icon: image, title: title
+            visible: isVisible, position: point, label: letter, title: title
         });
         google.maps.event.addListener(marker, "click", function (event) {
             master.map.zoomToPoint(marker.getPosition());
