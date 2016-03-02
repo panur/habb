@@ -141,28 +141,19 @@ function Utils() {
     };
 
     this.createDirectionMarker = function (point, heading) {
-        var direction = getLineDirection(heading);
-        var image = {
-            url: "http://www.google.com/mapfiles/dir_" + direction + ".png",
-            size: new google.maps.Size(24, 24),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(12, 12)
+        var icon = {
+            fillColor: 'blue',
+            fillOpacity: 0.6,
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+            rotation: heading,
+            scale: 5,
+            strokeWeight: 0
         };
 
         return new google.maps.Marker({
             position: point,
-            icon: image
+            icon: icon
         });
-
-        function getLineDirection(heading) {
-            var direction = heading;
-
-            while (direction >= 120) {
-                direction -= 120;
-            }
-
-            return direction;
-        }
     };
 
     this.createControlElement = function (title, text, handler) {
