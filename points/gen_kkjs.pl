@@ -19,7 +19,7 @@ my $line;
 
 if (@ARGV == 1) {
   open($input_fh, "<$ARGV[0]") or die "Can't open input file!";
-  print "<points>\n";
+  print "[\n";
 }
 
 for (my $i_lat = 0; $i_lat < $lats; $i_lat++) {
@@ -29,8 +29,12 @@ for (my $i_lat = 0; $i_lat < $lats; $i_lat++) {
     if (defined($input_fh)) {
       $line = readline($input_fh);
       if ($line =~ /(.+) (.+\d)/) {
-        printf("<point kkj_lat=\"%d\" kkj_lng=\"%d\" lat=\"%s\" lng=\"%s\"/>\n",
+        printf("{\"kkj_lat\": %d, \"kkj_lng\": %d, \"lat\": %s, \"lng\": %s}",
                $kkj_lat / $lat_lng_mult, $kkj_lng / $lat_lng_mult, $1, $2);
+        if (($i_lat < ($lats - 1)) or ($i_lng < ($lngs - 1))) {
+            printf(",");
+        }
+        printf("\n");
       }
     } else {
       printf("%d %d\n", $kkj_lat, $kkj_lng);
@@ -40,5 +44,5 @@ for (my $i_lat = 0; $i_lat < $lats; $i_lat++) {
 
 if (defined($input_fh)) {
   close($input_fh);
-  print "</points>\n";
+  print "]\n";
 }

@@ -12,7 +12,7 @@ function Areas(master) {
         s.isExtensionsShown = isExtensionsShown;
         s.isShown = true;
 
-        s.filenames = {points: "generated_points.xml",
+        s.filenames = {points: "generated_points.json",
             visitedDatas: {
                 "2008": "visited_datas/2008.xml",
                 "2009": "visited_datas/2009.xml",
@@ -61,7 +61,7 @@ function Areas(master) {
                    '0',  '0',  '0', '45', '46',  '0', '47', '48'];
 
         if (s.isExtensionsShown) {
-            s.filenames.points = "generated_points_ext.xml";
+            s.filenames.points = "generated_points_ext.json";
             s.latPages = 10;
             s.lngPages = 15;
             s.kkjStart = {lat: 60, lng: 14};
@@ -119,16 +119,15 @@ function Areas(master) {
         }
 
         master.utils.downloadUrl(state.filenames.points, function (data, responseCode) {
-            var xml = master.utils.parseXml(data);
-            var p = xml.documentElement.getElementsByTagName("point");
-            state.kkjOffset.lat = parseInt(p[0].getAttribute("kkj_lat"));
-            state.kkjOffset.lng = parseInt(p[0].getAttribute("kkj_lng"));
+            var p = JSON.parse(data);
+            state.kkjOffset.lat = p[0]["kkj_lat"];
+            state.kkjOffset.lng = p[0]["kkj_lng"];
 
             for (var i = 0; i < p.length; i++) {
-                var y = parseInt(p[i].getAttribute("kkj_lat")) - state.kkjOffset.lat;
-                var x = parseInt(p[i].getAttribute("kkj_lng")) - state.kkjOffset.lng;
-                var lat = parseFloat(p[i].getAttribute("lat"));
-                var lng = parseFloat(p[i].getAttribute("lng"));
+                var y = p[i]["kkj_lat"] - state.kkjOffset.lat;
+                var x = p[i]["kkj_lng"] - state.kkjOffset.lng;
+                var lat = p[i]["lat"];
+                var lng = p[i]["lng"];
                 points[y][x] = new google.maps.LatLng(lat, lng);
             }
 
