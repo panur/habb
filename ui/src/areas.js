@@ -14,15 +14,15 @@ function Areas(master) {
 
         s.filenames = {points: "generated_points.json",
             visitedDatas: {
-                "2008": "visited_datas/2008.xml",
-                "2009": "visited_datas/2009.xml",
-                "2010": "visited_datas/2010.xml",
-                "2011": "visited_datas/2011.xml",
-                "2012": "visited_datas/2012.xml",
-                "2013": "visited_datas/2013.xml",
-                "2014": "visited_datas/2014.xml",
-                "2015": "visited_datas/2015.xml",
-                "latest": "visited_datas/latest.xml"}};
+                "2008": "visited_datas/2008.json",
+                "2009": "visited_datas/2009.json",
+                "2010": "visited_datas/2010.json",
+                "2011": "visited_datas/2011.json",
+                "2012": "visited_datas/2012.json",
+                "2013": "visited_datas/2013.json",
+                "2014": "visited_datas/2014.json",
+                "2015": "visited_datas/2015.json",
+                "latest": "visited_datas/latest.json"}};
         s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
         s.area = {opacity: 0.5, opacityLow: 0.2, opacityHigh: 0.5,
@@ -161,14 +161,13 @@ function Areas(master) {
 
     function setVisitedDataToKm2s() {
         master.utils.downloadUrl(state.filenames.visitedData, function (data, responseCode) {
-            var xml = master.utils.parseXml(data);
+            var pages = JSON.parse(data);
             var allInPage = [];
-            var pages = xml.documentElement.getElementsByTagName("page");
 
             for (var i = 0; i < pages.length; i++) {
-                if (pages[i].getAttribute("visited_all") === "true") {
-                    if ((state.isExtensionsShown) || (pages[i].getAttribute("number") < 49)) {
-                        allInPage.push(pages[i].getAttribute("number"));
+                if (pages[i]["visited"] === "all") {
+                    if ((state.isExtensionsShown) || (pages[i]["page"] < 49)) {
+                        allInPage.push(pages[i]["page"]);
                     }
                 }
             }
@@ -185,14 +184,14 @@ function Areas(master) {
                 }
             }
 
-            var km2s = xml.documentElement.getElementsByTagName("km2");
+            for (var i = 0; i < pages.length; i++) {
+                if (pages[i]["visited"] !== "all") {
+                    var y = parseInt(pages[i]["lat"]) - state.kkjStart.lat;
+                    var x = parseInt(pages[i]["lng"]) - state.kkjStart.lng;
 
-            for (var i = 0; i < km2s.length; i++) {
-                var y = parseInt(km2s[i].getAttribute("kkj_lat")) - state.kkjStart.lat;
-                var x = parseInt(km2s[i].getAttribute("kkj_lng")) - state.kkjStart.lng;
-
-                if ((state.isExtensionsShown) || (km2s[i].getAttribute("page") < 49)) {
-                    state.km2s[y][x].visited = km2s[i].getAttribute("visited");
+                    if ((state.isExtensionsShown) || (pages[i]["page"] < 49)) {
+                        state.km2s[y][x].visited = pages[i]["visited"];
+                    }
                 }
             }
 
