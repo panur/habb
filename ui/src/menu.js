@@ -33,6 +33,9 @@ function Menu(master) {
                 if (downDurationMs > 150) {
                     return; // probably drag or drop but not click
                 }
+                if (master.areas.isVisitedAreaEditorActive(mouseEvent)) {
+                    return;
+                }
                 var menuItems = ["Open...", "Areas...", "Trips...", "Zoom", "Home"];
                 var rect = {"top": mouseEvent.pixel.y, "bottom": mouseEvent.pixel.y,
                             "left": mouseEvent.pixel.x, "right": mouseEvent.pixel.x};
@@ -135,6 +138,8 @@ function Menu(master) {
                                         "Google Maps", "HERE Maps", "Bing Maps", "OpenStreetMap"];
                     } else if (rowElement.textContent === "Areas...") {
                         subMenuItems = master.areas.getMenuItems();
+                    } else if (rowElement.textContent === "Edit visited...") {
+                        subMenuItems = master.areas.getEditMenuItems();
                     } else if (rowElement.textContent === "View...") {
                         subMenuItems = master.areas.getViewMenuItems();
                     } else if (rowElement.textContent === "Trips...") {
@@ -170,6 +175,7 @@ function Menu(master) {
                     if (state.selectedParentMenuItem === "Open...") {
                         master.map.openOtherMap(rowElement.textContent, latLng);
                     } else if ((state.selectedParentMenuItem === "Areas...") ||
+                               (state.selectedParentMenuItem === "Edit visited...") ||
                                (state.selectedParentMenuItem === "View...")) {
                         master.areas.processMenuCommand(rowElement.textContent);
                     } else if ((state.selectedParentMenuItem === "Trips...") ||

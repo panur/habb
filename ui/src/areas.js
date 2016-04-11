@@ -11,6 +11,8 @@ function Areas(master) {
 
         s.isExtensionsShown = isExtensionsShown;
         s.isShown = true;
+        s.isVisitedAreaEditorActive = false;
+        s.visitedAreaEditorEventListener = null;
 
         s.filenames = {points: "generated_points.json",
             visitedDatas: {
@@ -708,9 +710,22 @@ function Areas(master) {
                 menuItems.push("Show extensions");
             }
 
+            menuItems.push("Edit visited...");
             menuItems.push("View...");
         } else {
             menuItems.push("Show");
+        }
+
+        return menuItems;
+    };
+
+    this.getEditMenuItems = function () {
+        var menuItems = [];
+
+        if (state["isVisitedAreaEditorActive"]) {
+            menuItems.push("stop");
+        } else {
+            menuItems.push("start");
         }
 
         return menuItems;
@@ -732,6 +747,90 @@ function Areas(master) {
         return menuItems;
     };
 
+    function startVisitedAreaEditor() {
+        var listener = google.maps.event.addListener(master.gm, "click", function (mouseEvent) {
+            var info = that.getInfo(mouseEvent.latLng);
+            if (info["page"] !== "-") {
+                var newVisited = {"no": "yes", "yes": "np", "np": "no"}[info["visited"]];
+                state["km2s"][info["km2XY"]["y"]][info["km2XY"]["x"]]["visited"] = newVisited;
+                removeOverlaysFromMap();
+                google.maps.event.trigger(master.gm, "km2sAreInState");
+            }
+        });
+        state["visitedAreaEditorEventListener"] = listener;
+        state["isVisitedAreaEditorActive"] = true;
+    }
+
+    function stopVisitedAreaEditor() {
+        var visitedAreaDataWindow = window.open("", "visited area data");
+        visitedAreaDataWindow.document.body.innerHTML = getVisitedAreaJsonData();
+
+        google.maps.event.removeListener(state["visitedAreaEditorEventListener"]);
+        state["visitedAreaEditorEventListener"] = null;
+        state["isVisitedAreaEditorActive"] = false;
+    }
+
+    function getVisitedAreaJsonData() {
+        var lines = [];
+
+        for (var lat = 0; lat < state["latPages"]; lat++) {
+            for (var lng = 0; lng < state["lngPages"]; lng++) {
+                var pageIndex = (lat * state["lngPages"]) + lng;
+                if (state["pages"][pageIndex] !== "0") {
+                    var pageVisitedInfo = getPageVisitedInfo(pageIndex);
+                    if (isPageVisited(pageVisitedInfo) === "true") {
+                        lines.push('{"page": "' + state["pages"][pageIndex] +
+                                   '", "visited": "all"}');
+                    } else {
+                        for (var i = 0; i < pageVisitedInfo.length; i++) {
+                            lines.push('{"page": "' + state["pages"][pageIndex] +
+                                       '", "lat": "' + pageVisitedInfo[i]["lat"] +
+                                       '", "lng": "' + pageVisitedInfo[i]["lng"] +
+                                       '", "visited": "' + pageVisitedInfo[i]["visited"] + '"}');
+                        }
+                    }
+                }
+            }
+        }
+        return "<pre>[\n" + lines.join(",\n") + "\n]\n</pre>";
+    }
+
+    function getPageVisitedInfo(page) {
+        var initY = Math.floor(page / state["lngPages"]) * state["latKmPerP"];
+        var initX = (page % state["lngPages"]) * state["lngKmPerP"];
+        var visitedInfo = [];
+
+        for (var y = 0; y < state["latKmPerP"]; y++) {
+            for (var x = 0; x < state["lngKmPerP"]; x++) {
+                var lat = initY + y + state["kkjStart"]["lat"];
+                var lng = initX + x + state["kkjStart"]["lng"];
+                var visited = state["km2s"][initY + y][initX + x]["visited"];
+                visitedInfo.push({"lat": lat, "lng": lng, "visited": visited})
+            }
+        }
+
+        return visitedInfo;
+    }
+
+    function isPageVisited(pageVisitedInfo) {
+        for (var i = 0; i < pageVisitedInfo.length; i++) {
+            if (pageVisitedInfo[i]["visited"] !== "yes") {
+                return "false";
+            }
+        }
+        return "true";
+    }
+
+    this.isVisitedAreaEditorActive = function (mouseEvent) {
+        if (state["isVisitedAreaEditorActive"]) {
+            var info = that.getInfo(mouseEvent.latLng);
+            if (info["page"] !== "-") {
+                return true;
+            }
+        }
+        return false;
+    };
+
     this.processMenuCommand = function (command) {
         if ((command === "Hide") || (command === "Show")) {
             toggleVisibility();
@@ -739,6 +838,10 @@ function Areas(master) {
             toggleOpacity();
         } else if ((command === "Hide extensions") || (command === "Show extensions")) {
             toggleExtensionsVisibility();
+        } else if (command === "start") {
+            startVisitedAreaEditor();
+        } else if (command === "stop") {
+            stopVisitedAreaEditor();
         } else if (command === "latest") {
             that.changeVisitedData("latest");
         } else if (/end of \d\d\d\d/.test(command)) {
