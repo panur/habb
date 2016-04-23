@@ -390,6 +390,7 @@ def _create_rss(trips, output_filename):
         output_str += '  <description>' + trip_description + '</description>\n'
         output_str += '  <link>' + trip_url + '</link>\n'
         output_str += '  <guid>' + trip_url + '</guid>\n'
+        output_str += '  <pubDate>' + _get_rss_pub_date(trip_date) + '</pubDate>\n'
         output_str += '</item>\n'
 
     output_str += '</channel>\n'
@@ -397,6 +398,12 @@ def _create_rss(trips, output_filename):
 
     with codecs.open(output_filename, 'w', encoding='utf_8') as output_file:
         output_file.write(output_str)
+
+
+def _get_rss_pub_date(trip_date):  # YYYYMMDD
+    trip_datetime = datetime.datetime.strptime(trip_date + '15', '%Y%m%d%H')
+    epoch = (trip_datetime - datetime.datetime(1970, 1, 1)).total_seconds()
+    return email.utils.formatdate(epoch)
 
 
 if __name__ == '__main__':
