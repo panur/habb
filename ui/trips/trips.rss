@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 23 Apr 2016 05:46:19 -0000</lastBuildDate>
+<lastBuildDate>Sun, 24 Apr 2016 17:28:40 -0000</lastBuildDate>
+<item>
+  <title>Savijärvi</title>
+  <description>2016-04-24, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160424</link>
+  <guid>http://14142.net/habb/map.html?t=20160424</guid>
+  <pubDate>Sun, 24 Apr 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kalkkiranta</title>
   <description>2016-04-18, 120 km</description>

@@ -1,4 +1,5 @@
 [
+{"gps_data": "2016/20160424.gpx",   "visited_data": "2016/20160418.json", "distance": "144", "max_speed": "42.7", "avg_speed": "20.8", "duration": "6:54:00", "color": "#FFC060", "name": "Savijärvi"},
 {"gps_data": "2016/20160418.gpx",   "visited_data": "2016/20160101.json", "distance": "120", "max_speed": "40.7", "avg_speed": "21.7", "duration": "5:29:33", "color": "#60FFC0", "name": "Kalkkiranta"},
 {"gps_data": "2015/20150914.gpx",   "visited_data": "-",                  "distance": "181", "max_speed": "47.7", "avg_speed": "24.7", "duration": "7:17:56", "color": "#60C0FF", "name": "Lappeenranta-Lahti"},
 {"gps_data": "2015/20150913.gpx",   "visited_data": "-",                  "distance": "160", "max_speed": "42.3", "avg_speed": "24.3", "duration": "6:34:51", "color": "#FF60C0", "name": "Pyhtää-Lappeenranta"},
