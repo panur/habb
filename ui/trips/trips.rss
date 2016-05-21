@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 06 May 2016 13:35:18 -0000</lastBuildDate>
+<lastBuildDate>Sat, 21 May 2016 18:11:53 -0000</lastBuildDate>
+<item>
+  <title>Laukkoski</title>
+  <description>2016-05-21, 158 km</description>
+  <link>http://14142.net/habb/map.html?t=20160521</link>
+  <guid>http://14142.net/habb/map.html?t=20160521</guid>
+  <pubDate>Sat, 21 May 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Hämeenlinna-Espoo</title>
   <description>2016-05-06, 108 km</description>
