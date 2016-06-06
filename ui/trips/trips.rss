@@ -5,7 +5,28 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 29 May 2016 17:25:12 -0000</lastBuildDate>
+<lastBuildDate>Mon, 06 Jun 2016 18:08:08 -0000</lastBuildDate>
+<item>
+  <title>Loimaa-Tampere</title>
+  <description>2016-06-06, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160606</link>
+  <guid>http://14142.net/habb/map.html?t=20160606</guid>
+  <pubDate>Mon, 06 Jun 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Hämeenlinna-Loimaa</title>
+  <description>2016-06-05, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20160605</link>
+  <guid>http://14142.net/habb/map.html?t=20160605</guid>
+  <pubDate>Sun, 05 Jun 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2016-06-04, 171 km</description>
+  <link>http://14142.net/habb/map.html?t=20160604</link>
+  <guid>http://14142.net/habb/map.html?t=20160604</guid>
+  <pubDate>Sat, 04 Jun 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Hinthaara</title>
   <description>2016-05-29, 155 km</description>
