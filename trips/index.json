@@ -1,4 +1,6 @@
 [
+{"gps_data": "2016/20160612.gpx",   "visited_data": "-",                  "distance": "142", "max_speed": "44.2", "avg_speed": "27.0", "duration": "5:13:45", "color": "#608080", "name": "Säkylä-Turku"},
+{"gps_data": "2016/20160611.gpx",   "visited_data": "-",                  "distance": "141", "max_speed": "39.5", "avg_speed": "23.1", "duration": "6:05:28", "color": "#FF8060", "name": "Salo-Säkylä"},
 {"gps_data": "2016/20160606.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "41.8", "avg_speed": "21.8", "duration": "6:35:10", "color": "#808060", "name": "Loimaa-Tampere"},
 {"gps_data": "2016/20160605.gpx",   "visited_data": "-",                  "distance": "141", "max_speed": "46.0", "avg_speed": "24.3", "duration": "5:46:20", "color": "#60FF20", "name": "Hämeenlinna-Loimaa"},
 {"gps_data": "2016/20160604.gpx",   "visited_data": "2016/20160530.json", "distance": "171", "max_speed": "45.6", "avg_speed": "21.8", "duration": "7:48:30", "color": "#6020FF", "name": "Espoo-Hämeenlinna"},
