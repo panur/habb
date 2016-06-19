@@ -1,4 +1,5 @@
 [
+{"gps_data": "2016/20160619.gpx",   "visited_data": "2016/20160604.json", "distance": "124", "max_speed": "44.9", "avg_speed": "23.2", "duration": "5:20:16", "color": "#FF6020", "name": "Degerby"},
 {"gps_data": "2016/20160612.gpx",   "visited_data": "-",                  "distance": "142", "max_speed": "44.2", "avg_speed": "27.0", "duration": "5:13:45", "color": "#608080", "name": "Säkylä-Turku"},
 {"gps_data": "2016/20160611.gpx",   "visited_data": "-",                  "distance": "141", "max_speed": "39.5", "avg_speed": "23.1", "duration": "6:05:28", "color": "#FF8060", "name": "Salo-Säkylä"},
 {"gps_data": "2016/20160606.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "41.8", "avg_speed": "21.8", "duration": "6:35:10", "color": "#808060", "name": "Loimaa-Tampere"},
