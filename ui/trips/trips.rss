@@ -5,7 +5,35 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 24 Jun 2016 17:11:02 -0000</lastBuildDate>
+<lastBuildDate>Mon, 04 Jul 2016 17:22:24 -0000</lastBuildDate>
+<item>
+  <title>Nurmes-Kuopio</title>
+  <description>2016-07-03, 143 km</description>
+  <link>http://14142.net/habb/map.html?t=20160703</link>
+  <guid>http://14142.net/habb/map.html?t=20160703</guid>
+  <pubDate>Sun, 03 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Joensuu-Nurmes</title>
+  <description>2016-07-02, 135 km</description>
+  <link>http://14142.net/habb/map.html?t=20160702</link>
+  <guid>http://14142.net/habb/map.html?t=20160702</guid>
+  <pubDate>Sat, 02 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Savonlinna-Joensuu</title>
+  <description>2016-07-01, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160701</link>
+  <guid>http://14142.net/habb/map.html?t=20160701</guid>
+  <pubDate>Fri, 01 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Imatra-Savonlinna</title>
+  <description>2016-06-30, 133 km</description>
+  <link>http://14142.net/habb/map.html?t=20160630</link>
+  <guid>http://14142.net/habb/map.html?t=20160630</guid>
+  <pubDate>Thu, 30 Jun 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Siuntio</title>
   <description>2016-06-24, 160 km</description>

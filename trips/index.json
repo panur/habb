@@ -1,4 +1,8 @@
 [
+{"gps_data": "2016/20160703.gpx",   "visited_data": "-",                  "distance": "143", "max_speed": "??.?", "avg_speed": "23.8", "duration": "5:58:56", "color": "#6080FF", "name": "Nurmes-Kuopio"},
+{"gps_data": "2016/20160702.gpx",   "visited_data": "-",                  "distance": "135", "max_speed": "50.9", "avg_speed": "26.1", "duration": "5:10:01", "color": "#604000", "name": "Joensuu-Nurmes"},
+{"gps_data": "2016/20160701.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "43.5", "avg_speed": "24.9", "duration": "5:45:31", "color": "#004060", "name": "Savonlinna-Joensuu"},
+{"gps_data": "2016/20160630.gpx",   "visited_data": "-",                  "distance": "133", "max_speed": "46.5", "avg_speed": "25.0", "duration": "5:19:32", "color": "#20FF60", "name": "Imatra-Savonlinna"},
 {"gps_data": "2016/20160624.gpx",   "visited_data": "2016/20160619.json", "distance": "160", "max_speed": "??.?", "avg_speed": "21.8", "duration": "7:19:59", "color": "#2060FF", "name": "Siuntio"},
 {"gps_data": "2016/20160619.gpx",   "visited_data": "2016/20160604.json", "distance": "124", "max_speed": "44.9", "avg_speed": "23.2", "duration": "5:20:16", "color": "#FF6020", "name": "Degerby"},
 {"gps_data": "2016/20160612.gpx",   "visited_data": "-",                  "distance": "142", "max_speed": "44.2", "avg_speed": "27.0", "duration": "5:13:45", "color": "#608080", "name": "Säkylä-Turku"},
