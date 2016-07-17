@@ -1,4 +1,11 @@
 [
+{"gps_data": "2016/20160715.gpx",   "visited_data": "-",                  "distance": "108", "max_speed": "48.4", "avg_speed": "25.0", "duration": "4:18:05", "color": "#FF6040", "name": "Hartola-Lahti"},
+{"gps_data": "2016/20160714.gpx",   "visited_data": "-",                  "distance": "138", "max_speed": "49.8", "avg_speed": "21.1", "duration": "6:31:42", "color": "#4060FF", "name": "Laukaa-Hartola"},
+{"gps_data": "2016/20160713.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "46.8", "avg_speed": "23.0", "duration": "6:15:15", "color": "#FF4060", "name": "Keuruu-Laukaa"},
+{"gps_data": "2016/20160712.gpx",   "visited_data": "-",                  "distance": "138", "max_speed": "41.1", "avg_speed": "22.9", "duration": "6:02:13", "color": "#40FF60", "name": "Alajärvi-Keuruu"},
+{"gps_data": "2016/20160711.gpx",   "visited_data": "-",                  "distance": "142", "max_speed": "36.0", "avg_speed": "24.5", "duration": "5:45:53", "color": "#6040FF", "name": "Vaasa-Alajärvi"},
+{"gps_data": "2016/20160710.gpx",   "visited_data": "-",                  "distance": "139", "max_speed": "35.2", "avg_speed": "25.0", "duration": "5:33:02", "color": "#60FF40", "name": "Närpiö-Vaasa"},
+{"gps_data": "2016/20160709.gpx",   "visited_data": "-",                  "distance": "140", "max_speed": "35.2", "avg_speed": "25.4", "duration": "5:28:44", "color": "#8060FF", "name": "Pori-Närpiö"},
 {"gps_data": "2016/20160703.gpx",   "visited_data": "-",                  "distance": "143", "max_speed": "??.?", "avg_speed": "23.8", "duration": "5:58:56", "color": "#6080FF", "name": "Nurmes-Kuopio"},
 {"gps_data": "2016/20160702.gpx",   "visited_data": "-",                  "distance": "135", "max_speed": "50.9", "avg_speed": "26.1", "duration": "5:10:01", "color": "#604000", "name": "Joensuu-Nurmes"},
 {"gps_data": "2016/20160701.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "43.5", "avg_speed": "24.9", "duration": "5:45:31", "color": "#004060", "name": "Savonlinna-Joensuu"},
