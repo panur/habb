@@ -1,4 +1,9 @@
 [
+{"gps_data": "2016/20160722.gpx",   "visited_data": "-",                  "distance": "141", "max_speed": "48.1", "avg_speed": "25.1", "duration": "5:36:27", "color": "#80FF60", "name": "Alavus-Tampere"},
+{"gps_data": "2016/20160721.gpx",   "visited_data": "-",                  "distance": "161", "max_speed": "38.3", "avg_speed": "25.3", "duration": "6:21:04", "color": "#400060", "name": "Pietarsaari-Alavus"},
+{"gps_data": "2016/20160720.gpx",   "visited_data": "-",                  "distance": "170", "max_speed": "34.0", "avg_speed": "23.1", "duration": "7:22:02", "color": "#C0C060", "name": "Kurikka-Pietarsaari"},
+{"gps_data": "2016/20160719.gpx",   "visited_data": "-",                  "distance": "142", "max_speed": "34.5", "avg_speed": "23.2", "duration": "6:05:28", "color": "#006040", "name": "Kankaanpää-Kurikka"},
+{"gps_data": "2016/20160718.gpx",   "visited_data": "-",                  "distance": "133", "max_speed": "44.9", "avg_speed": "24.7", "duration": "5:22:58", "color": "#600040", "name": "Lempäälä-Kankaanpää"},
 {"gps_data": "2016/20160715.gpx",   "visited_data": "-",                  "distance": "108", "max_speed": "48.4", "avg_speed": "25.0", "duration": "4:18:05", "color": "#FF6040", "name": "Hartola-Lahti"},
 {"gps_data": "2016/20160714.gpx",   "visited_data": "-",                  "distance": "138", "max_speed": "49.8", "avg_speed": "21.1", "duration": "6:31:42", "color": "#4060FF", "name": "Laukaa-Hartola"},
 {"gps_data": "2016/20160713.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "46.8", "avg_speed": "23.0", "duration": "6:15:15", "color": "#FF4060", "name": "Keuruu-Laukaa"},

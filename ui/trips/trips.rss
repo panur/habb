@@ -5,7 +5,42 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 16 Jul 2016 18:38:23 -0000</lastBuildDate>
+<lastBuildDate>Sat, 23 Jul 2016 07:03:02 -0000</lastBuildDate>
+<item>
+  <title>Alavus-Tampere</title>
+  <description>2016-07-22, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20160722</link>
+  <guid>http://14142.net/habb/map.html?t=20160722</guid>
+  <pubDate>Fri, 22 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Pietarsaari-Alavus</title>
+  <description>2016-07-21, 161 km</description>
+  <link>http://14142.net/habb/map.html?t=20160721</link>
+  <guid>http://14142.net/habb/map.html?t=20160721</guid>
+  <pubDate>Thu, 21 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Kurikka-Pietarsaari</title>
+  <description>2016-07-20, 170 km</description>
+  <link>http://14142.net/habb/map.html?t=20160720</link>
+  <guid>http://14142.net/habb/map.html?t=20160720</guid>
+  <pubDate>Wed, 20 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Kankaanpää-Kurikka</title>
+  <description>2016-07-19, 142 km</description>
+  <link>http://14142.net/habb/map.html?t=20160719</link>
+  <guid>http://14142.net/habb/map.html?t=20160719</guid>
+  <pubDate>Tue, 19 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Lempäälä-Kankaanpää</title>
+  <description>2016-07-18, 133 km</description>
+  <link>http://14142.net/habb/map.html?t=20160718</link>
+  <guid>http://14142.net/habb/map.html?t=20160718</guid>
+  <pubDate>Mon, 18 Jul 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Hartola-Lahti</title>
   <description>2016-07-15, 108 km</description>
