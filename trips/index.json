@@ -1,4 +1,8 @@
 [
+{"gps_data": "2016/20160802.gpx",   "visited_data": "-",                  "distance": "133", "max_speed": "37.6", "avg_speed": "23.5", "duration": "5:40:29", "color": "#60C0C0", "name": "Paide-Tallinna"},
+{"gps_data": "2016/20160801.gpx",   "visited_data": "-",                  "distance": "115", "max_speed": "40.5", "avg_speed": "23.3", "duration": "4:55:08", "color": "#C060C0", "name": "Pärnu-Paide"},
+{"gps_data": "2016/20160731.gpx",   "visited_data": "-",                  "distance": "116", "max_speed": "29.7", "avg_speed": "22.4", "duration": "5:10:27", "color": "#406000", "name": "Haapsalu-Pärnu"},
+{"gps_data": "2016/20160730.gpx",   "visited_data": "-",                  "distance": "124", "max_speed": "37.9", "avg_speed": "24.1", "duration": "5:09:41", "color": "#202060", "name": "Tallinna-Haapsalu"},
 {"gps_data": "2016/20160722.gpx",   "visited_data": "-",                  "distance": "141", "max_speed": "48.1", "avg_speed": "25.1", "duration": "5:36:27", "color": "#80FF60", "name": "Alavus-Tampere"},
 {"gps_data": "2016/20160721.gpx",   "visited_data": "-",                  "distance": "161", "max_speed": "38.3", "avg_speed": "25.3", "duration": "6:21:04", "color": "#400060", "name": "Pietarsaari-Alavus"},
 {"gps_data": "2016/20160720.gpx",   "visited_data": "-",                  "distance": "170", "max_speed": "34.0", "avg_speed": "23.1", "duration": "7:22:02", "color": "#C0C060", "name": "Kurikka-Pietarsaari"},

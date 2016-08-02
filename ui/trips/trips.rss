@@ -5,7 +5,35 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 23 Jul 2016 07:03:02 -0000</lastBuildDate>
+<lastBuildDate>Tue, 02 Aug 2016 17:30:55 -0000</lastBuildDate>
+<item>
+  <title>Paide-Tallinna</title>
+  <description>2016-08-02, 133 km</description>
+  <link>http://14142.net/habb/map.html?t=20160802</link>
+  <guid>http://14142.net/habb/map.html?t=20160802</guid>
+  <pubDate>Tue, 02 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Pärnu-Paide</title>
+  <description>2016-08-01, 115 km</description>
+  <link>http://14142.net/habb/map.html?t=20160801</link>
+  <guid>http://14142.net/habb/map.html?t=20160801</guid>
+  <pubDate>Mon, 01 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Haapsalu-Pärnu</title>
+  <description>2016-07-31, 116 km</description>
+  <link>http://14142.net/habb/map.html?t=20160731</link>
+  <guid>http://14142.net/habb/map.html?t=20160731</guid>
+  <pubDate>Sun, 31 Jul 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Tallinna-Haapsalu</title>
+  <description>2016-07-30, 124 km</description>
+  <link>http://14142.net/habb/map.html?t=20160730</link>
+  <guid>http://14142.net/habb/map.html?t=20160730</guid>
+  <pubDate>Sat, 30 Jul 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Alavus-Tampere</title>
   <description>2016-07-22, 141 km</description>
