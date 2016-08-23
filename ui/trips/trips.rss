@@ -5,9 +5,72 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 02 Aug 2016 17:30:55 -0000</lastBuildDate>
+<lastBuildDate>Mon, 15 Aug 2016 05:30:08 -0000</lastBuildDate>
 <item>
-  <title>Paide-Tallinna</title>
+  <title>Uppsala-Stockholm</title>
+  <description>2016-08-12, 122 km</description>
+  <link>http://14142.net/habb/map.html?t=20160812</link>
+  <guid>http://14142.net/habb/map.html?t=20160812</guid>
+  <pubDate>Fri, 12 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Gävle-Uppsala</title>
+  <description>2016-08-11, 140 km</description>
+  <link>http://14142.net/habb/map.html?t=20160811</link>
+  <guid>http://14142.net/habb/map.html?t=20160811</guid>
+  <pubDate>Thu, 11 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Hudiksvall-Gävle</title>
+  <description>2016-08-10, 141 km</description>
+  <link>http://14142.net/habb/map.html?t=20160810</link>
+  <guid>http://14142.net/habb/map.html?t=20160810</guid>
+  <pubDate>Wed, 10 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Härnösand-Hudiksvall</title>
+  <description>2016-08-09, 154 km</description>
+  <link>http://14142.net/habb/map.html?t=20160809</link>
+  <guid>http://14142.net/habb/map.html?t=20160809</guid>
+  <pubDate>Tue, 09 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Örnsköldsvik-Härnösand</title>
+  <description>2016-08-08, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160808</link>
+  <guid>http://14142.net/habb/map.html?t=20160808</guid>
+  <pubDate>Mon, 08 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Umeå-Örnsköldsvik</title>
+  <description>2016-08-07, 128 km</description>
+  <link>http://14142.net/habb/map.html?t=20160807</link>
+  <guid>http://14142.net/habb/map.html?t=20160807</guid>
+  <pubDate>Sun, 07 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Skellefteå-Umeå</title>
+  <description>2016-08-06, 139 km</description>
+  <link>http://14142.net/habb/map.html?t=20160806</link>
+  <guid>http://14142.net/habb/map.html?t=20160806</guid>
+  <pubDate>Sat, 06 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Luleå-Skellefteå</title>
+  <description>2016-08-05, 149 km</description>
+  <link>http://14142.net/habb/map.html?t=20160805</link>
+  <guid>http://14142.net/habb/map.html?t=20160805</guid>
+  <pubDate>Fri, 05 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Tornio-Luleå</title>
+  <description>2016-08-04, 136 km</description>
+  <link>http://14142.net/habb/map.html?t=20160804</link>
+  <guid>http://14142.net/habb/map.html?t=20160804</guid>
+  <pubDate>Thu, 04 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Paide-Tallinn</title>
   <description>2016-08-02, 133 km</description>
   <link>http://14142.net/habb/map.html?t=20160802</link>
   <guid>http://14142.net/habb/map.html?t=20160802</guid>
@@ -28,7 +91,7 @@
   <pubDate>Sun, 31 Jul 2016 15:00:00 -0000</pubDate>
 </item>
 <item>
-  <title>Tallinna-Haapsalu</title>
+  <title>Tallinn-Haapsalu</title>
   <description>2016-07-30, 124 km</description>
   <link>http://14142.net/habb/map.html?t=20160730</link>
   <guid>http://14142.net/habb/map.html?t=20160730</guid>
