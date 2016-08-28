@@ -5,7 +5,49 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 15 Aug 2016 05:30:08 -0000</lastBuildDate>
+<lastBuildDate>Sun, 28 Aug 2016 17:33:33 -0000</lastBuildDate>
+<item>
+  <title>Kautakeino-Hetta</title>
+  <description>2016-08-22, 81 km</description>
+  <link>http://14142.net/habb/map.html?t=20160822</link>
+  <guid>http://14142.net/habb/map.html?t=20160822</guid>
+  <pubDate>Mon, 22 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Karasjok-Kautakeino</title>
+  <description>2016-08-21, 129 km</description>
+  <link>http://14142.net/habb/map.html?t=20160821</link>
+  <guid>http://14142.net/habb/map.html?t=20160821</guid>
+  <pubDate>Sun, 21 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Nuorgam-Karasjok</title>
+  <description>2016-08-20, 163 km</description>
+  <link>http://14142.net/habb/map.html?t=20160820</link>
+  <guid>http://14142.net/habb/map.html?t=20160820</guid>
+  <pubDate>Sat, 20 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Näätämö-Nuorgam</title>
+  <description>2016-08-19, 129 km</description>
+  <link>http://14142.net/habb/map.html?t=20160819</link>
+  <guid>http://14142.net/habb/map.html?t=20160819</guid>
+  <pubDate>Fri, 19 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Inari-Näätämö</title>
+  <description>2016-08-18, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160818</link>
+  <guid>http://14142.net/habb/map.html?t=20160818</guid>
+  <pubDate>Thu, 18 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Sodankylä-Inari</title>
+  <description>2016-08-17, 202 km</description>
+  <link>http://14142.net/habb/map.html?t=20160817</link>
+  <guid>http://14142.net/habb/map.html?t=20160817</guid>
+  <pubDate>Wed, 17 Aug 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Uppsala-Stockholm</title>
   <description>2016-08-12, 122 km</description>
