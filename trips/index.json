@@ -1,4 +1,9 @@
 [
+{"gps_data": "2016/20160828.gpx",   "visited_data": "-",                  "distance": "151", "max_speed": "48.3", "avg_speed": "23.6", "duration": "6:22:34", "color": "#20C060", "name": "Pori-Lempäälä"},
+{"gps_data": "2016/20160827.gpx",   "visited_data": "-",                  "distance": "171", "max_speed": "45.1", "avg_speed": "22.0", "duration": "7:45:45", "color": "#606040", "name": "Kaskinen-Pori"},
+{"gps_data": "2016/20160826.gpx",   "visited_data": "-",                  "distance": "165", "max_speed": "35.2", "avg_speed": "23.8", "duration": "6:53:22", "color": "#2060C0", "name": "Seinäjoki-Kaskinen"},
+{"gps_data": "2016/20160825.gpx",   "visited_data": "-",                  "distance": "153", "max_speed": "41.5", "avg_speed": "23.7", "duration": "6:27:46", "color": "#C02060", "name": "Virrat-Seinäjoki"},
+{"gps_data": "2016/20160824.gpx",   "visited_data": "-",                  "distance": "144", "max_speed": "39.7", "avg_speed": "23.1", "duration": "6:13:17", "color": "#6020C0", "name": "Lempäälä-Virrat"},
 {"gps_data": "2016/20160822.gpx",   "visited_data": "-",                  "distance": "81",  "max_speed": "44.9", "avg_speed": "24.4", "duration": "3:19:02", "color": "#C04060", "name": "Kautakeino-Hetta"},
 {"gps_data": "2016/20160821.gpx",   "visited_data": "-",                  "distance": "129", "max_speed": "??.?", "avg_speed": "23.4", "duration": "5:29:54", "color": "#40C060", "name": "Karasjok-Kautakeino"},
 {"gps_data": "2016/20160820.gpx",   "visited_data": "-",                  "distance": "163", "max_speed": "49.3", "avg_speed": "20.9", "duration": "7:48:14", "color": "#6040C0", "name": "Nuorgam-Karasjok"},

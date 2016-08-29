@@ -5,7 +5,42 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 28 Aug 2016 17:33:33 -0000</lastBuildDate>
+<lastBuildDate>Mon, 29 Aug 2016 15:45:36 -0000</lastBuildDate>
+<item>
+  <title>Pori-Lempäälä</title>
+  <description>2016-08-28, 151 km</description>
+  <link>http://14142.net/habb/map.html?t=20160828</link>
+  <guid>http://14142.net/habb/map.html?t=20160828</guid>
+  <pubDate>Sun, 28 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Kaskinen-Pori</title>
+  <description>2016-08-27, 171 km</description>
+  <link>http://14142.net/habb/map.html?t=20160827</link>
+  <guid>http://14142.net/habb/map.html?t=20160827</guid>
+  <pubDate>Sat, 27 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Seinäjoki-Kaskinen</title>
+  <description>2016-08-26, 165 km</description>
+  <link>http://14142.net/habb/map.html?t=20160826</link>
+  <guid>http://14142.net/habb/map.html?t=20160826</guid>
+  <pubDate>Fri, 26 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Virrat-Seinäjoki</title>
+  <description>2016-08-25, 153 km</description>
+  <link>http://14142.net/habb/map.html?t=20160825</link>
+  <guid>http://14142.net/habb/map.html?t=20160825</guid>
+  <pubDate>Thu, 25 Aug 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Lempäälä-Virrat</title>
+  <description>2016-08-24, 144 km</description>
+  <link>http://14142.net/habb/map.html?t=20160824</link>
+  <guid>http://14142.net/habb/map.html?t=20160824</guid>
+  <pubDate>Wed, 24 Aug 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kautakeino-Hetta</title>
   <description>2016-08-22, 81 km</description>
