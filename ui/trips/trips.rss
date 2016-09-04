@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 29 Aug 2016 15:45:36 -0000</lastBuildDate>
+<lastBuildDate>Sun, 04 Sep 2016 12:58:12 -0000</lastBuildDate>
+<item>
+  <title>Vesikansa</title>
+  <description>2016-09-04, 164 km</description>
+  <link>http://14142.net/habb/map.html?t=20160904</link>
+  <guid>http://14142.net/habb/map.html?t=20160904</guid>
+  <pubDate>Sun, 04 Sep 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Pori-Lempäälä</title>
   <description>2016-08-28, 151 km</description>

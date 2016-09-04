@@ -1,4 +1,5 @@
 [
+{"gps_data": "2016/20160904.gpx",   "visited_data": "2016/20160624.json", "distance": "164", "max_speed": "45.8", "avg_speed": "23.0", "duration": "7:07:07", "color": "#C06020", "name": "Vesikansa"},
 {"gps_data": "2016/20160828.gpx",   "visited_data": "-",                  "distance": "151", "max_speed": "48.3", "avg_speed": "23.6", "duration": "6:22:34", "color": "#20C060", "name": "Pori-Lempäälä"},
 {"gps_data": "2016/20160827.gpx",   "visited_data": "-",                  "distance": "171", "max_speed": "45.1", "avg_speed": "22.0", "duration": "7:45:45", "color": "#606040", "name": "Kaskinen-Pori"},
 {"gps_data": "2016/20160826.gpx",   "visited_data": "-",                  "distance": "165", "max_speed": "35.2", "avg_speed": "23.8", "duration": "6:53:22", "color": "#2060C0", "name": "Seinäjoki-Kaskinen"},
