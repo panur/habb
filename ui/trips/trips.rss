@@ -5,7 +5,21 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>http://14142.net/habb/map.html</link>
 <atom:link href="http://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 13 Sep 2016 13:09:34 -0000</lastBuildDate>
+<lastBuildDate>Sun, 18 Sep 2016 16:31:54 -0000</lastBuildDate>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2016-09-18, 156 km</description>
+  <link>http://14142.net/habb/map.html?t=20160918</link>
+  <guid>http://14142.net/habb/map.html?t=20160918</guid>
+  <pubDate>Sun, 18 Sep 2016 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2016-09-17, 113 km</description>
+  <link>http://14142.net/habb/map.html?t=20160917</link>
+  <guid>http://14142.net/habb/map.html?t=20160917</guid>
+  <pubDate>Sat, 17 Sep 2016 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Hiidenvesi</title>
   <description>2016-09-13, 154 km</description>

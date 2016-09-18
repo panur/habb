@@ -1,4 +1,6 @@
 [
+{"gps_data": "2016/20160918.gpx",   "visited_data": "-",                  "distance": "156", "max_speed": "47.9", "avg_speed": "24.4", "duration": "6:22:53", "color": "#600020", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2016/20160917.gpx",   "visited_data": "-",                  "distance": "113", "max_speed": "41.6", "avg_speed": "24.2", "duration": "4:39:44", "color": "#406040", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2016/20160913.gpx",   "visited_data": "2016/20160904.json", "distance": "154", "max_speed": "49.1", "avg_speed": "21.9", "duration": "7:00:49", "color": "#404060", "name": "Hiidenvesi"},
 {"gps_data": "2016/20160911.gpx",   "visited_data": "-",                  "distance": "145", "max_speed": "42.0", "avg_speed": "22.7", "duration": "6:23:22", "color": "#604060", "name": "Kasnäs-Turku"},
 {"gps_data": "2016/20160910.gpx",   "visited_data": "-",                  "distance": "171", "max_speed": "46.3", "avg_speed": "23.0", "duration": "7:23:40", "color": "#60C020", "name": "Karjaa-Kasnäs"},
