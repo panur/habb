@@ -98,17 +98,9 @@ function Map(master) {
         var zl = master.gm.getZoom();
         var url = "";
 
-        if (otherMapType === "Kansalaisen karttapaikka") {
-            var kkjOffset = master.areas.getKkjOffset(point);
-            url = "http://kansalaisen.karttapaikka.fi/kartanhaku";
-
-            if (kkjOffset !== null) {
-                url += "/osoitehaku.html?cy=" +
-                    kkjOffset.y + "500&cx=" + kkjOffset.x + "500&scale=8000";
-            } else {
-                url += "/koordinaattihaku.html?y=" + point.lat() + "&x=" + point.lng() +
-                    "&srsName=EPSG%3A4258&scale=8000";
-            }
+        if (otherMapType === "MML") {
+            url = "http://14142.net/mml/?lat=" +
+                point.lat() + "&lng=" + point.lng() + "&z=" + zl;
         } else if (otherMapType === "Helsingin seudun opaskartta") {
             var areasInfo = master.areas.getInfo(point);
             if (areasInfo.page === "-") {
@@ -121,8 +113,8 @@ function Map(master) {
             url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
                 point.lat() + "," + point.lng() + "&z=" + zl;
         } else if (otherMapType === "HERE Maps") {
-            url = "http://here.com/" +
-                point.lat() + "," + point.lng() + "," + zl + ",0,0,normal.day";
+            url = "http://wego.here.com/?map=" +
+                point.lat() + "," + point.lng() + "," + zl;
         } else if (otherMapType === "Bing Maps") {
             url = "http://www.bing.com/maps/default.aspx?cp=" +
                 point.lat() + "~" + point.lng() + "&lvl=" + zl;
