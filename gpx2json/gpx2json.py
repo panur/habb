@@ -5,7 +5,7 @@
 GPX: http://www.topografix.com/gpx.asp
 JSON: http://www.json.org/
 
-Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html
+Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html
 """
 
 import argparse
@@ -369,7 +369,7 @@ def _get_index_trip_filename(input_index_trips, index_trip):
 
 
 def _create_rss(trips, output_filename):
-    base_url = 'http://14142.net/habb/'
+    base_url = 'https://14142.net/habb/'
     rss_url = base_url + 'trips/trips.rss'
     output_str = '<?xml version="1.0" encoding="UTF-8"?>\n'
     output_str += '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'

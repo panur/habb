@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
+/* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
 'use strict';
 
@@ -99,7 +99,7 @@ function Map(master) {
         var url = "";
 
         if (otherMapType === "MML") {
-            url = "http://14142.net/mml/?lat=" +
+            url = "https://14142.net/mml/?lat=" +
                 point.lat() + "&lng=" + point.lng() + "&z=" + zl;
         } else if (otherMapType === "Helsingin seudun opaskartta") {
             var areasInfo = master.areas.getInfo(point);

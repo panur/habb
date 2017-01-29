@@ -1,4 +1,4 @@
-/* Author: Panu Ranta, panu.ranta@iki.fi, http://14142.net/habb/about.html */
+/* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
 'use strict';
 
