@@ -1,4 +1,5 @@
 [
+{"gps_data": "2017/20170428.gpx",   "visited_data": "2017/20170101.json", "distance": "145", "max_speed": "43.3", "avg_speed": "21.9", "duration": "6:36:18", "color": "#604040", "name": "Kiljava"},
 {"gps_data": "2016/20160925.gpx",   "visited_data": "-",                  "distance": "94",  "max_speed": "40.9", "avg_speed": "24.9", "duration": "3:45:16", "color": "#006020", "name": "Kehä III"},
 {"gps_data": "2016/20160918.gpx",   "visited_data": "-",                  "distance": "156", "max_speed": "47.9", "avg_speed": "24.4", "duration": "6:22:53", "color": "#600020", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2016/20160917.gpx",   "visited_data": "-",                  "distance": "113", "max_speed": "41.6", "avg_speed": "24.2", "duration": "4:39:44", "color": "#406040", "name": "Espoo-Hämeenlinna"},

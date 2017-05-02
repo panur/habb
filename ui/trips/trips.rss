@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 29 Jan 2017 07:21:31 -0000</lastBuildDate>
+<lastBuildDate>Tue, 02 May 2017 17:41:15 -0000</lastBuildDate>
+<item>
+  <title>Kiljava</title>
+  <description>2017-04-28, 145 km</description>
+  <link>https://14142.net/habb/map.html?t=20170428</link>
+  <guid>https://14142.net/habb/map.html?t=20170428</guid>
+  <pubDate>Fri, 28 Apr 2017 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kehä III</title>
   <description>2016-09-25, 94 km</description>
