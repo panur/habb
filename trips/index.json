@@ -1,4 +1,5 @@
 [
+{"gps_data": "2017/20170810.gpx",   "visited_data": "2017/20170428.json", "distance": "146", "max_speed": "45.6", "avg_speed": "22.0", "duration": "6:36:54", "color": "#002060", "name": "Vihtijärvi"},
 {"gps_data": "2017/20170622.gpx",   "visited_data": "-",                  "distance": "107", "max_speed": "44.9", "avg_speed": "25.5", "duration": "4:10:23", "color": "#206000", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2017/20170621.gpx",   "visited_data": "-",                  "distance": "106", "max_speed": "43.9", "avg_speed": "22.6", "duration": "4:42:25", "color": "#200060", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2017/20170428.gpx",   "visited_data": "2017/20170101.json", "distance": "145", "max_speed": "43.3", "avg_speed": "21.9", "duration": "6:36:18", "color": "#604040", "name": "Kiljava"},
