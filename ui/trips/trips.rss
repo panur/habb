@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 10 Aug 2017 14:03:12 -0000</lastBuildDate>
+<lastBuildDate>Fri, 11 Aug 2017 14:11:53 -0000</lastBuildDate>
+<item>
+  <title>Jäniksenlinna</title>
+  <description>2017-08-11, 149 km</description>
+  <link>https://14142.net/habb/map.html?t=20170811</link>
+  <guid>https://14142.net/habb/map.html?t=20170811</guid>
+  <pubDate>Fri, 11 Aug 2017 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Vihtijärvi</title>
   <description>2017-08-10, 146 km</description>
