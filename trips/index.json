@@ -1,4 +1,5 @@
 [
+{"gps_data": "2017/20170818.gpx",   "visited_data": "2017/20170811.json", "distance": "183", "max_speed": "42.3", "avg_speed": "22.7", "duration": "8:04:11", "color": "#FF6060", "name": "Pornainen"},
 {"gps_data": "2017/20170811.gpx",   "visited_data": "2017/20170810.json", "distance": "149", "max_speed": "39.9", "avg_speed": "22.4", "duration": "6:38:37", "color": "#602000", "name": "Jäniksenlinna"},
 {"gps_data": "2017/20170810.gpx",   "visited_data": "2017/20170428.json", "distance": "146", "max_speed": "45.6", "avg_speed": "22.0", "duration": "6:36:54", "color": "#002060", "name": "Vihtijärvi"},
 {"gps_data": "2017/20170622.gpx",   "visited_data": "-",                  "distance": "107", "max_speed": "44.9", "avg_speed": "25.5", "duration": "4:10:23", "color": "#206000", "name": "Hämeenlinna-Espoo"},
