@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 19 Aug 2017 07:02:37 -0000</lastBuildDate>
+<lastBuildDate>Thu, 24 Aug 2017 16:18:54 -0000</lastBuildDate>
+<item>
+  <title>Karkkila</title>
+  <description>2017-08-24, 174 km</description>
+  <link>https://14142.net/habb/map.html?t=20170824</link>
+  <guid>https://14142.net/habb/map.html?t=20170824</guid>
+  <pubDate>Thu, 24 Aug 2017 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Pornainen</title>
   <description>2017-08-18, 183 km</description>
