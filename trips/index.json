@@ -1,4 +1,5 @@
 [
+{"gps_data": "2017/20170905.gpx",   "visited_data": "2017/20170824.json", "distance": "130", "max_speed": "52.0", "avg_speed": "20.2", "duration": "6:24:00", "color": "#6060FF", "name": "Kiljava"},
 {"gps_data": "2017/20170903.gpx",   "visited_data": "-",                  "distance": "94",  "max_speed": "43.3", "avg_speed": "23.7", "duration": "3:56:47", "color": "#60FF60", "name": "Kehä III"},
 {"gps_data": "2017/20170824.gpx",   "visited_data": "2017/20170818.json", "distance": "174", "max_speed": "50.6", "avg_speed": "22.0", "duration": "7:52:42", "color": "#60C060", "name": "Karkkila"},
 {"gps_data": "2017/20170818.gpx",   "visited_data": "2017/20170811.json", "distance": "183", "max_speed": "42.3", "avg_speed": "22.7", "duration": "8:04:11", "color": "#FF6060", "name": "Pornainen"},
