@@ -11,8 +11,8 @@ function Map(master) {
 
         s.initialStatistics = document.getElementById("statistics").innerHTML;
 
-        s.initialZL = 10;
-        s.initialLatLng = new google.maps.LatLng(60.300893, 24.792562);
+        s.initialZL = 9;
+        s.initialLatLng = new google.maps.LatLng(60.300442, 24.864896);
         s.zoomToPointZoomLevel = 14;
 
         return s;
