@@ -19,7 +19,8 @@ function Map(master) {
     }
 
     this.init = function () {
-        master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL});
+        master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL,
+                              fullscreenControl: false});
         addMouseListeners();
         initStreetView();
 
