@@ -2,7 +2,7 @@
 
 'use strict';
 
-function Map(master) {
+function GMap(master) {
     var that = this;
     var state = getState();
 

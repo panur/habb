@@ -22,7 +22,7 @@ function main() {
     master.trips = new Trips(master);
     master.trips.init();
 
-    master.map = new Map(master);
+    master.map = new GMap(master);
     master.map.init();
 
     master.areas = new Areas(master);
