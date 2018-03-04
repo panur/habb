@@ -181,7 +181,7 @@ function GMap(master) {
     this.updateStreetView = function (position, heading) {
         if (document.getElementById("street_view").clientHeight !== 0) {
             var svs = new google.maps.StreetViewService();
-            svs.getPanoramaByLocation(position, 50, function (data, status) {
+            svs.getPanorama({location: position, radius: 50}, function (data, status) {
                 if (status === google.maps.StreetViewStatus.OK) {
                     var pov = {heading: heading, zoom: 1, pitch: 0};
                     master.gm.getStreetView().setPov(pov);
