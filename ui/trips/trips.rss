@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 11 Aug 2018 11:06:34 -0000</lastBuildDate>
+<lastBuildDate>Thu, 16 Aug 2018 13:20:35 -0000</lastBuildDate>
+<item>
+  <title>Hinthaara</title>
+  <description>2018-08-16, 116 km</description>
+  <link>https://14142.net/habb/map.html?t=20180816</link>
+  <guid>https://14142.net/habb/map.html?t=20180816</guid>
+  <pubDate>Thu, 16 Aug 2018 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Askola</title>
   <description>2018-08-11, 104 km</description>
