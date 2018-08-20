@@ -1,4 +1,6 @@
 [
+{"gps_data": "2018/20180819.gpx",   "visited_data": "-",                  "distance": "106", "max_speed": "42.1", "avg_speed": "26.2", "duration": "4:02:00", "color": "#606080", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2018/20180818.gpx",   "visited_data": "-",                  "distance": "111", "max_speed": "49.1", "avg_speed": "25.1", "duration": "4:23:36", "color": "#608060", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2018/20180816.gpx",   "visited_data": "2018/20180811.json", "distance": "116", "max_speed": "48.6", "avg_speed": "22.6", "duration": "5:07:09", "color": "#008060", "name": "Hinthaara"},
 {"gps_data": "2018/20180811.gpx",   "visited_data": "2018/20180804.json", "distance": "104", "max_speed": "38.9", "avg_speed": "20.9", "duration": "4:56:41", "color": "#6060C0", "name": "Askola"},
 {"gps_data": "2018/20180804.gpx",   "visited_data": "2018/20180101.json", "distance": "115", "max_speed": "45.6", "avg_speed": "22.6", "duration": "5:04:25", "color": "#C06060", "name": "Kilpilahti"},
