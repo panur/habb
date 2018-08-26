@@ -1,4 +1,5 @@
 [
+{"gps_data": "2018/20180826.gpx",   "visited_data": "-",                  "distance": "93",  "max_speed": "43.5", "avg_speed": "24.1", "duration": "3:52:27", "color": "#806060", "name": "Kehä III"},
 {"gps_data": "2018/20180822.gpx",   "visited_data": "2018/20180816.json", "distance": "144", "max_speed": "41.3", "avg_speed": "21.7", "duration": "6:36:51", "color": "#800060", "name": "Porvoo"},
 {"gps_data": "2018/20180819.gpx",   "visited_data": "-",                  "distance": "106", "max_speed": "42.1", "avg_speed": "26.2", "duration": "4:02:00", "color": "#606080", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2018/20180818.gpx",   "visited_data": "-",                  "distance": "111", "max_speed": "49.1", "avg_speed": "25.1", "duration": "4:23:36", "color": "#608060", "name": "Espoo-Hämeenlinna"},
