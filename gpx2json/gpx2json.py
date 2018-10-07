@@ -87,8 +87,12 @@ def _write_to_json_file(output_filename, data):
 def _parse_gpx_file(gpx_filename):
     points = []
     et_root = xml.etree.cElementTree.parse(gpx_filename).getroot()
+    is_creator_gps_visualizer = et_root.attrib['creator'].startswith('GPS Visualizer')
     is_creator_version_1_1 = et_root.attrib['creator'].endswith('1.1')
-    xmlns = '{http://www.topografix.com/GPX/1/0}'
+    if is_creator_gps_visualizer:
+        xmlns = '{http://www.topografix.com/GPX/1/1}'
+    else:
+        xmlns = '{http://www.topografix.com/GPX/1/0}'
 
     for et_trkpt in et_root.iter(xmlns + 'trkpt'):
         point = {}
@@ -96,20 +100,24 @@ def _parse_gpx_file(gpx_filename):
         point['lon'] = et_trkpt.attrib['lon']
         point['ele'] = float(et_trkpt.find(xmlns + 'ele').text)
         point['time'] = et_trkpt.find(xmlns + 'time').text
-        point['speed'] = float(et_trkpt.find(xmlns + 'speed').text)
-        if is_creator_version_1_1:
-            point['speed'] = point['speed'] * 3.6
+        if is_creator_gps_visualizer:
+            point['speed'] = 0
+        else:
+            point['speed'] = float(et_trkpt.find(xmlns + 'speed').text)
+            if is_creator_version_1_1:
+                point['speed'] = point['speed'] * 3.6
         if len(points) > 0:
-            _fill_gap(points, point)
+            _fill_gap(points, point, not is_creator_gps_visualizer)
         points.append(point)
 
     return points
 
 
-def _fill_gap(points, point):
+def _fill_gap(points, point, print_gaps):
     gap_in_seconds = _get_duration_seconds(points[-1], point)
     if gap_in_seconds > 10:
-        print 'gap of {} seconds before {}'.format(gap_in_seconds, point['time'])
+        if print_gaps:
+            print 'gap of {} seconds before {}'.format(gap_in_seconds, point['time'])
     if gap_in_seconds > 100:
         fill_point = points[-1]
         fill_point['speed'] = 0

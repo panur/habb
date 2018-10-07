@@ -1,4 +1,5 @@
 [
+{"gps_data": "2018/20181004.gpx",   "visited_data": "-",                  "distance": "??",  "max_speed": "??.?", "avg_speed": "??.?", "duration": "?:??:??", "color": "#006080", "name": "Riviera del Sol"},
 {"gps_data": "2018/20180829.gpx",   "visited_data": "2018/20180822.json", "distance": "148", "max_speed": "47.0", "avg_speed": "24.0", "duration": "6:09:20", "color": "#608000", "name": "Emäsalo"},
 {"gps_data": "2018/20180826.gpx",   "visited_data": "-",                  "distance": "93",  "max_speed": "43.5", "avg_speed": "24.1", "duration": "3:52:27", "color": "#806060", "name": "Kehä III"},
 {"gps_data": "2018/20180822.gpx",   "visited_data": "2018/20180816.json", "distance": "144", "max_speed": "41.3", "avg_speed": "21.7", "duration": "6:36:51", "color": "#800060", "name": "Porvoo"},

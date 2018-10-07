@@ -538,8 +538,8 @@ function Trips(master) {
     function getBounds(polylinePath) {
         var minLat = 180;
         var minLng = 180;
-        var maxLat = 0;
-        var maxLng = 0;
+        var maxLat = -180;
+        var maxLng = -180;
         for (var i = 0; i < polylinePath.getLength(); i++) {
             minLat = Math.min(minLat, polylinePath.getAt(i).lat());
             minLng = Math.min(minLng, polylinePath.getAt(i).lng());
