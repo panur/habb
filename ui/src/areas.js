@@ -26,6 +26,7 @@ function Areas(master) {
                 "2015": "visited_datas/2015.json",
                 "2016": "visited_datas/2016.json",
                 "2017": "visited_datas/2017.json",
+                "2018": "visited_datas/2018.json",
                 "latest": "visited_datas/latest.json"}};
         s.filenames.visitedData = s.filenames.visitedDatas["latest"];
 
@@ -67,7 +68,7 @@ function Areas(master) {
 
         if (s.isExtensionsShown) {
             s.filenames.points = "generated_points_ext.json";
-            s.latPages = 11;
+            s.latPages = 12;
             s.lngPages = 19;
             s.kkjStart = {lat: 60, lng: 10};
 
@@ -76,14 +77,14 @@ function Areas(master) {
                       {n: 5,  lngOffsetKm: 0,  latOffsetKm: 10, lengthP: 13},
                       {n: 5,  lngOffsetKm: 0,  latOffsetKm: 15, lengthP: 15},
                       {n: 5,  lngOffsetKm: 0,  latOffsetKm: 20, lengthP: 16},
-                      {n: 31, lngOffsetKm: 0,  latOffsetKm: 25, lengthP: 19}];
+                      {n: 36, lngOffsetKm: 0,  latOffsetKm: 25, lengthP: 19}];
 
-            s.lngs = [{n: 29, lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 11},
-                      {n: 4,  lngOffsetKm: 29, latOffsetKm: 5,  lengthP: 10},
-                      {n: 20, lngOffsetKm: 33, latOffsetKm: 10, lengthP: 9},
-                      {n: 8,  lngOffsetKm: 53, latOffsetKm: 15, lengthP: 8},
-                      {n: 4,  lngOffsetKm: 61, latOffsetKm: 20, lengthP: 7},
-                      {n: 12, lngOffsetKm: 65, latOffsetKm: 25, lengthP: 6}];
+            s.lngs = [{n: 29, lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 12},
+                      {n: 4,  lngOffsetKm: 29, latOffsetKm: 5,  lengthP: 11},
+                      {n: 20, lngOffsetKm: 33, latOffsetKm: 10, lengthP: 10},
+                      {n: 8,  lngOffsetKm: 53, latOffsetKm: 15, lengthP: 9},
+                      {n: 4,  lngOffsetKm: 61, latOffsetKm: 20, lengthP: 8},
+                      {n: 12, lngOffsetKm: 65, latOffsetKm: 25, lengthP: 7}];
 
             s.pages = [ '96',  '81',  '57',  '58',  '59',  '60',  '61',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
                         '97',  '82',  '49',   'a',   'A',   'B',   '1',   '2',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
@@ -95,7 +96,8 @@ function Areas(master) {
                        '103',  '88',  '55',   'g',   'N',   'O',   'P',   'Q',  '45',  '46',   'R',  '47',  '48',   'S',   'T',  '65',  '93', '125', '131',
                        '104',  '89',  '56',   'h',   'i',   'j',   'k',   'l',   'm',   'n',   'o',   'p',   'q',   'r',   's',  '66',  '94', '126', '132',
                        '105',  '90',  '67',  '68',  '69',  '70',  '71',  '72',  '73',  '74',  '75',  '76',  '77',  '78',  '79',  '80',  '95', '127', '133',
-                       '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '128', '134'];
+                       '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '128', '134',
+                       '135', '136', '137', '138', '139', '140', '141', '142', '143', '144', '145', '146', '147', '148', '149', '150', '151', '152', '153'];
         }
 
         return s;

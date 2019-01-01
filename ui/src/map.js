@@ -12,7 +12,7 @@ function GMap(master) {
         s.initialStatistics = document.getElementById("statistics").innerHTML;
 
         s.initialZL = 9;
-        s.initialLatLng = new google.maps.LatLng(60.300442, 24.864896);
+        s.initialLatLng = new google.maps.LatLng(60.318390, 24.865370);
         s.zoomToPointZoomLevel = 14;
 
         return s;

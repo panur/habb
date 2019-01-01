@@ -8,7 +8,7 @@ my $lng_start = 2510000;
 
 my $lat_lng_mult = 1000;
 
-my $lats = 56;
+my $lats = 61;
 my $lngs = 77;
 
 my $kkj_lat = 0;
