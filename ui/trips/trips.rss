@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 07 Oct 2018 12:13:50 -0000</lastBuildDate>
+<lastBuildDate>Thu, 30 May 2019 15:43:47 -0000</lastBuildDate>
+<item>
+  <title>Mäntsälä</title>
+  <description>2019-05-30, 106 km</description>
+  <link>https://14142.net/habb/map.html?t=20190530</link>
+  <guid>https://14142.net/habb/map.html?t=20190530</guid>
+  <pubDate>Thu, 30 May 2019 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Riviera del Sol</title>
   <description>2018-10-04, ?? km</description>

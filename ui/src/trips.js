@@ -645,7 +645,7 @@ function TripDataStore(master) {
         s["filenames"] = {
             "index": "trips/index.json",
             "tripsDatas": [
-                "trips/tripsData2018.json",
+                "trips/tripsData2019.json", "trips/tripsData2018.json",
                 "trips/tripsData2017.json", "trips/tripsData2016.json", "trips/tripsData2015.json",
                 "trips/tripsData2014.json", "trips/tripsData2013.json", "trips/tripsData2012.json",
                 "trips/tripsData2011.json", "trips/tripsData2010.json", "trips/tripsData2009.json"
