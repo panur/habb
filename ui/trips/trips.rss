@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 30 May 2019 15:43:47 -0000</lastBuildDate>
+<lastBuildDate>Thu, 13 Jun 2019 14:58:27 -0000</lastBuildDate>
+<item>
+  <title>Onkimaa</title>
+  <description>2019-06-13, 136 km</description>
+  <link>https://14142.net/habb/map.html?t=20190613</link>
+  <guid>https://14142.net/habb/map.html?t=20190613</guid>
+  <pubDate>Thu, 13 Jun 2019 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Mäntsälä</title>
   <description>2019-05-30, 106 km</description>

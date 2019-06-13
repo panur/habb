@@ -1,4 +1,5 @@
 [
+{"gps_data": "2019/20190613.gpx",   "visited_data": "2019/20190530.json", "distance": "136", "max_speed": "42.9", "avg_speed": "21.7", "duration": "6:14:26", "color": "#206080", "name": "Onkimaa"},
 {"gps_data": "2019/20190530.gpx",   "visited_data": "2019/20190101.json", "distance": "106", "max_speed": "44.2", "avg_speed": "21.0", "duration": "5:02:02", "color": "#608020", "name": "Mäntsälä"},
 {"gps_data": "2018/20181004.gpx",   "visited_data": "-",                  "distance": "??",  "max_speed": "??.?", "avg_speed": "??.?", "duration": "?:??:??", "color": "#006080", "name": "Riviera del Sol"},
 {"gps_data": "2018/20180829.gpx",   "visited_data": "2018/20180822.json", "distance": "148", "max_speed": "47.0", "avg_speed": "24.0", "duration": "6:09:20", "color": "#608000", "name": "Emäsalo"},
