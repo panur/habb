@@ -1,4 +1,5 @@
 [
+{"gps_data": "2019/20190713.gpx",   "visited_data": "2019/20190630.json", "distance": "130", "max_speed": "43.5", "avg_speed": "21.8", "duration": "5:55:39", "color": "#806020", "name": "Karkkila"},
 {"gps_data": "2019/20190630.gpx",   "visited_data": "2019/20190613.json", "distance": "123", "max_speed": "51.4", "avg_speed": "22.8", "duration": "5:23:36", "color": "#406020", "name": "Jokela"},
 {"gps_data": "2019/20190613.gpx",   "visited_data": "2019/20190530.json", "distance": "136", "max_speed": "42.9", "avg_speed": "21.7", "duration": "6:14:26", "color": "#206080", "name": "Onkimaa"},
 {"gps_data": "2019/20190530.gpx",   "visited_data": "2019/20190101.json", "distance": "106", "max_speed": "44.2", "avg_speed": "21.0", "duration": "5:02:02", "color": "#608020", "name": "Mäntsälä"},
