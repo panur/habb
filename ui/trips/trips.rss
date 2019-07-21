@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 13 Jul 2019 13:45:36 -0000</lastBuildDate>
+<lastBuildDate>Sun, 21 Jul 2019 11:04:22 -0000</lastBuildDate>
+<item>
+  <title>Kehä III</title>
+  <description>2019-07-21, 93 km</description>
+  <link>https://14142.net/habb/map.html?t=20190721</link>
+  <guid>https://14142.net/habb/map.html?t=20190721</guid>
+  <pubDate>Sun, 21 Jul 2019 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Karkkila</title>
   <description>2019-07-13, 130 km</description>
