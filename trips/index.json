@@ -1,4 +1,6 @@
 [
+{"gps_data": "2019/20190915.gpx",   "visited_data": "-",                  "distance": "107", "max_speed": "??.?", "avg_speed": "22.0", "duration": "4:50:30", "color": "#806000", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2019/20190914.gpx",   "visited_data": "-",                  "distance": "106", "max_speed": "41.3", "avg_speed": "22.5", "duration": "4:41:10", "color": "#606060", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2019/20190901.gpx",   "visited_data": "2019/20190825.json", "distance": "??",  "max_speed": "??.?", "avg_speed": "??.?", "duration": "?:??:??", "color": "#208060", "name": "Kurkisuo"},
 {"gps_data": "2019/20190825.gpx",   "visited_data": "2019/20190713.json", "distance": "133", "max_speed": "45.1", "avg_speed": "19.7", "duration": "6:42:35", "color": "#804060", "name": "Vaskijärvi"},
 {"gps_data": "2019/20190721.gpx",   "visited_data": "-",                  "distance": "93",  "max_speed": "41.8", "avg_speed": "24.1", "duration": "3:52:20", "color": "#606020", "name": "Kehä III"},

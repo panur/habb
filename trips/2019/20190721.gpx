@@ -4,31 +4,6 @@
 <name>20190721</name>
 <desc>Color:004000ff</desc>
 <trkseg>
-<trkpt lat="60.168915" lon="24.758070">
-<ele>-7.350000</ele>
-<time>2019-07-21T03:21:58Z</time>
-<speed>3.31</speed>
-</trkpt>
-<trkpt lat="60.168919" lon="24.757780">
-<ele>-8.809999</ele>
-<time>2019-07-21T03:22:02Z</time>
-<speed>3.70</speed>
-</trkpt>
-<trkpt lat="60.168934" lon="24.757519">
-<ele>-4.860000</ele>
-<time>2019-07-21T03:22:06Z</time>
-<speed>3.61</speed>
-</trkpt>
-<trkpt lat="60.168983" lon="24.757189">
-<ele>4.620000</ele>
-<time>2019-07-21T03:22:10Z</time>
-<speed>4.91</speed>
-</trkpt>
-<trkpt lat="60.168995" lon="24.756842">
-<ele>4.470000</ele>
-<time>2019-07-21T03:22:14Z</time>
-<speed>4.40</speed>
-</trkpt>
 <trkpt lat="60.168987" lon="24.756498">
 <ele>2.090000</ele>
 <time>2019-07-21T03:22:18Z</time>
@@ -17918,26 +17893,6 @@
 <ele>-1.750000</ele>
 <time>2019-07-21T07:21:39Z</time>
 <speed>5.72</speed>
-</trkpt>
-<trkpt lat="60.169235" lon="24.757139">
-<ele>-2.160000</ele>
-<time>2019-07-21T07:21:43Z</time>
-<speed>4.84</speed>
-</trkpt>
-<trkpt lat="60.169270" lon="24.757463">
-<ele>-0.940000</ele>
-<time>2019-07-21T07:21:47Z</time>
-<speed>3.78</speed>
-</trkpt>
-<trkpt lat="60.169304" lon="24.757751">
-<ele>0.890000</ele>
-<time>2019-07-21T07:21:51Z</time>
-<speed>3.44</speed>
-</trkpt>
-<trkpt lat="60.169296" lon="24.758036">
-<ele>1.860000</ele>
-<time>2019-07-21T07:21:55Z</time>
-<speed>2.51</speed>
 </trkpt>
 </trkseg>
 </trk>
