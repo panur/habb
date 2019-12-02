@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 """Convert GPX files into JSON files.
 
@@ -81,7 +81,7 @@ def _write_to_json_file(output_filename, data):
     if not os.path.isdir(parent_dir):
         os.makedirs(parent_dir)
     with open(output_filename, 'w') as output_file:
-        output_file.write(json.dumps(data, separators=(',', ':')))
+        output_file.write(json.dumps(data, separators=(',', ':'), sort_keys=True))
 
 
 def _parse_gpx_file(gpx_filename):
@@ -117,11 +117,11 @@ def _fill_gap(points, point, print_gaps):
     gap_in_seconds = _get_duration_seconds(points[-1], point)
     if gap_in_seconds > 10:
         if print_gaps:
-            print 'gap of {} seconds before {}'.format(gap_in_seconds, point['time'])
+            print('gap of {} seconds before {}'.format(gap_in_seconds, point['time']))
     if gap_in_seconds > 100:
         fill_point = points[-1]
         fill_point['speed'] = 0
-        for _ in range(gap_in_seconds / 4):
+        for _ in range(gap_in_seconds // 4):
             points.append(fill_point)
 
 
@@ -192,7 +192,7 @@ def _integer_list_to_string(integer_list):
     max_value = max_chr - min_chr
     output_string = ''
     for integer in integer_list:
-        num_mult_chr = max(0, integer - 1) / max_value
+        num_mult_chr = max(0, integer - 1) // max_value
         last_output_chr = chr(min_chr + (integer - (num_mult_chr * max_value)))
         output_string += (chr(mult_chr) * num_mult_chr) + last_output_chr
     return output_string
@@ -218,10 +218,10 @@ def _get_gps_distance(gpx_points):
     for i in range(len(gpx_points) - 1):
         distance = _get_distance(gpx_points[i], gpx_points[i + 1])
         if distance > 1000:
-            print 'gap of {} meters before {}'.format(int(distance), gpx_points[i + 1]['time'])
+            print('gap of {} meters before {}'.format(int(distance), gpx_points[i + 1]['time']))
         else:
             total_distance += distance
-    return int(round((total_distance / 1000)))
+    return _round(total_distance / 1000)
 
 
 def _get_distance(point1, point2):
@@ -248,13 +248,13 @@ def _get_radians(lat_or_lng):
 
 def _get_max_speed(gpx_points):
     max_speed = _get_max_gpx_point(gpx_points, 'speed')
-    max_speed['value'] = str(round(max_speed['value'] * 10) / 10)
+    max_speed['value'] = str(_round(max_speed['value'] * 10) / 10)
     return max_speed
 
 
 def _get_max_altitude(gpx_points):
     max_altitude = _get_max_gpx_point(gpx_points, 'ele')
-    max_altitude['value'] = int(round(max_altitude['value']))
+    max_altitude['value'] = _round(max_altitude['value'])
     return max_altitude
 
 
@@ -280,7 +280,7 @@ def _get_encoded_gps_data(gpx_points, element, scale):
 
     if len(gpx_points) <= max_length:
         for i in range(len(gpx_points)):
-            gps_data.append(int(round(tmp_array[i])))
+            gps_data.append(_round(tmp_array[i]))
     else:
         _downsample_array(tmp_array, gps_data, max_length)
 
@@ -312,7 +312,10 @@ def _downsample_array(original_array, new_array, new_size):
 
 
 def _round(number):
-    return int(round(number))
+    if number > 0:
+        return int(math.floor((number + 0.5)))
+    else:
+        return int(math.ceil((number - 0.5)))
 
 
 def _log_stats(trip, output_trip, gpx_points, encoded_polyline):

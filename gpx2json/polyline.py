@@ -133,7 +133,7 @@ def _encode_signed_number(num):
 
 def get_point_index(points, point, previous_index):
     """Find index of the point in points that is closest to point after previous_index."""
-    min_dist = {'i': None, 'v': sys.maxint}
+    min_dist = {'i': None, 'v': sys.maxsize}
     for i in range(previous_index, len(points)):
         dist = _dist(points[i], point)
         if dist < min_dist['v']:
