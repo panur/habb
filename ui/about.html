@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Helsinki Area By Bike - About</title>
   <link rel="stylesheet" href="../basic.css"/>
@@ -13,13 +13,13 @@
 
 <h1>Helsinki Area By Bike - About</h1>
 
-<p>Last updated 2020-01-01.</p>
+<p>Last updated 2020-03-04.</p>
 
 <h2 id="areas">Areas</h2>
 
 <p>
 The visited areas are based on a map called "Kartat ja Kadunnimet
-Pääkaupunkiseutu" (ISBN: 951-98617-1-8, printed in 2001):
+PÃ¤Ã¤kaupunkiseutu" (ISBN: 951-98617-1-8, printed in 2001):
 </p>
 
 <ul>
@@ -34,7 +34,7 @@ Pääkaupunkiseutu" (ISBN: 951-98617-1-8, printed in 2001):
     <li>Most parts of Espoo</li>
     <li>Vantaa</li>
     <li>Kauniainen</li>
-    <li>Small parts of Kirkkonummi, Vihti, Nurmijärvi, Tuusula, Kerava and Sipoo</li>
+    <li>Small parts of Kirkkonummi, Vihti, NurmijÃ¤rvi, Tuusula, Kerava and Sipoo</li>
     </ul></li>
 </ul>
 
@@ -46,7 +46,7 @@ The map was extended by:
 
 <ul>
   <li>20 pages (A-T) in 2009 to cover also all of Helsinki and Espoo</li>
-  <li>7 pages (a-g) in 2010 to cover all of <a href="http://ulkoilukartta.fi/">Ulkoilukartta</a></li>
+  <li>7 pages (a-g) in 2010</li>
   <li>12 pages (h-s) in 2011</li>
   <li>8 pages (49-56) in 2012</li>
   <li>10 pages (57-66) in 2013</li>
@@ -78,17 +78,17 @@ then). No map is used during the trips.
 <h2 id="maps">Other Maps</h2>
 
 <ul>
-  <li><a href="https://asiointi.maanmittauslaitos.fi/karttapaikka/?lang=en">Karttapaikka - Maanmittauslaitos</a>
+  <li><a href="https://asiointi.maanmittauslaitos.fi/karttapaikka/">Karttapaikka - Maanmittauslaitos</a>
     <ul>
     <li>Map with a splash screen.</li>
     </ul></li>
-  <li><a href="http://www.paikkatietoikkuna.fi/web/en/map-window">Map window - Paikkatietoikkuna</a>
+  <li><a href="https://kartta.paikkatietoikkuna.fi/">Paikkatietoikkuna</a>
     <ul>
-    <li>Recommended map layer: "Road pavement" (Tien päällyste).</li>
+    <li>Recommended map layer: "Road pavement" (Tien pÃ¤Ã¤llyste).</li>
     </ul></li>
   <li><a href="http://kartta.hel.fi/">Helsingin karttapalvelu</a>
     <ul>
-    <li>By Sito.</li>
+    <li>By Sitowise.</li>
     </ul></li>
   <li><a href="http://kartat.espoo.fi/">Espoon karttapalvelu</a>
     <ul>
@@ -96,17 +96,13 @@ then). No map is used during the trips.
     </ul></li>
   <li><a href="http://kartta.vantaa.fi/">Vantaan karttapalvelu</a>
     <ul>
-    <li>By Sito.</li>
+    <li>By Sitowise.</li>
     </ul></li>
   <li><a href="http://kartta.helsinginseutu.fi">Helsingin seudun opaskartta</a>
     <ul>
     <li>By City of Helsinki.</li>
     </ul></li>
-  <li><a href="http://ulkoilukartta.fi/">Pääkaupunkiseudun ulkoilukartta</a>
-    <ul>
-    <li>By City of Helsinki.</li>
-    </ul></li>
-  <li><a href="http://www.retkikartta.fi/">Retkikartta.fi - Metsähallitus</a>
+  <li><a href="http://www.retkikartta.fi/">Retkikartta.fi - MetsÃ¤hallitus</a>
     <ul>
     <li>By CGI.</li>
     </ul></li>
@@ -139,8 +135,9 @@ language.
 <h3 id="ui">User Interface</h3>
 
 <p>
-The browser based user interface displays <a href="#areas">areas</a> and <a href="#trips">trips</a>
-on a map using <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps
+The browser based <a href="firefox.png">user interface</a> displays <a href="#areas">areas</a> and
+<a href="#trips">trips</a> on a map using <a href="https://leafletjs.com/">Leaflet</a> JavaScript
+library or <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps
 JavaScript API</a>. The JSON files created by gpx2json are downloaded as compressed files if the
 browser supports <a href="https://en.wikipedia.org/wiki/HTTP_compression">HTTP compression</a>. In
 that case the size of the downloaded files is about 2 megabytes. The user interface is implemented
@@ -148,15 +145,6 @@ in <a href="http://javascript.crockford.com/">JavaScript</a> programming languag
 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a> and
 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">CSS</a> technologies.
 </p>
-
-<h2 id="browsers">Browser Compatibility</h2>
-
-<ul>
-  <li>Mozilla Firefox version 57.0.3: <a href="firefox.png">OK</a></li>
-  <li>Opera version 49.0.2725.64: OK</li>
-  <li>Microsoft Internet Explorer version 11.125.16299.0: OK</li>
-  <li>Google Chrome version 63.0.3239.108: OK</li>
-</ul>
 
 <p>back to the <a href="map.html">map</a></p>
 

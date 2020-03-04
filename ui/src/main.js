@@ -4,17 +4,9 @@
 
 function main() {
     var master = {};
-    var gmElement = document.getElementById("map_canvas");
-    var gmOptions = {
-        "tilt": 0,
-        "styles": [{
-            "featureType": "road.arterial",
-            "elementType": "geometry.fill",
-            "stylers": [{"color": "#FBF8A5"}]
-        }]
-    };
 
-    master.gm = new google.maps.Map(gmElement, gmOptions);
+    master.mapApi = new MapApi();
+    master.mapApi.init('map_canvas');
 
     master.utils = new Utils();
     master.tripGraph = new TripGraph(master);

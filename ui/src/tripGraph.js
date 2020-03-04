@@ -104,9 +104,8 @@ function TripGraph(master) {
                 processTripGraphEvent(event);
             }
             master.map.zoomToPoint(position);
-            var heading =
-                master.utils.getHeading(position, state.tripData.polyline, master.gm.getZoom());
-            master.map.updateStreetView(position, heading);
+            var heading = state.tripData.polyline.getHeading(position, master.mapApi.getZoom());
+            master.mapApi.updateStreetView(position, heading);
         };
 
         tripGraph.ondblclick = function (event) {
@@ -118,30 +117,34 @@ function TripGraph(master) {
         var tripData = state.tripData;
         var vertexTime = state.lastRatio * tripData.gpsDurationSeconds;
         var vertexIndex = getTripGraphVertexIndex(vertexTime, tripData);
-        var point = tripData.polyline.getPath().getAt(vertexIndex);
-        var heading = master.utils.getHeading(point, tripData.polyline, master.gm.getZoom());
-        var marker = master.utils.createDirectionMarker(point, heading);
+        var point = tripData.polyline.getLatLng(vertexIndex);
+        var heading = tripData.polyline.getHeading(point, master.mapApi.getZoom());
+        var markerOptions = {
+            visible: true,
+            heading: heading
+        };
+        var marker = master.mapApi.newMarker(point, markerOptions);
 
         if (state.tripCursor.length > state.maxTripCursorLength) {
-            state.tripCursor.pop().setMap(null);
+            master.mapApi.addOrRemoveOverlays(state.tripCursor.pop(), 'remove');
         }
 
         state.tripCursor.unshift(marker);
 
-        marker.setMap(master.gm);
+        master.mapApi.addOrRemoveOverlays(marker, 'add');
 
         if (state.player.state === "play") {
-            master.map.updateStreetView(marker.getPosition(), heading);
+            master.mapApi.updateStreetView(marker.getPosition(), heading);
 
-            if (master.gm.getBounds().contains(marker.getPosition()) === false) {
-                master.gm.panTo(marker.getPosition());
+            if (master.mapApi.contains(marker.getPosition()) === false) {
+                master.mapApi.panTo(marker.getPosition());
             }
         }
     }
 
     function removeTripCursor() {
         while (state.tripCursor.length > 0) {
-            state.tripCursor.pop().setMap(null);
+            master.mapApi.addOrRemoveOverlays(state.tripCursor.pop(), 'remove');
         }
     }
 
@@ -167,7 +170,7 @@ function TripGraph(master) {
         var time = master.utils.getTimeString(ratio * tripData.gpsDurationSeconds);
         var yScale = 1 / state.yUnitToPixelRatio;
         var xScale = Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
-        var latLng = state.tripCursor[0].getPosition().toUrlValue(4).replace(",", " / ");
+        var latLng = state.tripCursor[0].getPosition().toStr(4);
 
         var statusHtml = type + "=" + value + " " + unit + ", time=" + time +
             " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
@@ -273,7 +276,7 @@ function TripGraph(master) {
             }
         } else {
             if (state.tripCursor.length > 1) {
-                state.tripCursor.pop().setMap(null);
+                master.mapApi.addOrRemoveOverlays(state.tripCursor.pop(), 'remove');
             }
         }
     }

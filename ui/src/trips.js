@@ -41,7 +41,7 @@ function Trips(master) {
 
         initDragAndDrop();
 
-        google.maps.event.addListener(master.gm, "mapInitIsReady", function () {
+        master.mapApi.addListener("mapInitIsReady", function () {
             state.isMapInitReady = true;
             showUrlParamsTrips();
         });
@@ -86,21 +86,18 @@ function Trips(master) {
             for (var i = 0; i < points.length; i++) {
                 var lat = points[i].getAttribute("lat");
                 var lng = points[i].getAttribute("lon");
-                tripPath.push(new google.maps.LatLng(lat, lng));
+                tripPath.push(master.mapApi.newLatLng(lat, lng));
             }
 
-            var tripLength = google.maps.geometry.spherical.computeLength(tripPath);
-            console.info("trip length (m): " + Math.round(tripLength));
-
-            var tripPolyline = new google.maps.Polyline({
-                path: tripPath,
-                strokeColor: "#000000",
-                strokeOpacity: 0.9,
-                strokeWeight: 3
-            });
-
+            var polylineOptions = {
+                color: "#000000",
+                opacity: 0.9,
+                weight: 3
+            };
+            var tripPolyline = master.mapApi.newPolyline(tripPath, polylineOptions);
+            console.info("trip length (m): " + Math.round(tripPolyline.computeLength()));
             master.areas.setVisitedAreaOpacityToLow();
-            tripPolyline.setMap(master.gm);
+            master.mapApi.addOrRemoveOverlays(tripPolyline, 'add');
         }
     }
 
@@ -123,8 +120,8 @@ function Trips(master) {
     function showOneUrlParamsTrip(tripsToShow) {
         if (tripsToShow.length > 0) {
             var readyEventName = "singleTripLoaded";
-            google.maps.event.addListener(master.gm, readyEventName, function () {
-                google.maps.event.clearListeners(master.gm, readyEventName);
+            master.mapApi.addListener(readyEventName, function () {
+                master.mapApi.removeListeners(readyEventName);
                 toggleTripVisibility(tripsToShow[tripsToShow.length - 1], tripsToShow.length === 1);
                 tripsToShow.pop();
                 showOneUrlParamsTrip(tripsToShow);
@@ -135,21 +132,21 @@ function Trips(master) {
 
     function setVisibilityOfAllTrips(visibility) {
         var readyEventName = "allTripsLoaded";
-        google.maps.event.addListener(master.gm, readyEventName, function () {
-            google.maps.event.clearListeners(master.gm, readyEventName);
+        master.mapApi.addListener(readyEventName, function () {
+            master.mapApi.removeListeners(readyEventName);
             setVisibilityOfTripsByYear(visibility, "all");
         });
         if (visibility === "visible") {
             state.dataStore.loadAllTripFiles(readyEventName);
         } else {
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         }
     }
 
     function setVisibilityOfTripsByYear(visibility, year) {
         var readyEventName = "yearTripsLoaded";
-        google.maps.event.addListener(master.gm, readyEventName, function () {
-            google.maps.event.clearListeners(master.gm, readyEventName);
+        master.mapApi.addListener(readyEventName, function () {
+            master.mapApi.removeListeners(readyEventName);
             for (var i = state.dataStore.getNumberOfTrips() - 1; i >= 0; i--) {
                 var tripData = state.dataStore.getTrip(i);
                 if (tripData.visibility !== visibility) {
@@ -164,7 +161,7 @@ function Trips(master) {
         if (visibility === "visible") {
             state.dataStore.loadYearTripFiles(year, readyEventName);
         } else {
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         }
     }
 
@@ -176,6 +173,8 @@ function Trips(master) {
             var tripData = state.dataStore.getTrip(i);
             if (tripData.gpsMaxSpeed.marker) {
                 tripData.gpsMaxSpeed.marker.setVisible(isVisible);
+            }
+            if (tripData.gpsMaxAltitude.marker) {
                 tripData.gpsMaxAltitude.marker.setVisible(isVisible);
             }
         }
@@ -213,8 +212,8 @@ function Trips(master) {
             }
         } else {
             var readyEventName = "indexLoaded";
-            google.maps.event.addListener(master.gm, readyEventName, function () {
-                google.maps.event.clearListeners(master.gm, readyEventName);
+            master.mapApi.addListener(readyEventName, function () {
+                master.mapApi.removeListeners(readyEventName);
                 that.showControl();
                 showUrlParamsTrips();
             });
@@ -398,8 +397,8 @@ function Trips(master) {
         var text = (tripData.visibility === "hidden") ? "Show" : "Hide";
         var handler = function () {
             var readyEventName = "singleTripLoaded";
-            google.maps.event.addListener(master.gm, readyEventName, function () {
-                google.maps.event.clearListeners(master.gm, readyEventName);
+            master.mapApi.addListener(readyEventName, function () {
+                master.mapApi.removeListeners(readyEventName);
                 toggleTripVisibility(tripIndex, true);
                 that.showControl();
             });
@@ -439,16 +438,14 @@ function Trips(master) {
     }
 
     function createPolyline(tripData) {
-        var path = google.maps.geometry.encoding.decodePath(tripData.encodedPolyline);
-
-        return new google.maps.Polyline({
-            path: path,
-            strokeColor: tripData.color,
-            strokeWeight: 3,
-            strokeOpacity: 0.9,
+        var polylineOptions = {
+            color: tripData.color,
+            weight: 3,
+            opacity: 0.9,
             clickable: true,
             zIndex: 10
-        });
+        };
+        return master.mapApi.newPolylineFromEncoded(tripData.encodedPolyline, polylineOptions);
     }
 
     function toggleTripVisibility(tripIndex, zoomToBounds) {
@@ -457,9 +454,10 @@ function Trips(master) {
         if (typeof(tripData.polyline) === "undefined") {
             tripData.polyline = createPolyline(tripData);
 
-            google.maps.event.addListener(tripData.polyline, "click", function (mouseEvent) {
+            tripData.polyline.addListener("click", function (mouseEvent) {
                 if (master.tripGraph.isCurrentData(tripData)) {
-                    addDirectionMarker(mouseEvent.latLng, tripData.polyline);
+                    addDirectionMarker(master.mapApi.getMouseEventLatLng(mouseEvent),
+                                       tripData.polyline);
                 }
                 master.tripGraph.show(tripData);
                 state.selectedTripIndex = tripIndex;
@@ -478,12 +476,12 @@ function Trips(master) {
             tripData.visibility = "visible";
             state.numberOfVisibleTrips += 1;
             master.areas.setVisitedAreaOpacityToLow();
-            tripData.polyline.setMap(master.gm);
+            master.mapApi.addOrRemoveOverlays(tripData.polyline, 'add');
             if (zoomToBounds) {
-                master.gm.fitBounds(getBounds(tripData.polyline.getPath()));
+                master.mapApi.fitBounds(tripData.polyline.getBounds());
             }
-            tripData.gpsMaxSpeed.marker.setMap(master.gm);
-            tripData.gpsMaxAltitude.marker.setMap(master.gm);
+            master.mapApi.addOrRemoveOverlays(tripData.gpsMaxSpeed.marker, 'add');
+            master.mapApi.addOrRemoveOverlays(tripData.gpsMaxAltitude.marker, 'add');
             master.tripGraph.show(tripData);
             state.selectedTripIndex = tripIndex;
         } else {
@@ -492,9 +490,9 @@ function Trips(master) {
             if (state.numberOfVisibleTrips === 0) {
                 master.areas.setVisitedAreaOpacityToHigh();
             }
-            tripData.polyline.setMap(null);
-            tripData.gpsMaxSpeed.marker.setMap(null);
-            tripData.gpsMaxAltitude.marker.setMap(null);
+            master.mapApi.addOrRemoveOverlays(tripData.polyline, 'remove');
+            master.mapApi.addOrRemoveOverlays(tripData.gpsMaxSpeed.marker, 'remove');
+            master.mapApi.addOrRemoveOverlays(tripData.gpsMaxAltitude.marker, 'remove');
             removeDirectionMarkers();
             master.tripGraph.hide();
             state.selectedTripIndex = -1;
@@ -503,51 +501,44 @@ function Trips(master) {
 
     function addDirectionMarker(point, polyline) {
         /* modified from: http://econym.org.uk/gmap/arrows.htm */
-        var heading = master.utils.getHeading(point, polyline, master.gm.getZoom());
+        var heading = polyline.getHeading(point, master.mapApi.getZoom());
 
         if (heading !== -1) {
-            var marker = master.utils.createDirectionMarker(point, heading);
-            google.maps.event.addListener(marker, "click", function (event) {
-                marker.setMap(null);
+            var markerOptions = {
+                visible: true,
+                heading: heading
+            };
+            var marker = master.mapApi.newMarker(point, markerOptions);
+            marker.addListener("click", function (event) {
+                master.mapApi.addOrRemoveOverlays(marker, 'remove');
             });
-            marker.setMap(master.gm);
+            master.mapApi.addOrRemoveOverlays(marker, 'add');
             state.directionMarkers.push(marker);
         }
     }
 
     function removeDirectionMarkers() {
         for (var i = 0; i < state.directionMarkers.length; i++) {
-            state.directionMarkers[i].setMap(null);
+            master.mapApi.addOrRemoveOverlays(state.directionMarkers[i], 'remove');
         }
     }
 
     function getMaxMarker(polyline, point, isVisible, letter, title) {
-        var marker = new google.maps.Marker({
-            visible: isVisible, position: point, label: letter, title: title
-        });
-        google.maps.event.addListener(marker, "click", function (event) {
-            master.map.zoomToPoint(marker.getPosition());
-            var heading =
-                master.utils.getHeading(marker.getPosition(), polyline, master.gm.getZoom());
-            master.map.updateStreetView(marker.getPosition(), heading);
-        });
-
-        return marker;
-    }
-
-    function getBounds(polylinePath) {
-        var minLat = 180;
-        var minLng = 180;
-        var maxLat = -180;
-        var maxLng = -180;
-        for (var i = 0; i < polylinePath.getLength(); i++) {
-            minLat = Math.min(minLat, polylinePath.getAt(i).lat());
-            minLng = Math.min(minLng, polylinePath.getAt(i).lng());
-            maxLat = Math.max(maxLat, polylinePath.getAt(i).lat());
-            maxLng = Math.max(maxLng, polylinePath.getAt(i).lng());
+        var marker = undefined;
+        if ((point.lat() !== null) && (point.lng() !== null)) {
+            var markerOptions = {
+                visible: isVisible,
+                label: letter,
+                title: title
+            };
+            marker = master.mapApi.newMarker(point, markerOptions);
+            marker.addListener("click", function (event) {
+                master.map.zoomToPoint(marker.getPosition());
+                var heading = polyline.getHeading(marker.getPosition(), master.mapApi.getZoom());
+                master.mapApi.updateStreetView(marker.getPosition(), heading);
+            });
         }
-        return new google.maps.LatLngBounds({"lat": minLat, "lng": minLng},
-                                            {"lat": maxLat, "lng": maxLng});
+        return marker;
     }
 
     this.getMenuItems = function () {
@@ -664,17 +655,17 @@ function TripDataStore(master) {
         var file = state["filenames"]["index"];
         master.utils.downloadUrl(file, function (data, responseCode) {
             state["data"] = JSON.parse(data);
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         });
     };
 
     this.loadAllTripFiles = function (allReadyEventName) {
         if (state["filenames"]["tripsDatas"].length === state["fileIndex"]) {
-            google.maps.event.trigger(master.gm, allReadyEventName);
+            master.mapApi.triggerEvent(allReadyEventName);
         } else {
             var oneReadyEventName = "tripFileLoaded";
-            google.maps.event.addListener(master.gm, oneReadyEventName, function () {
-                google.maps.event.clearListeners(master.gm, oneReadyEventName);
+            master.mapApi.addListener(oneReadyEventName, function () {
+                master.mapApi.removeListeners(oneReadyEventName);
                 that.loadAllTripFiles(allReadyEventName);
             });
             loadTripsFile(state["filenames"]["tripsDatas"][state["fileIndex"]++],
@@ -694,7 +685,7 @@ function TripDataStore(master) {
                 }
             }
 
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         });
     }
 
@@ -709,7 +700,7 @@ function TripDataStore(master) {
 
     this.loadYearTripFiles = function (year, readyEventName) {
         if ((year === "all") || isAllLoaded(year)) {
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         } else {
             var file = getYearFilename(year);
             loadTripsFile(file, readyEventName);
@@ -742,11 +733,11 @@ function TripDataStore(master) {
         tripData["gpsAltitudeData"] =
             decodeGpsAltitudeData(tripData["encodedGpsAltitudeData"]);
         tripData["gpsMaxSpeed"]["location"] =
-            new google.maps.LatLng(tripData["gpsMaxSpeed"]["lat"],
-                                   tripData["gpsMaxSpeed"]["lon"]);
+            master.mapApi.newLatLng(tripData["gpsMaxSpeed"]["lat"],
+                                    tripData["gpsMaxSpeed"]["lon"]);
         tripData["gpsMaxAltitude"]["location"] =
-            new google.maps.LatLng(tripData["gpsMaxAltitude"]["lat"],
-                                   tripData["gpsMaxAltitude"]["lon"]);
+            master.mapApi.newLatLng(tripData["gpsMaxAltitude"]["lat"],
+                                    tripData["gpsMaxAltitude"]["lon"]);
     }
 
     function decodeGpsAltitudeData(encodedString) {
@@ -763,7 +754,7 @@ function TripDataStore(master) {
 
     this.loadSingleTrip = function (tripIndex, readyEventName) {
         if (isTripLoaded(tripIndex)) {
-            google.maps.event.trigger(master.gm, readyEventName);
+            master.mapApi.triggerEvent(readyEventName);
         } else {
             var file = "trips/years/" + state["data"][tripIndex]["filename"] + ".json";
             master.utils.downloadUrl(file, function (data, responseCode) {
@@ -771,7 +762,7 @@ function TripDataStore(master) {
                 decodeGpsTripData(tripData);
                 state["data"][tripIndex] = tripData;
 
-                google.maps.event.trigger(master.gm, readyEventName);
+                master.mapApi.triggerEvent(readyEventName);
             });
         }
     };

@@ -12,34 +12,25 @@ function GMap(master) {
         s.initialStatistics = document.getElementById("statistics").innerHTML;
 
         s.initialZL = 9;
-        s.initialLatLng = new google.maps.LatLng(60.336098, 24.902051);
+        s.initialLatLng = master.mapApi.newLatLng(60.336098, 24.902051);
         s.zoomToPointZoomLevel = 14;
 
         return s;
     }
 
     this.init = function () {
-        master.gm.setOptions({center: state.initialLatLng, zoom: state.initialZL,
-                              fullscreenControl: false});
+        master.mapApi.setCenter(state.initialLatLng, state.initialZL);
         addMouseListeners();
-        initStreetView();
+        master.mapApi.initStreetView("street_view", resizeMapCanvas);
 
-        google.maps.event.addListener(master.gm, "areasInitIsReady", function () {
+        master.mapApi.addListener("areasInitIsReady", function () {
             updateStatusBar(getInfo(state.initialLatLng));
             setStatistics();
             window.onresize = function () {that.resizeMap()};
             that.resizeMap();
-            google.maps.event.trigger(master.gm, "mapInitIsReady");
+            master.mapApi.triggerEvent("mapInitIsReady");
         });
     };
-
-    function setCenter(latLng, zoom) {
-        /* http://code.google.com/p/gmaps-api-issues/issues/detail?id=2673 */
-        if (zoom !== master.gm.getZoom()) {
-            master.gm.setZoom(zoom);
-        }
-        master.gm.panTo(latLng);
-    }
 
     function setStatistics() {
         var s = master.areas.getVisitedStatistics();
@@ -57,15 +48,15 @@ function GMap(master) {
     }
 
     function addMouseListeners() {
-        google.maps.event.addListener(master.gm, "mousemove", function (mouseEvent) {
+        master.mapApi.addListener("mousemove", function (mouseEvent) {
             if (master.tripGraph.isPlayerStopped()) {
-                var info = getInfo(mouseEvent.latLng);
+                var info = getInfo(master.mapApi.getMouseEventLatLng(mouseEvent));
                 updateStatusBar(info);
                 master.areas.updateCursor(info);
             }
         });
 
-        google.maps.event.addListener(master.gm, "mouseout", function (mouseEvent) {
+        master.mapApi.addListener("mouseout", function (mouseEvent) {
             master.areas.hideCursor();
         });
     }
@@ -78,8 +69,8 @@ function GMap(master) {
         info.km2XY = areasInfo.km2XY;
         info.kkjText = areasInfo.kkjText;
         info.visited = areasInfo.visited;
-        info.zl = master.gm.getZoom();
-        info.latLng = point.toUrlValue().replace(",", " / ");
+        info.zl = master.mapApi.getZoom();
+        info.latLng = point.toStr();
 
         return info;
     }
@@ -96,20 +87,12 @@ function GMap(master) {
     };
 
     this.openOtherMap = function (otherMapType, point) {
-        var zl = master.gm.getZoom();
+        var zl = master.mapApi.getZoom();
         var url = "";
 
         if (otherMapType === "MML") {
             url = "https://14142.net/mml/?lat=" +
                 point.lat() + "&lng=" + point.lng() + "&z=" + zl;
-        } else if (otherMapType === "Helsingin seudun opaskartta") {
-            var areasInfo = master.areas.getInfo(point);
-            if (areasInfo.page === "-") {
-                url = "http://kartta.helsinginseutu.fi/";
-            } else {
-                url = "http://kartta.helsinginseutu.fi/transform?layers=B0T&srs=1&" +
-                    "lat=" + point.lat() + "&lon=" + point.lng() + "&zoom=3";
-            }
         } else if (otherMapType === "Google Maps") {
             url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
                 point.lat() + "," + point.lng() + "&z=" + zl;
@@ -128,67 +111,7 @@ function GMap(master) {
     };
 
     this.zoomToPoint = function (latLng) {
-        setCenter(latLng, state.zoomToPointZoomLevel);
-    };
-
-    function initStreetView() {
-        var div = document.getElementById("street_view");
-        var panoramaOptions = {
-            visible: false,
-            enableCloseButton: true,
-            addressControl: false,
-            imageDateControl: true
-        };
-        var panorama = new google.maps.StreetViewPanorama(div, panoramaOptions);
-
-        google.maps.event.addListener(panorama, "visible_changed", function () {
-            if (panorama.getVisible()) {
-                if (div.clientHeight === 0) {
-                    showStreetView(master.gm);
-                }
-            }
-        });
-
-        google.maps.event.addListener(panorama, "closeclick", function () {
-            hideStreetView(master.gm);
-        });
-
-        google.maps.event.addListener(panorama, "position_changed", function () {
-            setCenter(master.gm.getStreetView().getPosition(), master.gm.getZoom());
-        });
-
-        master.gm.setStreetView(panorama);
-    }
-
-    function showStreetView(gm) {
-        document.getElementById("street_view").style.height =
-            (document.getElementById("map_canvas").clientHeight * 0.75) + "px";
-        google.maps.event.trigger(gm.getStreetView(), "resize");
-        resizeMapCanvas(gm);
-        gm.setOptions({panControl: false,
-                       zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL}});
-        setCenter(gm.getStreetView().getPosition(), master.gm.getZoom());
-    }
-
-    function hideStreetView(gm) {
-        document.getElementById("street_view").style.height = "0px";
-        google.maps.event.trigger(gm.getStreetView(), "resize");
-        resizeMapCanvas(gm);
-        gm.setOptions({panControl: true,
-                       zoomControlOptions: {style: google.maps.ZoomControlStyle.DEFAULT}});
-    }
-
-    this.updateStreetView = function (position, heading) {
-        if (document.getElementById("street_view").clientHeight !== 0) {
-            var svs = new google.maps.StreetViewService();
-            svs.getPanorama({location: position, radius: 50}, function (data, status) {
-                if (status === google.maps.StreetViewStatus.OK) {
-                    var pov = {heading: heading, zoom: 1, pitch: 0};
-                    master.gm.getStreetView().setPov(pov);
-                    master.gm.getStreetView().setPosition(position);
-                }
-            });
-        }
+        master.mapApi.setCenter(latLng, state.zoomToPointZoomLevel);
     };
 
     this.resizeMap = function () {
@@ -209,7 +132,7 @@ function GMap(master) {
         resizeMapCanvas();
 
         if (oldStreetViewHeight !== 0) {
-            showStreetView(master.gm);
+            master.mapApi.showStreetView(resizeMapCanvas);
         }
     };
 
@@ -222,10 +145,10 @@ function GMap(master) {
             document.getElementById("status_bar").clientHeight -
             document.getElementById("statistics").clientHeight + "px";
 
-        google.maps.event.trigger(master.gm, "resize");
+        master.mapApi.resize();
     }
 
     this.resetLocationAndZoom = function () {
-        setCenter(state.initialLatLng, state.initialZL);
+        master.mapApi.setCenter(state.initialLatLng, state.initialZL);
     };
 }

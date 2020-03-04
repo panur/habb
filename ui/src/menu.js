@@ -18,14 +18,14 @@ function Menu(master) {
     this.init = function () {
         var downStartTime;
 
-        google.maps.event.clearListeners(master.gm, "mousedown");
-        google.maps.event.clearListeners(master.gm, "mouseup");
+        master.mapApi.removeListeners("mousedown");
+        master.mapApi.removeListeners("mouseup");
 
-        google.maps.event.addListener(master.gm, "mousedown", function () {
+        master.mapApi.addListener("mousedown", function () {
             downStartTime = Date.now();
         });
 
-        google.maps.event.addListener(master.gm, "mouseup", function (mouseEvent) {
+        master.mapApi.addListener("mouseup", function (mouseEvent) {
             if (document.getElementById("menu")) {
                 hideMenu();
             } else {
@@ -37,9 +37,11 @@ function Menu(master) {
                     return;
                 }
                 var menuItems = ["Open...", "Areas...", "Trips...", "Zoom", "Home"];
-                var rect = {"top": mouseEvent.pixel.y, "bottom": mouseEvent.pixel.y,
-                            "left": mouseEvent.pixel.x, "right": mouseEvent.pixel.x};
-                showMenu(mouseEvent.latLng, getMenuLocation(rect), menuItems, "menu");
+                var mouseEventPixel = master.mapApi.getMouseEventPixel(mouseEvent);
+                var rect = {"top": mouseEventPixel.y, "bottom": mouseEventPixel.y,
+                            "left": mouseEventPixel.x, "right": mouseEventPixel.x};
+                showMenu(master.mapApi.getMouseEventLatLng(mouseEvent), getMenuLocation(rect),
+                         menuItems, "menu");
             }
         });
     };
@@ -134,7 +136,7 @@ function Menu(master) {
                     var subMenuItems = [];
 
                     if (rowElement.textContent === "Open...") {
-                        subMenuItems = ["MML", "Helsingin seudun opaskartta",
+                        subMenuItems = ["MML",
                                         "Google Maps", "HERE Maps", "Bing Maps", "OpenStreetMap"];
                     } else if (rowElement.textContent === "Areas...") {
                         subMenuItems = master.areas.getMenuItems();

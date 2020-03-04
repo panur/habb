@@ -7,17 +7,13 @@
     <meta name="description" content="Helsinki By Bike this is not but Helsinki Area By Bike."/>
     <title>Helsinki Area By Bike - Map</title>
     <link rel="stylesheet" type="text/css" href="css/map.css"/>
-    <link rel="stylesheet" type="text/css" href="css/leaflet.css"/>
     <link rel="alternate" type="application/rss+xml" href="trips/trips.rss"/>
-    <script src="src/ext/vector3d.js" type="text/javascript"></script>
-    <script src="src/ext/latlon-vectors.js" type="text/javascript"></script>
-    <script src="src/ext/leaflet.js" type="text/javascript"></script>
-    <script src="src/ext/proj4.js" type="text/javascript"></script>
-    <script src="src/ext/proj4leaflet.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.37&amp;libraries=geometry&amp;language=en&amp;key=AIzaSyAlqNebllEic_K0O88Oju6yV4mXkveVIKo"
+      type="text/javascript"></script>
     <script src="src/main.js" type="text/javascript"></script>
     <script src="src/map.js" type="text/javascript"></script>
     <script src="src/map_api.js" type="text/javascript"></script>
-    <script src="src/map_leaflet.js" type="text/javascript"></script>
+    <script src="src/map_google.js" type="text/javascript"></script>
     <script src="src/menu.js" type="text/javascript"></script>
     <script src="src/areas.js" type="text/javascript"></script>
     <script src="src/trips.js" type="text/javascript"></script>
@@ -35,7 +31,7 @@
     <div id="statistics">
       <a rel="alternate" type="application/rss+xml" href="trips/trips.rss"
       title="RSS feed of trips"><img class="rss" alt="RSS feed of trips" src="rss.svg"/></a>,
-      <a class="real_link" title="Google Maps version" href="gmap.html">G</a>,
+      <a class="real_link" title="Leaflet version" href="map.html">L</a>,
       <a class="real_link" href="about.html">about</a>
     </div>
   </body>

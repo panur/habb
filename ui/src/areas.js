@@ -106,15 +106,15 @@ function Areas(master) {
     }
 
     this.init = function () {
-        google.maps.event.addListener(master.gm, "pointsAreInState", function () {
+        master.mapApi.addListener("pointsAreInState", function () {
             setKm2sToState();
         });
 
-        google.maps.event.addListener(master.gm, "km2sAreInState", function () {
+        master.mapApi.addListener("km2sAreInState", function () {
             updateMapGrid();
             state.visitedStatusAreas = getVisitedStatusAreas();
             addOverlaysToMap();
-            google.maps.event.trigger(master.gm, "areasInitIsReady");
+            master.mapApi.triggerEvent("areasInitIsReady");
         });
 
         setPointsToState();
@@ -140,11 +140,11 @@ function Areas(master) {
                 var x = p[i]["kkj_lng"] - state.kkjOffset.lng;
                 var lat = p[i]["lat"];
                 var lng = p[i]["lng"];
-                points[y][x] = new google.maps.LatLng(lat, lng);
+                points[y][x] = master.mapApi.newLatLng(lat, lng);
             }
 
             state.points = points;
-            google.maps.event.trigger(master.gm, "pointsAreInState");
+            master.mapApi.triggerEvent("pointsAreInState");
         });
     }
 
@@ -204,7 +204,7 @@ function Areas(master) {
                 }
             }
 
-            google.maps.event.trigger(master.gm, "km2sAreInState");
+            master.mapApi.triggerEvent("km2sAreInState");
         });
     }
 
@@ -223,10 +223,14 @@ function Areas(master) {
                 }
                 color = ((lines++ % state.latKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
-                var lat = new google.maps.Polyline({
-                    path: points, strokeColor: color, strokeWeight: state.grid.weight,
-                    strokeOpacity: state.grid.opacity, clickable: false, zIndex: 1
-                });
+                var polylineOptions = {
+                    color: color,
+                    weight: state.grid.weight,
+                    opacity: state.grid.opacity,
+                    clickable: false,
+                    zIndex: 1
+                };
+                var lat = master.mapApi.newPolyline(points, polylineOptions);
                 state.grid.latPolylines.push(lat);
             }
         }
@@ -241,10 +245,14 @@ function Areas(master) {
 
                 color = ((lines++ % state.lngKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
-                var lng = new google.maps.Polyline({
-                    path: points, strokeColor: color, strokeWeight: state.grid.weight,
-                    strokeOpacity: state.grid.opacity, clickable: false, zIndex: 1
-                });
+                var polylineOptions = {
+                    color: color,
+                    weight: state.grid.weight,
+                    opacity: state.grid.opacity,
+                    clickable: false,
+                    zIndex: 1
+                };
+                var lng = master.mapApi.newPolyline(points, polylineOptions);
                 state.grid.lngPolylines.push(lng);
             }
         }
@@ -272,8 +280,7 @@ function Areas(master) {
                 paths.push(polygonGroups[i][j]);
             }
 
-            var polygon = new google.maps.Polygon({
-                paths: paths,
+            var polygonOptions = {
                 strokeColor: state.area.colors[i],
                 strokeWeight: 1,
                 strokeOpacity: 0.5,
@@ -281,8 +288,8 @@ function Areas(master) {
                 fillOpacity: state.area.opacity,
                 clickable: false,
                 zIndex: 1
-            });
-
+            };
+            var polygon = master.mapApi.newPolygon(paths, polygonOptions);
             visitedStatusAreas.push(polygon);
         }
 
@@ -470,27 +477,27 @@ function Areas(master) {
     }
 
     function addOverlaysToMap() {
-        addOrRemoveOverlays(master.gm);
+        addOrRemoveOverlays('add');
     }
 
     function removeOverlaysFromMap() {
-        addOrRemoveOverlays(null);
+        addOrRemoveOverlays('remove');
     }
 
-    function addOrRemoveOverlays(gmOrNull) {
+    function addOrRemoveOverlays(addOrRemove) {
         for (var i = 0; i < state.visitedStatusAreas.length; i++) {
-            if (state.visitedStatusAreas[i].getPath()) {
-                state.visitedStatusAreas[i].setOptions({fillOpacity: state.area.opacity});
-                state.visitedStatusAreas[i].setMap(gmOrNull);
+            if (state.visitedStatusAreas[i].getPathLength()) {
+                state.visitedStatusAreas[i].setOpacity(state.area.opacity);
+                master.mapApi.addOrRemoveOverlays(state.visitedStatusAreas[i], addOrRemove);
             }
         }
 
         for (var i = 0; i < state.grid.latPolylines.length; i++) {
-            state.grid.latPolylines[i].setMap(gmOrNull);
+            master.mapApi.addOrRemoveOverlays(state.grid.latPolylines[i], addOrRemove);
         }
 
         for (var i = 0; i < state.grid.lngPolylines.length; i++) {
-            state.grid.lngPolylines[i].setMap(gmOrNull);
+            master.mapApi.addOrRemoveOverlays(state.grid.lngPolylines[i], addOrRemove);
         }
     }
 
@@ -500,8 +507,8 @@ function Areas(master) {
 
         for (var i = 0; i < state.grid.latPolylines.length; i++) {
             var line = state.grid.latPolylines[i];
-            var p1 = line.getPath().getAt(0);
-            var p2 = line.getPath().getAt(line.getPath().length - 1);
+            var p1 = line.getLatLng(0);
+            var p2 = line.getLatLng(line.getPathLength() - 1);
             var mp = 1 - ((point.lng() - p1.lng()) / (p2.lng() - p1.lng()));
             var lat = p2.lat() + ((p1.lat() - p2.lat()) * mp);
 
@@ -513,8 +520,8 @@ function Areas(master) {
 
         for (var i = 0; i < state.grid.lngPolylines.length; i++) {
             var line = state.grid.lngPolylines[i];
-            var p1 = line.getPath().getAt(0);
-            var p2 = line.getPath().getAt(line.getPath().length - 1);
+            var p1 = line.getLatLng(0);
+            var p2 = line.getLatLng(line.getPathLength() - 1);
             var mp = 1 - ((point.lat() - p2.lat()) / (p1.lat() - p2.lat()));
             var lng = p1.lng() + ((p2.lng() - p1.lng()) * mp);
 
@@ -610,29 +617,29 @@ function Areas(master) {
             if (state.cursorParams.kkj === info.kkjText) {
                 return;
             } else {
-                state.cursor.setMap(null);
+                master.mapApi.addOrRemoveOverlays(state.cursor, 'remove');
                 state.cursorParams.kkj = "-";
             }
         }
 
-        if ((info.km2XY) && (master.gm.getZoom() < state.cursorParams.maxZoomLevel)) {
+        if ((info.km2XY) && (master.mapApi.getZoom() < state.cursorParams.maxZoomLevel)) {
             var points = state.km2s[info.km2XY.y][info.km2XY.x].points;
-            state.cursor = new google.maps.Polyline({
-                path: points,
-                strokeColor: state.cursorParams.strokeColor,
-                strokeWeight: state.cursorParams.strokeWeight,
-                strokeOpacity: state.cursorParams.strokeOpacity,
+            var polylineOptions = {
+                color: state.cursorParams.strokeColor,
+                weight: state.cursorParams.strokeWeight,
+                opacity: state.cursorParams.strokeOpacity,
                 clickable: false,
                 zIndex: 1
-            });
-            state.cursor.setMap(master.gm);
+            };
+            state.cursor = master.mapApi.newPolyline(points, polylineOptions);
+            master.mapApi.addOrRemoveOverlays(state.cursor, 'add');
             state.cursorParams.kkj = info.kkjText;
         }
     };
 
     this.hideCursor = function () {
         if (state.cursor) {
-            state.cursor.setMap(null);
+            master.mapApi.addOrRemoveOverlays(state.cursor, 'remove');
         }
     };
 
@@ -755,16 +762,16 @@ function Areas(master) {
     };
 
     function startVisitedAreaEditor() {
-        var listener = google.maps.event.addListener(master.gm, "click", function (mouseEvent) {
-            var info = that.getInfo(mouseEvent.latLng);
+        function clickHandler(mouseEvent) {
+            var info = that.getInfo(master.mapApi.getMouseEventLatLng(mouseEvent));
             if (info["page"] !== "-") {
                 var newVisited = {"no": "yes", "yes": "np", "np": "no"}[info["visited"]];
                 state["km2s"][info["km2XY"]["y"]][info["km2XY"]["x"]]["visited"] = newVisited;
                 removeOverlaysFromMap();
-                google.maps.event.trigger(master.gm, "km2sAreInState");
+                master.mapApi.triggerEvent("km2sAreInState");
             }
-        });
-        state["visitedAreaEditorEventListener"] = listener;
+        }
+        state["visitedAreaEditorEventListener"] = master.mapApi.addListener("click", clickHandler);
         state["isVisitedAreaEditorActive"] = true;
     }
 
@@ -772,7 +779,7 @@ function Areas(master) {
         var visitedAreaDataWindow = window.open("", "visited area data");
         visitedAreaDataWindow.document.body.innerHTML = getVisitedAreaJsonData();
 
-        google.maps.event.removeListener(state["visitedAreaEditorEventListener"]);
+        master.mapApi.removeListener(state["visitedAreaEditorEventListener"]);
         state["visitedAreaEditorEventListener"] = null;
         state["isVisitedAreaEditorActive"] = false;
     }
@@ -830,7 +837,7 @@ function Areas(master) {
 
     this.isVisitedAreaEditorActive = function (mouseEvent) {
         if (state["isVisitedAreaEditorActive"]) {
-            var info = that.getInfo(mouseEvent.latLng);
+            var info = that.getInfo(master.mapApi.getMouseEventLatLng(mouseEvent));
             if (info["page"] !== "-") {
                 return true;
             }

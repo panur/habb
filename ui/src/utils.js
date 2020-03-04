@@ -101,61 +101,6 @@ function Utils() {
         return timeString.substr(11, 8); // HH:mm:ss
     };
 
-    this.getHeading = function (point, polyline, zoom) {
-        var tolerances = [0.0001, 391817 * Math.pow(0.445208, zoom)];
-
-        for (var t = 0; t < tolerances.length; t++) {
-            for (var i = 0; i < polyline.getPath().length - 1; i++) {
-                var p1 = polyline.getPath().getAt(i);
-                var p2 = polyline.getPath().getAt(i + 1);
-
-                if (isPointInLineSegment(point, p1, p2, tolerances[t]) === true) {
-                    return computeHeading(p1, p2);
-                }
-            }
-        }
-
-        return -1;
-
-        function isPointInLineSegment(point, p1, p2, tolerance) {
-            var distance =
-                Math.abs(getDistance(point, p1) + getDistance(point, p2) - getDistance(p1, p2));
-            return (distance < tolerance);
-
-            function getDistance(from, to) {
-                return google.maps.geometry.spherical.computeDistanceBetween(from, to);
-            }
-        }
-
-        function computeHeading(from, to) {
-            var heading = google.maps.geometry.spherical.computeHeading(from, to);
-
-            if (heading < 0) {
-                heading += 360;
-            }
-
-            heading = Math.round(heading / 3) * 3;
-
-            return heading;
-        }
-    };
-
-    this.createDirectionMarker = function (point, heading) {
-        var icon = {
-            fillColor: 'blue',
-            fillOpacity: 0.6,
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-            rotation: heading,
-            scale: 5,
-            strokeWeight: 0
-        };
-
-        return new google.maps.Marker({
-            position: point,
-            icon: icon
-        });
-    };
-
     this.createControlElement = function (title, text, handler) {
         var a = document.createElement("a");
 
