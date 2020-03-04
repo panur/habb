@@ -14,8 +14,8 @@ function main() {
     master.trips = new Trips(master);
     master.trips.init();
 
-    master.map = new GMap(master);
-    master.map.init();
+    master.uiMap = new UiMap(master);
+    master.uiMap.init();
 
     master.areas = new Areas(master);
     master.areas.init();

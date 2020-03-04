@@ -167,15 +167,15 @@ function Menu(master) {
             function processMenuClick(rowElement) {
                 if (state.selectedMenuItem === "Zoom") {
                     hideMenu();
-                    master.map.zoomToPoint(latLng);
+                    master.uiMap.zoomToPoint(latLng);
                 } else if (state.selectedMenuItem === "Home") {
                     hideMenu();
-                    master.map.resetLocationAndZoom();
+                    master.uiMap.resetLocationAndZoom();
                 } else if (state.selectedMenuItem !== "") {
                     hideMenu();
 
                     if (state.selectedParentMenuItem === "Open...") {
-                        master.map.openOtherMap(rowElement.textContent, latLng);
+                        master.uiMap.openOtherMap(rowElement.textContent, latLng);
                     } else if ((state.selectedParentMenuItem === "Areas...") ||
                                (state.selectedParentMenuItem === "Edit visited...") ||
                                (state.selectedParentMenuItem === "View...")) {

@@ -533,7 +533,7 @@ function Trips(master) {
             };
             marker = master.mapApi.newMarker(point, markerOptions);
             marker.addListener("click", function (event) {
-                master.map.zoomToPoint(marker.getPosition());
+                master.uiMap.zoomToPoint(marker.getPosition());
                 var heading = polyline.getHeading(marker.getPosition(), master.mapApi.getZoom());
                 master.mapApi.updateStreetView(marker.getPosition(), heading);
             });

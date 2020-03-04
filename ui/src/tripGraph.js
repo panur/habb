@@ -38,7 +38,7 @@ function TripGraph(master) {
             addMouseListeners(tripGraph);
             setTripGraphControl();
             drawTripGraph();
-            master.map.resizeDivs();
+            master.uiMap.resizeDivs();
             showHideElement();
         }
     };
@@ -103,13 +103,13 @@ function TripGraph(master) {
             if (state.player.state !== "stop") {
                 processTripGraphEvent(event);
             }
-            master.map.zoomToPoint(position);
+            master.uiMap.zoomToPoint(position);
             var heading = state.tripData.polyline.getHeading(position, master.mapApi.getZoom());
             master.mapApi.updateStreetView(position, heading);
         };
 
         tripGraph.ondblclick = function (event) {
-            master.map.resetLocationAndZoom();
+            master.uiMap.resetLocationAndZoom();
         };
     }
 
@@ -176,7 +176,7 @@ function TripGraph(master) {
             " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
             " s), Lat/Lng=" + latLng;
 
-        master.map.setStatusBarHtml(statusHtml);
+        master.uiMap.setStatusBarHtml(statusHtml);
     }
 
     function toggleTripGraphType() {
@@ -411,7 +411,7 @@ function TripGraph(master) {
             document.getElementById("trip_graph_control").innerHTML = "";
             document.getElementById("tripGraphHide").innerHTML = "";
 
-            master.map.resizeMap();
+            master.uiMap.resizeMap();
         }
     };
 
