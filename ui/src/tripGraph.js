@@ -9,16 +9,16 @@ function TripGraph(master) {
     function getState() {
         var s = {};
 
-        s.visibility = "hidden";
+        s.visibility = 'hidden';
         s.height = 100;
         s.origo = {x: 5, y: 95};
-        s.types = ["Speed", "Altitude"];
+        s.types = ['Speed', 'Altitude'];
         s.lastRatio = 0;
         s.tripCursor = [];
         s.maxTripCursorLength = 10;
         s.tickIntervalMs = 200;
-        s.player = {state: "stop", speed: 50};
-        s.unit = "";
+        s.player = {state: 'stop', speed: 50};
+        s.unit = '';
         s.yUnitsPerScaleLine = 0;
         s.yUnitToPixelRatio = 0;
         s.tripData = null;
@@ -27,7 +27,7 @@ function TripGraph(master) {
     }
 
     this.show = function (tripData) {
-        var tripGraph = document.getElementById("trip_graph");
+        var tripGraph = document.getElementById('trip_graph');
         tripGraph.innerHTML = '<canvas id="tripGraphCanvas" width="' +
             tripGraph.clientWidth + '" height="' + state.height + '"></canvas>';
 
@@ -47,7 +47,7 @@ function TripGraph(master) {
         var originalGpsData;
 
         state.tripData = tripData;
-        state.visibility = "visible";
+        state.visibility = 'visible';
 
         if (state.tickInterval === undefined) {
             var intervalMs = state.tickIntervalMs;
@@ -55,13 +55,13 @@ function TripGraph(master) {
                 window.setInterval(function () {processTripGraphTick();}, intervalMs);
         }
 
-        if (state.types[0] === "Speed") {
-            state.unit = "km/h";
+        if (state.types[0] === 'Speed') {
+            state.unit = 'km/h';
             originalGpsData = tripData.gpsSpeedData;
             state.yUnitsPerScaleLine = 10;
             state.yUnitToPixelRatio = 2;
         } else {
-            state.unit = "m";
+            state.unit = 'm';
             originalGpsData = tripData.gpsAltitudeData;
             state.yUnitsPerScaleLine = 20;
             var maxAltitude = state.tripData.gpsMaxAltitude.value;
@@ -87,20 +87,20 @@ function TripGraph(master) {
 
     function addMouseListeners(tripGraph) {
         tripGraph.onmousemove = function (event) {
-            if (state.player.state === "stop") {
+            if (state.player.state === 'stop') {
                 processTripGraphEvent(event);
             }
         };
 
         tripGraph.onmouseout = function () {
-            if (state.player.state === "stop") {
+            if (state.player.state === 'stop') {
                 stopTrip();
             }
         };
 
         tripGraph.onclick = function (event) {
             var position = state.tripCursor[0].getPosition();
-            if (state.player.state !== "stop") {
+            if (state.player.state !== 'stop') {
                 processTripGraphEvent(event);
             }
             master.uiMap.zoomToPoint(position);
@@ -133,7 +133,7 @@ function TripGraph(master) {
 
         master.mapApi.addOrRemoveOverlays(marker, 'add');
 
-        if (state.player.state === "play") {
+        if (state.player.state === 'play') {
             master.mapApi.updateStreetView(marker.getPosition(), heading);
 
             if (master.mapApi.contains(marker.getPosition()) === false) {
@@ -172,9 +172,9 @@ function TripGraph(master) {
         var xScale = Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
         var latLng = state.tripCursor[0].getPosition().toStr(4);
 
-        var statusHtml = type + "=" + value + " " + unit + ", time=" + time +
-            " (1 y pixel = " + yScale + " " + unit + ", 1 x pixel = " + xScale +
-            " s), Lat/Lng=" + latLng;
+        var statusHtml = type + '=' + value + ' ' + unit + ', time=' + time +
+            ' (1 y pixel = ' + yScale + ' ' + unit + ', 1 x pixel = ' + xScale +
+            ' s), Lat/Lng=' + latLng;
 
         master.uiMap.setStatusBarHtml(statusHtml);
     }
@@ -185,37 +185,37 @@ function TripGraph(master) {
     }
 
     function setTripGraphControl() {
-        var play = getControl("Start trip playing", "Play", getHandler("play"));
-        var pause = getControl("Pause trip playing", "Pause", getHandler("pause"));
-        var stop = getControl("Stop trip playing", "Stop", getHandler("stop"));
-        var slower1x = getControl("Slower (-1x)", "<", getHandler("slower1x"));
-        var faster1x = getControl("Faster (+1x)", ">", getHandler("faster1x"));
-        var slower10x = getControl("Slower (-10x)", "<", getHandler("slower10x"));
-        var faster10x = getControl("Faster (+10x)", ">", getHandler("faster10x"));
+        var play = getControl('Start trip playing', 'Play', getHandler('play'));
+        var pause = getControl('Pause trip playing', 'Pause', getHandler('pause'));
+        var stop = getControl('Stop trip playing', 'Stop', getHandler('stop'));
+        var slower1x = getControl('Slower (-1x)', '<', getHandler('slower1x'));
+        var faster1x = getControl('Faster (+1x)', '>', getHandler('faster1x'));
+        var slower10x = getControl('Slower (-10x)', '<', getHandler('slower10x'));
+        var faster10x = getControl('Faster (+10x)', '>', getHandler('faster10x'));
 
-        var speed = " " + state.player.speed + "x ";
+        var speed = ' ' + state.player.speed + 'x ';
         var speedElements =
             [slower10x, slower1x, createTN(speed), faster1x, faster10x];
         var allElements;
 
-        if (state.player.state === "stop") {
-            allElements = [play, createTN(" | Stop  | <<" + speed + ">>")];
-        } else if (state.player.state === "play") {
-            allElements = [pause, createTN(" | "), stop, createTN(" | ")];
+        if (state.player.state === 'stop') {
+            allElements = [play, createTN(' | Stop  | <<' + speed + '>>')];
+        } else if (state.player.state === 'play') {
+            allElements = [pause, createTN(' | '), stop, createTN(' | ')];
             allElements = allElements.concat(speedElements);
-        } else if (state.player.state === "pause") {
-            allElements = [play, createTN(" | "), stop, createTN(" | ")];
+        } else if (state.player.state === 'pause') {
+            allElements = [play, createTN(' | '), stop, createTN(' | ')];
             allElements = allElements.concat(speedElements);
         }
 
-        allElements.push(createTN(" / "));
-        allElements.push(getControl("Toggle type of trip graph", "Show " + state.types[1],
+        allElements.push(createTN(' / '));
+        allElements.push(getControl('Toggle type of trip graph', 'Show ' + state.types[1],
                                     function () {toggleTripGraphType()}));
 
-        document.getElementById("trip_graph_control").innerHTML = "";
+        document.getElementById('trip_graph_control').innerHTML = '';
 
         for (var i = 0; i < allElements.length; i++) {
-            document.getElementById("trip_graph_control").appendChild(allElements[i]);
+            document.getElementById('trip_graph_control').appendChild(allElements[i]);
         }
 
         function getHandler(controlType) {
@@ -232,34 +232,34 @@ function TripGraph(master) {
     }
 
     function controlTripPlayer(controlType) {
-        if (controlType === "play") {
-            if (state.player.state === "stop") {
+        if (controlType === 'play') {
+            if (state.player.state === 'stop') {
                 state.lastRatio = 0;
             }
-            state.player.state = "play";
+            state.player.state = 'play';
             setTripGraphControl();
-        } else if (controlType === "pause") {
-            state.player.state = "pause";
+        } else if (controlType === 'pause') {
+            state.player.state = 'pause';
             setTripGraphControl();
-        } else if (controlType === "stop") {
+        } else if (controlType === 'stop') {
             stopTrip();
-        } else if (controlType === "slower10x") {
+        } else if (controlType === 'slower10x') {
             state.player.speed -= 10;
             setTripGraphControl();
-        } else if (controlType === "slower1x") {
+        } else if (controlType === 'slower1x') {
             state.player.speed -= 1;
             setTripGraphControl();
-        } else if (controlType === "faster1x") {
+        } else if (controlType === 'faster1x') {
             state.player.speed += 1;
             setTripGraphControl();
-        } else if (controlType === "faster10x") {
+        } else if (controlType === 'faster10x') {
             state.player.speed += 10;
             setTripGraphControl();
         }
     }
 
     function processTripGraphTick() {
-        if (state.player.state === "play") {
+        if (state.player.state === 'play') {
             var player = state.player;
             var tripData = state.tripData;
             var intervalMs = state.tickIntervalMs;
@@ -282,7 +282,7 @@ function TripGraph(master) {
     }
 
     function stopTrip() {
-        state.player.state = "stop";
+        state.player.state = 'stop';
         state.lastRatio = 0;
         removeTripCursor();
         drawTripGraph();
@@ -305,7 +305,7 @@ function TripGraph(master) {
         var origo = state.origo;
         var ctx = canvas.getContext('2d');
         var gradient = ctx.createLinearGradient(origo.x, 0, origo.x, origo.y);
-        gradient.addColorStop(0, "#000000");
+        gradient.addColorStop(0, '#000000');
         gradient.addColorStop(1, tripData.color);
 
         ctx.beginPath();
@@ -328,7 +328,7 @@ function TripGraph(master) {
 
         if (state.lastRatio > 0) {
             ctx.beginPath();
-            ctx.strokeStyle = "#000000";
+            ctx.strokeStyle = '#000000';
             ctx.moveTo(x, origo.y);
             ctx.lineTo(x, origo.y - canvas.height);
             ctx.stroke();
@@ -342,7 +342,7 @@ function TripGraph(master) {
 
         /* line */
         ctx.beginPath();
-        ctx.strokeStyle = "#000000";
+        ctx.strokeStyle = '#000000';
         ctx.moveTo(origo.x, origo.y);
         ctx.lineTo(canvas.width, origo.y);
         ctx.stroke();
@@ -353,7 +353,7 @@ function TripGraph(master) {
         for (var i = 1; i <= Math.floor(steps); i++) {
             var x = origo.x + (xStep * i);
             ctx.beginPath();
-            ctx.strokeStyle = "#000000";
+            ctx.strokeStyle = '#000000';
             ctx.moveTo(x, origo.y - 3);
             ctx.lineTo(x, origo.y + 3);
             ctx.stroke();
@@ -367,7 +367,7 @@ function TripGraph(master) {
 
         /* line */
         ctx.beginPath();
-        ctx.strokeStyle = "#000000";
+        ctx.strokeStyle = '#000000';
         ctx.moveTo(origo.x, origo.y);
         ctx.lineTo(origo.x, origo.y - canvas.height);
         ctx.stroke();
@@ -379,7 +379,7 @@ function TripGraph(master) {
         for (var i = 1; i <= Math.floor(steps); i++) {
             var y = origo.y - (yStep * i);
             ctx.beginPath();
-            ctx.strokeStyle = "#C0C0C0";
+            ctx.strokeStyle = '#C0C0C0';
             ctx.moveTo(origo.x, y);
             ctx.lineTo(canvas.width, y);
             ctx.stroke();
@@ -387,40 +387,40 @@ function TripGraph(master) {
     }
 
     function showHideElement() {
-        var tripGraphHide = document.getElementById("tripGraphHide");
+        var tripGraphHide = document.getElementById('tripGraphHide');
 
         if (tripGraphHide === null) {
-            tripGraphHide = document.createElement("div");
-            tripGraphHide.id = "tripGraphHide";
-            tripGraphHide.className = "tripGraphHide";
-            tripGraphHide.title = "Hide trip graph";
+            tripGraphHide = document.createElement('div');
+            tripGraphHide.id = 'tripGraphHide';
+            tripGraphHide.className = 'tripGraphHide';
+            tripGraphHide.title = 'Hide trip graph';
             tripGraphHide.onclick = function () {that.hide()};
-            document.getElementById("dynamic_divs").appendChild(tripGraphHide);
+            document.getElementById('dynamic_divs').appendChild(tripGraphHide);
         }
 
-        tripGraphHide.style.top = document.getElementById("trip_graph").style.top;
-        tripGraphHide.appendChild(master.utils.createHideElement("hideTripGraph"));
+        tripGraphHide.style.top = document.getElementById('trip_graph').style.top;
+        tripGraphHide.appendChild(master.utils.createHideElement('hideTripGraph'));
     }
 
     this.hide = function () {
-        if (state.visibility === "visible") {
-            state.visibility = "hidden";
+        if (state.visibility === 'visible') {
+            state.visibility = 'hidden';
             stopTrip();
 
-            document.getElementById("trip_graph").innerHTML = "";
-            document.getElementById("trip_graph_control").innerHTML = "";
-            document.getElementById("tripGraphHide").innerHTML = "";
+            document.getElementById('trip_graph').innerHTML = '';
+            document.getElementById('trip_graph_control').innerHTML = '';
+            document.getElementById('tripGraphHide').innerHTML = '';
 
             master.uiMap.resizeMap();
         }
     };
 
     this.isVisible = function () {
-        return (state.visibility === "visible");
+        return (state.visibility === 'visible');
     };
 
     this.isPlayerStopped = function () {
-        return (state.player.state === "stop");
+        return (state.player.state === 'stop');
     };
 
     this.isCurrentData = function (tripData) {

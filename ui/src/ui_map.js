@@ -9,7 +9,7 @@ function UiMap(master) {
     function getState() {
         var s = {};
 
-        s.initialStatistics = document.getElementById("statistics").innerHTML;
+        s.initialStatistics = document.getElementById('statistics').innerHTML;
 
         s.initialZL = 9;
         s.initialLatLng = master.mapApi.newLatLng(60.336098, 24.902051);
@@ -21,14 +21,14 @@ function UiMap(master) {
     this.init = function () {
         master.mapApi.setCenter(state.initialLatLng, state.initialZL);
         addMouseListeners();
-        master.mapApi.initStreetView("street_view", resizeMapCanvas);
+        master.mapApi.initStreetView('street_view', resizeMapCanvas);
 
-        master.mapApi.addListener("areasInitIsReady", function () {
+        master.mapApi.addListener('areasInitIsReady', function () {
             updateStatusBar(getInfo(state.initialLatLng));
             setStatistics();
             window.onresize = function () {that.resizeMap()};
             that.resizeMap();
-            master.mapApi.triggerEvent("uiMapInitIsReady");
+            master.mapApi.triggerEvent('uiMapInitIsReady');
         });
     };
 
@@ -38,17 +38,17 @@ function UiMap(master) {
         var p = {yes: Math.round(100 * s.yes / total),
                   no: Math.round(100 * s.no / total),
                   np: Math.round(100 * s.np / total)};
-        var statistics = "Visited: yes="           + s.yes + " ("+ p.yes +
-                               "%), no="           + s.no  + " ("+ p.no +
-                               "%), not possible=" + s.np  + " ("+ p.np +
-                               "%), total=" + total;
+        var statistics = 'Visited: yes='           + s.yes + ' ('+ p.yes +
+                               '%), no='           + s.no  + ' ('+ p.no +
+                               '%), not possible=' + s.np  + ' ('+ p.np +
+                               '%), total=' + total;
 
-        document.getElementById("statistics").innerHTML =
-            statistics + ", " + state.initialStatistics;
+        document.getElementById('statistics').innerHTML =
+            statistics + ', ' + state.initialStatistics;
     }
 
     function addMouseListeners() {
-        master.mapApi.addListener("mousemove", function (mouseEvent) {
+        master.mapApi.addListener('mousemove', function (mouseEvent) {
             if (master.tripGraph.isPlayerStopped()) {
                 var info = getInfo(master.mapApi.getMouseEventLatLng(mouseEvent));
                 updateStatusBar(info);
@@ -56,7 +56,7 @@ function UiMap(master) {
             }
         });
 
-        master.mapApi.addListener("mouseout", function (mouseEvent) {
+        master.mapApi.addListener('mouseout', function (mouseEvent) {
             master.areas.hideCursor();
         });
     }
@@ -76,35 +76,35 @@ function UiMap(master) {
     }
 
     function updateStatusBar(info) {
-        var statusHtml = "Page=" + info.page + ", KKJ=" + info.kkjText + ", visited=" +
-            info.visited + ", ZL=" + info.zl + ", Lat/Lng=" + info.latLng;
+        var statusHtml = 'Page=' + info.page + ', KKJ=' + info.kkjText + ', visited=' +
+            info.visited + ', ZL=' + info.zl + ', Lat/Lng=' + info.latLng;
 
         that.setStatusBarHtml(statusHtml);
     }
 
     this.setStatusBarHtml = function (statusBarHtml) {
-        document.getElementById("status_bar").innerHTML = statusBarHtml;
+        document.getElementById('status_bar').innerHTML = statusBarHtml;
     };
 
     this.openOtherMap = function (otherMapType, point) {
         var zl = master.mapApi.getZoom();
-        var url = "";
+        var url = '';
 
-        if (otherMapType === "MML") {
-            url = "https://14142.net/mml/?lat=" +
-                point.lat() + "&lng=" + point.lng() + "&z=" + zl;
-        } else if (otherMapType === "Google Maps") {
-            url = "http://maps.google.com/?output=classic&dg=opt&ll=" +
-                point.lat() + "," + point.lng() + "&z=" + zl;
-        } else if (otherMapType === "HERE Maps") {
-            url = "http://wego.here.com/?map=" +
-                point.lat() + "," + point.lng() + "," + zl;
-        } else if (otherMapType === "Bing Maps") {
-            url = "http://www.bing.com/maps/default.aspx?cp=" +
-                point.lat() + "~" + point.lng() + "&lvl=" + zl;
-        } else if (otherMapType === "OpenStreetMap") {
-            url = "http://www.openstreetmap.org/#map=" +
-                zl + "/" + point.lat() + "/" + point.lng();
+        if (otherMapType === 'MML') {
+            url = 'https://14142.net/mml/?lat=' +
+                point.lat() + '&lng=' + point.lng() + '&z=' + zl;
+        } else if (otherMapType === 'Google Maps') {
+            url = 'http://maps.google.com/?output=classic&dg=opt&ll=' +
+                point.lat() + ',' + point.lng() + '&z=' + zl;
+        } else if (otherMapType === 'HERE Maps') {
+            url = 'http://wego.here.com/?map=' +
+                point.lat() + ',' + point.lng() + ',' + zl;
+        } else if (otherMapType === 'Bing Maps') {
+            url = 'http://www.bing.com/maps/default.aspx?cp=' +
+                point.lat() + '~' + point.lng() + '&lvl=' + zl;
+        } else if (otherMapType === 'OpenStreetMap') {
+            url = 'http://www.openstreetmap.org/#map=' +
+                zl + '/' + point.lat() + '/' + point.lng();
         }
 
         window.open(url);
@@ -125,9 +125,9 @@ function UiMap(master) {
     };
 
     this.resizeDivs = function () {
-        var oldStreetViewHeight = document.getElementById("street_view").clientHeight;
+        var oldStreetViewHeight = document.getElementById('street_view').clientHeight;
 
-        document.getElementById("street_view").style.height = "0px";
+        document.getElementById('street_view').style.height = '0px';
 
         resizeMapCanvas();
 
@@ -137,13 +137,13 @@ function UiMap(master) {
     };
 
     function resizeMapCanvas() {
-        document.getElementById("map_canvas").style.height =
+        document.getElementById('map_canvas').style.height =
             document.documentElement.clientHeight -
-            document.getElementById("street_view").clientHeight -
-            document.getElementById("trip_graph").clientHeight -
-            document.getElementById("trip_graph_control").clientHeight -
-            document.getElementById("status_bar").clientHeight -
-            document.getElementById("statistics").clientHeight + "px";
+            document.getElementById('street_view').clientHeight -
+            document.getElementById('trip_graph').clientHeight -
+            document.getElementById('trip_graph_control').clientHeight -
+            document.getElementById('status_bar').clientHeight -
+            document.getElementById('statistics').clientHeight + 'px';
 
         master.mapApi.resize();
     }

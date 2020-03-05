@@ -12,16 +12,16 @@ function Utils() {
             if (request.readyState === 4) {
                 var status = request.status;
                 if ((status === 0) || (status === 200)) {
-                    console.log("downloaded: %o", url);
+                    console.log('downloaded: %o', url);
                     callback(request.responseText, status);
                     request.onreadystatechange = function () {};
                 }
             }
         };
 
-        request.open("GET", url, true);
-        if (url.indexOf(".json") !== -1) {
-            request.overrideMimeType("application/json");
+        request.open('GET', url, true);
+        if (url.indexOf('.json') !== -1) {
+            request.overrideMimeType('application/json');
         }
         request.send();
     };
@@ -102,44 +102,44 @@ function Utils() {
     };
 
     this.createControlElement = function (title, text, handler) {
-        var a = document.createElement("a");
+        var a = document.createElement('a');
 
         a.title = title;
         a.onclick = onClick;
         a.textContent = text;
-        a.href = "javascript:";
+        a.href = 'javascript:';
 
         return a;
 
         function onClick() {
-            a.className = "progress";
+            a.className = 'progress';
             handler();
         }
     };
 
     this.createHideElement = function (className) {
-        var hideElement = document.createElement("span");
+        var hideElement = document.createElement('span');
         hideElement.className = className;
-        hideElement.textContent = "\u274C";
+        hideElement.textContent = '\u274C';
         return hideElement;
     };
 
     this.getUrlParams = function () {
         var params = {};
-        if (document.URL.indexOf("?") !== -1) {
-            var addressParams = document.URL.split("?");
+        if (document.URL.indexOf('?') !== -1) {
+            var addressParams = document.URL.split('?');
             if (addressParams.length === 2) {
-                var nameValues = addressParams[1].split("&");
+                var nameValues = addressParams[1].split('&');
                 for (var i = 0; i < nameValues.length; i++) {
-                    var nameValue = nameValues[i].split("=");
+                    var nameValue = nameValues[i].split('=');
                     if (nameValue.length === 2) {
                         params[nameValue[0]] = nameValue[1];
                     } else {
-                        console.error("unexpected URL parameter: %o", nameValues[i]);
+                        console.error('unexpected URL parameter: %o', nameValues[i]);
                     }
                 }
             } else {
-                console.error("unexpected URL parameters: %o", document.URL);
+                console.error('unexpected URL parameters: %o', document.URL);
             }
         }
         return params;
