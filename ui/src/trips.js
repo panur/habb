@@ -15,7 +15,7 @@ function Trips(master) {
         s.areMarkersVisible = false;
         s.dataStore = null;
         s.selectedTripIndex = -1;
-        s.isMapInitReady = false;
+        s.isUiMapInitReady = false;
         return s;
     }
 
@@ -41,8 +41,8 @@ function Trips(master) {
 
         initDragAndDrop();
 
-        master.mapApi.addListener("mapInitIsReady", function () {
-            state.isMapInitReady = true;
+        master.mapApi.addListener("uiMapInitIsReady", function () {
+            state.isUiMapInitReady = true;
             showUrlParamsTrips();
         });
     };
@@ -102,7 +102,7 @@ function Trips(master) {
     }
 
     function showUrlParamsTrips() {
-        if (state.isMapInitReady && state.dataStore.isIndexLoaded()) {
+        if (state.isUiMapInitReady && state.dataStore.isIndexLoaded()) {
             var tripsToShowPattern = master.utils.getUrlParams()["t"];
             if (tripsToShowPattern !== undefined) {
                 var tripsToShow = [];

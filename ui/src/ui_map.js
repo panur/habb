@@ -28,7 +28,7 @@ function UiMap(master) {
             setStatistics();
             window.onresize = function () {that.resizeMap()};
             that.resizeMap();
-            master.mapApi.triggerEvent("mapInitIsReady");
+            master.mapApi.triggerEvent("uiMapInitIsReady");
         });
     };
 

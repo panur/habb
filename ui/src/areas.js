@@ -33,7 +33,8 @@ function Areas(master) {
 
         s.area = {opacity: 0.5, opacityLow: 0.2, opacityHigh: 0.5,
                   colors: {yes: "#00FF00", no: "#FF0000", np: "#808080"}};
-        s.grid = {weight: 1, opacity: 0.5, colors: {page: "#000000", km2: "#FFFFFF"}};
+        s.grid = {weight: 1, opacity: 0.5, colors: {page: "#000000", km2: "#FFFFFF"},
+                  latPolylines: [], lngPolylines: []};
         s.cursorParams =
             {strokeColor: "#000000", strokeWeight: 2, strokeOpacity: 1, maxZoomLevel: 15, kkj: "-"};
 
@@ -210,9 +211,6 @@ function Areas(master) {
 
     function updateMapGrid() {
         var color;
-
-        state.grid.latPolylines = [];
-        state.grid.lngPolylines = [];
 
         for (var i = 0, lines = 0; i < state.lats.length; i++) {
             for (var j = 0; j < state.lats[i].n; j++) {
