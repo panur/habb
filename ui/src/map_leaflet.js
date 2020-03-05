@@ -23,7 +23,10 @@ function MapApiImpl() {
             'OpenStreetMap': getOsmBaseLayer(),
             'NLS Topographic': getNlsBaseLayer('maastokartta'),
             'NLS Background': getNlsBaseLayer('taustakartta'),
-            'Mapbox': getMapboxBaseLayer(),
+            'NLS Orthophotos': getNlsBaseLayer('ortokuva'),
+            'Mapbox Streets': getMapboxBaseLayer('streets-v11'),
+            'Mapbox Outdoors': getMapboxBaseLayer('outdoors-v11'),
+            'Mapbox Satellite': getMapboxBaseLayer('satellite-streets-v11'),
             'HSL': getHslBaseLayer()
         };
         state.map = L.map(mapDivId, {
@@ -74,7 +77,7 @@ function MapApiImpl() {
         });
     }
 
-    function getMapboxBaseLayer() {
+    function getMapboxBaseLayer(styleId) {
         var url = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
         return L.tileLayer(url, {
             'customOptions': {'zoomOffset': 0},
@@ -83,7 +86,7 @@ function MapApiImpl() {
                 'contributors, ' +
                 '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
                 'Imagery &copy; <a href="https://mapbox.com">Mapbox</a>',
-            'id': 'mapbox/streets-v11',
+            'id': 'mapbox/' + styleId,
             'accessToken': 'pk.eyJ1IjoicGFudXIiLCJhIjoiY2s2YXdhdDJ0MDM1' +
                 'ZDNscGF3ZXcydGYxYSJ9.sKE9SIx-t212_DRGOekJFA'
         });
