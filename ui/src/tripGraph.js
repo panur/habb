@@ -11,13 +11,13 @@ function TripGraph(master) {
 
         s.visibility = 'hidden';
         s.height = 100;
-        s.origo = {x: 5, y: 95};
+        s.origo = {'x': 5, 'y': 95};
         s.types = ['Speed', 'Altitude'];
         s.lastRatio = 0;
         s.tripCursor = [];
         s.maxTripCursorLength = 10;
         s.tickIntervalMs = 200;
-        s.player = {state: 'stop', speed: 50};
+        s.player = {'state': 'stop', 'speed': 50};
         s.unit = '';
         s.yUnitsPerScaleLine = 0;
         s.yUnitToPixelRatio = 0;
@@ -120,8 +120,8 @@ function TripGraph(master) {
         var point = tripData.polyline.getLatLng(vertexIndex);
         var heading = tripData.polyline.getHeading(point, master.mapApi.getZoom());
         var markerOptions = {
-            visible: true,
-            heading: heading
+            'visible': true,
+            'heading': heading
         };
         var marker = master.mapApi.newMarker(point, markerOptions);
 

@@ -90,9 +90,9 @@ function Trips(master) {
             }
 
             var polylineOptions = {
-                color: '#000000',
-                opacity: 0.9,
-                weight: 3
+                'color': '#000000',
+                'opacity': 0.9,
+                'weight': 3
             };
             var tripPolyline = master.mapApi.newPolyline(tripPath, polylineOptions);
             console.info('trip length (m): ' + Math.round(tripPolyline.computeLength()));
@@ -439,11 +439,11 @@ function Trips(master) {
 
     function createPolyline(tripData) {
         var polylineOptions = {
-            color: tripData.color,
-            weight: 3,
-            opacity: 0.9,
-            clickable: true,
-            zIndex: 10
+            'color': tripData.color,
+            'weight': 3,
+            'opacity': 0.9,
+            'clickable': true,
+            'zIndex': 10
         };
         return master.mapApi.newPolylineFromEncoded(tripData.encodedPolyline, polylineOptions);
     }
@@ -505,8 +505,8 @@ function Trips(master) {
 
         if (heading !== -1) {
             var markerOptions = {
-                visible: true,
-                heading: heading
+                'visible': true,
+                'heading': heading
             };
             var marker = master.mapApi.newMarker(point, markerOptions);
             marker.addListener('click', function (event) {
@@ -527,9 +527,9 @@ function Trips(master) {
         var marker = undefined;
         if ((point.lat() !== null) && (point.lng() !== null)) {
             var markerOptions = {
-                visible: isVisible,
-                label: letter,
-                title: title
+                'visible': isVisible,
+                'label': letter,
+                'title': title
             };
             marker = master.mapApi.newMarker(point, markerOptions);
             marker.addListener('click', function (event) {

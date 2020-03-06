@@ -35,9 +35,9 @@ function UiMap(master) {
     function setStatistics() {
         var s = master.areas.getVisitedStatistics();
         var total = s.yes + s.no + s.np;
-        var p = {yes: Math.round(100 * s.yes / total),
-                  no: Math.round(100 * s.no / total),
-                  np: Math.round(100 * s.np / total)};
+        var p = {'yes': Math.round(100 * s.yes / total),
+                  'no': Math.round(100 * s.no / total),
+                  'np': Math.round(100 * s.np / total)};
         var statistics = 'Visited: yes='           + s.yes + ' ('+ p.yes +
                                '%), no='           + s.no  + ' ('+ p.no +
                                '%), not possible=' + s.np  + ' ('+ p.np +

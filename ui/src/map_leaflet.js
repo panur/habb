@@ -179,7 +179,7 @@ function MapApiImpl() {
 
     // added as returned by addListener()
     this.removeListener = function (added) {
-        state.map.off(added['eventName'], added['handler']);
+        state.map.off(added.eventName, added.handler);
     };
 
     this.removeListeners = function (eventName) {
@@ -430,7 +430,7 @@ function MapApiMarkerImpl(position, markerOptions) {
             }
         });
         return new HideableMarker(position.getImpl(), {
-            icon: markerIcon
+            'icon': markerIcon
         });
     }
 

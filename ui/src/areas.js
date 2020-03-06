@@ -14,8 +14,9 @@ function Areas(master) {
         s.isVisitedAreaEditorActive = false;
         s.visitedAreaEditorEventListener = null;
 
-        s.filenames = {points: 'generated_points.json',
-            visitedDatas: {
+        s.filenames = {
+            'points': 'generated_points.json',
+            'visitedDatas': {
                 '2008': 'visited_datas/2008.json',
                 '2009': 'visited_datas/2009.json',
                 '2010': 'visited_datas/2010.json',
@@ -28,37 +29,52 @@ function Areas(master) {
                 '2017': 'visited_datas/2017.json',
                 '2018': 'visited_datas/2018.json',
                 '2019': 'visited_datas/2019.json',
-                'latest': 'visited_datas/latest.json'}};
+                'latest': 'visited_datas/latest.json'
+            }
+        };
         s.filenames.visitedData = s.filenames.visitedDatas['latest'];
 
-        s.area = {opacity: 0.5, opacityLow: 0.2, opacityHigh: 0.5,
-                  colors: {yes: '#00FF00', no: '#FF0000', np: '#808080'}};
-        s.grid = {weight: 1, opacity: 0.5, colors: {page: '#000000', km2: '#FFFFFF'},
-                  latPolylines: [], lngPolylines: []};
-        s.cursorParams =
-            {strokeColor: '#000000', strokeWeight: 2, strokeOpacity: 1, maxZoomLevel: 15, kkj: '-'};
-
+        s.area = {
+            'opacity': 0.5,
+            'opacityLow': 0.2,
+            'opacityHigh': 0.5,
+            'colors': {'yes': '#00FF00', 'no': '#FF0000', 'np': '#808080'}
+        };
+        s.grid = {
+            'weight': 1,
+            'opacity': 0.5,
+            'colors': {'page': '#000000', 'km2': '#FFFFFF'},
+            'latPolylines': [],
+            'lngPolylines': []
+        };
+        s.cursorParams = {
+            'strokeColor': '#000000',
+            'strokeWeight': 2,
+            'strokeOpacity': 1,
+            'maxZoomLevel': 15,
+            'kkj': '-'
+        };
         s.latKmPerP = 5;
         s.latPages = 7;
         s.lngKmPerP = 4;
         s.lngPages = 9;
-        s.kkjStart = {lat: 65, lng: 30};
-        s.kkjOffset = {lat: -1, lng: -1}; /* will be read from file */
+        s.kkjStart = {'lat': 65, 'lng': 30};
+        s.kkjOffset = {'lat': -1, 'lng': -1}; /* will be read from file */
 
-        s.lats = [{n: 5,  lngOffsetKm: 4,  latOffsetKm: 0,  lengthP: 2},
-                  {n: 5,  lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 8},
-                  {n: 11, lngOffsetKm: 0,  latOffsetKm: 10, lengthP: 9},
-                  {n: 10, lngOffsetKm: 4,  latOffsetKm: 21, lengthP: 8},
-                  {n: 5,  lngOffsetKm: 12, latOffsetKm: 31, lengthP: 2},
-                  {n: 5,  lngOffsetKm: 24, latOffsetKm: 31, lengthP: 2}];
+        s.lats = [{'n': 5,  'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 2},
+                  {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 8},
+                  {'n': 11, 'lngOffsetKm': 0,  'latOffsetKm': 10, 'lengthP': 9},
+                  {'n': 10, 'lngOffsetKm': 4,  'latOffsetKm': 21, 'lengthP': 8},
+                  {'n': 5,  'lngOffsetKm': 12, 'latOffsetKm': 31, 'lengthP': 2},
+                  {'n': 5,  'lngOffsetKm': 24, 'latOffsetKm': 31, 'lengthP': 2}];
 
-        s.lngs = [{n: 4, lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 3},
-                  {n: 8, lngOffsetKm: 4,  latOffsetKm: 0,  lengthP: 6},
-                  {n: 1, lngOffsetKm: 12, latOffsetKm: 0,  lengthP: 7},
-                  {n: 8, lngOffsetKm: 13, latOffsetKm: 5,  lengthP: 6},
-                  {n: 3, lngOffsetKm: 21, latOffsetKm: 5,  lengthP: 5},
-                  {n: 9, lngOffsetKm: 24, latOffsetKm: 5,  lengthP: 6},
-                  {n: 4, lngOffsetKm: 33, latOffsetKm: 10, lengthP: 4}];
+        s.lngs = [{'n': 4, 'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 3},
+                  {'n': 8, 'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 6},
+                  {'n': 1, 'lngOffsetKm': 12, 'latOffsetKm': 0,  'lengthP': 7},
+                  {'n': 8, 'lngOffsetKm': 13, 'latOffsetKm': 5,  'lengthP': 6},
+                  {'n': 3, 'lngOffsetKm': 21, 'latOffsetKm': 5,  'lengthP': 5},
+                  {'n': 9, 'lngOffsetKm': 24, 'latOffsetKm': 5,  'lengthP': 6},
+                  {'n': 4, 'lngOffsetKm': 33, 'latOffsetKm': 10, 'lengthP': 4}];
 
         s.pages = ['0',  '1',  '2',  '0',  '0',  '0',  '0',  '0',  '0',
                    '3',  '4',  '5',  '6',  '7',  '8',  '9', '10',  '0',
@@ -72,21 +88,21 @@ function Areas(master) {
             s.filenames.points = 'generated_points_ext.json';
             s.latPages = 13;
             s.lngPages = 20;
-            s.kkjStart = {lat: 60, lng: 10};
+            s.kkjStart = {'lat': 60, 'lng': 10};
 
-            s.lats = [{n: 5,  lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 7},
-                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 5,  lengthP: 8},
-                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 10, lengthP: 13},
-                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 15, lengthP: 15},
-                      {n: 5,  lngOffsetKm: 0,  latOffsetKm: 20, lengthP: 16},
-                      {n: 41, lngOffsetKm: 0,  latOffsetKm: 25, lengthP: 20}];
+            s.lats = [{'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 0,  'lengthP': 7},
+                      {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 8},
+                      {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 10, 'lengthP': 13},
+                      {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 15, 'lengthP': 15},
+                      {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 20, 'lengthP': 16},
+                      {'n': 41, 'lngOffsetKm': 0,  'latOffsetKm': 25, 'lengthP': 20}];
 
-            s.lngs = [{n: 29, lngOffsetKm: 0,  latOffsetKm: 0,  lengthP: 13},
-                      {n: 4,  lngOffsetKm: 29, latOffsetKm: 5,  lengthP: 12},
-                      {n: 20, lngOffsetKm: 33, latOffsetKm: 10, lengthP: 11},
-                      {n: 8,  lngOffsetKm: 53, latOffsetKm: 15, lengthP: 10},
-                      {n: 4,  lngOffsetKm: 61, latOffsetKm: 20, lengthP: 9},
-                      {n: 16, lngOffsetKm: 65, latOffsetKm: 25, lengthP: 8}];
+            s.lngs = [{'n': 29, 'lngOffsetKm': 0,  'latOffsetKm': 0,  'lengthP': 13},
+                      {'n': 4,  'lngOffsetKm': 29, 'latOffsetKm': 5,  'lengthP': 12},
+                      {'n': 20, 'lngOffsetKm': 33, 'latOffsetKm': 10, 'lengthP': 11},
+                      {'n': 8,  'lngOffsetKm': 53, 'latOffsetKm': 15, 'lengthP': 10},
+                      {'n': 4,  'lngOffsetKm': 61, 'latOffsetKm': 20, 'lengthP': 9},
+                      {'n': 16, 'lngOffsetKm': 65, 'latOffsetKm': 25, 'lengthP': 8}];
 
             s.pages = [ '96',  '81',  '57',  '58',  '59',  '60',  '61',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
                         '97',  '82',  '49',   'a',   'A',   'B',   '1',   '2',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
@@ -222,11 +238,11 @@ function Areas(master) {
                 color = ((lines++ % state.latKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
                 var polylineOptions = {
-                    color: color,
-                    weight: state.grid.weight,
-                    opacity: state.grid.opacity,
-                    clickable: false,
-                    zIndex: 1
+                    'color': color,
+                    'weight': state.grid.weight,
+                    'opacity': state.grid.opacity,
+                    'clickable': false,
+                    'zIndex': 1
                 };
                 var lat = master.mapApi.newPolyline(points, polylineOptions);
                 state.grid.latPolylines.push(lat);
@@ -244,11 +260,11 @@ function Areas(master) {
                 color = ((lines++ % state.lngKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
                 var polylineOptions = {
-                    color: color,
-                    weight: state.grid.weight,
-                    opacity: state.grid.opacity,
-                    clickable: false,
-                    zIndex: 1
+                    'color': color,
+                    'weight': state.grid.weight,
+                    'opacity': state.grid.opacity,
+                    'clickable': false,
+                    'zIndex': 1
                 };
                 var lng = master.mapApi.newPolyline(points, polylineOptions);
                 state.grid.lngPolylines.push(lng);
@@ -279,13 +295,13 @@ function Areas(master) {
             }
 
             var polygonOptions = {
-                strokeColor: state.area.colors[i],
-                strokeWeight: 1,
-                strokeOpacity: 0.5,
-                fillColor: state.area.colors[i],
-                fillOpacity: state.area.opacity,
-                clickable: false,
-                zIndex: 1
+                'strokeColor': state.area.colors[i],
+                'strokeWeight': 1,
+                'strokeOpacity': 0.5,
+                'fillColor': state.area.colors[i],
+                'fillOpacity': state.area.opacity,
+                'clickable': false,
+                'zIndex': 1
             };
             var polygon = master.mapApi.newPolygon(paths, polygonOptions);
             visitedStatusAreas.push(polygon);
@@ -296,8 +312,10 @@ function Areas(master) {
 
     function getPolygonGroup(visitedStatus) {
         var polygons = [];
-        var params =
-            {visitedStatus: visitedStatus, km2NeedsToBeTested: getKm2sInMap()};
+        var params = {
+            'visitedStatus': visitedStatus,
+            'km2NeedsToBeTested': getKm2sInMap()
+        };
 
         for (var y = 0; y < state.km2s.length; y++) {
             for (var x = 0; x < state.km2s[y].length; x++) {
@@ -501,7 +519,7 @@ function Areas(master) {
 
     // tbd: this is not accurate
     function getKm2XYFromPoint(point) {
-        var guessXY = {y: -1, x: -1};
+        var guessXY = {'y': -1, 'x': -1};
 
         for (var i = 0; i < state.grid.latPolylines.length; i++) {
             var line = state.grid.latPolylines[i];
@@ -558,7 +576,7 @@ function Areas(master) {
         var kkj = null;
 
         if (km2XY !== null) {
-            kkj = {y: km2XY.y, x: km2XY.x};
+            kkj = {'y': km2XY.y, 'x': km2XY.x};
             kkj.y += state.kkjOffset.lat;
             kkj.x += state.kkjOffset.lng;
         }
@@ -567,7 +585,7 @@ function Areas(master) {
     };
 
     this.getInfo = function (point) {
-        var info = {page: '-', km2XY: null, kkjText: '-/-', visited: '-'};
+        var info = {'page': '-', 'km2XY': null, 'kkjText': '-/-', 'visited': '-'};
         var km2XY = getKm2XYFromPoint(point);
 
         if (km2XY) {
@@ -597,7 +615,7 @@ function Areas(master) {
     };
 
     this.getVisitedStatistics = function () {
-        var s = {yes: 0, no: 0, np: 0};
+        var s = {'yes': 0, 'no': 0, 'np': 0};
 
         for (var y = 0; y < state.km2s.length; y++) {
             for (var x = 0; x < state.km2s[y].length; x++) {
@@ -623,11 +641,11 @@ function Areas(master) {
         if ((info.km2XY) && (master.mapApi.getZoom() < state.cursorParams.maxZoomLevel)) {
             var points = state.km2s[info.km2XY.y][info.km2XY.x].points;
             var polylineOptions = {
-                color: state.cursorParams.strokeColor,
-                weight: state.cursorParams.strokeWeight,
-                opacity: state.cursorParams.strokeOpacity,
-                clickable: false,
-                zIndex: 1
+                'color': state.cursorParams.strokeColor,
+                'weight': state.cursorParams.strokeWeight,
+                'opacity': state.cursorParams.strokeOpacity,
+                'clickable': false,
+                'zIndex': 1
             };
             state.cursor = master.mapApi.newPolyline(points, polylineOptions);
             master.mapApi.addOrRemoveOverlays(state.cursor, 'add');
