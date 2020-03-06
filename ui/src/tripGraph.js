@@ -28,9 +28,12 @@ function TripGraph(master) {
 
     this.show = function (tripData) {
         var tripGraph = document.getElementById('trip_graph');
-        tripGraph.innerHTML = '<canvas id="tripGraphCanvas" width="' +
-            tripGraph.clientWidth + '" height="' + state.height + '"></canvas>';
-
+        tripGraph.innerHTML = '';
+        var canvasElement = document.createElement('canvas');
+        canvasElement.id = 'tripGraphCanvas';
+        canvasElement.width = tripGraph.clientWidth;
+        canvasElement.height = state.height;
+        tripGraph.appendChild(canvasElement);
         var canvas = document.getElementById('tripGraphCanvas');
 
         if (canvas && canvas.getContext) {
@@ -172,11 +175,11 @@ function TripGraph(master) {
         var xScale = Math.round(tripData.gpsDurationSeconds / tripData.graphData.length);
         var latLng = state.tripCursor[0].getPosition().toStr(4);
 
-        var statusHtml = type + '=' + value + ' ' + unit + ', time=' + time +
+        var statusBarText = type + '=' + value + ' ' + unit + ', time=' + time +
             ' (1 y pixel = ' + yScale + ' ' + unit + ', 1 x pixel = ' + xScale +
             ' s), Lat/Lng=' + latLng;
 
-        master.uiMap.setStatusBarHtml(statusHtml);
+        master.uiMap.setStatusBarText(statusBarText);
     }
 
     function toggleTripGraphType() {

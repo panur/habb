@@ -793,7 +793,9 @@ function Areas(master) {
 
     function stopVisitedAreaEditor() {
         var visitedAreaDataWindow = window.open('', 'visited area data');
-        visitedAreaDataWindow.document.body.innerHTML = getVisitedAreaJsonData();
+        var preElement = document.createElement('pre');
+        preElement.textContent = getVisitedAreaJsonData();
+        visitedAreaDataWindow.document.body.appendChild(preElement);
 
         master.mapApi.removeListener(state['visitedAreaEditorEventListener']);
         state['visitedAreaEditorEventListener'] = null;
@@ -822,7 +824,7 @@ function Areas(master) {
                 }
             }
         }
-        return '<pre>[\n' + lines.join(',\n') + '\n]\n</pre>';
+        return '[\n' + lines.join(',\n') + '\n]\n';
     }
 
     function getPageVisitedInfo(page) {

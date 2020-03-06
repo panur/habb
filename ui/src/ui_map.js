@@ -76,14 +76,14 @@ function UiMap(master) {
     }
 
     function updateStatusBar(info) {
-        var statusHtml = 'Page=' + info.page + ', KKJ=' + info.kkjText + ', visited=' +
+        var statusBarText = 'Page=' + info.page + ', KKJ=' + info.kkjText + ', visited=' +
             info.visited + ', ZL=' + info.zl + ', Lat/Lng=' + info.latLng;
 
-        that.setStatusBarHtml(statusHtml);
+        that.setStatusBarText(statusBarText);
     }
 
-    this.setStatusBarHtml = function (statusBarHtml) {
-        document.getElementById('status_bar').innerHTML = statusBarHtml;
+    this.setStatusBarText = function (statusBarText) {
+        document.getElementById('status_bar').textContent = statusBarText;
     };
 
     this.openOtherMap = function (otherMapType, point) {
