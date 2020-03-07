@@ -387,8 +387,6 @@ function MapApiMarkerImpl(position, markerOptions) {
         s.map = undefined;
         s.isVisible = markerOptions.visible;
         s.isAddedInternal = false;
-        s.isAddedExternal = false;
-        s.isExecutingSetVisible = false;
         s.symbolElement = createSymbolElement(markerOptions.title);
         s.impl = newImpl(s.symbolElement);
         return s;
@@ -410,9 +408,6 @@ function MapApiMarkerImpl(position, markerOptions) {
         });
         var HideableMarker = L.Marker.extend({
             onAdd: function(map) {
-                if (state.isExecutingSetVisible === false) {
-                    state.isAddedExternal = true;
-                }
                 state.map = map;
                 if (state.isVisible) {
                     L.Marker.prototype.onAdd.call(this, map);
@@ -420,9 +415,6 @@ function MapApiMarkerImpl(position, markerOptions) {
                 }
             },
             onRemove: function(map) {
-                if (state.isExecutingSetVisible === false) {
-                    state.isAddedExternal = false;
-                }
                 if (state.isAddedInternal) {
                     L.Marker.prototype.onRemove.call(this, map);
                     state.isAddedInternal = false;
@@ -509,17 +501,15 @@ function MapApiMarkerImpl(position, markerOptions) {
     };
 
     this.setVisible = function (isVisible) {
-        state.isExecutingSetVisible = true;
         state.isVisible = isVisible;
         if (state.map !== undefined) {
-            if (isVisible && state.isAddedExternal) {
+            if (isVisible) {
                 state.impl.remove();
                 state.impl.addTo(state.map);
             } else {
                 state.impl.remove();
             }
         }
-        state.isExecutingSetVisible = false;
     };
 
     this.getPosition = function () {

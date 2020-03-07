@@ -171,11 +171,13 @@ function Trips(master) {
 
         for (var i = 0; i < state.dataStore.getNumberOfTrips(); i++) {
             var tripData = state.dataStore.getTrip(i);
-            if (tripData.gpsMaxSpeed.marker) {
-                tripData.gpsMaxSpeed.marker.setVisible(isVisible);
-            }
-            if (tripData.gpsMaxAltitude.marker) {
-                tripData.gpsMaxAltitude.marker.setVisible(isVisible);
+            if (tripData.visibility === "visible") {
+                if (tripData.gpsMaxSpeed.marker) {
+                    tripData.gpsMaxSpeed.marker.setVisible(isVisible);
+                }
+                if (tripData.gpsMaxAltitude.marker) {
+                    tripData.gpsMaxAltitude.marker.setVisible(isVisible);
+                }
             }
         }
 
