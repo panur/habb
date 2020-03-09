@@ -269,7 +269,7 @@ function MapApiPolylineImpl(path, polylineOptions) {
         return bounds;
     };
 
-    this.computeDistance = function(p1, p2) {
+    this.computeDistance = function (p1, p2) {
         return google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
     };
 

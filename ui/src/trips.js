@@ -59,7 +59,7 @@ function Trips(master) {
 
             if (e.dataTransfer.files.length === 1) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     addDroppedTrip(e.target.result);
                 };
                 reader.readAsText(e.dataTransfer.files[0]);

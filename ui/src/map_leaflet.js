@@ -33,7 +33,7 @@ function MapApiImpl() {
             'zoomControl': false,
             'layers': [state.baseLayers[state.baseLayerName]]
         });
-        state.map.on('baselayerchange', function(event) {
+        state.map.on('baselayerchange', function (event) {
             // https://github.com/Leaflet/Leaflet/issues/2553
             var oldCenter = state.map.getCenter();
             var oldZoom = state.map.getZoom() + getZoomOffset(state.baseLayerName);
@@ -345,7 +345,7 @@ function MapApiPolylineImpl(path, polylineOptions) {
         return impl.getBounds();
     };
 
-    this.computeDistance = function(p1, p2) {
+    this.computeDistance = function (p1, p2) {
         return p1.getImpl().distanceTo(p2.getImpl());
     };
 
@@ -421,14 +421,14 @@ function MapApiMarkerImpl(position, markerOptions) {
             'iconSize': iconSize
         });
         var HideableMarker = L.Marker.extend({
-            onAdd: function(map) {
+            onAdd: function (map) {
                 state.map = map;
                 if (state.isVisible) {
                     L.Marker.prototype.onAdd.call(this, map);
                     state.isAddedInternal = true;
                 }
             },
-            onRemove: function(map) {
+            onRemove: function (map) {
                 if (state.isAddedInternal) {
                     L.Marker.prototype.onRemove.call(this, map);
                     state.isAddedInternal = false;
