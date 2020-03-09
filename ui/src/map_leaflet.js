@@ -128,6 +128,20 @@ function MapApiImpl() {
         return Math.max(zoomOffset, Math.min(zoom, maxZoom + zoomOffset));
     }
 
+    this.addControlElement = function (controlElement, position) {
+        var CustomControl = L.Control.extend({
+            options: {
+                position: position
+            },
+            onAdd: function (map) {
+                L.DomEvent.disableScrollPropagation(controlElement);
+                L.DomEvent.disableClickPropagation(controlElement);
+                return controlElement;
+            }
+        });
+        state.map.addControl(new CustomControl());
+    };
+
     this.resize = function () {
         state.map.invalidateSize();
     };

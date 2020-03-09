@@ -43,13 +43,10 @@ tr.menuItem {
 }
 
 div.tripsControl {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  overflow: hidden;
+  margin: 10px;
   color: #000000;
   box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);
-  z-index: 810;
+  font: initial;
 }
 
 div.showTripsTable {
@@ -80,10 +77,8 @@ div.tripsTable {
 span.hideTripsTable {
   border: 0px;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  right: 0px;
   cursor: pointer;
-  z-index: 810;
 }
 
 table.trips {
@@ -139,6 +134,10 @@ a.progress {
     to {
         opacity: 0.2;
     }
+}
+
+a.control_link {
+  color: #0000FF;
 }
 
 a.real_link:link {

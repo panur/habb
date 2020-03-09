@@ -34,6 +34,16 @@ function MapApiImpl() {
         state.map = new google.maps.Map(mapElement, mapOptions);
     };
 
+    this.addControlElement = function (controlElement, position) {
+        var googlePosition = {
+            'topleft': google.maps.ControlPosition.LEFT_TOP,
+            'topright': google.maps.ControlPosition.RIGHT_TOP,
+            'bottomleft': google.maps.ControlPosition.LEFT_BOTTOM,
+            'bottomright': google.maps.ControlPosition.RIGHT_BOTTOM
+        }[position];
+        state.map.controls[googlePosition].push(controlElement);
+    };
+
     this.resize = function () {
         google.maps.event.trigger(state.map, 'resize');
     };

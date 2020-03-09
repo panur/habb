@@ -25,17 +25,7 @@ function Trips(master) {
         var tripsControl = document.createElement('div');
         tripsControl.id = 'tripsControl';
         tripsControl.className = 'tripsControl';
-        document.getElementById('dynamic_divs').appendChild(tripsControl);
-
-        var tripsTableHide = document.createElement('div');
-        tripsTableHide.id = 'tripsTableHide';
-        tripsTableHide.title = 'Hide trips table';
-        tripsTableHide.onclick = function () {
-            state.isTableShown = false;
-            that.showControl();
-            setTableHideVisibility('hidden');
-        };
-        document.getElementById('dynamic_divs').appendChild(tripsTableHide);
+        master.mapApi.addControlElement(tripsControl, 'topright');
 
         that.showControl();
 
@@ -188,40 +178,54 @@ function Trips(master) {
         var tripsControl = document.getElementById('tripsControl');
 
         if (state.dataStore.isIndexLoaded()) {
-            if (state.isTableShown) {
-                setTableHideVisibility('visible');
-                if (document.getElementById('tripsTable')) {
-                    tripsControl.replaceChild(getTableHeaderElement(),
-                                              document.getElementById('tripsSummary'));
-                    updateTable();
+            if (tripsControl !== null) {
+                if (state.isTableShown) {
+                    if (document.getElementById('tripsTable')) {
+                        tripsControl.replaceChild(getTableHeaderElement(),
+                                                document.getElementById('tripsSummary'));
+                        updateTable();
+                    } else {
+                        tripsControl.innerHTML = '';
+                        tripsControl.appendChild(getTableHideElement());
+                        tripsControl.appendChild(getTableHeaderElement());
+                        tripsControl.appendChild(getTableElement());
+                    }
+                    resizeTable();
                 } else {
+                    var e = document.createElement('div');
+                    e.className = 'showTripsTable';
+                    e.title = 'Show trips';
+                    e.onclick = function () {
+                        state.isTableShown = true;
+                        that.showControl();
+                    };
+                    e.textContent = 'Trips';
                     tripsControl.innerHTML = '';
-                    tripsControl.appendChild(getTableHeaderElement());
-                    tripsControl.appendChild(getTableElement());
+                    tripsControl.appendChild(e);
                 }
-                resizeTable();
-            } else {
-                var e = document.createElement('div');
-                e.className = 'showTripsTable';
-                e.title = 'Show trips';
-                e.onclick = function () {
-                    state.isTableShown = true;
-                    that.showControl();
-                };
-                e.textContent = 'Trips';
-                tripsControl.innerHTML = '';
-                tripsControl.appendChild(e);
             }
         } else {
             var readyEventName = 'indexLoaded';
             master.mapApi.addListener(readyEventName, function () {
                 master.mapApi.removeListeners(readyEventName);
-                that.showControl();
-                showUrlParamsTrips();
+                waitForElement('tripsControl', function () {
+                    that.showControl();
+                    showUrlParamsTrips();
+                });
             });
             state.dataStore.loadIndex(readyEventName);
         }
     };
+
+    function waitForElement(elementId, delayedFunc) {
+        if (document.getElementById(elementId) === null) {
+            setTimeout(function () {
+                waitForElement(elementId, delayedFunc);
+            }, 100);
+        } else {
+            delayedFunc();
+        }
+    }
 
     function resizeTable() {
         var tripsTable = document.getElementById('tripsTableDiv');
@@ -240,15 +244,16 @@ function Trips(master) {
         }
     }
 
-    function setTableHideVisibility(visibility) {
-        var tripsTableHide = document.getElementById('tripsTableHide');
-
-        if (visibility === 'visible') {
-            var hideElement = master.utils.createHideElement('hideTripsTable');
-            tripsTableHide.appendChild(hideElement);
-        } else {
-            tripsTableHide.innerHTML = '';
-        }
+    function getTableHideElement() {
+        var tripsTableHide = document.createElement('div');
+        tripsTableHide.id = 'tripsTableHide';
+        tripsTableHide.title = 'Hide trips table';
+        tripsTableHide.onclick = function () {
+            state.isTableShown = false;
+            that.showControl();
+        };
+        tripsTableHide.appendChild(master.utils.createHideElement('hideTripsTable'));
+        return tripsTableHide;
     }
 
     function getTableHeaderElement() {

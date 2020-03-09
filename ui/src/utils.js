@@ -104,6 +104,7 @@ function Utils() {
     this.createControlElement = function (title, text, handler) {
         var a = document.createElement('a');
 
+        a.className = 'control_link';
         a.title = title;
         a.onclick = onClick;
         a.textContent = text;

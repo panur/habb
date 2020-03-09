@@ -17,6 +17,10 @@ function MapApi() {
         state.maMap.init(mapDivId);
     };
 
+    this.addControlElement = function (controlElement, position) {
+        state.maMap.addControlElement(controlElement, position);
+    };
+
     this.resize = function () {
         state.maMap.resize();
     };
