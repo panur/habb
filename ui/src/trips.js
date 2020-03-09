@@ -175,40 +175,17 @@ function Trips(master) {
     }
 
     this.showControl = function () {
-        var tripsControl = document.getElementById('tripsControl');
-
+        var elementID = 'tripsControl';
         if (state.dataStore.isIndexLoaded()) {
-            if (tripsControl !== null) {
-                if (state.isTableShown) {
-                    if (document.getElementById('tripsTable')) {
-                        tripsControl.replaceChild(getTableHeaderElement(),
-                                                document.getElementById('tripsSummary'));
-                        updateTable();
-                    } else {
-                        tripsControl.innerHTML = '';
-                        tripsControl.appendChild(getTableHideElement());
-                        tripsControl.appendChild(getTableHeaderElement());
-                        tripsControl.appendChild(getTableElement());
-                    }
-                    resizeTable();
-                } else {
-                    var e = document.createElement('div');
-                    e.className = 'showTripsTable';
-                    e.title = 'Show trips';
-                    e.onclick = function () {
-                        state.isTableShown = true;
-                        that.showControl();
-                    };
-                    e.textContent = 'Trips';
-                    tripsControl.innerHTML = '';
-                    tripsControl.appendChild(e);
-                }
+            var tripsControlElement = document.getElementById(elementID);
+            if (tripsControlElement !== null) {
+                updateTripsControlElement(tripsControlElement);
             }
         } else {
             var readyEventName = 'indexLoaded';
             master.mapApi.addListener(readyEventName, function () {
                 master.mapApi.removeListeners(readyEventName);
-                waitForElement('tripsControl', function () {
+                waitForElement(elementID, function () {
                     that.showControl();
                     showUrlParamsTrips();
                 });
@@ -216,6 +193,33 @@ function Trips(master) {
             state.dataStore.loadIndex(readyEventName);
         }
     };
+
+    function updateTripsControlElement(tripsControlElement) {
+        if (state.isTableShown) {
+            if (document.getElementById('tripsTable')) {
+                tripsControlElement.replaceChild(getTableHeaderElement(),
+                                        document.getElementById('tripsSummary'));
+                updateTable();
+            } else {
+                tripsControlElement.innerHTML = '';
+                tripsControlElement.appendChild(getTableHideElement());
+                tripsControlElement.appendChild(getTableHeaderElement());
+                tripsControlElement.appendChild(getTableElement());
+            }
+            resizeTable();
+        } else {
+            var e = document.createElement('div');
+            e.className = 'showTripsTable';
+            e.title = 'Show trips';
+            e.onclick = function () {
+                state.isTableShown = true;
+                that.showControl();
+            };
+            e.textContent = 'Trips';
+            tripsControlElement.innerHTML = '';
+            tripsControlElement.appendChild(e);
+        }
+    }
 
     function waitForElement(elementId, delayedFunc) {
         if (document.getElementById(elementId) === null) {
