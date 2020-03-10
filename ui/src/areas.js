@@ -226,7 +226,8 @@ function Areas(master) {
     }
 
     function updateMapGrid() {
-        var color;
+        state.grid.latPolylines = [];
+        state.grid.lngPolylines = [];
 
         for (var i = 0, lines = 0; i < state.lats.length; i++) {
             for (var j = 0; j < state.lats[i].n; j++) {
@@ -235,7 +236,7 @@ function Areas(master) {
                 for (var k = 0; k <= (state.lats[i].lengthP * state.lngKmPerP); k++) {
                     points.push(state.points[lat][state.lats[i].lngOffsetKm + k]);
                 }
-                color = ((lines++ % state.latKmPerP) === 0) ?
+                var color = ((lines++ % state.latKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
                 var polylineOptions = {
                     'color': color,
@@ -257,7 +258,7 @@ function Areas(master) {
                     points.push(state.points[state.lngs[i].latOffsetKm + k][lng]);
                 }
 
-                color = ((lines++ % state.lngKmPerP) === 0) ?
+                var color = ((lines++ % state.lngKmPerP) === 0) ?
                     state.grid.colors.page : state.grid.colors.km2;
                 var polylineOptions = {
                     'color': color,
