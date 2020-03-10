@@ -203,6 +203,10 @@ function MapApiImpl() {
     this.getMouseEventPixel = function (mouseEvent) {
         return mouseEvent.pixel;
     };
+
+    this.isMouseEventOnMap = function (mouseEvent) {
+        return true;
+    };
 }
 
 function MapApiLatLngImpl(lat, lng) {

@@ -111,6 +111,10 @@ function MapApi() {
     this.getMouseEventPixel = function (mouseEvent) {
         return state.maMap.getMouseEventPixel(mouseEvent);
     };
+
+    this.isMouseEventOnMap = function (mouseEvent) {
+        return state.maMap.isMouseEventOnMap(mouseEvent);
+    };
 }
 
 function MapApiLatLng(impl) {

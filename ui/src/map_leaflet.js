@@ -277,6 +277,10 @@ function MapApiImpl() {
     this.getMouseEventPixel = function (mouseEvent) {
         return mouseEvent.containerPoint;
     };
+
+    this.isMouseEventOnMap = function (mouseEvent) {
+        return mouseEvent.originalEvent.target.id === state.map.getContainer().id;
+    };
 }
 
 function MapApiLatLngImpl(lat, lng) {
@@ -318,9 +322,6 @@ function MapApiPolylineImpl(path, polylineOptions) {
 
     this.addListener = function (eventName, handler) {
         impl.on(eventName, handler);
-        if (eventName === 'click') {
-            impl.on('mouseup', L.DomEvent.stopPropagation);
-        }
     };
 
     this.getPathLength = function () {
@@ -507,11 +508,6 @@ function MapApiMarkerImpl(position, markerOptions) {
 
     this.addListener = function (eventName, handler) {
         L.DomEvent.on(state.symbolElement, eventName, handler);
-        if (eventName === 'click') {
-            L.DomEvent.on(state.symbolElement, 'mouseup', function (mouseEvent) {
-                L.DomEvent.stopPropagation(mouseEvent);
-            });
-        }
     };
 
     this.setVisible = function (isVisible) {

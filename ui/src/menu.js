@@ -26,22 +26,24 @@ function Menu(master) {
         });
 
         master.mapApi.addListener('mouseup', function (mouseEvent) {
-            if (document.getElementById('menu')) {
-                hideMenu();
-            } else {
-                var downDurationMs = Date.now() - downStartTime;
-                if (downDurationMs > 150) {
-                    return; // probably drag or drop but not click
+            if (master.mapApi.isMouseEventOnMap(mouseEvent)) {
+                if (document.getElementById('menu')) {
+                    hideMenu();
+                } else {
+                    var downDurationMs = Date.now() - downStartTime;
+                    if (downDurationMs > 150) {
+                        return; // probably drag or drop but not click
+                    }
+                    if (master.areas.isVisitedAreaEditorActive(mouseEvent)) {
+                        return;
+                    }
+                    var menuItems = ['Open...', 'Areas...', 'Trips...', 'Zoom', 'Home'];
+                    var mouseEventPixel = master.mapApi.getMouseEventPixel(mouseEvent);
+                    var rect = {'top': mouseEventPixel.y, 'bottom': mouseEventPixel.y,
+                                'left': mouseEventPixel.x, 'right': mouseEventPixel.x};
+                    showMenu(master.mapApi.getMouseEventLatLng(mouseEvent), getMenuLocation(rect),
+                            menuItems, 'menu');
                 }
-                if (master.areas.isVisitedAreaEditorActive(mouseEvent)) {
-                    return;
-                }
-                var menuItems = ['Open...', 'Areas...', 'Trips...', 'Zoom', 'Home'];
-                var mouseEventPixel = master.mapApi.getMouseEventPixel(mouseEvent);
-                var rect = {'top': mouseEventPixel.y, 'bottom': mouseEventPixel.y,
-                            'left': mouseEventPixel.x, 'right': mouseEventPixel.x};
-                showMenu(master.mapApi.getMouseEventLatLng(mouseEvent), getMenuLocation(rect),
-                         menuItems, 'menu');
             }
         });
     };
