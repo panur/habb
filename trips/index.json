@@ -1,4 +1,5 @@
 [
+{"gps_data": "2020/20200614.csv",   "visited_data": "2020/20200607.json", "distance": "100", "max_speed": "41.3", "avg_speed": "21.5", "duration": "4:38:38", "color": "#2020C0", "name": "Kaukas"},
 {"gps_data": "2020/20200607.gpx",   "visited_data": "2020/20200101.json", "distance": "79",  "max_speed": "39.7", "avg_speed": "18.8", "duration": "4:12:16", "color": "#600080", "name": "Myllykylä"},
 {"gps_data": "2019/20190915.gpx",   "visited_data": "-",                  "distance": "107", "max_speed": "??.?", "avg_speed": "22.0", "duration": "4:50:30", "color": "#806000", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2019/20190914.gpx",   "visited_data": "-",                  "distance": "106", "max_speed": "41.3", "avg_speed": "22.5", "duration": "4:41:10", "color": "#606060", "name": "Espoo-Hämeenlinna"},
