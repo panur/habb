@@ -58,9 +58,15 @@ function Trips(master) {
             e.preventDefault();
 
             if (e.dataTransfer.files.length === 1) {
+                var filename = e.dataTransfer.files[0].name;
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    addDroppedTrip(e.target.result);
+                    if (filename.endsWith('.gpx')) {
+                        var tripPath = getGpxTripPath(e.target.result)
+                    } else {
+                        var tripPath = getCsvTripPath(e.target.result);
+                    }
+                    addDroppedTrip(tripPath);
                 };
                 reader.readAsText(e.dataTransfer.files[0]);
             } else {
@@ -68,7 +74,7 @@ function Trips(master) {
             }
         }
 
-        function addDroppedTrip(gpxFile) {
+        function getGpxTripPath(gpxFile) {
             var xml = master.utils.parseXml(gpxFile);
             var points = xml.documentElement.getElementsByTagName('trkpt');
             var tripPath = [];
@@ -78,7 +84,26 @@ function Trips(master) {
                 var lng = points[i].getAttribute('lon');
                 tripPath.push(master.mapApi.newLatLng(lat, lng));
             }
+            return tripPath;
+        }
 
+        function getCsvTripPath(csvFile) {
+            var lines = csvFile.split('\n');
+            var tripPath = [];
+
+            for (var i = 1; i < lines.length; i++) {
+                // INDEX,TAG,DATE,TIME,LATITUDE N/S,LONGITUDE E/W,HEIGHT,SPEED,HEADING
+                var columns = lines[i].split(',');
+                if (columns.length > 5) {
+                    var lat = columns[4].slice(0, -1);  // 60.169155N -> 60.169155
+                    var lng = columns[5].slice(0, -1);  // 24.759781E -> 24.759781
+                    tripPath.push(master.mapApi.newLatLng(lat, lng));
+                }
+            }
+            return tripPath;
+        }
+
+        function addDroppedTrip(tripPath) {
             var polylineOptions = {
                 'color': '#000000',
                 'opacity': 0.9,

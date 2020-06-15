@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-"""Convert GPX files into JSON files.
+"""Convert GPX and CSV files into JSON files.
 
 GPX: http://www.topografix.com/gpx.asp
+CSV: https://cbgps.com/p1/support/P-1_Quickstart_EN_V1.0.pdf
 JSON: http://www.json.org/
 
 Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html
@@ -10,6 +11,7 @@ Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html
 
 import argparse
 import codecs
+import csv
 import datetime
 import email.utils
 import json
@@ -26,7 +28,7 @@ import polyline
 
 def _main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('input_dir', help='GPX input directory')
+    parser.add_argument('input_dir', help='GPX/CSV input directory')
     parser.add_argument('output_dir', help='JSON output directory')
     parser.add_argument('--trip-filter', help='Filter processed trips by gps_data (start)')
     args = parser.parse_args()
@@ -61,14 +63,18 @@ def _create_output_files(input_dir, output_dir, trips, trip_filter):
 
     for trip in trips:
         if (trip_filter is None) or trip['gps_data'].startswith(trip_filter):
-            gpx = _parse_gpx_file(os.path.join(input_dir, trip['gps_data']))
-            output_trip = _create_output_trip(trip, gpx)
+            if trip['gps_data'].endswith('csv'):
+                trip_points = _parse_csv_file(os.path.join(input_dir, trip['gps_data']))
+            else:
+                trip_points = _parse_gpx_file(os.path.join(input_dir, trip['gps_data']))
+            output_trip = _create_output_trip(trip, trip_points)
             year = output_trip['date'][0:4]
             if year not in output_trips:
                 output_trips[year] = []
             output_trips[year].append(output_trip)
+            _, ext = os.path.splitext(trip['gps_data'])
             output_filename = os.path.join(output_dir, 'years',
-                                           trip['gps_data'].replace('gpx', 'json'))
+                                           trip['gps_data'].replace(ext, '.json'))
             _write_to_json_file(output_filename, output_trip)
 
     for year in output_trips:
@@ -82,6 +88,26 @@ def _write_to_json_file(output_filename, data):
         os.makedirs(parent_dir)
     with open(output_filename, 'w') as output_file:
         output_file.write(json.dumps(data, separators=(',', ':'), sort_keys=True))
+
+
+def _parse_csv_file(csv_filename):
+    points = []
+    with open(csv_filename) as input_file:
+        # INDEX,TAG,DATE,TIME,LATITUDE N/S,LONGITUDE E/W,HEIGHT,SPEED,HEADING
+        csv_reader = csv.DictReader(input_file)
+        for row in csv_reader:
+            point = {}
+            point['lat'] = row['LATITUDE N/S'][:-1]  # 60.169155N -> 60.169155
+            point['lon'] = row['LONGITUDE E/W'][:-1]  # 24.759781E -> 24.759781
+            point['ele'] = float(row['HEIGHT'])
+            # row['DATE']=200604, row['TIME']=122503 -> point['time']=2020-06-04T12:25:03Z
+            point_dt = datetime.datetime.strptime(row['DATE'] + row['TIME'], '%y%m%d%H%M%S')
+            point['time'] = point_dt.strftime('%Y-%m-%dT%H:%M:%SZ')
+            point['speed'] = float(row['SPEED'])
+            if len(points) > 0:
+                _fill_gap(points, point, True)
+            points.append(point)
+    return points
 
 
 def _parse_gpx_file(gpx_filename):
@@ -125,22 +151,22 @@ def _fill_gap(points, point, print_gaps):
             points.append(fill_point)
 
 
-def _create_output_trip(trip, gpx_points):
+def _create_output_trip(trip, trip_points):
     output_trip = {}
 
-    encoded_polyline = _get_encoded_polyline(gpx_points, trip['visited_data'] != '-')
+    encoded_polyline = _get_encoded_polyline(trip_points, trip['visited_data'] != '-')
 
     output_trip['encodedPolyline'] = encoded_polyline['points']
     output_trip['encodedVertexTimes'] = _get_encoded_vertex_times(
-        gpx_points, encoded_polyline['kept_indexes'])
-    output_trip['date'] = gpx_points[0]['time'][0:10]  # 2009-07-19T10:23:21Z
-    output_trip['gpsDurationSeconds'] = _get_gps_duration_seconds(gpx_points)
+        trip_points, encoded_polyline['kept_indexes'])
+    output_trip['date'] = trip_points[0]['time'][0:10]  # 2009-07-19T10:23:21Z
+    output_trip['gpsDurationSeconds'] = _get_gps_duration_seconds(trip_points)
     output_trip['gpsDuration'] = _get_gps_duration(output_trip['gpsDurationSeconds'])
-    output_trip['gpsDistance'] = _get_gps_distance(gpx_points)
-    output_trip['gpsMaxSpeed'] = _get_max_speed(gpx_points)
-    output_trip['gpsMaxAltitude'] = _get_max_altitude(gpx_points)
-    output_trip['encodedGpsSpeedData'] = _get_encoded_gps_data(gpx_points, 'speed', scale=1)
-    output_trip['encodedGpsAltitudeData'] = _get_encoded_gps_data(gpx_points, 'ele', scale=2)
+    output_trip['gpsDistance'] = _get_gps_distance(trip_points)
+    output_trip['gpsMaxSpeed'] = _get_max_speed(trip_points)
+    output_trip['gpsMaxAltitude'] = _get_max_altitude(trip_points)
+    output_trip['encodedGpsSpeedData'] = _get_encoded_gps_data(trip_points, 'speed', scale=1)
+    output_trip['encodedGpsAltitudeData'] = _get_encoded_gps_data(trip_points, 'ele', scale=2)
 
     output_trip['visibility'] = 'hidden'
     output_trip['visitedDataFilename'] = 'visited_datas/' + trip['visited_data']
@@ -151,24 +177,23 @@ def _create_output_trip(trip, gpx_points):
     output_trip['ccMaxSpeed'] = trip['max_speed']
     output_trip['ccAvgSpeed'] = trip['avg_speed']
 
-    _log_stats(trip, output_trip, gpx_points, encoded_polyline)
+    _log_stats(trip, output_trip, trip_points, encoded_polyline)
 
     return output_trip
 
 
-def _get_encoded_polyline(gpx_points, is_hq):
+def _get_encoded_polyline(trip_points, is_hq):
     very_small = {True: 0.000005, False: 0.00002}[is_hq]
     points = []
-    for point in gpx_points:
+    for point in trip_points:
         points.append((float(point['lat']), float(point['lon'])))
     return polyline.encode(points, very_small=very_small)
 
 
-def _get_encoded_vertex_times(gpx_points, kept_indexes):
+def _get_encoded_vertex_times(trip_points, kept_indexes):
     vertex_times = [0]  # seconds since start
-
-    for i in range(len(kept_indexes)):
-        vertex_times.append(_get_duration_seconds(gpx_points[0], gpx_points[kept_indexes[i]]))
+    for kept_index in kept_indexes:
+        vertex_times.append(_get_duration_seconds(trip_points[0], trip_points[kept_index]))
 
     return _integer_list_to_string(_get_delta_list(vertex_times))
 
@@ -198,14 +223,14 @@ def _integer_list_to_string(integer_list):
     return output_string
 
 
-def _get_gps_duration_seconds(gpx_points):
-    return _get_duration_seconds(gpx_points[0], gpx_points[-1])
+def _get_gps_duration_seconds(trip_points):
+    return _get_duration_seconds(trip_points[0], trip_points[-1])
 
 
-def _get_duration_seconds(gpx_point_start, gpx_point_end):
+def _get_duration_seconds(trip_point_start, trip_point_end):
     date_format = '%Y-%m-%dT%H:%M:%SZ'
-    start = datetime.datetime.strptime(gpx_point_start['time'], date_format)
-    end = datetime.datetime.strptime(gpx_point_end['time'], date_format)
+    start = datetime.datetime.strptime(trip_point_start['time'], date_format)
+    end = datetime.datetime.strptime(trip_point_end['time'], date_format)
     return (end - start).seconds
 
 
@@ -213,12 +238,12 @@ def _get_gps_duration(gps_duration_seconds):
     return time.strftime('%H:%M:%S', time.gmtime(gps_duration_seconds))
 
 
-def _get_gps_distance(gpx_points):
+def _get_gps_distance(trip_points):
     total_distance = 0
-    for i in range(len(gpx_points) - 1):
-        distance = _get_distance(gpx_points[i], gpx_points[i + 1])
+    for i in range(len(trip_points) - 1):
+        distance = _get_distance(trip_points[i], trip_points[i + 1])
         if distance > 1000:
-            print('gap of {} meters before {}'.format(int(distance), gpx_points[i + 1]['time']))
+            print('gap of {} meters before {}'.format(int(distance), trip_points[i + 1]['time']))
         else:
             total_distance += distance
     return _round(total_distance / 1000)
@@ -246,22 +271,22 @@ def _get_radians(lat_or_lng):
     return (float(lat_or_lng) * math.pi) / 180
 
 
-def _get_max_speed(gpx_points):
-    max_speed = _get_max_gpx_point(gpx_points, 'speed')
+def _get_max_speed(trip_points):
+    max_speed = _get_max_trip_point(trip_points, 'speed')
     max_speed['value'] = str(_round(max_speed['value'] * 10) / 10)
     return max_speed
 
 
-def _get_max_altitude(gpx_points):
-    max_altitude = _get_max_gpx_point(gpx_points, 'ele')
+def _get_max_altitude(trip_points):
+    max_altitude = _get_max_trip_point(trip_points, 'ele')
     max_altitude['value'] = _round(max_altitude['value'])
     return max_altitude
 
 
-def _get_max_gpx_point(gpx_points, element):
+def _get_max_trip_point(trip_points, element):
     max_element = {'value': 0, 'lat': None, 'lon': None}
 
-    for point in gpx_points:
+    for point in trip_points:
         if point[element] > max_element['value']:
             max_element['value'] = point[element]
             max_element['lat'] = point['lat']
@@ -270,16 +295,16 @@ def _get_max_gpx_point(gpx_points, element):
     return max_element
 
 
-def _get_encoded_gps_data(gpx_points, element, scale):
+def _get_encoded_gps_data(trip_points, element, scale):
     gps_data = []
     max_length = 2000
     tmp_array = []
 
-    for point in gpx_points:
+    for point in trip_points:
         tmp_array.append(max(point[element] / scale, 0))
 
-    if len(gpx_points) <= max_length:
-        for i in range(len(gpx_points)):
+    if len(trip_points) <= max_length:
+        for i in range(len(trip_points)):
             gps_data.append(_round(tmp_array[i]))
     else:
         _downsample_array(tmp_array, gps_data, max_length)
@@ -314,20 +339,19 @@ def _downsample_array(original_array, new_array, new_size):
 def _round(number):
     if number > 0:
         return int(math.floor((number + 0.5)))
-    else:
-        return int(math.ceil((number - 0.5)))
+    return int(math.ceil((number - 0.5)))
 
 
-def _log_stats(trip, output_trip, gpx_points, encoded_polyline):
+def _log_stats(trip, output_trip, trip_points, encoded_polyline):
     format_str = (u'{} ({}) - points: [total={}, kept={}, dropped={} ({} %)]; '
                   'bytes: [polyline={} ({}/point), speed={}, ele={}, times={}]')
 
-    drop_ratio = int((encoded_polyline['num_dropped_points'] / float(len(gpx_points))) * 100)
-    kept_points = len(gpx_points) - encoded_polyline['num_dropped_points']
+    drop_ratio = int((encoded_polyline['num_dropped_points'] / float(len(trip_points))) * 100)
+    kept_points = len(trip_points) - encoded_polyline['num_dropped_points']
     polyline_ratio = round(len(encoded_polyline['points']) / float(kept_points), 2)
 
     logging.debug(format_str.format(
-        trip['name'], trip['gps_data'], len(gpx_points), kept_points,
+        trip['name'], trip['gps_data'], len(trip_points), kept_points,
         encoded_polyline['num_dropped_points'], drop_ratio, len(encoded_polyline['points']),
         polyline_ratio, len(output_trip['encodedGpsSpeedData']),
         len(output_trip['encodedGpsAltitudeData']), len(output_trip['encodedVertexTimes'])))
@@ -374,7 +398,8 @@ def _get_index_trip_filename(input_index_trips, index_trip):
     for input_index_trip in input_index_trips:
         if ((input_index_trip['color'] == index_trip['color']) and
                 (input_index_trip['name'] == index_trip['name'])):
-            filename = input_index_trip['gps_data'].replace('.gpx', '')
+            _, ext = os.path.splitext(input_index_trip['gps_data'])
+            filename = input_index_trip['gps_data'].replace(ext, '')
             break
     return filename
 
