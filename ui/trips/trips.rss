@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 21 Jun 2020 06:09:30 -0000</lastBuildDate>
+<lastBuildDate>Mon, 27 Jul 2020 08:24:17 -0000</lastBuildDate>
+<item>
+  <title>Pilpala</title>
+  <description>2020-07-26, 115 km</description>
+  <link>https://14142.net/habb/map.html?t=20200726</link>
+  <guid>https://14142.net/habb/map.html?t=20200726</guid>
+  <pubDate>Sun, 26 Jul 2020 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Emäsalo</title>
   <description>2020-06-20, 122 km</description>

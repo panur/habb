@@ -1,4 +1,5 @@
 [
+{"gps_data": "2020/20200726.csv",   "visited_data": "2020/20200620.json", "distance": "115", "max_speed": "49.1", "avg_speed": "19.5", "duration": "5:54:20", "color": "#608040", "name": "Pilpala"},
 {"gps_data": "2020/20200620.csv",   "visited_data": "2020/20200614.json", "distance": "122", "max_speed": "42.7", "avg_speed": "21.8", "duration": "5:36:04", "color": "#604020", "name": "Emäsalo"},
 {"gps_data": "2020/20200614.csv",   "visited_data": "2020/20200607.json", "distance": "100", "max_speed": "41.3", "avg_speed": "21.5", "duration": "4:38:38", "color": "#2020C0", "name": "Kaukas"},
 {"gps_data": "2020/20200607.gpx",   "visited_data": "2020/20200101.json", "distance": "79",  "max_speed": "39.7", "avg_speed": "18.8", "duration": "4:12:16", "color": "#600080", "name": "Myllykylä"},
