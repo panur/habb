@@ -9,13 +9,20 @@ function UiMap(master) {
     function getState() {
         var s = {};
 
-        s.initialStatistics = document.getElementById('statistics').innerHTML;
+        s.initialStatistics = getInitialStatistics();
 
         s.initialZL = 9;
         s.initialLatLng = master.mapApi.newLatLng(60.336098, 24.902051);
         s.zoomToPointZoomLevel = 14;
 
         return s;
+    }
+
+    function getInitialStatistics() {
+        var element = document.getElementById('statistics');
+        var aElement = document.getElementById('map_link');
+        aElement.href += (new URL(document.URL)).search;
+        return element.innerHTML;
     }
 
     this.init = function () {

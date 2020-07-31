@@ -34,6 +34,7 @@ function Trips(master) {
         master.mapApi.addListener('uiMapInitIsReady', function () {
             state.isUiMapInitReady = true;
             showUrlParamsTrips();
+            showUrlParamsRoute();
         });
     };
 
@@ -66,25 +67,17 @@ function Trips(master) {
                     } else {
                         var tripPath = getCsvTripPath(e.target.result);
                     }
-                    addDroppedTrip(tripPath);
+                    var polylineOptions = {
+                        'color': '#000000',
+                        'opacity': 0.9,
+                        'weight': 3
+                    };
+                    addTripToMap(tripPath, polylineOptions);
                 };
                 reader.readAsText(e.dataTransfer.files[0]);
             } else {
                 alert('Please drop only one file at a time.');
             }
-        }
-
-        function getGpxTripPath(gpxFile) {
-            var xml = master.utils.parseXml(gpxFile);
-            var points = xml.documentElement.getElementsByTagName('trkpt');
-            var tripPath = [];
-
-            for (var i = 0; i < points.length; i++) {
-                var lat = points[i].getAttribute('lat');
-                var lng = points[i].getAttribute('lon');
-                tripPath.push(master.mapApi.newLatLng(lat, lng));
-            }
-            return tripPath;
         }
 
         function getCsvTripPath(csvFile) {
@@ -102,18 +95,27 @@ function Trips(master) {
             }
             return tripPath;
         }
+    }
 
-        function addDroppedTrip(tripPath) {
-            var polylineOptions = {
-                'color': '#000000',
-                'opacity': 0.9,
-                'weight': 3
-            };
-            var tripPolyline = master.mapApi.newPolyline(tripPath, polylineOptions);
-            console.info('trip length (m): ' + Math.round(tripPolyline.computeLength()));
-            master.areas.setVisitedAreaOpacityToLow();
-            master.mapApi.addOrRemoveOverlays(tripPolyline, 'add');
+    function getGpxTripPath(gpxFile) {
+        var xml = master.utils.parseXml(gpxFile);
+        var points = xml.documentElement.getElementsByTagName('trkpt');
+        var tripPath = [];
+
+        for (var i = 0; i < points.length; i++) {
+            var lat = points[i].getAttribute('lat');
+            var lng = points[i].getAttribute('lon');
+            tripPath.push(master.mapApi.newLatLng(lat, lng));
         }
+        return tripPath;
+    }
+
+    function addTripToMap(tripPath, polylineOptions) {
+        var tripPolyline = master.mapApi.newPolyline(tripPath, polylineOptions);
+        console.info('trip length (m): ' + Math.round(tripPolyline.computeLength()));
+        master.areas.setVisitedAreaOpacityToLow();
+        master.mapApi.addOrRemoveOverlays(tripPolyline, 'add');
+        master.mapApi.fitBounds(tripPolyline.getBounds());
     }
 
     function showUrlParamsTrips() {
@@ -142,6 +144,20 @@ function Trips(master) {
                 showOneUrlParamsTrip(tripsToShow);
             });
             state.dataStore.loadSingleTrip(tripsToShow[tripsToShow.length - 1], readyEventName);
+        }
+    }
+
+    function showUrlParamsRoute() {
+        var routeFile = master.utils.getUrlParams()['r'];
+        if ((routeFile !== undefined) && (routeFile.match(/^\w+$/))) {
+            master.utils.downloadUrl('routes/' + routeFile + '.gpx', function (data, responseCode) {
+                var polylineOptions = {
+                    'color': '#0000FF',
+                    'opacity': 0.7,
+                    'weight': 3
+                };
+                addTripToMap(getGpxTripPath(data), polylineOptions);
+            });
         }
     }
 
