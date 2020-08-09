@@ -1,4 +1,5 @@
 [
+{"gps_data": "2020/20200808.csv",   "visited_data": "-",                  "distance": "94",  "max_speed": "42.1", "avg_speed": "23.0", "duration": "4:04:18", "color": "#406080", "name": "Kehä III"},
 {"gps_data": "2020/20200802.csv",   "visited_data": "-",                  "distance": "105", "max_speed": "36.7", "avg_speed": "21.8", "duration": "4:48:24", "color": "#206060", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2020/20200801.csv",   "visited_data": "-",                  "distance": "105", "max_speed": "39.5", "avg_speed": "20.2", "duration": "5:10:48", "color": "#602060", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2020/20200726.csv",   "visited_data": "2020/20200620.json", "distance": "115", "max_speed": "49.1", "avg_speed": "19.5", "duration": "5:54:20", "color": "#608040", "name": "Pilpala"},
