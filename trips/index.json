@@ -1,4 +1,5 @@
 [
+{"gps_data": "2020/20200829.csv",   "visited_data": "2020/20200823.json", "distance": "109", "max_speed": "42.0", "avg_speed": "21.0", "duration": "5:09:59", "color": "#206040", "name": "Pukkila"},
 {"gps_data": "2020/20200823.csv",   "visited_data": "2020/20200726.json", "distance": "116", "max_speed": "39.9", "avg_speed": "20.9", "duration": "5:31:34", "color": "#402060", "name": "Askola"},
 {"gps_data": "2020/20200808.csv",   "visited_data": "-",                  "distance": "94",  "max_speed": "42.1", "avg_speed": "23.0", "duration": "4:04:18", "color": "#406080", "name": "Kehä III"},
 {"gps_data": "2020/20200802.csv",   "visited_data": "-",                  "distance": "105", "max_speed": "36.7", "avg_speed": "21.8", "duration": "4:48:24", "color": "#206060", "name": "Hämeenlinna-Espoo"},
