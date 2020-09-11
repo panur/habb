@@ -5,11 +5,14 @@ use strict;
 
 my $lat_start = 6660000;
 my $lng_start = 2510000;
+# 10k: my $lng_start = 2502000;
 
 my $lat_lng_mult = 1000;
 
-my $lats = 66;
-my $lngs = 81;
+my $lats = 66;  # (66 - 1) / 5 = 13 pages
+my $lngs = 81;  # (81 - 1) / 4 = 20 pages
+# 10k: my $lats = 106;  # (106 - 1) / 5 = 21 pages
+# 10k: my $lngs = 97;  # (97 - 1) / 4 = 24 pages
 
 my $kkj_lat = 0;
 my $kkj_lng = 0;

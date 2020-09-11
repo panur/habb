@@ -4,12 +4,12 @@
 
 function Areas(master) {
     var that = this;
-    var state = getState(true);
+    var state = getState('extended');
 
-    function getState(isExtensionsShown) {
+    function getState(gridType) {
         var s = {};
 
-        s.isExtensionsShown = isExtensionsShown;
+        s.gridType = gridType;
         s.isShown = true;
         s.isVisitedAreaEditorActive = false;
         s.visitedAreaEditorEventListener = null;
@@ -55,36 +55,37 @@ function Areas(master) {
             'kkj': '-'
         };
         s.latKmPerP = 5;
-        s.latPages = 7;
         s.lngKmPerP = 4;
-        s.lngPages = 9;
-        s.kkjStart = {'lat': 65, 'lng': 30};
         s.kkjOffset = {'lat': -1, 'lng': -1}; /* will be read from file */
 
-        s.lats = [{'n': 5,  'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 2},
-                  {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 8},
-                  {'n': 11, 'lngOffsetKm': 0,  'latOffsetKm': 10, 'lengthP': 9},
-                  {'n': 10, 'lngOffsetKm': 4,  'latOffsetKm': 21, 'lengthP': 8},
-                  {'n': 5,  'lngOffsetKm': 12, 'latOffsetKm': 31, 'lengthP': 2},
-                  {'n': 5,  'lngOffsetKm': 24, 'latOffsetKm': 31, 'lengthP': 2}];
+        if (s.gridType === 'original') {
+            s.latPages = 7;
+            s.lngPages = 9;
+            s.kkjStart = {'lat': 65, 'lng': 30};
 
-        s.lngs = [{'n': 4, 'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 3},
-                  {'n': 8, 'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 6},
-                  {'n': 1, 'lngOffsetKm': 12, 'latOffsetKm': 0,  'lengthP': 7},
-                  {'n': 8, 'lngOffsetKm': 13, 'latOffsetKm': 5,  'lengthP': 6},
-                  {'n': 3, 'lngOffsetKm': 21, 'latOffsetKm': 5,  'lengthP': 5},
-                  {'n': 9, 'lngOffsetKm': 24, 'latOffsetKm': 5,  'lengthP': 6},
-                  {'n': 4, 'lngOffsetKm': 33, 'latOffsetKm': 10, 'lengthP': 4}];
+            s.lats = [{'n': 5,  'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 2},
+                      {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 8},
+                      {'n': 11, 'lngOffsetKm': 0,  'latOffsetKm': 10, 'lengthP': 9},
+                      {'n': 10, 'lngOffsetKm': 4,  'latOffsetKm': 21, 'lengthP': 8},
+                      {'n': 5,  'lngOffsetKm': 12, 'latOffsetKm': 31, 'lengthP': 2},
+                      {'n': 5,  'lngOffsetKm': 24, 'latOffsetKm': 31, 'lengthP': 2}];
 
-        s.pages = ['0',  '1',  '2',  '0',  '0',  '0',  '0',  '0',  '0',
-                   '3',  '4',  '5',  '6',  '7',  '8',  '9', '10',  '0',
-                  '11', '12', '13', '14', '15', '16', '17', '18', '19',
-                  '20', '21', '22', '23', '24', '25', '26', '27', '28',
-                   '0', '29', '30', '31', '32', '33', '34', '35', '36',
-                   '0', '37', '38', '39', '40', '41', '42', '43', '44',
-                   '0',  '0',  '0', '45', '46',  '0', '47', '48'];
+            s.lngs = [{'n': 4, 'lngOffsetKm': 0,  'latOffsetKm': 5,  'lengthP': 3},
+                      {'n': 8, 'lngOffsetKm': 4,  'latOffsetKm': 0,  'lengthP': 6},
+                      {'n': 1, 'lngOffsetKm': 12, 'latOffsetKm': 0,  'lengthP': 7},
+                      {'n': 8, 'lngOffsetKm': 13, 'latOffsetKm': 5,  'lengthP': 6},
+                      {'n': 3, 'lngOffsetKm': 21, 'latOffsetKm': 5,  'lengthP': 5},
+                      {'n': 9, 'lngOffsetKm': 24, 'latOffsetKm': 5,  'lengthP': 6},
+                      {'n': 4, 'lngOffsetKm': 33, 'latOffsetKm': 10, 'lengthP': 4}];
 
-        if (s.isExtensionsShown) {
+            s.pages = ['0',  '1',  '2',  '0',  '0',  '0',  '0',  '0',  '0',
+                       '3',  '4',  '5',  '6',  '7',  '8',  '9', '10',  '0',
+                      '11', '12', '13', '14', '15', '16', '17', '18', '19',
+                      '20', '21', '22', '23', '24', '25', '26', '27', '28',
+                       '0', '29', '30', '31', '32', '33', '34', '35', '36',
+                       '0', '37', '38', '39', '40', '41', '42', '43', '44',
+                       '0',  '0',  '0', '45', '46',  '0', '47', '48'];
+        } else {  // extended or 10k
             s.filenames.points = 'generated_points_ext.json';
             s.latPages = 13;
             s.lngPages = 20;
@@ -117,9 +118,52 @@ function Areas(master) {
                        '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '128', '134', '159',
                        '135', '136', '137', '138', '139', '140', '141', '142', '143', '144', '145', '146', '147', '148', '149', '150', '151', '152', '153', '160',
                        '161', '162', '163', '164', '165', '166', '167', '168', '169', '170', '171', '172', '173', '174', '175', '176', '177', '178', '179', '180'];
+
+            if (s.gridType === '10k') {
+                var extendedPages = getExtendedPages(s);
+                s.filenames.points = 'generated_points_10k.json';
+                s.latPages = 21;
+                s.lngPages = 24;
+                s.kkjStart = {'lat': 60, 'lng': 2};
+                s.lats = [{'n': 106, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 24}];
+                s.lngs = [{'n': 97, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 21}];
+                s.pages = get10kPages(s, extendedPages);
+            }
         }
 
         return s;
+    }
+
+    function getExtendedPages(state) {
+        var extendedPages = new Map();
+        for (var lat = 0; lat < state.latPages; lat++) {
+            for (var lng = 0; lng < state.lngPages; lng++) {
+                var key = getPageMapKey(state, lat, lng);
+                extendedPages.set(key, state.pages[(lat * state.lngPages) + lng]);
+            }
+        }
+        return extendedPages;
+    }
+
+    function getPageMapKey(state, lat, lng) {
+        return (state.kkjStart.lat + (lat * state.latKmPerP)) + '/' +
+            (state.kkjStart.lng + (lng * state.lngKmPerP));
+    }
+
+    function get10kPages(state, extendedPages) {
+        var pages = [];
+        for (var lat = 0; lat < state.latPages; lat++) {
+            for (var lng = 0; lng < state.lngPages; lng++) {
+                var key = getPageMapKey(state, lat, lng);
+                if (extendedPages.has(key)) {
+                    var pageValue = extendedPages.get(key);
+                } else {
+                    var pageValue = '?';
+                }
+                pages.push(pageValue);
+            }
+        }
+        return pages;
     }
 
     this.init = function () {
@@ -192,7 +236,7 @@ function Areas(master) {
 
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i]['visited'] === 'all') {
-                    if ((state.isExtensionsShown) || (pages[i]['page'] < 49)) {
+                    if ((state.gridType !== 'original') || (pages[i]['page'] < 49)) {
                         allInPage.push(pages[i]['page']);
                     }
                 }
@@ -215,7 +259,7 @@ function Areas(master) {
                     var y = parseInt(pages[i]['lat']) - state.kkjStart.lat;
                     var x = parseInt(pages[i]['lng']) - state.kkjStart.lng;
 
-                    if ((state.isExtensionsShown) || (pages[i]['page'] < 49)) {
+                    if ((state.gridType !== 'original') || (pages[i]['page'] < 49)) {
                         state.km2s[y][x].visited = pages[i]['visited'];
                     }
                 }
@@ -698,13 +742,13 @@ function Areas(master) {
         }
     };
 
-    function toggleExtensionsVisibility() {
+    function changeGridType(newGridType) {
         var opacity = state.area.opacity;
         var visitedData = state.filenames.visitedData;
 
         removeOverlaysFromMap();
 
-        state = getState(!(state.isExtensionsShown));
+        state = getState(newGridType);
         state.area.opacity = opacity;
         state.filenames.visitedData = visitedData;
 
@@ -735,16 +779,23 @@ function Areas(master) {
                 menuItems.push('Increase opacity');
             }
 
-            if (state.isExtensionsShown) {
-                menuItems.push('Hide extensions');
-            } else {
-                menuItems.push('Show extensions');
-            }
-
+            menuItems.push('Change grid...');
             menuItems.push('Edit visited...');
             menuItems.push('View...');
         } else {
             menuItems.push('Show');
+        }
+
+        return menuItems;
+    };
+
+    this.getChangeGridMenuItems = function () {
+        var menuItems = [];
+
+        for (var gridType of ['original', 'extended', '10k']) {
+            if (state.gridType !== gridType) {
+                menuItems.push(gridType);
+            }
         }
 
         return menuItems;
@@ -869,8 +920,8 @@ function Areas(master) {
             toggleVisibility();
         } else if ((command === 'Decrease opacity') || (command === 'Increase opacity')) {
             toggleOpacity();
-        } else if ((command === 'Hide extensions') || (command === 'Show extensions')) {
-            toggleExtensionsVisibility();
+        } else if ((command === 'original') || (command === 'extended') || (command === '10k')) {
+            changeGridType(command);
         } else if (command === 'start') {
             startVisitedAreaEditor();
         } else if (command === 'stop') {

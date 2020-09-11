@@ -1,11 +1,19 @@
-./gen_kkjs.pl | unix2dos > generated_kkjs.txt
+1: ./gen_kkjs.pl | unix2dos > generated_kkjs.txt
+
+2a:
 
 EurefMuunnos.exe:
-  Lähtötiedosto: generated_kkjs.txt
+  LÃ¤htÃ¶tiedosto: generated_kkjs.txt
   Muunnostaulu tiedostoon: generated_wgs84s_.txt
 
-UltraEdit (tyhjät rivit!):
+Text editor (tyhjÃ¤t rivit!):
   input: generated_wgs84s_.txt
   output: generated_wgs84s.txt
 
-./gen_kkjs.pl generated_wgs84s.txt > generated_points.xml
+2b:
+
+https://kartta.paikkatietoikkuna.fi/ (koordinaattimuunnos):
+  input: generated_kkjs.txt
+  output: generated_wgs84s.txt
+
+3: ./gen_kkjs.pl generated_wgs84s.txt > generated_points.json

@@ -142,6 +142,8 @@ function Menu(master) {
                                         'Google Maps', 'HERE Maps', 'Bing Maps', 'OpenStreetMap'];
                     } else if (rowElement.textContent === 'Areas...') {
                         subMenuItems = master.areas.getMenuItems();
+                    } else if (rowElement.textContent === 'Change grid...') {
+                        subMenuItems = master.areas.getChangeGridMenuItems();
                     } else if (rowElement.textContent === 'Edit visited...') {
                         subMenuItems = master.areas.getEditMenuItems();
                     } else if (rowElement.textContent === 'View...') {
@@ -179,6 +181,7 @@ function Menu(master) {
                     if (state.selectedParentMenuItem === 'Open...') {
                         master.uiMap.openOtherMap(rowElement.textContent, latLng);
                     } else if ((state.selectedParentMenuItem === 'Areas...') ||
+                               (state.selectedParentMenuItem === 'Change grid...') ||
                                (state.selectedParentMenuItem === 'Edit visited...') ||
                                (state.selectedParentMenuItem === 'View...')) {
                         master.areas.processMenuCommand(rowElement.textContent);
