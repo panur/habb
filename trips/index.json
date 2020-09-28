@@ -1,4 +1,5 @@
 [
+{"gps_data": "2020/20200927.csv",   "visited_data": "-",                  "distance": "105", "max_speed": "53.1", "avg_speed": "23.6", "duration": "4:26:21", "color": "#602040", "name": "Kärkölä"},
 {"gps_data": "2020/20200920.csv",   "visited_data": "2020/20200906.json", "distance": "108", "max_speed": "42.7", "avg_speed": "19.4", "duration": "5:33:23", "color": "#806040", "name": "Petkelsuo"},
 {"gps_data": "2020/20200906.csv",   "visited_data": "2020/20200829.json", "distance": "124", "max_speed": "42.5", "avg_speed": "18.4", "duration": "6:41:54", "color": "#204060", "name": "Kytäjä"},
 {"gps_data": "2020/20200829.csv",   "visited_data": "2020/20200823.json", "distance": "109", "max_speed": "42.0", "avg_speed": "21.0", "duration": "5:09:59", "color": "#206040", "name": "Pukkila"},
