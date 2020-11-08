@@ -1,0 +1,3 @@
+/gpx2json/**/*.pyc
+/tmp/
+/ui/trips/years/**/*.json
