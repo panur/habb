@@ -67,8 +67,9 @@ function MapApiImpl() {
 
     function getNlsBaseLayer(layerType) {
         var licenceUrl = 'https://www.maanmittauslaitos.fi/avoindata-lisenssi-cc40';
+        var apiKey = '6fd5e210-df61-41c3-b827-74691975b103';
         var urlTemplate = 'https://avoin-karttakuva.maanmittauslaitos.fi/avoin/wmts/1.0.0/' +
-            '{layerType}/default/ETRS-TM35FIN/{z}/{y}/{x}.png';
+            '{layerType}/default/ETRS-TM35FIN/{z}/{y}/{x}.png?api-key=' + apiKey;
         return L.tileLayer(urlTemplate, {
             'customOptions': {'zoomOffset': 3},
             'layerType': layerType,
