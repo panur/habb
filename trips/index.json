@@ -1,4 +1,5 @@
 [
+{"gps_data": "2021/20210529.csv",   "visited_data": "2021/20210523.json", "distance": "109", "max_speed": "42.9", "avg_speed": "19.5", "duration": "5:35:46", "color": "#2020FF", "name": "Mäntsälä"},
 {"gps_data": "2021/20210523.csv",   "visited_data": "2021/20210516.json", "distance": "101", "max_speed": "39.1", "avg_speed": "19.7", "duration": "5:07:40", "color": "#802060", "name": "Päivölä"},
 {"gps_data": "2021/20210516.csv",   "visited_data": "2021/20210101.json", "distance": "95",  "max_speed": "43.2", "avg_speed": "18.4", "duration": "5:09:40", "color": "#408060", "name": "Hirvijärvi"},
 {"gps_data": "2020/20200927.csv",   "visited_data": "-",                  "distance": "105", "max_speed": "53.1", "avg_speed": "23.6", "duration": "4:26:21", "color": "#602040", "name": "Kärkölä"},
