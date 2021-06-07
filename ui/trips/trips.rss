@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 29 May 2021 17:26:54 -0000</lastBuildDate>
+<lastBuildDate>Mon, 07 Jun 2021 17:19:36 -0000</lastBuildDate>
+<item>
+  <title>Loppijärvi</title>
+  <description>2021-06-06, 123 km</description>
+  <link>https://14142.net/habb/map.html?t=20210606</link>
+  <guid>https://14142.net/habb/map.html?t=20210606</guid>
+  <pubDate>Sun, 06 Jun 2021 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Mäntsälä</title>
   <description>2021-05-29, 109 km</description>
