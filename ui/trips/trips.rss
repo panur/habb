@@ -5,7 +5,21 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 07 Jun 2021 17:19:36 -0000</lastBuildDate>
+<lastBuildDate>Sun, 25 Jul 2021 18:00:48 -0000</lastBuildDate>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2021-07-25, 102 km</description>
+  <link>https://14142.net/habb/map.html?t=20210725</link>
+  <guid>https://14142.net/habb/map.html?t=20210725</guid>
+  <pubDate>Sun, 25 Jul 2021 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2021-07-24, 102 km</description>
+  <link>https://14142.net/habb/map.html?t=20210724</link>
+  <guid>https://14142.net/habb/map.html?t=20210724</guid>
+  <pubDate>Sat, 24 Jul 2021 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Loppijärvi</title>
   <description>2021-06-06, 123 km</description>
