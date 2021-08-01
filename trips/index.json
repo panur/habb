@@ -1,4 +1,5 @@
 [
+{"gps_data": "2021/20210731.csv",   "visited_data": "2021/20210606.json", "distance": "107", "max_speed": "45.8", "avg_speed": "21.0", "duration": "5:06:29", "color": "#604080", "name": "Pukkila"},
 {"gps_data": "2021/20210725.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "39.3", "avg_speed": "23.1", "duration": "4:25:07", "color": "#202020", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2021/20210724.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "41.6", "avg_speed": "22.6", "duration": "4:30:03", "color": "#202040", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2021/20210606.csv",   "visited_data": "2021/20210529.json", "distance": "123", "max_speed": "46.0", "avg_speed": "20.7", "duration": "5:55:26", "color": "#602080", "name": "Loppijärvi"},
