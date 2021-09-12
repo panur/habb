@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 29 Aug 2021 16:56:20 -0000</lastBuildDate>
+<lastBuildDate>Sun, 12 Sep 2021 04:47:47 -0000</lastBuildDate>
+<item>
+  <title>Punelia</title>
+  <description>2021-09-11, 122 km</description>
+  <link>https://14142.net/habb/map.html?t=20210911</link>
+  <guid>https://14142.net/habb/map.html?t=20210911</guid>
+  <pubDate>Sat, 11 Sep 2021 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kråkö</title>
   <description>2021-08-29, 133 km</description>
