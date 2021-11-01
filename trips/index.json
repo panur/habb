@@ -1,4 +1,5 @@
 [
+{"gps_data": "2021/20211031.csv",   "visited_data": "2021/20211028.json", "distance": "88",  "max_speed": "40.9", "avg_speed": "17.7", "duration": "4:56:49", "color": "#00A060", "name": "Kaidanpää"},
 {"gps_data": "2021/20211028.csv",   "visited_data": "2021/20210911.json", "distance": "72",  "max_speed": "43.7", "avg_speed": "19.4", "duration": "3:40:32", "color": "#00A040", "name": "Immula"},
 {"gps_data": "2021/20211010.csv",   "visited_data": "-",                  "distance": "99",  "max_speed": "38.9", "avg_speed": "20.0", "duration": "4:55:45", "color": "#202000", "name": "Kehä III"},
 {"gps_data": "2021/20210911.csv",   "visited_data": "2021/20210829.json", "distance": "122", "max_speed": "40.3", "avg_speed": "19.9", "duration": "6:06:15", "color": "#00A020", "name": "Punelia"},
