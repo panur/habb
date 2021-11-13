@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 01 Nov 2021 18:19:08 -0000</lastBuildDate>
+<lastBuildDate>Sat, 13 Nov 2021 17:59:53 -0000</lastBuildDate>
+<item>
+  <title>Ridasjärvi</title>
+  <description>2021-11-12, 53 km</description>
+  <link>https://14142.net/habb/map.html?t=20211112</link>
+  <guid>https://14142.net/habb/map.html?t=20211112</guid>
+  <pubDate>Fri, 12 Nov 2021 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kaidanpää</title>
   <description>2021-10-31, 88 km</description>
