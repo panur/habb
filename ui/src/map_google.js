@@ -15,6 +15,7 @@ function MapApiImpl() {
         s.map = null;
         s.mapDivId = null;
         s.streetViewDivId = null;
+        s.ownLocation = null;
         return s;
     }
 
@@ -165,6 +166,27 @@ function MapApiImpl() {
 
     this.triggerEvent = function (eventName) {
         google.maps.event.trigger(state.map, eventName);
+    };
+
+    this.clearOwnLocation = function () {
+        if (state.ownLocation !== null) {
+            state.ownLocation.setMap(null);
+        }
+    };
+
+    this.updateOwnLocation = function (lat, lng, radius, circleOptions) {
+        state.ownLocation = new google.maps.Circle({
+            'strokeColor': circleOptions['strokeColor'],
+            'strokeOpacity': circleOptions['strokeOpacity'],
+            'strokeWeight': circleOptions['strokeWeight'],
+            'fillColor': circleOptions['fillColor'],
+            'fillOpacity': circleOptions['fillOpacity'],
+            'map': state.map,
+            'center': {'lat': lat, 'lng': lng},
+            'radius': radius,
+            'clickable': false
+        });
+        state.map.fitBounds(state.ownLocation.getBounds());
     };
 
     this.newPolylineFromEncoded = function (encodedPath, polylineOptions) {

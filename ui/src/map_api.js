@@ -15,7 +15,63 @@ function MapApi() {
     this.init = function (mapDivId) {
         state.maMap = new MapApiImpl();
         state.maMap.init(mapDivId);
+
+        if ('geolocation' in navigator) {
+            createOwnLocationControl();
+        }
     };
+
+    function createOwnLocationControl() {
+        var ownLocationElement = createOwnLocationElement();
+        var wrapperElement = document.createElement('div');
+        wrapperElement.appendChild(ownLocationElement);
+
+        state.maMap.addControlElement(wrapperElement, 'bottomleft');
+
+        function createOwnLocationElement(statusClassName) {
+            var newControlElement = document.createElement('div');
+            newControlElement.className = 'findOwnLocation';
+            if (statusClassName !== undefined) {
+                newControlElement.className += ' ' + statusClassName;
+            }
+            newControlElement.title = 'show own location';
+            newControlElement.textContent = '(\u25C9)';
+            newControlElement.addEventListener('click', onClick, false);
+            return newControlElement;
+
+            function onClick() {
+                newControlElement.removeEventListener('click', onClick, false);
+                state.maMap.clearOwnLocation();
+                newControlElement.className = 'findingOwnLocation';
+                newControlElement.title = 'finding own location';
+                newControlElement.textContent = '(\u25CE)';
+                navigator.geolocation.getCurrentPosition(onPositionSuccess, onPositionError,
+                                                         {'timeout': 20000});
+            }
+        }
+
+        function onPositionSuccess(position) {
+            updateOwnLocationElement('locatingSuccess');
+            var radius = Math.max(10, position.coords.accuracy);
+            var circleOptions = {'strokeColor': 'blue', 'strokeOpacity': 0.4, 'strokeWeight': 2,
+                                 'fillColor': 'black', 'fillOpacity': 0.05};
+            state.maMap.updateOwnLocation(position.coords.latitude, position.coords.longitude,
+                                          radius, circleOptions);
+        }
+
+        function onPositionError(err) {
+            updateOwnLocationElement('locatingError');
+            ownLocationElement.textContent = '(\u25EC)';
+            console.log('failed to find own position: %o', err);
+        }
+
+        function updateOwnLocationElement(statusClassName) {
+            var oldElement = ownLocationElement;
+            var newElement = createOwnLocationElement(statusClassName);
+            oldElement.parentNode.replaceChild(newElement, oldElement);
+            ownLocationElement = newElement;
+        }
+    }
 
     this.addControlElement = function (controlElement, position) {
         state.maMap.addControlElement(controlElement, position);

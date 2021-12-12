@@ -15,6 +15,7 @@ function MapApiImpl() {
         s.map = null;
         s.baseLayers = null;
         s.baseLayerName = 'OpenStreetMap';
+        s.ownLocation = null;
         return s;
     }
 
@@ -203,6 +204,26 @@ function MapApiImpl() {
 
     this.triggerEvent = function (eventName) {
         state.map.fire(eventName);
+    };
+
+    this.clearOwnLocation = function () {
+        if (state.ownLocation !== null) {
+            state.map.removeLayer(state.ownLocation);
+        }
+    };
+
+    this.updateOwnLocation = function (lat, lng, radius, circleOptions) {
+        var pathOptions = {
+            'color': circleOptions['strokeColor'],
+            'weight': circleOptions['strokeWeight'],
+            'opacity': circleOptions['strokeOpacity'],
+            'fillColor': circleOptions['fillColor'],
+            'fillOpacity': circleOptions['fillOpacity'],
+            'clickable': false
+        };
+        state.ownLocation = L.circle([lat, lng], radius, pathOptions);
+        state.ownLocation.addTo(state.map);
+        state.map.fitBounds(state.ownLocation.getBounds(), {'maxZoom': 16});
     };
 
     this.newPolylineFromEncoded = function (encodedPath, polylineOptions) {

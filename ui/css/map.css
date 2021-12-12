@@ -159,3 +159,25 @@ a.real_link:visited:hover {
   color: #FFFFFF;
   background-color: #606060;
 }
+
+div.findOwnLocation {
+  cursor: pointer;
+  font-size: large;
+}
+
+div.findingOwnLocation {
+  color: black;
+  font-size: large;
+  animation-duration: 2s;
+  animation-name: blink;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+div.locatingSuccess {
+  color: green;
+}
+
+div.locatingError {
+  color: red;
+}
