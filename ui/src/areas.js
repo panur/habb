@@ -30,6 +30,7 @@ function Areas(master) {
                 '2018': 'visited_datas/2018.json',
                 '2019': 'visited_datas/2019.json',
                 '2020': 'visited_datas/2020.json',
+                '2021': 'visited_datas/2021.json',
                 'latest': 'visited_datas/latest.json'
             }
         };
@@ -88,7 +89,7 @@ function Areas(master) {
                        '0',  '0',  '0', '45', '46',  '0', '47', '48'];
         } else {  // extended or 10k
             s.filenames.points = 'generated_points_ext.json';
-            s.latPages = 14;
+            s.latPages = 16;
             s.lngPages = 22;
             s.kkjStart = {'lat': 60, 'lng': 6};
 
@@ -98,15 +99,15 @@ function Areas(master) {
                       {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 15, 'lengthP': 16},
                       {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 20, 'lengthP': 17},
                       {'n': 5,  'lngOffsetKm': 0,  'latOffsetKm': 25, 'lengthP': 21},
-                      {'n': 41, 'lngOffsetKm': 0,  'latOffsetKm': 30, 'lengthP': 22}];
+                      {'n': 51, 'lngOffsetKm': 0,  'latOffsetKm': 30, 'lengthP': 22}];
 
-            s.lngs = [{'n': 33, 'lngOffsetKm': 0,  'latOffsetKm': 0,  'lengthP': 14},
-                      {'n': 4,  'lngOffsetKm': 33, 'latOffsetKm': 5,  'lengthP': 13},
-                      {'n': 20, 'lngOffsetKm': 37, 'latOffsetKm': 10, 'lengthP': 12},
-                      {'n': 8,  'lngOffsetKm': 57, 'latOffsetKm': 15, 'lengthP': 11},
-                      {'n': 4,  'lngOffsetKm': 65, 'latOffsetKm': 20, 'lengthP': 10},
-                      {'n': 16, 'lngOffsetKm': 69, 'latOffsetKm': 25, 'lengthP': 9},
-                      {'n': 4,  'lngOffsetKm': 85, 'latOffsetKm': 30, 'lengthP': 8}];
+            s.lngs = [{'n': 33, 'lngOffsetKm': 0,  'latOffsetKm': 0,  'lengthP': 16},
+                      {'n': 4,  'lngOffsetKm': 33, 'latOffsetKm': 5,  'lengthP': 15},
+                      {'n': 20, 'lngOffsetKm': 37, 'latOffsetKm': 10, 'lengthP': 14},
+                      {'n': 8,  'lngOffsetKm': 57, 'latOffsetKm': 15, 'lengthP': 13},
+                      {'n': 4,  'lngOffsetKm': 65, 'latOffsetKm': 20, 'lengthP': 12},
+                      {'n': 16, 'lngOffsetKm': 69, 'latOffsetKm': 25, 'lengthP': 11},
+                      {'n': 4,  'lngOffsetKm': 85, 'latOffsetKm': 30, 'lengthP': 10}];
 
             s.pages = ['181',  '96',  '81',  '57',  '58',  '59',  '60',  '61',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
                        '182',  '97',  '82',  '49',   'a',   'A',   'B',   '1',   '2',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',   '0',
@@ -121,7 +122,9 @@ function Areas(master) {
                        '191', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116', '117', '118', '119', '120', '121', '122', '128', '134', '159', '218',
                        '192', '135', '136', '137', '138', '139', '140', '141', '142', '143', '144', '145', '146', '147', '148', '149', '150', '151', '152', '153', '160', '217',
                        '193', '161', '162', '163', '164', '165', '166', '167', '168', '169', '170', '171', '172', '173', '174', '175', '176', '177', '178', '179', '180', '216',
-                       '194', '195', '196', '197', '198', '199', '200', '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215'];
+                       '194', '195', '196', '197', '198', '199', '200', '201', '202', '203', '204', '205', '206', '207', '208', '209', '210', '211', '212', '213', '214', '215',
+                       '223', '224', '225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '235', '236', '237', '238', '239', '240', '241', '242', '243', '244',
+                       '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266'];
 
             if (s.gridType === '10k') {
                 var extendedPages = getExtendedPages(s);
