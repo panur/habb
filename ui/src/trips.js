@@ -59,15 +59,13 @@ function Trips(master) {
             e.stopPropagation();
             e.preventDefault();
 
-            if (e.dataTransfer.files.length === 1) {
-                var filename = e.dataTransfer.files[0].name;
+            for (var i = 0; i < e.dataTransfer.files.length; i++) {
+                let filename = e.dataTransfer.files[i].name;
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     processDroppedFile(filename, e.target.result);
                 };
-                reader.readAsText(e.dataTransfer.files[0]);
-            } else {
-                alert('Please drop only one file at a time.');
+                reader.readAsText(e.dataTransfer.files[i]);
             }
         }
 
