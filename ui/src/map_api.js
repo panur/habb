@@ -160,6 +160,10 @@ function MapApi() {
         }
     };
 
+    this.addGeoJson = function (geoJson, styleOptions) {
+        state.maMap.addGeoJson(geoJson, styleOptions);
+    };
+
     this.getMouseEventLatLng = function (mouseEvent) {
         return new MapApiLatLng(state.maMap.getMouseEventLatLng(mouseEvent));
     };

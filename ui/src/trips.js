@@ -35,6 +35,7 @@ function Trips(master) {
             state.isUiMapInitReady = true;
             showUrlParamsTrips();
             showUrlParamsRoute();
+            showUrlParamsKml();
         });
     };
 
@@ -62,21 +63,32 @@ function Trips(master) {
                 var filename = e.dataTransfer.files[0].name;
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    if (filename.endsWith('.gpx')) {
-                        var tripPath = getGpxTripPath(e.target.result)
-                    } else {
-                        var tripPath = getCsvTripPath(e.target.result);
-                    }
-                    var polylineOptions = {
-                        'color': '#000000',
-                        'opacity': 0.9,
-                        'weight': 3
-                    };
-                    addTripToMap(tripPath, polylineOptions);
+                    processDroppedFile(filename, e.target.result);
                 };
                 reader.readAsText(e.dataTransfer.files[0]);
             } else {
                 alert('Please drop only one file at a time.');
+            }
+        }
+
+        function processDroppedFile(filename, droppedFile) {
+            if (filename.endsWith('.kml')) {
+                addKmlToMap(droppedFile);
+            } else {
+                var polylineOptions = {
+                    'color': '#000000',
+                    'opacity': 0.9,
+                    'weight': 3
+                };
+                if (filename.endsWith('.gpx')) {
+                    var tripPath = getGpxTripPath(droppedFile)
+                    addTripToMap(tripPath, polylineOptions);
+                } else if (filename.endsWith('.csv')) {
+                    var tripPath = getCsvTripPath(droppedFile);
+                    addTripToMap(tripPath, polylineOptions);
+                } else {
+                    console.error('Dropped filename not supported: %o', filename)
+                }
             }
         }
 
@@ -118,6 +130,16 @@ function Trips(master) {
         master.mapApi.fitBounds(tripPolyline.getBounds());
     }
 
+    function addKmlToMap(kmlFile) {
+        var styleOptions = {
+            'strokeColor': '#FF0000',
+            'strokeOpacity': 0.9,
+            'strokeWeight': 1
+        };
+        var kmlXml = master.utils.parseXml(kmlFile);
+        master.mapApi.addGeoJson(toGeoJSON.kml(kmlXml), styleOptions);
+    }
+
     function showUrlParamsTrips() {
         if (state.isUiMapInitReady && state.dataStore.isIndexLoaded()) {
             var tripsToShowPattern = master.utils.getUrlParams()['t'];
@@ -157,6 +179,15 @@ function Trips(master) {
                     'weight': 3
                 };
                 addTripToMap(getGpxTripPath(data), polylineOptions);
+            });
+        }
+    }
+
+    function showUrlParamsKml() {
+        var kmlFile = master.utils.getUrlParams()['k'];
+        if ((kmlFile !== undefined) && (kmlFile.match(/^\w+$/))) {
+            master.utils.downloadUrl('routes/' + kmlFile + '.kml', function (data, responseCode) {
+                addKmlToMap(data);
             });
         }
     }

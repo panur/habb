@@ -292,6 +292,15 @@ function MapApiImpl() {
         }
     };
 
+    this.addGeoJson = function (geoJson, styleOptions) {
+        var style = {
+            'color': styleOptions['strokeColor'],
+            'opacity': styleOptions['strokeOpacity'],
+            'weight': styleOptions['strokeWeight'],
+        };
+        L.geoJSON(geoJson, {style: style}).addTo(state.map);
+    };
+
     this.getMouseEventLatLng = function (mouseEvent) {
         return that.newLatLng(mouseEvent.latlng.lat, mouseEvent.latlng.lng);
     };

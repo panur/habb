@@ -218,6 +218,15 @@ function MapApiImpl() {
         }
     };
 
+    this.addGeoJson = function (geoJson, styleOptions) {
+        state.map.data.addGeoJson(geoJson);
+        state.map.data.setStyle({
+            strokeColor: styleOptions['strokeColor'],
+            strokeOpacity: styleOptions['strokeOpacity'],
+            strokeWeight: styleOptions['strokeWeight'],
+        });
+    };
+
     this.getMouseEventLatLng = function (mouseEvent) {
         return that.newLatLng(mouseEvent.latLng.lat(), mouseEvent.latLng.lng());
     };
