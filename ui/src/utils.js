@@ -1,8 +1,6 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
-'use strict';
-
-function Utils() {
+export function Utils() {
     var that = this;
 
     this.downloadUrl = function (url, callback) {

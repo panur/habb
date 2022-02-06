@@ -1,8 +1,6 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
-'use strict';
-
-function Areas(master) {
+export function Areas(master) {
     var that = this;
     var state = getState('extended');
 

@@ -1,8 +1,6 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
-'use strict';
-
-function Menu(master) {
+export function Menu(master) {
     var that = this;
     var state = getState();
 

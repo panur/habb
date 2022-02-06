@@ -8,20 +8,11 @@
     <title>Helsinki Area By Bike - Map</title>
     <link rel="stylesheet" type="text/css" href="css/map.css"/>
     <link rel="alternate" type="application/rss+xml" href="trips/trips.rss"/>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.45&amp;libraries=geometry&amp;language=en&amp;key=AIzaSyAlqNebllEic_K0O88Oju6yV4mXkveVIKo"
-      type="text/javascript"></script>
-    <script src="src/ext/togeojson.js" type="text/javascript"></script>
-    <script src="src/main.js" type="text/javascript"></script>
-    <script src="src/map_api.js" type="text/javascript"></script>
-    <script src="src/map_google.js" type="text/javascript"></script>
-    <script src="src/menu.js" type="text/javascript"></script>
-    <script src="src/areas.js" type="text/javascript"></script>
-    <script src="src/trips.js" type="text/javascript"></script>
-    <script src="src/tripGraph.js" type="text/javascript"></script>
-    <script src="src/ui_map.js" type="text/javascript"></script>
-    <script src="src/utils.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.45&amp;libraries=geometry&amp;language=en&amp;key=AIzaSyAlqNebllEic_K0O88Oju6yV4mXkveVIKo"></script>
+    <script src="src/ext/togeojson.js"></script>
+    <script src="src/main.js" type="module"></script>
   </head>
-  <body onload="main()">
+  <body>
     <noscript><p>This map is implemented using JavaScript. Please enable support for JavaScript in your browser to see the map.</p></noscript>
     <div id="map_canvas" class="map_canvas"></div>
     <div id="street_view"></div>

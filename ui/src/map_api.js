@@ -1,8 +1,6 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
-'use strict';
-
-function MapApi() {
+export function MapApi() {
     var that = this;
     var state = getState();
 
@@ -12,14 +10,23 @@ function MapApi() {
         return s;
     }
 
-    this.init = function (mapDivId) {
-        state.maMap = new MapApiImpl();
+    this.init = async function (mapDivId) {
+        var module = await import(getMapSourceFile());
+        state.maMap = new module.MapApiImpl();
         state.maMap.init(mapDivId);
 
         if ('geolocation' in navigator) {
             createOwnLocationControl();
         }
     };
+
+    function getMapSourceFile() {
+        if (typeof L !== 'undefined') {
+            return './map_leaflet.js';
+        } else {
+            return './map_google.js';
+        }
+    }
 
     function createOwnLocationControl() {
         var ownLocationElement = createOwnLocationElement();

@@ -1,12 +1,18 @@
 /* Author: Panu Ranta, panu.ranta@iki.fi, https://14142.net/habb/about.html */
 
-'use strict';
+import { MapApi } from './map_api.js';
+import { Utils } from './utils.js';
+import { TripGraph } from './tripGraph.js';
+import { Trips } from './trips.js';
+import { UiMap } from './ui_map.js';
+import { Areas } from './areas.js';
+import { Menu } from './menu.js';
 
-function main() {
+async function main() {
     var master = {};
 
     master.mapApi = new MapApi();
-    master.mapApi.init('map_canvas');
+    await master.mapApi.init('map_canvas');
 
     master.utils = new Utils();
     master.tripGraph = new TripGraph(master);
@@ -23,3 +29,5 @@ function main() {
     var menu = new Menu(master);
     menu.init();
 }
+
+document.addEventListener('DOMContentLoaded', main);

@@ -4,9 +4,7 @@
 API Reference: https://leafletjs.com/reference.html
 */
 
-'use strict';
-
-function MapApiImpl() {
+export function MapApiImpl() {
     var that = this;
     var state = getState();
 
