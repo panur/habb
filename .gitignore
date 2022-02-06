@@ -1,3 +1,4 @@
 /gpx2json/**/*.pyc
 /tmp/
+/ui/routes/
 /ui/trips/years/**/*.json
