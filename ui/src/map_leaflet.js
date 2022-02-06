@@ -4,6 +4,8 @@
 API Reference: https://leafletjs.com/reference.html
 */
 
+import LatLon from './ext/geodesy/latlon-nvector-spherical.js';
+
 export function MapApiImpl() {
     var that = this;
     var state = getState();
@@ -384,7 +386,7 @@ function MapApiPolylineImpl(path, polylineOptions) {
         var p2Impl = p2.getImpl();
         var p1LatLon = new LatLon(p1Impl.lat, p1Impl.lng);
         var p2LatLon = new LatLon(p2Impl.lat, p2Impl.lng);
-        return p1LatLon.bearingTo(p2LatLon);
+        return p1LatLon.initialBearingTo(p2LatLon);
     };
 }
 
