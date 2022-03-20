@@ -32,6 +32,7 @@ export function MapApi() {
         var ownLocationElement = createOwnLocationElement();
         var wrapperElement = document.createElement('div');
         wrapperElement.appendChild(ownLocationElement);
+        var watchPositionId = null;
 
         state.maMap.addControlElement(wrapperElement, 'bottomleft');
 
@@ -47,13 +48,20 @@ export function MapApi() {
             return newControlElement;
 
             function onClick() {
-                newControlElement.removeEventListener('click', onClick, false);
-                state.maMap.clearOwnLocation();
-                newControlElement.className = 'findingOwnLocation';
-                newControlElement.title = 'finding own location';
-                newControlElement.textContent = '(\u25CE)';
-                navigator.geolocation.getCurrentPosition(onPositionSuccess, onPositionError,
-                                                         {'timeout': 20000});
+                if (watchPositionId === null) {
+                    newControlElement.removeEventListener('click', onClick, false);
+                    newControlElement.className = 'findingOwnLocation';
+                    newControlElement.title = 'finding own location';
+                    newControlElement.textContent = '(\u25CE)';
+                    watchPositionId = navigator.geolocation.watchPosition(onPositionSuccess,
+                                                                          onPositionError,
+                                                                          {'timeout': 60000});
+                } else {
+                    navigator.geolocation.clearWatch(watchPositionId);
+                    watchPositionId = null;
+                    state.maMap.clearOwnLocation();
+                    updateOwnLocationElement();
+                }
             }
         }
 
@@ -62,6 +70,7 @@ export function MapApi() {
             var radius = Math.max(10, position.coords.accuracy);
             var circleOptions = {'strokeColor': 'blue', 'strokeOpacity': 0.4, 'strokeWeight': 2,
                                  'fillColor': 'black', 'fillOpacity': 0.05};
+            state.maMap.clearOwnLocation();
             state.maMap.updateOwnLocation(position.coords.latitude, position.coords.longitude,
                                           radius, circleOptions);
         }

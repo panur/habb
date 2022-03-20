@@ -185,6 +185,9 @@ export function MapApiImpl() {
             'clickable': false
         });
         state.map.fitBounds(state.ownLocation.getBounds());
+        if (that.getZoom() > 16) {
+            that.setZoom(16);
+        }
     };
 
     this.newPolylineFromEncoded = function (encodedPath, polylineOptions) {
