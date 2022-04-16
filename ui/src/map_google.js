@@ -153,6 +153,13 @@ export function MapApiImpl() {
         return google.maps.event.addListener(state.map, eventName, handler);
     };
 
+    this.addMoveListener = function (handler) {
+        google.maps.event.addListener(state.map, 'center_changed', function () {
+            var center = state.map.getCenter();
+            handler(that.newLatLng(center.lat(), center.lng()));
+        });
+    };
+
     // added as returned by addListener()
     this.removeListener = function (added) {
         google.maps.event.removeListener(added);

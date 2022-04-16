@@ -193,6 +193,13 @@ export function MapApiImpl() {
         return {'eventName': eventName, 'handler': handler};
     };
 
+    this.addMoveListener = function (handler) {
+        state.map.on('moveend', function (event) {
+            var center = state.map.getCenter();
+            handler(that.newLatLng(center.lat, center.lng));
+        });
+    };
+
     // added as returned by addListener()
     this.removeListener = function (added) {
         state.map.off(added.eventName, added.handler);

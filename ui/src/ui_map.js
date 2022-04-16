@@ -25,7 +25,7 @@ export function UiMap(master) {
 
     this.init = function () {
         master.mapApi.setCenter(state.initialLatLng, state.initialZL);
-        addMouseListeners();
+        addListeners();
         master.mapApi.initStreetView('street_view', resizeMapCanvas);
 
         master.mapApi.addListener('areasInitIsReady', function () {
@@ -52,18 +52,28 @@ export function UiMap(master) {
             statistics + ', ' + state.initialStatistics;
     }
 
-    function addMouseListeners() {
+    function addListeners() {
         master.mapApi.addListener('mousemove', function (mouseEvent) {
             if (master.tripGraph.isPlayerStopped()) {
-                var info = getInfo(master.mapApi.getMouseEventLatLng(mouseEvent));
-                updateStatusBar(info);
-                master.areas.updateCursor(info);
+                updateLocation(master.mapApi.getMouseEventLatLng(mouseEvent));
+            }
+        });
+
+        master.mapApi.addMoveListener(function (point) {
+            if ('ontouchstart' in window) {
+                updateLocation(point);
             }
         });
 
         master.mapApi.addListener('mouseout', function (mouseEvent) {
             master.areas.hideCursor();
         });
+    }
+
+    function updateLocation(point) {
+        var info = getInfo(point);
+        updateStatusBar(info);
+        master.areas.updateCursor(info);
     }
 
     function getInfo(point) {

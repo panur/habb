@@ -141,6 +141,10 @@ export function MapApi() {
         return state.maMap.addListener(eventName, handler);
     };
 
+    this.addMoveListener = function (handler) {
+        state.maMap.addMoveListener(handler);
+    };
+
     // added as returned by addListener()
     this.removeListener = function (added) {
         state.maMap.removeListener(added);
