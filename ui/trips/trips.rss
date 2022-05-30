@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 13 Nov 2021 17:59:53 -0000</lastBuildDate>
+<lastBuildDate>Sun, 29 May 2022 17:37:14 -0000</lastBuildDate>
+<item>
+  <title>Erkylänjärvi</title>
+  <description>2022-05-29, 95 km</description>
+  <link>https://14142.net/habb/map.html?t=20220529</link>
+  <guid>https://14142.net/habb/map.html?t=20220529</guid>
+  <pubDate>Sun, 29 May 2022 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Ridasjärvi</title>
   <description>2021-11-12, 53 km</description>
