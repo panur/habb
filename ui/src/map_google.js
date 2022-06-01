@@ -313,11 +313,11 @@ function MapApiPolylineImpl(path, polylineOptions) {
     };
 
     this.computeDistance = function (p1, p2) {
-        return google.maps.geometry.spherical.computeDistanceBetween(p1, p2)
+        return google.maps.geometry.spherical.computeDistanceBetween(p1.getImpl(), p2.getImpl());
     };
 
     this.computeHeading = function (p1, p2) {
-        return google.maps.geometry.spherical.computeHeading(p1, p2);
+        return google.maps.geometry.spherical.computeHeading(p1.getImpl(), p2.getImpl());
     };
 }
 
