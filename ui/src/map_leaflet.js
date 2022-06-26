@@ -230,7 +230,9 @@ export function MapApiImpl() {
         };
         state.ownLocation = L.circle([lat, lng], radius, pathOptions);
         state.ownLocation.addTo(state.map);
-        state.map.fitBounds(state.ownLocation.getBounds(), {'maxZoom': 16});
+        if (!that.contains(that.newLatLng(lat, lng))) {
+            state.map.fitBounds(state.ownLocation.getBounds(), {'maxZoom': 16});
+        }
     };
 
     this.newPolylineFromEncoded = function (encodedPath, polylineOptions) {

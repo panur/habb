@@ -191,9 +191,11 @@ export function MapApiImpl() {
             'radius': radius,
             'clickable': false
         });
-        state.map.fitBounds(state.ownLocation.getBounds());
-        if (that.getZoom() > 16) {
-            that.setZoom(16);
+        if (!that.contains(that.newLatLng(lat, lng))) {
+            state.map.fitBounds(state.ownLocation.getBounds());
+            if (that.getZoom() > 16) {
+                that.setZoom(16);
+            }
         }
     };
 
