@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 11 Jul 2022 16:22:31 -0000</lastBuildDate>
+<lastBuildDate>Mon, 08 Aug 2022 16:59:10 -0000</lastBuildDate>
+<item>
+  <title>Kilpijärvi</title>
+  <description>2022-08-08, 112 km</description>
+  <link>https://14142.net/habb/map.html?t=20220808</link>
+  <guid>https://14142.net/habb/map.html?t=20220808</guid>
+  <pubDate>Mon, 08 Aug 2022 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kerkkoo</title>
   <description>2022-07-10, 124 km</description>
