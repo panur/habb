@@ -1,4 +1,5 @@
 [
+{"gps_data": "2022/20220821.csv",   "visited_data": "-",                  "distance": "100", "max_speed": "39.7", "avg_speed": "22.5", "duration": "4:26:32", "color": "#8080A0", "name": "Kehä III"},
 {"gps_data": "2022/20220813.csv",   "visited_data": "2022/20220808.json", "distance": "113", "max_speed": "43.4", "avg_speed": "18.5", "duration": "6:07:44", "color": "#4060A0", "name": "Ojajärvi"},
 {"gps_data": "2022/20220808.csv",   "visited_data": "2022/20220710.json", "distance": "112", "max_speed": "53.1", "avg_speed": "19.5", "duration": "5:43:41", "color": "#4040A0", "name": "Kilpijärvi"},
 {"gps_data": "2022/20220710.csv",   "visited_data": "2022/20220612.json", "distance": "124", "max_speed": "42.5", "avg_speed": "20.2", "duration": "6:06:51", "color": "#A02020", "name": "Kerkkoo"},
