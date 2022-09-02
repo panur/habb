@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 30 Aug 2022 17:33:50 -0000</lastBuildDate>
+<lastBuildDate>Fri, 02 Sep 2022 17:54:05 -0000</lastBuildDate>
+<item>
+  <title>Hautjärvi</title>
+  <description>2022-09-02, 109 km</description>
+  <link>https://14142.net/habb/map.html?t=20220902</link>
+  <guid>https://14142.net/habb/map.html?t=20220902</guid>
+  <pubDate>Fri, 02 Sep 2022 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Mynterlä</title>
   <description>2022-08-30, 127 km</description>
