@@ -1,4 +1,5 @@
 [
+{"gps_data": "2022/20220907.csv",   "visited_data": "2022/20220902.json", "distance": "114", "max_speed": "40.5", "avg_speed": "18.7", "duration": "6:05:53", "color": "#A000C0", "name": "Raikkuanlammi"},
 {"gps_data": "2022/20220902.csv",   "visited_data": "2022/20220830.json", "distance": "109", "max_speed": "43.5", "avg_speed": "18.9", "duration": "5:44:24", "color": "#A0C060", "name": "Hautjärvi"},
 {"gps_data": "2022/20220830.csv",   "visited_data": "2022/20220813.json", "distance": "127", "max_speed": "41.6", "avg_speed": "17.9", "duration": "7:03:28", "color": "#FFA080", "name": "Mynterlä"},
 {"gps_data": "2022/20220821.csv",   "visited_data": "-",                  "distance": "100", "max_speed": "39.7", "avg_speed": "22.5", "duration": "4:26:32", "color": "#8080A0", "name": "Kehä III"},
