@@ -1,4 +1,6 @@
 [
+{"gps_data": "2022/20220911.csv",   "visited_data": "-",                  "distance": "101", "max_speed": "35.6", "avg_speed": "21.9", "duration": "4:36:27", "color": "#00A080", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2022/20220910.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "40.7", "avg_speed": "23.3", "duration": "4:22:11", "color": "#00A0C0", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2022/20220907.csv",   "visited_data": "2022/20220902.json", "distance": "114", "max_speed": "40.5", "avg_speed": "18.7", "duration": "6:05:53", "color": "#A000C0", "name": "Raikkuanlammi"},
 {"gps_data": "2022/20220902.csv",   "visited_data": "2022/20220830.json", "distance": "109", "max_speed": "43.5", "avg_speed": "18.9", "duration": "5:44:24", "color": "#A0C060", "name": "Hautjärvi"},
 {"gps_data": "2022/20220830.csv",   "visited_data": "2022/20220813.json", "distance": "127", "max_speed": "41.6", "avg_speed": "17.9", "duration": "7:03:28", "color": "#FFA080", "name": "Mynterlä"},
