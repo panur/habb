@@ -1,4 +1,5 @@
 [
+{"gps_data": "2022/20220917.csv",   "visited_data": "2022/20220907.json", "distance": "117", "max_speed": "40.5", "avg_speed": "19.3", "duration": "6:04:44", "color": "#FFA060", "name": "Siilinsuo"},
 {"gps_data": "2022/20220911.csv",   "visited_data": "-",                  "distance": "101", "max_speed": "35.6", "avg_speed": "21.9", "duration": "4:36:27", "color": "#00A080", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2022/20220910.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "40.7", "avg_speed": "23.3", "duration": "4:22:11", "color": "#00A0C0", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2022/20220907.csv",   "visited_data": "2022/20220902.json", "distance": "114", "max_speed": "40.5", "avg_speed": "18.7", "duration": "6:05:53", "color": "#A000C0", "name": "Raikkuanlammi"},
