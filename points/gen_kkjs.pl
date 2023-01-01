@@ -9,7 +9,7 @@ my $lng_start = 2506000;
 
 my $lat_lng_mult = 1000;
 
-my $lats = 81;  # (81 - 1) / 5 = 16 pages
+my $lats = 91;  # (91 - 1) / 5 = 18 pages
 my $lngs = 89;  # (89 - 1) / 4 = 22 pages
 # 10k: my $lats = 106;  # (106 - 1) / 5 = 21 pages
 # 10k: my $lngs = 97;  # (97 - 1) / 4 = 24 pages
