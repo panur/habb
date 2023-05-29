@@ -53,9 +53,14 @@ export function MapApi() {
                     newControlElement.className = 'findingOwnLocation';
                     newControlElement.title = 'finding own location';
                     newControlElement.textContent = '(\u25CE)';
+                    var positionOptions = {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 30000
+                    };
                     watchPositionId = navigator.geolocation.watchPosition(onPositionSuccess,
                                                                           onPositionError,
-                                                                          {'timeout': 60000});
+                                                                          positionOptions);
                 } else {
                     navigator.geolocation.clearWatch(watchPositionId);
                     watchPositionId = null;
