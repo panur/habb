@@ -1,4 +1,5 @@
 [
+{"gps_data": "2023/20230531.csv",   "visited_data": "2023/20230101.json", "distance": "93",  "max_speed": "38.0", "avg_speed": "18.5", "duration": "5:03:57", "color": "#2020A0", "name": "Lehmiaronsuo"},
 {"gps_data": "2022/20221009.csv",   "visited_data": "2022/20220917.json", "distance": "120", "max_speed": "39.5", "avg_speed": "17.8", "duration": "6:42:45", "color": "#40A020", "name": "Halmaa"},
 {"gps_data": "2022/20220917.csv",   "visited_data": "2022/20220907.json", "distance": "117", "max_speed": "40.5", "avg_speed": "19.3", "duration": "6:04:44", "color": "#FFA060", "name": "Siilinsuo"},
 {"gps_data": "2022/20220911.csv",   "visited_data": "-",                  "distance": "101", "max_speed": "35.6", "avg_speed": "21.9", "duration": "4:36:27", "color": "#00A080", "name": "Hämeenlinna-Espoo"},
