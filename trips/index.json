@@ -1,4 +1,5 @@
 [
+{"gps_data": "2023/20230609.csv",   "visited_data": "2023/20230531.json", "distance": "107", "max_speed": "39.4", "avg_speed": "19.5", "duration": "5:28:36", "color": "#A02040", "name": "Rutajärvi"},
 {"gps_data": "2023/20230531.csv",   "visited_data": "2023/20230101.json", "distance": "93",  "max_speed": "38.0", "avg_speed": "18.5", "duration": "5:03:57", "color": "#2020A0", "name": "Lehmiaronsuo"},
 {"gps_data": "2022/20221009.csv",   "visited_data": "2022/20220917.json", "distance": "120", "max_speed": "39.5", "avg_speed": "17.8", "duration": "6:42:45", "color": "#40A020", "name": "Halmaa"},
 {"gps_data": "2022/20220917.csv",   "visited_data": "2022/20220907.json", "distance": "117", "max_speed": "40.5", "avg_speed": "19.3", "duration": "6:04:44", "color": "#FFA060", "name": "Siilinsuo"},

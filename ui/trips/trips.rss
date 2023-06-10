@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 01 Jun 2023 11:01:27 -0000</lastBuildDate>
+<lastBuildDate>Fri, 09 Jun 2023 16:49:06 -0000</lastBuildDate>
+<item>
+  <title>Rutajärvi</title>
+  <description>2023-06-09, 107 km</description>
+  <link>https://14142.net/habb/map.html?t=20230609</link>
+  <guid>https://14142.net/habb/map.html?t=20230609</guid>
+  <pubDate>Fri, 09 Jun 2023 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Lehmiaronsuo</title>
   <description>2023-05-31, 93 km</description>
