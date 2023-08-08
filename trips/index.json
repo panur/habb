@@ -1,4 +1,6 @@
 [
+{"gps_data": "2023/20230806.csv",   "visited_data": "-",                  "distance": "101", "max_speed": "39.4", "avg_speed": "22.7", "duration": "4:28:10", "color": "#A0C0A0", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2023/20230805.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "37.3", "avg_speed": "23.4", "duration": "4:20:19", "color": "#A08080", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2023/20230730.csv",   "visited_data": "-",                  "distance": "99",  "max_speed": "39.2", "avg_speed": "21.4", "duration": "4:38:47", "color": "#C0C0A0", "name": "Kehä III"},
 {"gps_data": "2023/20230710.csv",   "visited_data": "2023/20230609.json", "distance": "107", "max_speed": "41.5", "avg_speed": "18.7", "duration": "5:45:14", "color": "#20A020", "name": "Luutasuo"},
 {"gps_data": "2023/20230609.csv",   "visited_data": "2023/20230531.json", "distance": "107", "max_speed": "39.4", "avg_speed": "19.5", "duration": "5:28:36", "color": "#A02040", "name": "Rutajärvi"},

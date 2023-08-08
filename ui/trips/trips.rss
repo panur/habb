@@ -5,7 +5,21 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 30 Jul 2023 09:42:13 -0000</lastBuildDate>
+<lastBuildDate>Mon, 07 Aug 2023 12:22:03 -0000</lastBuildDate>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2023-08-06, 101 km</description>
+  <link>https://14142.net/habb/map.html?t=20230806</link>
+  <guid>https://14142.net/habb/map.html?t=20230806</guid>
+  <pubDate>Sun, 06 Aug 2023 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2023-08-05, 102 km</description>
+  <link>https://14142.net/habb/map.html?t=20230805</link>
+  <guid>https://14142.net/habb/map.html?t=20230805</guid>
+  <pubDate>Sat, 05 Aug 2023 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kehä III</title>
   <description>2023-07-30, 99 km</description>
