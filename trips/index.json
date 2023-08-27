@@ -1,4 +1,5 @@
 [
+{"gps_data": "2023/20230826.csv",   "visited_data": "2023/20230820.json", "distance": "104", "max_speed": "43.1", "avg_speed": "20.9", "duration": "4:59:46", "color": "#A000A0", "name": "Haminankylä"},
 {"gps_data": "2023/20230820.csv",   "visited_data": "2023/20230818.json", "distance": "92",  "max_speed": "44.3", "avg_speed": "18.5", "duration": "4:58:21", "color": "#FFA000", "name": "Tekemäjärvi"},
 {"gps_data": "2023/20230818.csv",   "visited_data": "2023/20230810.json", "distance": "96",  "max_speed": "36.3", "avg_speed": "17.4", "duration": "5:31:07", "color": "#0000A0", "name": "Matosaari"},
 {"gps_data": "2023/20230810.csv",   "visited_data": "2023/20230710.json", "distance": "94",  "max_speed": "40.8", "avg_speed": "19.8", "duration": "4:44:55", "color": "#0060A0", "name": "Orimattila"},
