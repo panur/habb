@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sun, 27 Aug 2023 08:52:49 -0000</lastBuildDate>
+<lastBuildDate>Wed, 30 Aug 2023 10:36:31 -0000</lastBuildDate>
+<item>
+  <title>Sorsamo</title>
+  <description>2023-08-29, 102 km</description>
+  <link>https://14142.net/habb/map.html?t=20230829</link>
+  <guid>https://14142.net/habb/map.html?t=20230829</guid>
+  <pubDate>Tue, 29 Aug 2023 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Haminankylä</title>
   <description>2023-08-26, 104 km</description>
