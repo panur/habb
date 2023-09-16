@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 07 Sep 2023 03:46:52 -0000</lastBuildDate>
+<lastBuildDate>Sat, 16 Sep 2023 08:39:05 -0000</lastBuildDate>
+<item>
+  <title>Ikkala</title>
+  <description>2023-09-15, 88 km</description>
+  <link>https://14142.net/habb/map.html?t=20230915</link>
+  <guid>https://14142.net/habb/map.html?t=20230915</guid>
+  <pubDate>Fri, 15 Sep 2023 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Karkkila</title>
   <description>2023-09-06, 99 km</description>
