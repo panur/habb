@@ -1,4 +1,5 @@
 [
+{"gps_data": "2023/20230927.csv",   "visited_data": "2023/20230922.json", "distance": "105", "max_speed": "40.8", "avg_speed": "19.5", "duration": "5:22:53", "color": "#20A060", "name": "Rehakka"},
 {"gps_data": "2023/20230922.csv",   "visited_data": "2023/20230915.json", "distance": "100", "max_speed": "36.9", "avg_speed": "21.1", "duration": "4:43:49", "color": "#0080A0", "name": "Puujaa"},
 {"gps_data": "2023/20230915.csv",   "visited_data": "2023/20230906.json", "distance": "88",  "max_speed": "47.4", "avg_speed": "17.4", "duration": "5:04:52", "color": "#A04020", "name": "Ikkala"},
 {"gps_data": "2023/20230906.csv",   "visited_data": "2023/20230829.json", "distance": "99",  "max_speed": "53.4", "avg_speed": "19.4", "duration": "5:04:34", "color": "#00C0A0", "name": "Karkkila"},
