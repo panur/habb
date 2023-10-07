@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 30 Sep 2023 03:26:24 -0000</lastBuildDate>
+<lastBuildDate>Sat, 07 Oct 2023 03:22:52 -0000</lastBuildDate>
+<item>
+  <title>Räyskälä</title>
+  <description>2023-10-06, 112 km</description>
+  <link>https://14142.net/habb/map.html?t=20231006</link>
+  <guid>https://14142.net/habb/map.html?t=20231006</guid>
+  <pubDate>Fri, 06 Oct 2023 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Tervakoski</title>
   <description>2023-09-29, 114 km</description>
