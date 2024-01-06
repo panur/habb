@@ -10,7 +10,7 @@ export function UiMap(master) {
         s.initialStatistics = getInitialStatistics();
 
         s.initialZL = 9;
-        s.initialLatLng = master.mapApi.newLatLng(60.452760, 24.905283);
+        s.initialLatLng = master.mapApi.newLatLng(60.497629, 24.906533);
         s.zoomToPointZoomLevel = 14;
 
         return s;
