@@ -53,7 +53,7 @@ export function Areas(master) {
             'strokeColor': '#000000',
             'strokeWeight': 2,
             'strokeOpacity': 1,
-            'maxZoomLevel': 15,
+            'maxZoomLevel': 17,
             'kkj': '-'
         };
         s.latKmPerP = 5;
