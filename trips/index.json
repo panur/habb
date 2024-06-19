@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20240619.csv",   "visited_data": "2024/20240101.json", "distance": "102", "max_speed": "46.0", "avg_speed": "19.5", "duration": "5:13:34", "color": "#A00040", "name": "Valajärvi"},
 {"gps_data": "2023/20231006.csv",   "visited_data": "2023/20230929.json", "distance": "112", "max_speed": "44.4", "avg_speed": "19.9", "duration": "5:36:13", "color": "#0040A0", "name": "Räyskälä"},
 {"gps_data": "2023/20230929.csv",   "visited_data": "2023/20230927.json", "distance": "114", "max_speed": "41.1", "avg_speed": "19.3", "duration": "5:54:20", "color": "#FFA020", "name": "Tervakoski"},
 {"gps_data": "2023/20230927.csv",   "visited_data": "2023/20230922.json", "distance": "105", "max_speed": "40.8", "avg_speed": "19.5", "duration": "5:22:53", "color": "#20A060", "name": "Rehakka"},
