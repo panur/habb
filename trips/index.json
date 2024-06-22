@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20240622.csv",   "visited_data": "2024/20240621.json", "distance": "96",  "max_speed": "44.3", "avg_speed": "18.4", "duration": "5:13:23", "color": "#FF80A0", "name": "Järvelä"},
 {"gps_data": "2024/20240621.csv",   "visited_data": "2024/20240619.json", "distance": "91",  "max_speed": "38.2", "avg_speed": "19.4", "duration": "4:42:32", "color": "#2040A0", "name": "Pennala"},
 {"gps_data": "2024/20240619.csv",   "visited_data": "2024/20240101.json", "distance": "102", "max_speed": "46.0", "avg_speed": "19.5", "duration": "5:13:34", "color": "#A00040", "name": "Valajärvi"},
 {"gps_data": "2023/20231006.csv",   "visited_data": "2023/20230929.json", "distance": "112", "max_speed": "44.4", "avg_speed": "19.9", "duration": "5:36:13", "color": "#0040A0", "name": "Räyskälä"},
