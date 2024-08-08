@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 06 Aug 2024 13:08:28 -0000</lastBuildDate>
+<lastBuildDate>Thu, 08 Aug 2024 15:14:59 -0000</lastBuildDate>
+<item>
+  <title>Mommila</title>
+  <description>2024-08-08, 89 km</description>
+  <link>https://14142.net/habb/map.html?t=20240808</link>
+  <guid>https://14142.net/habb/map.html?t=20240808</guid>
+  <pubDate>Thu, 08 Aug 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Herrala</title>
   <description>2024-08-06, 92 km</description>

@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20240808.csv",   "visited_data": "2024/20240806.json", "distance": "89",  "max_speed": "39.2", "avg_speed": "18.9", "duration": "4:43:52", "color": "#20A040", "name": "Mommila"},
 {"gps_data": "2024/20240806.csv",   "visited_data": "2024/20240622.json", "distance": "92",  "max_speed": "41.3", "avg_speed": "20.3", "duration": "4:32:16", "color": "#2060A0", "name": "Herrala"},
 {"gps_data": "2024/20240623.csv",   "visited_data": "-",                  "distance": "98",  "max_speed": "37.7", "avg_speed": "20.3", "duration": "4:51:44", "color": "#C0A020", "name": "Kehä III"},
 {"gps_data": "2024/20240622.csv",   "visited_data": "2024/20240621.json", "distance": "96",  "max_speed": "44.3", "avg_speed": "18.4", "duration": "5:13:23", "color": "#FF80A0", "name": "Järvelä"},
