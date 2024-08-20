@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 13 Aug 2024 14:57:18 -0000</lastBuildDate>
+<lastBuildDate>Tue, 20 Aug 2024 15:16:06 -0000</lastBuildDate>
+<item>
+  <title>Kaartjärvi</title>
+  <description>2024-08-20, 103 km</description>
+  <link>https://14142.net/habb/map.html?t=20240820</link>
+  <guid>https://14142.net/habb/map.html?t=20240820</guid>
+  <pubDate>Tue, 20 Aug 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Löyttymäki</title>
   <description>2024-08-13, 102 km</description>
