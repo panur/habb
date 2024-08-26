@@ -1,4 +1,6 @@
 [
+{"gps_data": "2024/20240825.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "34.0", "avg_speed": "19.5", "duration": "5:12:37", "color": "#80A080", "name": "Hämeenlinna-Espoo"},
+{"gps_data": "2024/20240824.csv",   "visited_data": "2024/20240820.json", "distance": "104", "max_speed": "39.4", "avg_speed": "24.1", "duration": "4:17:36", "color": "#C0A0A0", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2024/20240820.csv",   "visited_data": "2024/20240813.json", "distance": "103", "max_speed": "42.9", "avg_speed": "21.7", "duration": "4:46:23", "color": "#A0A020", "name": "Kaartjärvi"},
 {"gps_data": "2024/20240813.csv",   "visited_data": "2024/20240808.json", "distance": "102", "max_speed": "46.2", "avg_speed": "19.4", "duration": "5:16:13", "color": "#A020FF", "name": "Löyttymäki"},
 {"gps_data": "2024/20240808.csv",   "visited_data": "2024/20240806.json", "distance": "89",  "max_speed": "39.2", "avg_speed": "18.9", "duration": "4:43:52", "color": "#20A040", "name": "Mommila"},
