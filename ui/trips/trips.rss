@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 27 Aug 2024 12:49:18 -0000</lastBuildDate>
+<lastBuildDate>Tue, 03 Sep 2024 16:23:46 -0000</lastBuildDate>
+<item>
+  <title>Heinisuo</title>
+  <description>2024-09-03, 95 km</description>
+  <link>https://14142.net/habb/map.html?t=20240903</link>
+  <guid>https://14142.net/habb/map.html?t=20240903</guid>
+  <pubDate>Tue, 03 Sep 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Turenki</title>
   <description>2024-08-27, 96 km</description>
