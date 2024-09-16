@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20240916.csv",   "visited_data": "2024/20240910.json", "distance": "101", "max_speed": "39.8", "avg_speed": "19.5", "duration": "5:10:03", "color": "#20A0FF", "name": "Lappila"},
 {"gps_data": "2024/20240910.csv",   "visited_data": "2024/20240908.json", "distance": "113", "max_speed": "42.9", "avg_speed": "22.0", "duration": "5:08:47", "color": "#FFC0A0", "name": "Lairo"},
 {"gps_data": "2024/20240908.csv",   "visited_data": "2024/20240903.json", "distance": "110", "max_speed": "37.5", "avg_speed": "19.5", "duration": "5:39:00", "color": "#60A040", "name": "Mallinkainen"},
 {"gps_data": "2024/20240903.csv",   "visited_data": "2024/20240827.json", "distance": "95",  "max_speed": "38.4", "avg_speed": "19.2", "duration": "4:56:10", "color": "#FF60A0", "name": "Heinisuo"},
