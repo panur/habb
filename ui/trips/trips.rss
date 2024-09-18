@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 16 Sep 2024 14:02:48 -0000</lastBuildDate>
+<lastBuildDate>Wed, 18 Sep 2024 15:07:33 -0000</lastBuildDate>
+<item>
+  <title>Hirvihaara</title>
+  <description>2024-09-18, 96 km</description>
+  <link>https://14142.net/habb/map.html?t=20240918</link>
+  <guid>https://14142.net/habb/map.html?t=20240918</guid>
+  <pubDate>Wed, 18 Sep 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Lappila</title>
   <description>2024-09-16, 101 km</description>
