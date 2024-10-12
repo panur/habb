@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20241012.csv",   "visited_data": "-",                  "distance": "91",  "max_speed": "36.7", "avg_speed": "19.9", "duration": "4:34:52", "color": "#20FFA0", "name": "Vestra"},
 {"gps_data": "2024/20241010.csv",   "visited_data": "-",                  "distance": "99",  "max_speed": "40.8", "avg_speed": "19.6", "duration": "5:02:16", "color": "#A02060", "name": "Venunjärvi"},
 {"gps_data": "2024/20240924.csv",   "visited_data": "-",                  "distance": "94",  "max_speed": "41.3", "avg_speed": "19.5", "duration": "4:48:49", "color": "#2080A0", "name": "Ridasjärvi"},
 {"gps_data": "2024/20240918.csv",   "visited_data": "-",                  "distance": "96",  "max_speed": "42.5", "avg_speed": "19.6", "duration": "4:53:53", "color": "#A06020", "name": "Hirvihaara"},
