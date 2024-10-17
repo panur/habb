@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 12 Oct 2024 17:55:31 -0000</lastBuildDate>
+<lastBuildDate>Thu, 17 Oct 2024 08:52:29 -0000</lastBuildDate>
+<item>
+  <title>Kulloo</title>
+  <description>2024-10-16, 111 km</description>
+  <link>https://14142.net/habb/map.html?t=20241016</link>
+  <guid>https://14142.net/habb/map.html?t=20241016</guid>
+  <pubDate>Wed, 16 Oct 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Vestra</title>
   <description>2024-10-12, 91 km</description>
