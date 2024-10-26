@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20241026.csv",   "visited_data": "-",                  "distance": "101", "max_speed": "40.4", "avg_speed": "20.3", "duration": "4:58:17", "color": "#20A0C0", "name": "Nahkela"},
 {"gps_data": "2024/20241023.csv",   "visited_data": "-",                  "distance": "97",  "max_speed": "45.2", "avg_speed": "20.6", "duration": "4:42:28", "color": "#A0C040", "name": "Läyliäinen"},
 {"gps_data": "2024/20241016.csv",   "visited_data": "-",                  "distance": "111", "max_speed": "38.0", "avg_speed": "19.3", "duration": "5:43:37", "color": "#4080A0", "name": "Kulloo"},
 {"gps_data": "2024/20241012.csv",   "visited_data": "-",                  "distance": "91",  "max_speed": "36.7", "avg_speed": "19.9", "duration": "4:34:52", "color": "#20FFA0", "name": "Vestra"},
