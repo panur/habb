@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Tue, 29 Oct 2024 16:39:54 -0000</lastBuildDate>
+<lastBuildDate>Fri, 08 Nov 2024 18:04:04 -0000</lastBuildDate>
+<item>
+  <title>Immersby</title>
+  <description>2024-11-08, 72 km</description>
+  <link>https://14142.net/habb/map.html?t=20241108</link>
+  <guid>https://14142.net/habb/map.html?t=20241108</guid>
+  <pubDate>Fri, 08 Nov 2024 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kalatoin</title>
   <description>2024-10-29, 100 km</description>
