@@ -87,7 +87,7 @@ export function Areas(master) {
                        '0', '29', '30', '31', '32', '33', '34', '35', '36',
                        '0', '37', '38', '39', '40', '41', '42', '43', '44',
                        '0',  '0',  '0', '45', '46',  '0', '47', '48'];
-        } else {  // extended or 10k
+        } else {  // extended or 18k
             s.filenames.points = 'generated_points_ext.json';
             s.latPages = 20;
             s.lngPages = 22;
@@ -130,15 +130,15 @@ export function Areas(master) {
                        '311', '312', '313', '314', '315', '316', '317', '318', '319', '320', '321', '322', '323', '324', '325', '326', '327', '328', '329', '330', '331', '332',
                        '333', '334', '335', '336', '337', '338', '339', '340', '341', '342', '343', '344', '345', '346', '347', '348', '349', '350', '351', '352', '353', '354'];
 
-            if (s.gridType === '10k') {
+            if (s.gridType === '18k') {
                 var extendedPages = getExtendedPages(s);
-                s.filenames.points = 'generated_points_10k.json';
-                s.latPages = 21;
-                s.lngPages = 24;
-                s.kkjStart = {'lat': 60, 'lng': 2};
-                s.lats = [{'n': 106, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 24}];
-                s.lngs = [{'n': 97, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 21}];
-                s.pages = get10kPages(s, extendedPages);
+                s.filenames.points = 'generated_points_18k.json';
+                s.latPages = 26;
+                s.lngPages = 34;
+                s.kkjStart = {'lat': 60, 'lng': -18};
+                s.lats = [{'n': 131, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 34}];
+                s.lngs = [{'n': 137, 'lngOffsetKm': 0, 'latOffsetKm': 0, 'lengthP': 26}];
+                s.pages = get18kPages(s, extendedPages);
             }
         }
 
@@ -161,7 +161,7 @@ export function Areas(master) {
             (state.kkjStart.lng + (lng * state.lngKmPerP));
     }
 
-    function get10kPages(state, extendedPages) {
+    function get18kPages(state, extendedPages) {
         var pages = [];
         for (var lat = 0; lat < state.latPages; lat++) {
             for (var lng = 0; lng < state.lngPages; lng++) {
@@ -803,7 +803,7 @@ export function Areas(master) {
     this.getChangeGridMenuItems = function () {
         var menuItems = [];
 
-        for (var gridType of ['original', 'extended', '10k']) {
+        for (var gridType of ['original', 'extended', '18k']) {
             if (state.gridType !== gridType) {
                 menuItems.push(gridType);
             }
@@ -931,7 +931,7 @@ export function Areas(master) {
             toggleVisibility();
         } else if ((command === 'Decrease opacity') || (command === 'Increase opacity')) {
             toggleOpacity();
-        } else if ((command === 'original') || (command === 'extended') || (command === '10k')) {
+        } else if ((command === 'original') || (command === 'extended') || (command === '18k')) {
             changeGridType(command);
         } else if (command === 'start') {
             startVisitedAreaEditor();
