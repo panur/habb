@@ -1,4 +1,5 @@
 [
+{"gps_data": "2024/20241202.csv",   "visited_data": "-",                  "distance": "103", "max_speed": "42.1", "avg_speed": "19.3", "duration": "5:20:45", "color": "#6040A0", "name": "Linjassuo"},
 {"gps_data": "2024/20241115.csv",   "visited_data": "2024/20240916.json", "distance": "91",  "max_speed": "36.9", "avg_speed": "17.8", "duration": "5:05:04", "color": "#2000A0", "name": "Hyvikkälä"},
 {"gps_data": "2024/20241108.csv",   "visited_data": "-",                  "distance": "72",  "max_speed": "43.3", "avg_speed": "18.3", "duration": "3:56:25", "color": "#A04040", "name": "Immersby"},
 {"gps_data": "2024/20241029.csv",   "visited_data": "-",                  "distance": "100", "max_speed": "40.8", "avg_speed": "18.3", "duration": "5:29:54", "color": "#40A080", "name": "Kalatoin"},
