@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Mon, 02 Dec 2024 18:08:07 -0000</lastBuildDate>
+<lastBuildDate>Thu, 08 May 2025 08:50:11 -0000</lastBuildDate>
+<item>
+  <title>Tiirismaa</title>
+  <description>2025-05-07, 79 km</description>
+  <link>https://14142.net/habb/map.html?t=20250507</link>
+  <guid>https://14142.net/habb/map.html?t=20250507</guid>
+  <pubDate>Wed, 07 May 2025 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Linjassuo</title>
   <description>2024-12-02, 103 km</description>

@@ -715,7 +715,7 @@ function TripDataStore(master) {
         s['filenames'] = {
             'index': 'trips/index.json',
             'tripsDatas': [
-                'trips/tripsData2024.json',
+                'trips/tripsData2025.json', 'trips/tripsData2024.json',
                 'trips/tripsData2023.json', 'trips/tripsData2022.json', 'trips/tripsData2021.json',
                 'trips/tripsData2020.json', 'trips/tripsData2019.json', 'trips/tripsData2018.json',
                 'trips/tripsData2017.json', 'trips/tripsData2016.json', 'trips/tripsData2015.json',
