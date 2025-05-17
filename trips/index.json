@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20250515.csv",   "visited_data": "2025/20250507.json", "distance": "89",  "max_speed": "45.6", "avg_speed": "19.6", "duration": "4:33:13", "color": "#A02080", "name": "Tyry"},
 {"gps_data": "2025/20250507.csv",   "visited_data": "2025/20250101.json", "distance": "79",  "max_speed": "41.7", "avg_speed": "16.6", "duration": "4:44:50", "color": "#20A080", "name": "Tiirismaa"},
 {"gps_data": "2024/20241202.csv",   "visited_data": "-",                  "distance": "103", "max_speed": "42.1", "avg_speed": "19.3", "duration": "5:20:45", "color": "#6040A0", "name": "Linjassuo"},
 {"gps_data": "2024/20241115.csv",   "visited_data": "2024/20240916.json", "distance": "91",  "max_speed": "36.9", "avg_speed": "17.8", "duration": "5:05:04", "color": "#2000A0", "name": "Hyvikkälä"},
