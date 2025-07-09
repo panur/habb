@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20250709.csv",   "visited_data": "2025/20250701.json", "distance": "107", "max_speed": "43.3", "avg_speed": "16.0", "duration": "6:43:15", "color": "#FFA040", "name": "Sulenko"},
 {"gps_data": "2025/20250701.csv",   "visited_data": "2025/20250521.json", "distance": "98",  "max_speed": "49.1", "avg_speed": "18.8", "duration": "5:11:59", "color": "#A00020", "name": "Hämeenkoski"},
 {"gps_data": "2025/20250521.csv",   "visited_data": "2025/20250515.json", "distance": "106", "max_speed": "41.7", "avg_speed": "19.1", "duration": "5:32:16", "color": "#40A0FF", "name": "Sääjärvi"},
 {"gps_data": "2025/20250515.csv",   "visited_data": "2025/20250507.json", "distance": "89",  "max_speed": "45.6", "avg_speed": "19.6", "duration": "4:33:13", "color": "#A02080", "name": "Tyry"},
