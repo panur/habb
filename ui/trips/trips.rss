@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 10 Jul 2025 14:55:20 -0000</lastBuildDate>
+<lastBuildDate>Fri, 11 Jul 2025 15:15:45 -0000</lastBuildDate>
+<item>
+  <title>Vaimaroinen</title>
+  <description>2025-07-11, 109 km</description>
+  <link>https://14142.net/habb/map.html?t=20250711</link>
+  <guid>https://14142.net/habb/map.html?t=20250711</guid>
+  <pubDate>Fri, 11 Jul 2025 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Takajärvi</title>
   <description>2025-07-10, 102 km</description>
