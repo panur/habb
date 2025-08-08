@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20250807.csv",   "visited_data": "2025/20250711.json", "distance": "104", "max_speed": "39.0", "avg_speed": "18.7", "duration": "5:33:01", "color": "#A04060", "name": "Renkajärvi"},
 {"gps_data": "2025/20250712.csv",   "visited_data": "-",                  "distance": "98",  "max_speed": "39.4", "avg_speed": "20.1", "duration": "4:53:12", "color": "#A0A080", "name": "Kehä III"},
 {"gps_data": "2025/20250711.csv",   "visited_data": "2025/20250710.json", "distance": "109", "max_speed": "40.8", "avg_speed": "17.9", "duration": "6:06:10", "color": "#60A020", "name": "Vaimaroinen"},
 {"gps_data": "2025/20250710.csv",   "visited_data": "2025/20250709.json", "distance": "102", "max_speed": "38.0", "avg_speed": "18.2", "duration": "5:34:41", "color": "#00A0A0", "name": "Takajärvi"},
