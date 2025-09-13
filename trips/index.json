@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20250913.csv",   "visited_data": "-",                  "distance": "??",  "max_speed": "??.?", "avg_speed": "??.?", "duration": "?:??:??", "color": "#C0A080", "name": "Sajaniemenvuori"},
 {"gps_data": "2025/20250827.csv",   "visited_data": "2025/20250807.json", "distance": "108", "max_speed": "44.3", "avg_speed": "17.7", "duration": "6:06:24", "color": "#40A040", "name": "Hälvälä"},
 {"gps_data": "2025/20250807.csv",   "visited_data": "2025/20250711.json", "distance": "104", "max_speed": "39.0", "avg_speed": "18.7", "duration": "5:33:01", "color": "#A04060", "name": "Renkajärvi"},
 {"gps_data": "2025/20250712.csv",   "visited_data": "-",                  "distance": "98",  "max_speed": "39.4", "avg_speed": "20.1", "duration": "4:53:12", "color": "#A0A080", "name": "Kehä III"},
