@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Sat, 13 Sep 2025 11:26:09 -0000</lastBuildDate>
+<lastBuildDate>Fri, 26 Sep 2025 15:20:13 -0000</lastBuildDate>
+<item>
+  <title>Kurjoo</title>
+  <description>2025-09-25, 89 km</description>
+  <link>https://14142.net/habb/map.html?t=20250925</link>
+  <guid>https://14142.net/habb/map.html?t=20250925</guid>
+  <pubDate>Thu, 25 Sep 2025 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Sajaniemenvuori</title>
   <description>2025-09-13, ?? km</description>
