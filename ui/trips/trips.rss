@@ -5,7 +5,21 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 26 Sep 2025 15:20:13 -0000</lastBuildDate>
+<lastBuildDate>Mon, 29 Sep 2025 11:16:36 -0000</lastBuildDate>
+<item>
+  <title>Hämeenlinna-Espoo</title>
+  <description>2025-09-29, 102 km</description>
+  <link>https://14142.net/habb/map.html?t=20250929</link>
+  <guid>https://14142.net/habb/map.html?t=20250929</guid>
+  <pubDate>Mon, 29 Sep 2025 15:00:00 -0000</pubDate>
+</item>
+<item>
+  <title>Espoo-Hämeenlinna</title>
+  <description>2025-09-28, 106 km</description>
+  <link>https://14142.net/habb/map.html?t=20250928</link>
+  <guid>https://14142.net/habb/map.html?t=20250928</guid>
+  <pubDate>Sun, 28 Sep 2025 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kurjoo</title>
   <description>2025-09-25, 89 km</description>
