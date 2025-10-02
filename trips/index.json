@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20251001.csv",   "visited_data": "-",                  "distance": "83",  "max_speed": "42.9", "avg_speed": "18.6", "duration": "4:28:16", "color": "#C040A0", "name": "Suvisaaristo"},
 {"gps_data": "2025/20250929.csv",   "visited_data": "-",                  "distance": "102", "max_speed": "35.5", "avg_speed": "20.7", "duration": "4:55:42", "color": "#A0C080", "name": "Hämeenlinna-Espoo"},
 {"gps_data": "2025/20250928.csv",   "visited_data": "2025/20250827.json", "distance": "106", "max_speed": "36.9", "avg_speed": "22.3", "duration": "4:44:06", "color": "#C0A060", "name": "Espoo-Hämeenlinna"},
 {"gps_data": "2025/20250925.csv",   "visited_data": "-",                  "distance": "89",  "max_speed": "46.2", "avg_speed": "18.0", "duration": "4:57:29", "color": "#40A0A0", "name": "Kurjoo"},
