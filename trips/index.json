@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20251015.csv",   "visited_data": "-",                  "distance": "73",  "max_speed": "47.0", "avg_speed": "16.2", "duration": "4:28:51", "color": "#FFA0C0", "name": "Kakarlampi"},
 {"gps_data": "2025/20251010.csv",   "visited_data": "2025/20251003.json", "distance": "108", "max_speed": "40.4", "avg_speed": "21.4", "duration": "5:02:15", "color": "#20A0A0", "name": "Rietajärvi"},
 {"gps_data": "2025/20251003.csv",   "visited_data": "2025/20250928.json", "distance": "99",  "max_speed": "37.5", "avg_speed": "18.9", "duration": "5:12:14", "color": "#A06000", "name": "Kataloinen"},
 {"gps_data": "2025/20251001.csv",   "visited_data": "-",                  "distance": "83",  "max_speed": "42.9", "avg_speed": "18.6", "duration": "4:28:16", "color": "#C040A0", "name": "Suvisaaristo"},
