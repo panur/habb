@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Thu, 16 Oct 2025 08:34:37 -0000</lastBuildDate>
+<lastBuildDate>Mon, 20 Oct 2025 09:43:13 -0000</lastBuildDate>
+<item>
+  <title>Seitsemänlamminsuo</title>
+  <description>2025-10-19, 98 km</description>
+  <link>https://14142.net/habb/map.html?t=20251019</link>
+  <guid>https://14142.net/habb/map.html?t=20251019</guid>
+  <pubDate>Sun, 19 Oct 2025 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Kakarlampi</title>
   <description>2025-10-15, 73 km</description>
