@@ -1,4 +1,5 @@
 [
+{"gps_data": "2025/20251024.csv",   "visited_data": "2025/20251019.json", "distance": "103", "max_speed": "37.5", "avg_speed": "16.8", "duration": "6:07:25", "color": "#A0FFC0", "name": "Kahvilankulma"},
 {"gps_data": "2025/20251019.csv",   "visited_data": "2025/20251010.json", "distance": "98",  "max_speed": "36.3", "avg_speed": "17.8", "duration": "5:31:48", "color": "#A08060", "name": "Seitsemänlamminsuo"},
 {"gps_data": "2025/20251015.csv",   "visited_data": "-",                  "distance": "73",  "max_speed": "47.0", "avg_speed": "16.2", "duration": "4:28:51", "color": "#FFA0C0", "name": "Kakarlampi"},
 {"gps_data": "2025/20251010.csv",   "visited_data": "2025/20251003.json", "distance": "108", "max_speed": "40.4", "avg_speed": "21.4", "duration": "5:02:15", "color": "#20A0A0", "name": "Rietajärvi"},
