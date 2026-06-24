@@ -578,58 +578,56 @@ export function Areas(master) {
         }
     }
 
-    // tbd: this is not accurate
     function getKm2XYFromPoint(point) {
-        var guessXY = {'y': -1, 'x': -1};
-
-        for (var i = 0; i < state.grid.latPolylines.length; i++) {
-            var line = state.grid.latPolylines[i];
-            var p1 = line.getLatLng(0);
-            var p2 = line.getLatLng(line.getPathLength() - 1);
-            var mp = 1 - ((point.lng() - p1.lng()) / (p2.lng() - p1.lng()));
-            var lat = p2.lat() + ((p1.lat() - p2.lat()) * mp);
-
-            if (point.lat() < lat) {
-                guessXY.y = i - 1;
-                break;
+        var maxH = state.points.length - 1;
+        var h = maxH;
+        var maxW = state.points[0].length - 1;
+        var w = maxW;
+        var y = 0;
+        var x = 0;
+        if (!isPointInPolygon(point, getPolygon(h, w, y, x))) {
+            return null;
+        }
+        for (var i = 0; i < 20; i++) {  // 2^20=1048576 -> should be more than enough
+            if ((w == 1) && (h == 1)) {
+                return {y:y, x:x};
             }
-        }
-
-        for (var i = 0; i < state.grid.lngPolylines.length; i++) {
-            var line = state.grid.lngPolylines[i];
-            var p1 = line.getLatLng(0);
-            var p2 = line.getLatLng(line.getPathLength() - 1);
-            var mp = 1 - ((point.lat() - p2.lat()) / (p1.lat() - p2.lat()));
-            var lng = p1.lng() + ((p2.lng() - p1.lng()) * mp);
-
-            if (point.lng() < lng) {
-                guessXY.x = i - 1;
-                break;
-            }
-        }
-
-        if ((guessXY.y >= 0) && (guessXY.x >= 0)) {
-            return getKm2XYFromGuess(point, guessXY);
-        }
-
-        return null;
-    }
-
-    function getKm2XYFromGuess(point, guessXY) {
-        for (var y = guessXY.y - 1; y < guessXY.y + 2; y++) {
-            for (var x = guessXY.x - 1; x < guessXY.x + 2; x++) {
-                if ((y >= 0) && (x >= 0) &&
-                    (y < (state.points.length - 1) &&
-                    (x < (state.points[y].length - 1)))) {
-
-                    if (isPointInPolygon(point, state.km2s[y][x].points)) {
-                        return {y:y, x:x};
-                    }
+            if (h >= w) {
+                var new_h = Math.floor(h / 2);
+                if (isPointInPolygon(point, getPolygon(new_h, w, y, x))) {
+                    h = new_h;
+                } else {
+                    y += new_h;
+                    h -= new_h;
+                }
+            } else {
+                var new_w = Math.floor(w / 2);
+                if (isPointInPolygon(point, getPolygon(h, new_w, y, x))) {
+                    w = new_w;
+                } else {
+                    x += new_w;
+                    w -= new_w;
                 }
             }
         }
+        return null; // should not happen
+    }
 
-        return null;
+    function getPolygon(h, w, y, x) {
+        var points = [];
+        for (var i = 0; i < w; i++) {
+            points.push(state.points[y][x + i]); // to right
+        }
+        for (var i = 0; i < h; i++) {
+            points.push(state.points[y + i][x + w]); // to up
+        }
+        for (var i = w; i > 0; i--) {
+            points.push(state.points[y + h][x + i]); // to left
+        }
+        for (var i = h; i >= 0; i--) {
+            points.push(state.points[y + i][x]); // to down
+        }
+        return points;
     }
 
     this.getKkjOffset = function (point) {
@@ -656,8 +654,6 @@ export function Areas(master) {
                 if (state.pages[pageIndex] !== '0') {
                     info.page = state.pages[pageIndex];
                     info.visited = state.km2s[km2XY.y][km2XY.x].visited;
-                } else {
-                    km2XY = null;
                 }
             } else {
                 km2XY = null;
