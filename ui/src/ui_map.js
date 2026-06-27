@@ -109,16 +109,16 @@ export function UiMap(master) {
             url = 'https://14142.net/mml/?lat=' +
                 point.lat() + '&lng=' + point.lng() + '&z=' + zl;
         } else if (otherMapType === 'Google Maps') {
-            url = 'http://maps.google.com/?output=classic&dg=opt&ll=' +
+            url = 'https://maps.google.com/?output=classic&dg=opt&ll=' +
                 point.lat() + ',' + point.lng() + '&z=' + zl;
         } else if (otherMapType === 'HERE Maps') {
-            url = 'http://wego.here.com/?map=' +
+            url = 'https://wego.here.com/?map=' +
                 point.lat() + ',' + point.lng() + ',' + zl;
         } else if (otherMapType === 'Bing Maps') {
-            url = 'http://www.bing.com/maps/default.aspx?cp=' +
+            url = 'https://www.bing.com/maps?cp=' +
                 point.lat() + '~' + point.lng() + '&lvl=' + zl;
         } else if (otherMapType === 'OpenStreetMap') {
-            url = 'http://www.openstreetmap.org/#map=' +
+            url = 'https://www.openstreetmap.org/#map=' +
                 zl + '/' + point.lat() + '/' + point.lng();
         }
 
