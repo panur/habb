@@ -1,4 +1,5 @@
 [
+{"gps_data": "2026/20260701.csv",   "visited_data": "2026/20260626.json", "distance": "92",  "max_speed": "48.7", "avg_speed": "18.1", "duration": "5:03:53", "color": "#A06060", "name": "Arkiomaanjärvi"},
 {"gps_data": "2026/20260628.csv",   "visited_data": "-",                  "distance": "100", "max_speed": "39.6", "avg_speed": "21.8", "duration": "4:35:45", "color": "#C0A0C0", "name": "Kehä III"},
 {"gps_data": "2026/20260626.csv",   "visited_data": "2026/20260601.json", "distance": "107", "max_speed": "42.1", "avg_speed": "20.3", "duration": "5:14:54", "color": "#8060A0", "name": "Leppälammi"},
 {"gps_data": "2026/20260601.csv",   "visited_data": "2026/20260526.json", "distance": "???", "max_speed": "??.?", "avg_speed": "??.?", "duration": "?:??:??", "color": "#A0C020", "name": "Pakaa"},
