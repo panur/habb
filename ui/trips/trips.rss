@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 04 Sep 2026 18:19:40 -0000</lastBuildDate>
+<lastBuildDate>Fri, 11 Sep 2026 17:40:13 -0000</lastBuildDate>
+<item>
+  <title>Villähde</title>
+  <description>2026-09-11, 98 km</description>
+  <link>https://14142.net/habb/map.html?t=20260911</link>
+  <guid>https://14142.net/habb/map.html?t=20260911</guid>
+  <pubDate>Fri, 11 Sep 2026 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Teuronjärvi</title>
   <description>2026-09-04, 111 km</description>
