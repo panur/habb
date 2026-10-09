@@ -432,7 +432,7 @@ def _create_rss(trips, output_filename):
     output_str += '</channel>\n'
     output_str += '</rss>\n'
 
-    with codecs.open(output_filename, 'w', encoding='utf_8') as output_file:
+    with open(output_filename, 'w', encoding='utf_8') as output_file:
         output_file.write(output_str)
 
 
