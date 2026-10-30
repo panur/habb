@@ -5,7 +5,14 @@
 <description>Trips around Helsinki area by bike.</description>
 <link>https://14142.net/habb/map.html</link>
 <atom:link href="https://14142.net/habb/trips/trips.rss" rel="self" type="application/rss+xml"/>
-<lastBuildDate>Fri, 23 Oct 2026 09:22:10 -0000</lastBuildDate>
+<lastBuildDate>Fri, 30 Oct 2026 09:41:21 -0000</lastBuildDate>
+<item>
+  <title>Vaania</title>
+  <description>2026-10-29, 111 km</description>
+  <link>https://14142.net/habb/map.html?t=20261029</link>
+  <guid>https://14142.net/habb/map.html?t=20261029</guid>
+  <pubDate>Thu, 29 Oct 2026 15:00:00 -0000</pubDate>
+</item>
 <item>
   <title>Ilamo</title>
   <description>2026-10-22, ?? km</description>
